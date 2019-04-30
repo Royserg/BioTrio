@@ -21,13 +21,17 @@ public class DashboardController {
     ArrayList<Booking> bookingList = new ArrayList<Booking>();
 
 
+    @GetMapping("/")
+    public String dashboard() {
+        return "index";
+    }
 
     @GetMapping("/bookings")
-    @ResponseBody
-    public ArrayList<Booking> bookings(Model m) {
+    public String bookings(Model m) {
         bookingList.add(someBooking);
-        m.addAttribute("booking",bookingList);
-        return bookingList;
+        m.addAttribute("bookings", bookingList);
+
+        return "bookings";
     }
 
     @GetMapping("/movies")
@@ -38,11 +42,6 @@ public class DashboardController {
     @GetMapping("/cinemas")
     public String cinemas() {
         return "cinemas";
-    }
-
-    @GetMapping("/")
-    public String dashboard() {
-        return "index";
     }
 
     @GetMapping("/bookings/add")

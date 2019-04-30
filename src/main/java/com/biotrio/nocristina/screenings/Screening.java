@@ -30,6 +30,12 @@ public class Screening {
         return dateTime;
     }
 
+    public void getFormattedDate() {
+        // TODO:
+        //  make formatted date for displaying on frontend
+        //  and change return type to String
+    }
+
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
