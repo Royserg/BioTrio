@@ -1,3 +1,7 @@
+.navbar {
+    height: 50px;
+}
+
 .sidebar-sticky {
-    height: calc(100vh - 39.6px);
+    height: calc(100vh - 50px);
 }
