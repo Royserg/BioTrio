@@ -2,21 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
     <head th:fragment="head">
         <meta charset="UTF-8">
-        <!--<link rel="shortcut icon" href="./favicon.png" type="image/x-icon"/>-->
-        <!--<link rel="manifest" href="./site.webmanifest">-->
+
+        <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}" />
         <title th:text="${title}"></title>
 
         <!-- Bootstrap stylesheet -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- custom css -->
+        <link rel="stylesheet" th:href="@{/css/header.css}">
 
-        <!--TODO: fix importing styles from the file-->
-        <!--<link rel="stylesheet" href="../../static/css/header.css">-->
-        <style>
-            .sidebar-sticky {
-                height: calc(100vh - 39.6px);
-            }
-        </style>
     </head>
     <body>
         <!-- Navbar -->
