@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+    <head th:replace="fragments/header :: head(title='Dashboard')" />
+
+    <body>
+        <nav th:replace="fragments/header :: navbar" />
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav th:replace="fragments/header :: sidebar" />
+                <div class="col-10">
+
+                    <ul class="list-group">
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
