@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index page</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments/header :: head(title='Dashboard')" />
+
 <body>
-    <h1>Hello index page</h1>
+    <nav th:replace="fragments/header :: navbar" />
 
-    <p>Lorem dasfasdd fdsa dsfas d sa</p>
-
-    <h2>another Heading</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="fragments/header :: sidebar" />
+            <div class="col-10">
+                My Dashboard Content
+            </div>
+        </div>
+    </div>
 </body>
 </html>
