@@ -11,6 +11,8 @@ public class Screening {
     private int price;
     private Theater theater;
 
+    public Screening(){}
+
     public Screening(Movie movie, LocalDateTime dateTime, int price, Theater theater) {
         this.movie = movie;
         this.dateTime = dateTime;

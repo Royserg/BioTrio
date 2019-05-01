@@ -6,6 +6,8 @@ public class Theater {
     private int rows;
     private int cols;
 
+    public Theater(){}
+
     public Theater(String name, int rows, int cols) {
         this.name = name;
         this.rows = rows;
