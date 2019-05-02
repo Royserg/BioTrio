@@ -8,18 +8,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Controller
-public class DashboardController {
+public class DashboardController<someMovie> {
 
     Movie someMovie = new Movie("avengers end game", 170);
     Theater someTheater = new Theater("blue", 14, 20);
     Screening someScreening = new Screening(someMovie, LocalDateTime.now(), 120,someTheater);
     Booking someBooking = new Booking(1,3, "22323232", someScreening);
-    ArrayList<Booking> bookingList = new ArrayList<Booking>();
 
+    ArrayList<Booking> bookingList = new ArrayList<Booking>();
+    ArrayList<Movie> movieArrayList = new ArrayList<Movie>();
+    ArrayList<Booking> bookingsArrayList = new ArrayList<Booking>();
 
     @GetMapping("/")
     public String dashboard() {
@@ -35,7 +38,7 @@ public class DashboardController {
     }
 
     @GetMapping("/movies")
-    public String movies() {
+    public String movies(Model m) {
         return "movies";
     }
 
@@ -45,13 +48,17 @@ public class DashboardController {
     }
 
     @GetMapping("/bookings/add")
-    public String addBookings() {
+    public String addBookings(Model m) {
+        movieArrayList.add(someMovie);
+        m.addAttribute("movies",movieArrayList);
+
         return "add-booking";
     }
 
     @GetMapping("/movies/add")
-    public String addMovie() {
-        return "add-movie";
+    public String addMovie(Model m) {
+
+        return "add-movies";
     }
 
     @GetMapping("/screening/add")
