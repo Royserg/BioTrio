@@ -1,5 +1,6 @@
 package com.biotrio.nocristina.tickets;
 
+import com.biotrio.nocristina.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +21,11 @@ public class TicketController {
         return "add-ticket";
     }
 
-    @PostMapping("/tickets/add")
-    public String saveTicket(@ModelAttribute Ticket newTicket){
-        ticketRepo.getTicketList().add(newTicket);
-        return "redirect:/tickets";
-    }
+//    @PostMapping("/tickets/add")
+//    public String saveTicket(@ModelAttribute Ticket newTicket){
+//        ticketRepo.getTickets().add(newTicket);
+//        return "redirect:/tickets";
+//    }
 
     @GetMapping("/tickets")
     public String showTicket(){

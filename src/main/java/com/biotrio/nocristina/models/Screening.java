@@ -11,7 +11,7 @@ public class Screening {
     private double price;
     private boolean is3D = false;
     private boolean isDolby = false;
-
+    private Movie movie;
 
 
     public Screening(){}
@@ -84,6 +84,14 @@ public class Screening {
 
     public void setDolby(boolean dolby) {
         isDolby = dolby;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
 

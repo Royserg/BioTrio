@@ -1,5 +1,6 @@
 package com.biotrio.nocristina.movies;
 
+import com.biotrio.nocristina.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
-        return movieRepo.getMovieList();
+        return movieRepo.getMovies();
     }
 
     @GetMapping("/movies")
@@ -36,7 +37,7 @@ public class MovieController {
 
     @PostMapping("/movies/add")
     public String saveMovie(@ModelAttribute Movie newMovie){
-        movieRepo.getMovieList().add(newMovie);
+        movieRepo.getMovies().add(newMovie);
         return "redirect:/add-movie";
     }
 

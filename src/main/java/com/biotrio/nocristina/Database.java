@@ -34,14 +34,14 @@ public class Database {
         screenings.add(new Screening(2, 1, 2, "19:30", 100));
         screenings.add(new Screening(3, 2, 3, "18:00", 100));
         // fill tickets
-        tickets.add(new Ticket(1, 1, 1, 5, 6));
-        tickets.add(new Ticket(2, 1, 1, 5, 7));
-        tickets.add(new Ticket(3, 1, 1, 5, 8));
-        tickets.add(new Ticket(4, 2, 2, 8, 1));
-        tickets.add(new Ticket(5, 2, 2, 8, 2));
+        tickets.add(new Ticket(1, 1, 5, 6));
+        tickets.add(new Ticket(2, 1, 5, 7));
+        tickets.add(new Ticket(3, 1, 5, 8));
+        tickets.add(new Ticket(4, 2, 8, 1));
+        tickets.add(new Ticket(5, 2, 8, 2));
         // fill bookings
-        bookings.add(new Booking(1, "50177722"));
-        bookings.add(new Booking(2, "90385266"));
+        bookings.add(new Booking(1, 1, "50177722"));
+        bookings.add(new Booking(2, 2, "90385266"));
 
     }
 

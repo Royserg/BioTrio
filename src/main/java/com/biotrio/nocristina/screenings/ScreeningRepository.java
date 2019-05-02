@@ -1,35 +1,27 @@
 package com.biotrio.nocristina.screenings;
-import com.biotrio.nocristina.movies.MovieRepository;
-import com.biotrio.nocristina.theaters.TheaterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.biotrio.nocristina.Database;
+import com.biotrio.nocristina.models.Screening;
 import org.springframework.stereotype.Repository;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ScreeningRepository {
 
-    @Autowired
-    private MovieRepository movieRepo;
-    @Autowired
-    private TheaterRepository theaterRepo;
+    private Database db = Database.getInstance();
 
-    Screening s1 = new Screening(movieRepo.getMovie1(), LocalDateTime.now(), 100, theaterRepo.getNewTheater());
-    Screening s2 = new Screening(movieRepo.getMovie1(), LocalDateTime.now(), 100, theaterRepo.getNewTheater());
-    Screening s3 = new Screening(movieRepo.getMovie2(), LocalDateTime.now(), 120, theaterRepo.getNewTheater());
 
-    ArrayList<Screening> screeningList = new ArrayList<>();
-
-    public Screening getNewScreening(){
-        return s1;
+    public List<Screening> getScreenings(){
+        return db.screenings;
     }
 
-    public ArrayList<Screening> getScreeningList(){
-        if(screeningList.size() < 1){
-            screeningList.add(s1);
-            screeningList.add(s2);
-            screeningList.add(s3);
+    public Screening getScreening(int screeningId) {
+
+        for (Screening screening : db.screenings) {
+            if (screening.getId() == screeningId) {
+                return screening;
+            }
         }
-        return screeningList;
+
+        return null;
     }
 }

@@ -4,16 +4,14 @@ public class Ticket {
 
     private int id;
     private int bookingId;
-    private int screeningId;
     private int row;
     private int column;
 
     public Ticket(){}
 
-    public Ticket(int id, int bookingId, int screeningId, int row, int column) {
+    public Ticket(int id, int bookingId, int row, int column) {
         this.id = id;
         this.bookingId = bookingId;
-        this.screeningId = screeningId;
         this.row = row;
         this.column = column;
     }
@@ -32,14 +30,6 @@ public class Ticket {
 
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
-    }
-
-    public int getScreeningId() {
-        return screeningId;
-    }
-
-    public void setScreeningId(int screeningId) {
-        this.screeningId = screeningId;
     }
 
     public int getRow() {

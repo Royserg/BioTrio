@@ -1,19 +1,32 @@
 package com.biotrio.nocristina.tickets;
 
+import com.biotrio.nocristina.Database;
+import com.biotrio.nocristina.models.Ticket;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TicketRepository {
 
-    private Ticket ticket1 = new Ticket(1, 5, 5);
-    private Ticket ticket2 = new Ticket(2, 5, 6);
-    private ArrayList<Ticket> ticketList = new ArrayList<>();
+    private Database db = Database.getInstance();
 
-    public ArrayList<Ticket> getTicketList(){
-        ticketList.add(ticket1);
-        ticketList.add(ticket2);
-        return ticketList;
+    /**
+     * Get tickets for a specific booking
+     * @param bookingId id of the booking for which to find tickets
+     * @return List of tickets for a praticular id
+     */
+    public List<Ticket> getTickets(int bookingId){
+        List<Ticket> tickets = new ArrayList<>();
+
+        /* Will be replaced by sql query to the database */
+        for (Ticket ticket : db.tickets) {
+            if (ticket.getBookingId() == bookingId) {
+                tickets.add(ticket);
+            }
+        }
+
+        return tickets;
     }
 }

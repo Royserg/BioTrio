@@ -1,32 +1,27 @@
 package com.biotrio.nocristina.movies;
 
+import com.biotrio.nocristina.Database;
+import com.biotrio.nocristina.models.Movie;
 import org.springframework.stereotype.Repository;
-import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class MovieRepository {
 
+    private Database db = Database.getInstance();
 
-    public Movie getMovie1(){
-        Movie m1 = new Movie(1, "Avengers: Endgame", 240);
-        return m1;
+    public List<Movie> getMovies(){
+
+        return db.movies;
     }
 
-    public Movie getMovie2() {
-        Movie m2 = new Movie(2, "Captain Marvel", 170);
-        return m2;
-    }
-
-    public ArrayList<Movie> getMovieList(){
-        ArrayList<Movie> movieList = new ArrayList<>();
-        Movie m2 = new Movie(2, "Captain Marvel", 170);
-        Movie m1 = new Movie(1, "Avengers: Endgame", 240);
-
-        if (movieList.size() < 1) {
-            movieList.add(m1);
-            movieList.add(m2);
+    public Movie getMovie(int movieId) {
+        for (Movie movie : db.movies) {
+            if (movie.getId() == movieId) {
+                return movie;
+            }
         }
 
-        return movieList;
+        return null;
     }
 }

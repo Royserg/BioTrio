@@ -1,5 +1,6 @@
 package com.biotrio.nocristina.theaters;
 
+import com.biotrio.nocristina.models.Theater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class TheaterController {
 
     @PostMapping("/theaters")
     public String saveTheater(@ModelAttribute Theater newTheater){
-        theaterRepo.getTheaterList().add(newTheater);
+        theaterRepo.getTheaters().add(newTheater);
         return "redirct:/theaters";
     }
 

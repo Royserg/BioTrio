@@ -1,4 +1,5 @@
 package com.biotrio.nocristina.screenings;
+import com.biotrio.nocristina.models.Screening;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ public class ScreeningController {
     @GetMapping("/api/screenings")
     @ResponseBody
     public List<Screening> showScreenings() {
-        return screeningRepo.getScreeningList();
+        return screeningRepo.getScreenings();
     }
 
     @GetMapping("/screening/add")
@@ -29,7 +30,7 @@ public class ScreeningController {
 
     @PostMapping("/screening/add")
     public String saveScreening(@ModelAttribute Screening newScreening){
-        screeningRepo.getScreeningList().add(newScreening);
+        screeningRepo.getScreenings().add(newScreening);
         return "redirect:/screening";
     }
 
