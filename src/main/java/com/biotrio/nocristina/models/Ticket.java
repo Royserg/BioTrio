@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.tickets;
+package com.biotrio.nocristina.models;
 
 public class Ticket {
 

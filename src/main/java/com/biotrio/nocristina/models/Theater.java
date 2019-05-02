@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.theaters;
+package com.biotrio.nocristina.models;
 
 public class Theater {
 

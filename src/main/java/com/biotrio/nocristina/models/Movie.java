@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.movies;
+package com.biotrio.nocristina.models;
 
 public class Movie {
 

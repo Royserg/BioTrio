@@ -1,9 +1,12 @@
-package com.biotrio.nocristina.bookings;
+package com.biotrio.nocristina.models;
+
+import java.util.List;
 
 public class Booking {
 
     private int id;
     private String phoneNumber;
+    private List<Ticket> tickets;
 
     public Booking(){}
 
@@ -26,5 +29,13 @@ public class Booking {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

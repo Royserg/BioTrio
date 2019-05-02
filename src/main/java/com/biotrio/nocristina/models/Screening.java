@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.screenings;
+package com.biotrio.nocristina.models;
 import java.time.LocalDateTime;
 
 public class Screening {
