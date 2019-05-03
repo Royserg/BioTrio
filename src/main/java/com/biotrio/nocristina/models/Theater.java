@@ -1,10 +1,12 @@
-package com.biotrio.nocristina.theaters;
+package com.biotrio.nocristina.models;
 
 public class Theater {
 
     private String name;
     private int rows;
     private int cols;
+
+    public Theater(){}
 
     public Theater(String name, int rows, int cols) {
         this.name = name;
