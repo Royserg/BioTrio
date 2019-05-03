@@ -12,7 +12,7 @@
                 <div class="col-10 mt-3">
 
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item list-group-item-secondary">
                             <div class="row">
                                 <div class="col-1">
                                     <span>id</span>
@@ -28,27 +28,53 @@
                                 </div>
                             </div>
                         </li>
-                        <li th:each="booking: ${bookings}" class="list-group-item">
-                            <div class="row">
-                                <div class="col-1">
-                                    <span th:text="${booking.id}">id</span>
+                            <!-- toggle wrapper -->
+                            <a th:each="booking: ${bookings}"
+                               class="list-group-item list-group-item-action"
+                               data-toggle="collapse"
+                               th:href="'#' + ${booking.id}"
+                               role="button"
+                               aria-expanded="false"
+                               th:aria-controls="${booking.id}"
+                            >
+                                <div class="row">
+                                    <div class="col-1">
+                                        <span th:text="${booking.id}">id</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span th:text="${booking.screening.movie.title}">movie</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span th:text="${booking.screening.start_time}">datetime</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <span th:text="${booking.phoneNumber}">phone</span>
+                                    </div>
                                 </div>
-                                <div class="col-3">
-                                    <span th:text="${booking.screening.movie.title}">movie</span>
+
+
+                                <!-- collapsing part of each booking -> list of tickets -->
+                                <div class="collapse mt-2" th:id="${booking.id}">
+                                    <h4 class="mt-2">tickets:</h4>
+                                    <ul class="list-group">
+                                        <li th:each="ticket : ${booking.tickets}" class="list-group-item">
+                                            <!-- some random info -->
+                                            <span th:text="'row: ' + ${ticket.row}"></span>
+                                            <span th:text="'column: ' + ${ticket.column}"></span>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="col-3">
-                                    <span th:text="${booking.screening.dateTime}">datetime</span>
-                                </div>
-                                <div class="col-3">
-                                    <span th:text="${booking.phoneNumber}">phone</span>
-                                </div>
-                            </div>
-                        </li>
+                            </a>
                     </ul>
 
                 </div>
             </div>
         </div>
 
+
+        <!-- Bootstrap scripts -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>
