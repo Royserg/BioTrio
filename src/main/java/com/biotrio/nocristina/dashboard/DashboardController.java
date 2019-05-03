@@ -15,58 +15,10 @@ import java.util.ArrayList;
 @Controller
 public class DashboardController<someMovie> {
 
-    Movie someMovie = new Movie("avengers end game", 170);
-    Theater someTheater = new Theater("blue", 14, 20);
-    Screening someScreening = new Screening(someMovie, LocalDateTime.now(), 120,someTheater);
-    Booking someBooking = new Booking(1,3, "22323232", someScreening);
-
-    ArrayList<Booking> bookingList = new ArrayList<Booking>();
-    ArrayList<Movie> movieArrayList = new ArrayList<Movie>();
-    ArrayList<Booking> bookingsArrayList = new ArrayList<Booking>();
 
     @GetMapping("/")
     public String dashboard() {
         return "index";
     }
-
-    @GetMapping("/bookings")
-    public String bookings(Model m) {
-        bookingList.add(someBooking);
-        m.addAttribute("bookings", bookingList);
-
-        return "bookings";
-    }
-
-    @GetMapping("/movies")
-    public String movies(Model m) {
-        return "movies";
-    }
-
-    @GetMapping("/cinemas")
-    public String cinemas() {
-        return "cinemas";
-    }
-
-    @GetMapping("/bookings/add")
-    public String addBookings(Model m) {
-        movieArrayList.add(someMovie);
-        m.addAttribute("movies",movieArrayList);
-
-        return "add-booking";
-    }
-
-    @GetMapping("/movies/add")
-    public String addMovie(Model m) {
-
-        return "add-movies";
-    }
-
-    @GetMapping("/screening/add")
-    public String addScreening() {
-        return "add-screening";
-    }
-
-    // add future mappings below
-    // maybe functionality to add more theaters??
 
 }
