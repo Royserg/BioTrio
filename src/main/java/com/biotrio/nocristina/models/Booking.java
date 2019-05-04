@@ -6,16 +6,16 @@ public class Booking {
 
     private int id;
     private int screeningId;
-    private String phoneNumber;
+    private String customerPhoneNumber;
     private List<Ticket> tickets;
     private Screening screening;
 
     public Booking(){}
 
-    public Booking(int id, int screeningId, String phoneNumber) {
+    public Booking(int id, int screeningId, String customerPhoneNumber) {
         this.id = id;
         this.screeningId = screeningId;
-        this.phoneNumber = phoneNumber;
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
     public int getId() {
@@ -26,12 +26,12 @@ public class Booking {
         this.id = id;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
     public List<Ticket> getTickets() {

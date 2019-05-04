@@ -1,26 +1,26 @@
 package com.biotrio.nocristina.bookings;
 import com.biotrio.nocristina.Database;
 import com.biotrio.nocristina.models.Booking;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public class BookingRepository {
 
-    private Database db = Database.getInstance();
+    @Autowired
+    private JdbcTemplate jdbc;
 
-    public List<Booking> getBookings() {
-        return db.bookings;
+
+    public List<Booking> findAll() {
+        String sql = "SELECT * FROM bookings";
+        List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+
+        return bookings;
     }
 
-//    public Booking findBooking(int id) {
-//        for (Booking booking : bookingList) {
-//            if (booking.getId() == id) {
-//                return booking;
-//            }
-//        }
-//        return null;
-//    }
 
 //    public void editBooking (int id, Booking edit){
 //        Booking previousBooking = findBooking(id);

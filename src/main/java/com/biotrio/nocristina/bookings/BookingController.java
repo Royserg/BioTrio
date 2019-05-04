@@ -16,13 +16,14 @@ public class BookingController {
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> bookings() {
-        return bookingService.getBookings();
+//        return bookingService.getBookings();
+        return bookingService.getAllBookings();
     }
 
     @GetMapping("/bookings")
     public String showBookings(Model m){
 
-        m.addAttribute("bookings", bookingService.getBookings());
+        m.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
 

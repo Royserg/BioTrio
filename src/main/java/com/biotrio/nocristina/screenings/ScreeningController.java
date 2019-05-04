@@ -18,7 +18,7 @@ public class ScreeningController {
     @GetMapping("/api/screenings")
     @ResponseBody
     public List<Screening> showScreenings() {
-        return screeningRepo.getScreenings();
+        return screeningRepo.findAll();
     }
 
     @GetMapping("/screening/add")
@@ -30,7 +30,7 @@ public class ScreeningController {
 
     @PostMapping("/screening/add")
     public String saveScreening(@ModelAttribute Screening newScreening){
-        screeningRepo.getScreenings().add(newScreening);
+        screeningRepo.findAll().add(newScreening);
         return "redirect:/screening";
     }
 
