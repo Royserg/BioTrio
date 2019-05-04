@@ -26,18 +26,17 @@ public class BookingService {
     private MovieRepository movieRepo;
 
 
-    public List<Booking> getBookings() {
-
-        List<Booking> bookings = bookingRepo.getBookings();
+    public List<Booking> getAllBookings() {
+        List<Booking> bookings = bookingRepo.findAll();
 
         for (Booking booking : bookings) {
-            // get tickets for that booking
-            booking.setTickets(ticketRepo.getTickets(booking.getId()));
-            // get info about screening
-            Screening screening = screeningRepo.getScreening(booking.getScreeningId());
-            // get movie for screening
-            screening.setMovie(movieRepo.getMovie(screening.getMovieId()));
-
+            // Fetch tickets for that booking
+            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
+            // get screening and keep reference for adding movie info inside
+            Screening screening = screeningRepo.findById(booking.getScreeningId());
+            // set movie for screening object
+            screening.setMovie(movieRepo.findById(screening.getMovieId()));
+            // attach screening to booking
             booking.setScreening(screening);
         }
 

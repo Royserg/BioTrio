@@ -20,7 +20,7 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
-        return movieRepo.getMovies();
+        return movieRepo.FindAll();
     }
 
     @GetMapping("/movies")
@@ -37,7 +37,7 @@ public class MovieController {
 
     @PostMapping("/movies/add")
     public String saveMovie(@ModelAttribute Movie newMovie){
-        movieRepo.getMovies().add(newMovie);
+//        movieRepo.getMovies().add(newMovie);
         return "redirect:/add-movie";
     }
 

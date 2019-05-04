@@ -4,14 +4,14 @@ public class Theater {
 
     private String name;
     private int rows;
-    private int cols;
+    private int columns;
 
     public Theater(){}
 
-    public Theater(String name, int rows, int cols) {
+    public Theater(String name, int rows, int columns) {
         this.name = name;
         this.rows = rows;
-        this.cols = cols;
+        this.columns = columns;
     }
 
     public String getName() {
@@ -30,11 +30,12 @@ public class Theater {
         this.rows = rows;
     }
 
-    public int getCols() {
-        return cols;
+
+    public int getColumns() {
+        return columns;
     }
 
-    public void setCols(int cols) {
-        this.cols = cols;
+    public void setColumns(int columns) {
+        this.columns = columns;
     }
 }
