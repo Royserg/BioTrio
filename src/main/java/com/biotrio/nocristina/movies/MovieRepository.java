@@ -1,6 +1,5 @@
 package com.biotrio.nocristina.movies;
 
-import com.biotrio.nocristina.Database;
 import com.biotrio.nocristina.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
