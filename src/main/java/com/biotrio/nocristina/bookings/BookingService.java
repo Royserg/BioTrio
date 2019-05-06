@@ -3,6 +3,7 @@ package com.biotrio.nocristina.bookings;
 import com.biotrio.nocristina.models.Booking;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.movies.MovieRepository;
+import com.biotrio.nocristina.bookings.BookingRepository;
 import com.biotrio.nocristina.screenings.ScreeningRepository;
 import com.biotrio.nocristina.tickets.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;

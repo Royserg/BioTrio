@@ -35,10 +35,11 @@ public class MovieController {
         return "add-movie";
     }
 
-    @PostMapping("/movies/add")
+    @PostMapping("/movies/save")
     public String saveMovie(@ModelAttribute Movie newMovie){
+        movieRepo.addMovie(newMovie);
 //        movieRepo.getMovies().add(newMovie);
-        return "redirect:/add-movie";
+        return "redirect:/movies/add";
     }
 
 }
