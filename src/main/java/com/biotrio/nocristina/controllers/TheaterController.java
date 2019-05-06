@@ -5,10 +5,7 @@ import com.biotrio.nocristina.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,15 +26,18 @@ public class TheaterController {
 
     @GetMapping("/theaters")
     public String addTheater(Model model) {
-        Theater newTheater = new Theater();
-        model.addAttribute("newTheater", newTheater);
+        // TODO: implement Cinema Repo, model and controller => below dummy list of integers
+        model.addAttribute("dummyCinema", 1);
+        model.addAttribute("theaterForm", new Theater());
+        // pass list of theaters
+        model.addAttribute("theaterList", theaterRepo.findAll());
         return "theaters";
     }
 
     @PostMapping("/theaters")
     public String saveTheater(@ModelAttribute Theater newTheater){
-        theaterRepo.findAll().add(newTheater);
-        return "redirct:/theaters";
+        theaterRepo.saveTheater(newTheater);
+        return "redirect:/theaters";
     }
 
 }
