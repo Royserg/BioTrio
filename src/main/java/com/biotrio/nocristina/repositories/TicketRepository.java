@@ -4,8 +4,12 @@ import com.biotrio.nocristina.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -26,5 +30,22 @@ public class TicketRepository {
         List<Ticket> tickets = jdbc.query(sql, new BeanPropertyRowMapper<>(Ticket.class));
 
         return tickets;
+    }
+
+
+
+    public Ticket saveTicket(Ticket ticket){
+        System.out.println(ticket.getColumnNo());
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement("insert into tickets values (null, ?,?,?)");
+            ps.setInt(1,ticket.getBookingId());
+            ps.setInt(2,ticket.getRowNo());
+            ps.setInt(3,ticket.getColumnNo());
+            return ps;
+        };
+        jdbc.update(psc);
+        System.out.println("ddddd");
+        return ticket;
+
     }
 }
