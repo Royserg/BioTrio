@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.screenings;
+package com.biotrio.nocristina.repositories;
 import com.biotrio.nocristina.models.Screening;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

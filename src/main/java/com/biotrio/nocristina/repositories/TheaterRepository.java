@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.theaters;
+package com.biotrio.nocristina.repositories;
 
 import com.biotrio.nocristina.models.Theater;
 import org.springframework.beans.factory.annotation.Autowired;

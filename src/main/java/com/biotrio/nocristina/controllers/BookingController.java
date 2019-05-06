@@ -1,4 +1,5 @@
-package com.biotrio.nocristina.bookings;
+package com.biotrio.nocristina.controllers;
+import com.biotrio.nocristina.services.BookingService;
 import com.biotrio.nocristina.models.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
