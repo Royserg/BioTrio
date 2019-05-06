@@ -24,23 +24,19 @@ public class MovieController {
         return movieRepo.FindAll();
     }
 
-    @GetMapping("/movies")
-    public String movies() {
-        return "movies";
-    }
 
-    @GetMapping("/movies/add")
+    @GetMapping("/movies")
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
-        return "add-movie";
+        model.addAttribute("movieList", movieRepo.FindAll());
+        return "movies";
     }
 
-    @PostMapping("/movies/save")
+    @PostMapping("/movies")
     public String saveMovie(@ModelAttribute Movie newMovie){
         movieRepo.addMovie(newMovie);
-//        movieRepo.getMovies().add(newMovie);
-        return "redirect:/movies/add";
+        return "redirect:/movies";
     }
 
 }
