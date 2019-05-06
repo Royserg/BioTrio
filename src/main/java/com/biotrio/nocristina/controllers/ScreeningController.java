@@ -20,14 +20,15 @@ public class ScreeningController {
         return screeningRepo.findAll();
     }
 
-    @GetMapping("/screening/add")
-    public String addScreening(Model model) {
-        Screening newScreening = new Screening();
-        model.addAttribute("newScreening", newScreening);
-        return "add-screening";
-    }
+//    html page not implemented yet, might not be needed (might be implemented with movies list)
+//    @GetMapping("/screening/add")
+//    public String addScreening(Model model) {
+//        Screening newScreening = new Screening();
+//        model.addAttribute("newScreening", newScreening);
+//        return "add-screening";
+//    }
 
-    @PostMapping("/screening/save")
+    @PostMapping("/screenings")
     public String saveScreening(@RequestBody Screening newScreening){
         screeningRepo.addScreening(newScreening);
         return "redirect:/screening";
