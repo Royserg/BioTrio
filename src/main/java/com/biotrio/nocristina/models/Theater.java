@@ -4,42 +4,19 @@ public class Theater {
 
     private int cinemaId;
     private String name;
-    private int rows_number;
-    private int columns_number;
-    private boolean can3D;
+    private int rowsNumber;
+    private int columnsNumber;
+    private boolean can3d;
 
 
     public Theater(){}
 
-    public Theater(String name, int rows_number, int columns_number) {
+    public Theater(int cinemaId,String name, int rowsNumber, int columnsNumber, boolean can3d) {
+        this.cinemaId=cinemaId;
         this.name = name;
-        this.rows_number = rows_number;
-        this.columns_number = columns_number;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getRows_number() {
-        return rows_number;
-    }
-
-    public void setRows_number(int rows_number) {
-        this.rows_number = rows_number;
-    }
-
-
-    public int getColumns_number() {
-        return columns_number;
-    }
-
-    public void setColumns_number(int columns_number) {
-        this.columns_number = columns_number;
+        this.rowsNumber = rowsNumber;
+        this.columnsNumber = columnsNumber;
+        this.can3d=can3d;
     }
 
     public int getCinemaId() {
@@ -50,12 +27,36 @@ public class Theater {
         this.cinemaId = cinemaId;
     }
 
-    public boolean isCan3D() {
-        return can3D;
+    public String getName() {
+        return name;
     }
 
-    public void setCan3D(boolean can3D) {
-        this.can3D = can3D;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRowsNumber() {
+        return rowsNumber;
+    }
+
+    public void setRowsNumber(int rowsNumber) {
+        this.rowsNumber = rowsNumber;
+    }
+
+    public int getColumnsNumber() {
+        return columnsNumber;
+    }
+
+    public void setColumnsNumber(int columnsNumber) {
+        this.columnsNumber = columnsNumber;
+    }
+
+    public boolean isCan3d() {
+        return can3d;
+    }
+
+    public void setCan3d(boolean can3d) {
+        this.can3d = can3d;
     }
 
     @Override
@@ -63,9 +64,9 @@ public class Theater {
         return "Theater{" +
                 "cinemaId=" + cinemaId +
                 ", name='" + name + '\'' +
-                ", rows_number=" + rows_number +
-                ", columns_number=" + columns_number +
-                ", can3D=" + can3D +
+                ", rowsNumber=" + rowsNumber +
+                ", columnsNumber=" + columnsNumber +
+                ", can3d=" + can3d +
                 '}';
     }
 }
