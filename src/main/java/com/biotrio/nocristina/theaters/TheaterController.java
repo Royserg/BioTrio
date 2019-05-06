@@ -4,10 +4,7 @@ import com.biotrio.nocristina.models.Theater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,9 +31,10 @@ public class TheaterController {
     }
 
     @PostMapping("/theaters")
-    public String saveTheater(@ModelAttribute Theater newTheater){
-        theaterRepo.findAll().add(newTheater);
-        return "redirct:/theaters";
+    public String saveTheater(@RequestBody Theater newTheater){
+        theaterRepo.newTheater(newTheater);
+        return "redirect:/api/theaters";
     }
+
 
 }

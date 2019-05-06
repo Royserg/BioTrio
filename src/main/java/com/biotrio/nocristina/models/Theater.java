@@ -2,16 +2,36 @@ package com.biotrio.nocristina.models;
 
 public class Theater {
 
+    private int cinema_id;
     private String name;
     private int rows_number;
     private int columns_number;
+    private boolean can3d;
 
     public Theater(){}
 
-    public Theater(String name, int rows_number, int columns_number) {
+    public Theater(int cinema_id,String name, int rows_number, int columns_number, boolean can3d) {
+        this.cinema_id=cinema_id;
         this.name = name;
         this.rows_number = rows_number;
         this.columns_number = columns_number;
+        this.can3d=can3d;
+    }
+
+    public int getCinema_id() {
+        return cinema_id;
+    }
+
+    public void setCinema_id(int cinema_id) {
+        this.cinema_id = cinema_id;
+    }
+
+    public boolean isCan3d() {
+        return can3d;
+    }
+
+    public void setCan3d(boolean can3d) {
+        this.can3d = can3d;
     }
 
     public String getName() {
