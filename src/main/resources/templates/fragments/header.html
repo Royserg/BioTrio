@@ -15,6 +15,9 @@
 
     </head>
     <body>
+
+        <h4 th:fragment="heading" th:text="${text}" class="page-heading"></h4>
+
         <!-- Navbar -->
         <nav th:fragment="navbar" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">BioTrio</a>
@@ -25,31 +28,46 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column mt-2">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/">
+                        <a
+                            th:classappend="${#request.requestURI == '/' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/"
+                        >
                             <span class="fas fa-home">&nbsp;</span>Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bookings">
-                            <span class="fas fa-dot-circle">&nbsp;</span>
+                        <a
+                            th:classappend="${#request.requestURI == '/bookings' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/bookings"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
                             Bookings
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/movies">
-                            <span class="fas fa-dot-circle">&nbsp;</span>
+                        <a
+                            th:classappend="${#request.requestURI == '/movies' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/movies"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
                             Movies
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/theaters">
-                            <span class="fas fa-dot-circle">&nbsp;</span>
+                        <a
+                            th:classappend="${#request.requestURI == '/theaters' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/theaters"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
                             Theaters
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="fas fa-dot-circle">&nbsp;</span>
+                        <a
+                            th:classappend="${#request.requestURI == '/cinemas' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="#"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
                             Cinemas
                         </a>
                     </li>
