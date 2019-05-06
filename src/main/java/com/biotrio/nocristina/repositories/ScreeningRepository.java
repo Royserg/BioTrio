@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -25,5 +28,24 @@ public class ScreeningRepository {
         Screening screening = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Screening.class));
 
         return screening;
+    }
+
+    public void addScreening(Screening newScreening){
+        String sql = "INSERT INTO screenings(movie_id, theater_id, start_time, price, is3D, isDolby) VALUES(?,?,?,?,?,?);";
+        jdbc.update((Connection connection)->{
+
+                    PreparedStatement ps = connection.prepareStatement(sql);
+
+                        ps.setInt(1, newScreening.getMovieId());
+                        ps.setInt(2, newScreening.getTheaterId());
+                        ps.setString(3, newScreening.getStartTime());
+                        ps.setBigDecimal(4, newScreening.getPrice());
+                        ps.setBoolean(5, false);
+                        ps.setBoolean(6, false);
+                    //ps.executeUpdate();
+
+                    return ps;
+                }
+        );
     }
 }
