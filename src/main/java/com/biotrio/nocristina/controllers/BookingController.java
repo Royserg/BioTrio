@@ -29,12 +29,12 @@ public class BookingController {
     }
 
     // Show form to add bookings
-//    @GetMapping("/bookings/add")
-//    public String addBookings(Model model) {
-//        Booking newBooking = new Booking();
-//        model.addAttribute(newBooking);
-//        return "add-booking";
-//    }
+    @GetMapping("/bookings/add")
+    public String addBookings(Model model) {
+        Booking newBooking = new Booking();
+        model.addAttribute("bookingForm", newBooking);
+        return "add-booking";
+    }
 //
 //    // Post method for form handling
 //    @PostMapping("/bookings/add")
