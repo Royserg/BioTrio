@@ -1,5 +1,6 @@
-package com.biotrio.nocristina.screenings;
+package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.Screening;
+import com.biotrio.nocristina.repositories.ScreeningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.biotrio.nocristina.tickets;
+package com.biotrio.nocristina.repositories;
 
 import com.biotrio.nocristina.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;

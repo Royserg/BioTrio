@@ -1,10 +1,11 @@
-package com.biotrio.nocristina.bookings;
+package com.biotrio.nocristina.services;
 
 import com.biotrio.nocristina.models.Booking;
 import com.biotrio.nocristina.models.Screening;
-import com.biotrio.nocristina.movies.MovieRepository;
-import com.biotrio.nocristina.screenings.ScreeningRepository;
-import com.biotrio.nocristina.tickets.TicketRepository;
+import com.biotrio.nocristina.repositories.MovieRepository;
+import com.biotrio.nocristina.repositories.BookingRepository;
+import com.biotrio.nocristina.repositories.ScreeningRepository;
+import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
