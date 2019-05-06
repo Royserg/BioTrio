@@ -28,15 +28,20 @@ public class TheaterController {
 
     @GetMapping("/theaters")
     public String addTheater(Model model) {
-        Theater newTheater = new Theater();
-        model.addAttribute("newTheater", newTheater);
+        // TODO: implement Cinema Repo, model and controller => below dummy list of integers
+        model.addAttribute("dummyCinema", 1);
+        model.addAttribute("theaterForm", new Theater());
+        // pass list of theaters
+        model.addAttribute("theaterList", theaterRepo.findAll());
         return "theaters";
     }
 
     @PostMapping("/theaters")
     public String saveTheater(@ModelAttribute Theater newTheater){
-        theaterRepo.findAll().add(newTheater);
-        return "redirct:/theaters";
+
+        System.out.println(newTheater);
+
+        return "redirect:/theaters";
     }
 
 }
