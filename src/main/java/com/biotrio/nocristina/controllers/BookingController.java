@@ -1,4 +1,5 @@
 package com.biotrio.nocristina.controllers;
+import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.services.BookingService;
 import com.biotrio.nocristina.models.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,15 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
+    @GetMapping("/api/screenings/{movieId}")
+    @ResponseBody
+    public List<Screening> screenings(@PathVariable int movieId) {
+        return bookingService.getByMovieId(movieId);
+    }
+
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> bookings() {
-//        return bookingService.getBookings();
         return bookingService.getAllBookings();
     }
 
@@ -33,6 +39,12 @@ public class BookingController {
     public String addBookings(Model model) {
         Booking newBooking = new Booking();
         model.addAttribute("bookingForm", newBooking);
+
+        // Pass all movies to frontend
+        model.addAttribute("movieList", bookingService.getAllMovies());
+        // Testing: Pass all screenings
+        model.addAttribute("screeningList", bookingService.getAllScreenings());
+
         return "add-booking";
     }
 //

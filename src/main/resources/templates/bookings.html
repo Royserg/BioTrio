@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
-<head th:replace="fragments/header :: head(title='Bookings')" />
+<head th:replace="fragments/fragments :: head(title='Bookings')" />
 
 <body>
-    <nav th:replace="fragments/header :: navbar" />
+    <nav th:replace="fragments/fragments :: navbar" />
 
     <div class="container-fluid">
         <div class="row">
-            <nav th:replace="fragments/header :: sidebar" />
+            <nav th:replace="fragments/fragments :: sidebar" />
             <div class="col-10 mt-3">
-                <h4 th:replace="fragments/header :: heading(text='Bookings')" />
+                <h4 th:replace="fragments/fragments :: heading(text='Bookings')" />
 
                 <div class="search-container mb-4">
                     <div class="row">

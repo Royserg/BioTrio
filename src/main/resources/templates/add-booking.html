@@ -1,35 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
-    <head th:replace="fragments/header :: head(title='Add Booking')" />
+    <head th:replace="fragments/fragments :: head(title='Add Booking')" />
+
+    <style>
+        .list-group-item-action:active, .list-group-item-action:focus {
+            background: #343A40;
+            color: white;
+        }
+
+        .calendar-container {
+            width: 100%;
+            border: 1px solid grey;
+        }
+
+    </style>
 
     <body>
-        <nav th:replace="fragments/header :: navbar" />
+        <nav th:replace="fragments/fragments :: navbar" />
 
         <div class="container-fluid">
             <div class="row">
-                <nav th:replace="fragments/header :: sidebar" />
+                <nav th:replace="fragments/fragments :: sidebar" />
+
                 <div class="col-10 mt-3">
-                    <h4 th:replace="fragments/header :: heading(text='Add Booking')" />
+                    <h4 th:replace="fragments/fragments :: heading(text='Add Booking')" />
 
                     <!-- List of movies and Calendar with Showings underneath -->
                     <div class="row container mt-4">
                         <div class="col-md-4">
-                            Movies List
+                            <div class="list-group" id="movieList">
+                                <!-- TODO: data-attribute put id to each movie -->
+                                <!-- Adding data attribute to each element (id of the movie) -->
+                               <a
+                                  href="#"
+                                  class="list-group-item list-group-item-action"
+                                  th:each="movie : ${movieList}"
+                                  th:text="${movie.title}"
+                                  th:attr="data-id=${movie.id}"
+                               ></a>
+                            </div>
                         </div>
                         <div class="col-md-8">
-                            Calendar and showings
+                            Calendar
+                            <div class="calendar-container">
+                                <div class="list-group" id="screeningList">
+                                    <!--<a-->
+                                        <!--href="#"-->
+                                        <!--class="list-group-item list-group-item-action"-->
+                                        <!--th:each="screening : ${screeningList}"-->
+                                        <!--th:text="${screening.startTime}"-->
+                                    <!--&gt;</a>-->
+                                </div>
+                            </div>
+                            <div>
+                                Screening Time
+                                TODO: separate time from the date
+                            </div>
+
                         </div>
                     </div>
 
                     <hr>
 
                     <!-- Seats to select -->
-
                     seats
 
                 </div>
             </div>
         </div>
+
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        <script th:src="@{/js/addBooking.js}"></script>
     </body>
 </html>
