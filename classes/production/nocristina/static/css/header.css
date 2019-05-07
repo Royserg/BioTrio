@@ -1,0 +1,29 @@
+.navbar {
+    height: 50px;
+}
+
+.nav-link {
+    color: #232323;
+    border-bottom: 1px solid transparent;
+    transition: .4s border ease-in;
+}
+
+.nav-link__active {
+    background: #D7D8D9;
+    border-bottom: 1px solid #343434;
+}
+
+.nav-link:hover {
+    color: #343434;
+    border-bottom: 1px solid #343434;
+}
+
+
+.sidebar-sticky {
+    height: calc(100vh - 50px);
+}
+
+.page-heading {
+    display: inline;
+    border-bottom: 1px solid #343434;
+}
