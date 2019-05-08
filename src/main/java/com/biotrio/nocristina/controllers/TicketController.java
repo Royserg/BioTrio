@@ -5,10 +5,7 @@ import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,5 +38,12 @@ public class TicketController {
     @GetMapping("/tickets")
     public String showTicket(){
         return "ticket";
+    }
+
+    @GetMapping("/api/tickets/reservedSeats/{id}")
+    @ResponseBody
+    public List<Ticket> showReservedSeats(@PathVariable int id){
+
+        return ticketRepo.findTicketsForScreening(id);
     }
 }
