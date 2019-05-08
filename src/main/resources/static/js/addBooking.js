@@ -7,7 +7,12 @@ $(function() {
   const timeList = $('#screeningTimes');
   const screeningList = $('#screeningList');
   const seatsContainer = $('#seats');
+  const phoneNum = $('#phoneNum');
+  const bookButton = $('#bookButton');
+  let screeningId;
+  let seatsArrangement;
 
+  let selectedSeats = [];
   let screeningsData = [];
 
   // onClick event for each movie in the list
@@ -21,7 +26,7 @@ $(function() {
 
     $.ajax(`/api/screenings/${movieId}`,   // request url
       {
-        success: function (data, status, xhr) {// success callback function
+        success: function (data) {// success callback function
           // save Screening data for the movie in the array
           screeningsData = data;
           // filtrate the data array and remove duplicates
@@ -56,12 +61,11 @@ $(function() {
 
   // OnClick event for a screening Time
   timeList.on('click', 'a', function() {
-    const screeningId = $(this).data('screening-id');
+    screeningId = $(this).data('screening-id');
     const theaterId = $(this).data('theater-id');
 
     let theaterData;
     let ticketData;
-    let seatsArrangement;
 
     // clear seats container
     seatsContainer.html('');
@@ -74,7 +78,7 @@ $(function() {
         }
       }),
       $.ajax(`/api/tickets/reservedSeats/${screeningId}`, {
-          success: function(data, status, xhr){
+          success: function(data){
             ticketData = data;
           }
       })
@@ -105,7 +109,7 @@ $(function() {
 
         $.each(row, function(columnIndex, column) {
           $(`#row-${rowIndex}`)
-            .append(`<span style="font-size: 1.4em" class="${column ? 'far fa-square' : 'fas fa-square'} mx-2 my-2 ${column ? '' : 'text-danger'}"></span>`)
+            .append(`<span data-row="${rowIndex}" data-column="${columnIndex}" style="font-size: 1.4em" class="seat ${column ? 'far fa-square' : 'fas fa-square'} mx-2 my-2 ${column ? '' : 'text-danger'}"></span>`)
         })
       })
 
@@ -115,6 +119,58 @@ $(function() {
   })
 
 
+  // Select and unselect seats.
+  seatsContainer.on('click', 'span', function(){
+
+      let row = this.getAttribute('data-row');
+      let column = this.getAttribute('data-column');
+
+
+        if (!this.classList.contains('selectedSeat')){
+
+          if(selectedSeats.length < 4) {
+
+              $(this).addClass("text-success fas fa-square selectedSeat");
+
+              selectedSeats.push({'row': row, 'column': column});
+              seatsArrangement[row][column] = false;
+
+          } else {
+
+              alert("You can't select more than 4 seats!");
+
+          }
+
+        } else {
+
+            $(this).removeClass("text-success fas fa-square selectedSeat");
+            $(this).addClass("far fa-square");
+
+            let index = selectedSeats.findIndex(x => (x.row === row) && (x.column === column));
+
+            selectedSeats.splice(index, 1);
+
+        }
+
+      console.log(selectedSeats);
+
+    })
+
+    bookButton.on('click', () => {
+
+      booking = {
+        "screeningId": screeningId,
+        "phoneNumber": phoneNum.val(),
+          "tickets": selectedSeats
+      }
+
+      //$.post()
+        //TODO
+
+    })
+
+
+    //TODO: count selected seats, calculate the ticket price -> controller or... sth
 
 })
 

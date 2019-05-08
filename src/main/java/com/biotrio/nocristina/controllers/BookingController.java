@@ -48,10 +48,17 @@ public class BookingController {
         return "add-booking";
     }
 //
+
+    @PostMapping("/api/bookings/add")
+    public String saveBooking(@RequestBody Booking booking) {
+        System.out.println(booking.getCustomerPhoneNumber());
+        return "index";
+    }
+
 //    // Post method for form handling
 //    @PostMapping("/bookings/add")
 //    public String saveBooking(@ModelAttribute Booking booking) {
-//        bookingRepo.getBookingList().add(booking);
+//        bookingService.getBookingList().add(booking);
 //        return "redirect:/add";
 //    }
 //

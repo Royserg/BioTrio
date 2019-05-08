@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
@@ -20,6 +22,20 @@ public class BookingRepository {
         List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
 
         return bookings;
+    }
+
+    public void addBooking(Booking newBooking){
+        String sql = "INSERT INTO bookings(customer_phone_number, screening_id) VALUES(?,?);";
+        jdbc.update((Connection connection)->{
+
+                    PreparedStatement ps = connection.prepareStatement(sql);
+
+                    ps.setString(1, newBooking.getCustomerPhoneNumber());
+                    ps.setInt(2, newBooking.getScreeningId());
+
+                    return ps;
+                }
+        );
     }
 
 
