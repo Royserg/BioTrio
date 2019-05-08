@@ -23,11 +23,23 @@ public class ScreeningRepository {
         return screenings;
     }
 
+//    TODO: convert to prepared statement
     public Screening findById(int screeningId) {
         String sql = "SELECT * FROM screenings WHERE id = " + screeningId;
         Screening screening = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Screening.class));
 
         return screening;
+    }
+
+//    TODO: convert to prepared statement
+    public List<Screening> findByMovieId(int movieId) {
+        String sql = "SELECT * FROM screenings WHERE movie_id = " + movieId;
+
+        List<Screening> screeningList = jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+
+
+
+        return screeningList;
     }
 
     public void addScreening(Screening newScreening){
@@ -38,11 +50,11 @@ public class ScreeningRepository {
 
                         ps.setInt(1, newScreening.getMovieId());
                         ps.setInt(2, newScreening.getTheaterId());
-                        ps.setString(3, newScreening.getStartTime());
+                        ps.setObject(3, newScreening.getStartTime());
+    //    Conversion  LocalDateTime to Object and back - https://stackoverflow.com/a/43039615/8421735
                         ps.setBigDecimal(4, newScreening.getPrice());
                         ps.setBoolean(5, false);
                         ps.setBoolean(6, false);
-                    //ps.executeUpdate();
 
                     return ps;
                 }

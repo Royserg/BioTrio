@@ -44,8 +44,16 @@ public class TicketRepository {
             return ps;
         };
         jdbc.update(psc);
-        System.out.println("ddddd");
         return ticket;
 
+    }
+
+    public List<Ticket> findTicketsForScreening(int screeningId) {
+
+        String sql = "SELECT * FROM tickets JOIN bookings ON tickets.booking_id = bookings.id " +
+                     "WHERE bookings.screening_id =" + screeningId;
+        List<Ticket> reservedSeats = jdbc.query(sql, new BeanPropertyRowMapper<>(Ticket.class));
+
+        return reservedSeats;
     }
 }

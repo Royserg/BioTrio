@@ -1,6 +1,7 @@
 package com.biotrio.nocristina.services;
 
 import com.biotrio.nocristina.models.Booking;
+import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.MovieRepository;
 import com.biotrio.nocristina.repositories.BookingRepository;
@@ -42,6 +43,31 @@ public class BookingService {
         }
 
         return bookings;
+    }
+
+    public List<Movie> getAllMovies() {
+        return movieRepo.FindAll();
+    }
+
+    // testing: , get all of them
+    public List<Screening> getAllScreenings() {
+        return screeningRepo.findAll();
+    }
+
+    // TODO: getScreeningByMovieID -> screening for selected movie from the list
+
+    // get screenings for particular movie
+    public List<Screening> getByMovieId(int movieId) {
+
+        List<Screening> screeningList = screeningRepo.findByMovieId(movieId);
+
+        // separate LocalDateTime into LocalDate and LocalTime
+        for (Screening screening : screeningList) {
+            screening.setDate(screening.getStartTime().toLocalDate());
+            screening.setTime(screening.getStartTime().toLocalTime());
+        }
+
+        return screeningList;
     }
 
 }

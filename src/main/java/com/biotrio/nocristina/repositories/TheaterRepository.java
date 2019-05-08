@@ -25,6 +25,11 @@ public class TheaterRepository {
         return theaters;
     }
 
+    public Theater findOne(int id) {
+        String sql = "SELECT * FROM theaters WHERE id=" + id;
+        return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
+    }
+
     public Theater saveTheater(Theater theater) {
         PreparedStatementCreator psc = new PreparedStatementCreator() {
             @Override

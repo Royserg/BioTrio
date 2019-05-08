@@ -40,4 +40,9 @@ public class TheaterController {
         return "redirect:/theaters";
     }
 
+    @GetMapping("/api/theaters/{id}")
+    @ResponseBody
+    public Theater oneTheater(@PathVariable int id) {
+        return theaterRepo.findOne(id);
+    }
 }
