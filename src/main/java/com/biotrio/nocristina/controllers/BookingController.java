@@ -49,10 +49,8 @@ public class BookingController {
 //
 
     @PostMapping("/api/bookings/add")
-    public String saveBooking(@RequestBody Booking booking) {
-
-        System.out.println(booking);
-
+    public String saveBooking(@RequestBody Booking newBooking) {
+        bookingService.addBooking(newBooking);
         return "index";
     }
 

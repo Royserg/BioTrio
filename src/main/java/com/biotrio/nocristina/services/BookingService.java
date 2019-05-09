@@ -3,11 +3,14 @@ package com.biotrio.nocristina.services;
 import com.biotrio.nocristina.models.Booking;
 import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
+import com.biotrio.nocristina.models.Ticket;
 import com.biotrio.nocristina.repositories.MovieRepository;
 import com.biotrio.nocristina.repositories.BookingRepository;
 import com.biotrio.nocristina.repositories.ScreeningRepository;
 import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,6 +71,20 @@ public class BookingService {
         }
 
         return screeningList;
+    }
+
+    //add booking in database and then get booking ID to add tickets in database
+    public void addBooking(Booking newBooking){
+
+        int bookingID = bookingRepo.addBooking(newBooking);
+
+        for (Ticket ticket : newBooking.getTickets()) {
+            
+            ticket.setBookingId(bookingID);
+            ticketRepo.saveTicket(ticket);
+
+        }
+
     }
 
 }

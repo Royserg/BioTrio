@@ -3,6 +3,8 @@ import com.biotrio.nocristina.models.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -24,18 +26,23 @@ public class BookingRepository {
         return bookings;
     }
 
-    public void addBooking(Booking newBooking){
-        String sql = "INSERT INTO bookings(customer_phone_number, screening_id) VALUES(?,?);";
+    public int addBooking(Booking newBooking){
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        String sql = "INSERT INTO bookings VALUES(null, ?, ?);";
         jdbc.update((Connection connection)->{
 
-                    PreparedStatement ps = connection.prepareStatement(sql);
+                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                     ps.setString(1, newBooking.getCustomerPhoneNumber());
                     ps.setInt(2, newBooking.getScreeningId());
 
                     return ps;
-                }
+                }, keyHolder
         );
+
+        return keyHolder.getKey().intValue();
     }
 
 

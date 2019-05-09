@@ -37,8 +37,8 @@ public class TicketRepository {
         PreparedStatementCreator psc = connection -> {
             PreparedStatement ps = connection.prepareStatement("insert into tickets values (null, ?,?,?)");
             ps.setInt(1,ticket.getBookingId());
-            ps.setInt(2,ticket.getRowNo());
-            ps.setInt(3,ticket.getColumnNo());
+            ps.setInt(2,ticket.getRowNo()+1);
+            ps.setInt(3,ticket.getColumnNo()+1);
             return ps;
         };
         jdbc.update(psc);
@@ -54,4 +54,5 @@ public class TicketRepository {
 
         return reservedSeats;
     }
+
 }
