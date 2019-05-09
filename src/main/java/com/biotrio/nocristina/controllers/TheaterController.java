@@ -45,4 +45,18 @@ public class TheaterController {
     public Theater oneTheater(@PathVariable int id) {
         return theaterRepo.findOne(id);
     }
+
+    @GetMapping("/theaters/edit/{id}")
+    public String editTheater(Model m, @PathVariable(name = "id") int id){
+        Theater theater= theaterRepo.findOne(id);
+        m.addAttribute("edittheaterform", theater);
+        return "theaters";
+
+    }
+    @GetMapping("/theaters/delete/{id}")
+    public String deleteTheater(@PathVariable(name = "id") int id){
+        theaterRepo.delete(id);
+        return "redirect:/theaters";
+    }
 }
+

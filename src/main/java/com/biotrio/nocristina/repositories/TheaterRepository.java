@@ -54,4 +54,18 @@ public class TheaterRepository {
         return theater;
 
     }
+
+    public void update(Theater theater) {
+        jdbc.update("UPDATE theaters SET " +
+                "cinemaId='" + theater.getCinemaId() + "', " +
+                "name='" + theater.getName() + "', " +
+                "rowsnumber='" + theater.getRowsNumber() + "', " +
+                "columsnumber='" + theater.getColumnsNumber() + "' " +
+                "can3d='" + theater.isCan3d() + "' " +
+                "WHERE id=" + theater.getId());
+    }
+
+    public void delete(int id) {
+        jdbc.update("DELETE FROM theaters WHERE id = " + id);
+    }
 }

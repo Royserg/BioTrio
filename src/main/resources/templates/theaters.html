@@ -33,7 +33,7 @@
                                 <td class="col-2" th:text="${theater.rowsNumber}"/>
                                 <td class="col-3" th:text="${theater.can3d}"/>
                                 <td class="col-1"><button class="btn btn-warning">Edit</button></td>
-                                <td class="col-1"><button class="btn btn-danger">Delete</button></td>
+                                <td> <a class="col-1" th:href="@{'/theaters/delete/' + ${theater.id}}"><button class="btn btn-danger">Delete<a/></button></td>
                             </tr>
                         </tbody>
                     </table>
