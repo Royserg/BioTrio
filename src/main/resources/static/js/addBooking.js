@@ -170,7 +170,7 @@ $(function() {
           dataType: "json",
           data: JSON.stringify(booking),
           contentType: "application/json; charset=utf-8",
-          success: () => alert("it worksssss")
+          success: () => console.log("it worksssss")
       })
 
 

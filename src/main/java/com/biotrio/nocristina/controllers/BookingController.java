@@ -51,7 +51,7 @@ public class BookingController {
     @PostMapping("/api/bookings/add")
     public String saveBooking(@RequestBody Booking newBooking) {
         bookingService.addBooking(newBooking);
-        return "index";
+        return "redirect:/bookings";
     }
 
 //    // Post method for form handling
