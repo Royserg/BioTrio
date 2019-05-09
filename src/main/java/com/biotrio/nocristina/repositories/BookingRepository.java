@@ -36,7 +36,7 @@ public class BookingRepository {
                     PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                     ps.setString(1, newBooking.getCustomerPhoneNumber());
-                    ps.setInt(2, newBooking.getScreeningId());
+                    ps.setInt(2, newBooking.getScreening().getId());
 
                     return ps;
                 }, keyHolder

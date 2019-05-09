@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments/fragments :: head(title='Screenings')" >
+    <link rel="stylesheet" type="text/css" href="jquery-ui.min">
+</head>
+<body>
+<!--this is for the navigation bar-->
+
+<nav th:replace="fragments/fragments :: navbar" />
+
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/fragments :: sidebar" />
+
+        <div class="col-10 mt-3">
+            <div class="container" >
+                <!-- List of available movies -->
+                <table class="table table-hover">
+                    <caption>List of screenings</caption>
+                    <thead class="thead-dark">
+                    <tr class="d-flex">
+                        <th class="col-2">Movie Title</th>
+                        <th class="col-2">Theater room</th>
+                        <th class="col-2">Date</th>
+                        <th class="col-2">Time</th>
+                        <th class="col-2">Price</th>
+                        <!-- columns for edit and delete button -->
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="d-flex" th:each="screening : ${screeningList}">
+                        <td class="col-2" th:text="${screening.movie.title}" />
+                        <td class="col-2" th:text="${screening.theater.name}"/>
+                        <td class="col-2" th:text="${screening.date}"/>
+                        <td class="col-2" th:text="${screening.time}"/>
+                        <td class="col-2" th:text="${screening.price}"/>
+                        <td class="col-1"><button class="btn btn-warning">Edit</button></td>
+                        <td class="col-1"><button class="btn btn-danger">Delete</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <!-- Form for adding a movie -->
+                <!-- <h1 class="display-4">Add New Movie</h1>
+
+                <details>
+                    <summary>Add new theater</summary>
+                    <p>
+                    <p class="lead">
+                    <form method="post" th:object="${newScreening}">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Title" maxlength="50" th:field="*{title}">
+                        </div>
+                        <div class="form-group">
+                            <label for="durationInMinutes">Duration in Minutes</label>
+                            <input type="number" class="form-control" id="durationInMinutes" placeholder="Duration" th:field="*{durationInMinutes}">
+                        </div>
+
+                        <input type="submit" class="btn btn-outline-dark" value="Add Movie"/>
+                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
+                    </form>
+                    </p>
+                    </p>
+                </details>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

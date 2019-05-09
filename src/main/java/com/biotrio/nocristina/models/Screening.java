@@ -7,24 +7,25 @@ import java.time.LocalTime;
 public class Screening {
 
     private int id;
-    private int movieId;
-    private int theaterId;
+   // private int movieId;
+   // private int theaterId;
     // atm String, later to implement LocalDateTime
     private LocalDateTime startTime;
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
     private Movie movie;
+    private Theater theater;
     private LocalDate date;
     private LocalTime time;
 
 
     public Screening(){}
 
-    public Screening(int id, int movieId, int theaterId, LocalDateTime startTime, BigDecimal price) {
+    public Screening(int id, LocalDateTime startTime, BigDecimal price) {
         this.id = id;
-        this.movieId = movieId;
-        this.theaterId = theaterId;
+        //this.movieId = movieId;
+        //this.theaterId = theaterId;
         this.startTime = startTime;
         this.price = price;
     }
@@ -41,22 +42,6 @@ public class Screening {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public int getTheaterId() {
-        return theaterId;
-    }
-
-    public void setTheaterId(int theaterId) {
-        this.theaterId = theaterId;
     }
 
     public LocalDateTime getStartTime() {
@@ -83,14 +68,6 @@ public class Screening {
         this.is3D = is3D;
     }
 
-    public boolean isDolby() {
-        return isDolby;
-    }
-
-    public void setDolby(boolean dolby) {
-        isDolby = dolby;
-    }
-
     public Movie getMovie() {
         return movie;
     }
@@ -113,6 +90,22 @@ public class Screening {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
+    }
+
+    public boolean isDolby() {
+        return isDolby;
+    }
+
+    public void setDolby(boolean dolby) {
+        isDolby = dolby;
     }
 }
 

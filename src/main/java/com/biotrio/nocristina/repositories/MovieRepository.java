@@ -25,6 +25,12 @@ public class MovieRepository {
         return movies;
     }
 
+    public Movie findbyScreeningId(int screeningId){
+        String sql ="SELECT * from movies Join screenings s on movies.id = s.movie_id where s.id =" +screeningId;
+        Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
+        return movie;
+    }
+
     public Movie findById(int movieId) {
         String sql = "SELECT * FROM movies WHERE id = ?";
         Movie movie = jdbc.queryForObject(sql, new Object[] {movieId}, new BeanPropertyRowMapper<>(Movie.class));

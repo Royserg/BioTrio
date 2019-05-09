@@ -1,6 +1,7 @@
 package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.ScreeningRepository;
+import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,26 +13,37 @@ import java.util.List;
 public class ScreeningController {
 
     @Autowired
-    ScreeningRepository screeningRepo;
+    ScreeningService screeningService;
 
     @GetMapping("/api/screenings")
     @ResponseBody
     public List<Screening> showScreenings() {
-        return screeningRepo.findAll();
+        List<Screening> screenings = screeningService.getAllScreenings();
+        for (Screening screening : screenings) {
+            System.out.println(screening);
+        }
+        return screenings;
+    }
+       /* @GetMapping("/screenings")
+        public String showScreeningsT(Model model) {
+        List<Screening> screenings = screeningService.getAllScreenings();
+        model.addAttribute("screeningList",screenings);
+        return "screenings";
+    } */
+
+       @GetMapping("/screenings")
+        public String addScreeningT(Model m) {
+        Screening newScreening = new Screening();
+        m.addAttribute("newScreening",newScreening);
+        m.addAttribute("screeningList",screeningService.getAllScreenings());
+        return "screenings";
     }
 
-//    html page not implemented yet, might not be needed (might be implemented with movies list)
-//    @GetMapping("/screening/add")
-//    public String addScreening(Model model) {
-//        Screening newScreening = new Screening();
-//        model.addAttribute("newScreening", newScreening);
-//        return "add-screening";
-//    }
-
+    /*
     @PostMapping("/screenings")
     public String saveScreening(@RequestBody Screening newScreening){
-        screeningRepo.addScreening(newScreening);
+        screeningService.addScreening(newScreening);
         return "redirect:/screening";
     }
-
+*/
 }

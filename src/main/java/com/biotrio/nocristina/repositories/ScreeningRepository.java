@@ -37,9 +37,13 @@ public class ScreeningRepository {
 
         List<Screening> screeningList = jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
 
-
-
         return screeningList;
+    }
+
+    public Screening findByBookingId(int bookingId) {
+        String sql ="SELECT * from screenings JOIN bookings b on screenings.id = b.screening_id where b.id=" + bookingId;
+        Screening screening = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Screening.class));
+        return screening;
     }
 
     public void addScreening(Screening newScreening){
@@ -48,8 +52,8 @@ public class ScreeningRepository {
 
                     PreparedStatement ps = connection.prepareStatement(sql);
 
-                        ps.setInt(1, newScreening.getMovieId());
-                        ps.setInt(2, newScreening.getTheaterId());
+                        ps.setInt(1, newScreening.getMovie().getId());
+                        ps.setInt(2, newScreening.getTheater().getId());
                         ps.setObject(3, newScreening.getStartTime());
     //    Conversion  LocalDateTime to Object and back - https://stackoverflow.com/a/43039615/8421735
                         ps.setBigDecimal(4, newScreening.getPrice());

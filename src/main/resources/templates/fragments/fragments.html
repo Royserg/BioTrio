@@ -55,6 +55,15 @@
                     </li>
                     <li class="nav-item">
                         <a
+                                th:classappend="${#request.requestURI == '/screenings' ? 'nav-link__active' : ''}"
+                                class="nav-link" href="/screenings"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Screenings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
                             th:classappend="${#request.requestURI == '/theaters' ? 'nav-link__active' : ''}"
                             class="nav-link" href="/theaters"
                         >
