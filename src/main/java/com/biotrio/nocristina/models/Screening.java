@@ -1,6 +1,8 @@
 package com.biotrio.nocristina.models;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Screening {
 
@@ -8,16 +10,18 @@ public class Screening {
     private int movieId;
     private int theaterId;
     // atm String, later to implement LocalDateTime
-    private String startTime;
+    private LocalDateTime startTime;
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
     private Movie movie;
+    private LocalDate date;
+    private LocalTime time;
 
 
     public Screening(){}
 
-    public Screening(int id, int movieId, int theaterId, String startTime, BigDecimal price) {
+    public Screening(int id, int movieId, int theaterId, LocalDateTime startTime, BigDecimal price) {
         this.id = id;
         this.movieId = movieId;
         this.theaterId = theaterId;
@@ -55,11 +59,11 @@ public class Screening {
         this.theaterId = theaterId;
     }
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String start_time) {
+    public void setStartTime(LocalDateTime start_time) {
         this.startTime = start_time;
     }
 
@@ -93,6 +97,22 @@ public class Screening {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }
 

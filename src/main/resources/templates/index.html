@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
-<head th:replace="fragments/header :: head(title='Dashboard')" />
+<head th:replace="fragments/fragments :: head(title='Dashboard')" />
 
 <body>
-    <nav th:replace="fragments/header :: navbar" />
+    <nav th:replace="fragments/fragments :: navbar" />
 
     <div class="container-fluid">
         <div class="row">
-            <nav th:replace="fragments/header :: sidebar" />
+            <nav th:replace="fragments/fragments :: sidebar" />
             <div class="col-10">
                 My Dashboard Content
             </div>

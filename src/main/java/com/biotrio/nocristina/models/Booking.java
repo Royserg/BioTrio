@@ -57,4 +57,15 @@ public class Booking {
     public void setScreening(Screening screening) {
         this.screening = screening;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", screeningId=" + screeningId +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", tickets=" + tickets +
+                ", screening=" + screening +
+                '}';
+    }
 }
