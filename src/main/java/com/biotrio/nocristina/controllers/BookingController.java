@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,9 @@ public class BookingController {
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> bookings() {
-        return bookingService.getAllBookings();
+        List<Booking> bookings = bookingService.getAllBookings();
+        System.out.println(bookingService);
+        return bookings;
     }
 
     @GetMapping("/bookings")
@@ -49,9 +52,11 @@ public class BookingController {
 //
 
     @PostMapping("/api/bookings/add")
-    public String saveBooking(@RequestBody Booking newBooking) {
+    @ResponseBody
+    public int saveBooking(@RequestBody Booking newBooking) {
         bookingService.addBooking(newBooking);
-        return "redirect:/bookings";
+
+        return newBooking.getId();
     }
 
 //    // Post method for form handling

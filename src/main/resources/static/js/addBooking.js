@@ -154,32 +154,34 @@ $(function() {
 
     })
 
-    bookButton.on('click', () => {
-
+    bookButton.click(function() {
       let booking = {
         "screeningId": screeningId,
         "customerPhoneNumber": phoneNum.val(),
         "tickets": selectedSeats
       }
 
-      console.log(JSON.stringify(booking));
-
       $.ajax({
-          type: "POST",
-          url:"/api/bookings/add",
-          dataType: "json",
-          data: JSON.stringify(booking),
-          contentType: "application/json; charset=utf-8",
-          success: () => console.log("it worksssss")
+        type: "POST",
+        url:"/api/bookings/add",
+        dataType: "json",
+        data: JSON.stringify(booking),
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+          // redirect to /bookings once request is successfull
+          $(location).attr('href','/bookings');
+        }
       })
 
-
+      console.log('request sent');
     })
+
+})
 
 
     //TODO: count selected seats, calculate the ticket price -> controller or... sth
 
-})
+
 
 
 
