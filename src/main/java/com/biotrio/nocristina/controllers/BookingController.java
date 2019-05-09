@@ -1,7 +1,9 @@
 package com.biotrio.nocristina.controllers;
+import com.biotrio.nocristina.models.JSONBooking;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.services.BookingService;
 import com.biotrio.nocristina.models.Booking;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +53,9 @@ public class BookingController {
 
     @PostMapping("/api/bookings/add")
     public String saveBooking(@RequestBody Booking booking) {
-        System.out.println(booking.getCustomerPhoneNumber());
+
+        System.out.println(booking);
+//        System.out.println(booking.getTickets());
         return "index";
     }
 

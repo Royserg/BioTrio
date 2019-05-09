@@ -133,7 +133,7 @@ $(function() {
               $(this).addClass("text-success fas fa-square selectedSeat");
 
               selectedSeats.push({'row': row, 'column': column});
-              seatsArrangement[row][column] = false;
+              // seatsArrangement[row][column] = false;
 
           } else {
 
@@ -152,20 +152,34 @@ $(function() {
 
         }
 
-      console.log(selectedSeats);
-
     })
 
     bookButton.on('click', () => {
 
-      booking = {
+        for(let x of selectedSeats){
+          console.log(x.toString())
+        }
+
+      let booking = {
         "screeningId": screeningId,
         "phoneNumber": phoneNum.val(),
-          "tickets": selectedSeats
+        "tickets": selectedSeats
       }
 
-      //$.post()
-        //TODO
+      console.log(booking);
+
+      // $.ajax({
+      //
+      //     type: "POST",
+      //     url:"/api/bookings/add",
+      //     dataType: "json",
+      //     data: JSON.stringify(booking),
+      //     contentType: "application/json; charset=utf-8",
+      //     success: () => alert("it worksssss")
+      // })
+
+        //$.post()
+        //TODO: POST
 
     })
 
