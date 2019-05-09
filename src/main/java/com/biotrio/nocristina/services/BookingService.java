@@ -27,6 +27,8 @@ public class BookingService {
     @Autowired
     private ScreeningRepository screeningRepo;
 
+    
+
     @Autowired
     private MovieRepository movieRepo;
 
