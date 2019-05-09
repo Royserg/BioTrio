@@ -132,7 +132,7 @@ $(function() {
 
               $(this).addClass("text-success fas fa-square selectedSeat");
 
-              selectedSeats.push({'row': row, 'column': column});
+              selectedSeats.push({'rowNo': row, 'columnNo': column});
               // seatsArrangement[row][column] = false;
 
           } else {
@@ -146,7 +146,7 @@ $(function() {
             $(this).removeClass("text-success fas fa-square selectedSeat");
             $(this).addClass("far fa-square");
 
-            let index = selectedSeats.findIndex(x => (x.row === row) && (x.column === column));
+            let index = selectedSeats.findIndex(x => (x.rowNo === row) && (x.columnNo === column));
 
             selectedSeats.splice(index, 1);
 
@@ -156,30 +156,23 @@ $(function() {
 
     bookButton.on('click', () => {
 
-        for(let x of selectedSeats){
-          console.log(x.toString())
-        }
-
       let booking = {
         "screeningId": screeningId,
-        "phoneNumber": phoneNum.val(),
+        "customerPhoneNumber": phoneNum.val(),
         "tickets": selectedSeats
       }
 
-      console.log(booking);
+      console.log(JSON.stringify(booking));
 
-      // $.ajax({
-      //
-      //     type: "POST",
-      //     url:"/api/bookings/add",
-      //     dataType: "json",
-      //     data: JSON.stringify(booking),
-      //     contentType: "application/json; charset=utf-8",
-      //     success: () => alert("it worksssss")
-      // })
+      $.ajax({
+          type: "POST",
+          url:"/api/bookings/add",
+          dataType: "json",
+          data: JSON.stringify(booking),
+          contentType: "application/json; charset=utf-8",
+          success: () => alert("it worksssss")
+      })
 
-        //$.post()
-        //TODO: POST
 
     })
 

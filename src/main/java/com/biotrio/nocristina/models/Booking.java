@@ -9,7 +9,6 @@ public class Booking {
     private String customerPhoneNumber;
     private List<Ticket> tickets;
     private Screening screening;
-    private String ticketString;
 
     public Booking(){}
 
@@ -17,11 +16,6 @@ public class Booking {
         this.id = id;
         this.screeningId = screeningId;
         this.customerPhoneNumber = customerPhoneNumber;
-    }public Booking(int screeningId, String customerPhoneNumber, String tickets) {
-        this.id = id;
-        this.screeningId = screeningId;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.ticketString = tickets;
     }
 
     public int getId() {
@@ -67,9 +61,11 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "screeningId=" + screeningId +
+                "id=" + id +
+                ", screeningId=" + screeningId +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
-                ", ticketString='" + ticketString + '\'' +
+                ", tickets=" + tickets +
+                ", screening=" + screening +
                 '}';
     }
 }
