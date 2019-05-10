@@ -9,8 +9,6 @@ import com.biotrio.nocristina.repositories.BookingRepository;
 import com.biotrio.nocristina.repositories.ScreeningRepository;
 import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +25,6 @@ public class BookingService {
     @Autowired
     private ScreeningRepository screeningRepo;
 
-
-
     @Autowired
     private MovieRepository movieRepo;
 
@@ -37,8 +33,6 @@ public class BookingService {
         List<Booking> bookings = bookingRepo.findAll();
 
         for (Booking booking : bookings) {
-            // Fetch tickets for that booking
-            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
             // get screening and keep reference for adding movie info inside
             Screening screening = screeningRepo.findById(booking.getScreeningId());
             // set movie for screening object
