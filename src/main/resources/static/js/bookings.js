@@ -33,4 +33,13 @@ $(function() {
   })
 
 
+  // Delete booking with confirmation popup
+  // $('table').on('click', '.btn-danger', function() {
+  //   const bookingId = $(this).data('bookingid');
+  //   const remove = confirm(`You sure, u want to remove booking: ${bookingId}`);
+  //   if (remove) {
+  //       console.log('removing');
+  //   }
+  //
+  // });
 });

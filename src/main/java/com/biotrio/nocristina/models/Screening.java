@@ -14,8 +14,8 @@ public class Screening {
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
-    private Movie movie;
-    private Theater theater;
+    private Movie movie = null;
+    private Theater theater = null;
     private LocalDate date;
     private LocalTime time;
 
@@ -106,6 +106,21 @@ public class Screening {
 
     public void setDolby(boolean dolby) {
         isDolby = dolby;
+    }
+
+    @Override
+    public String toString() {
+        return "Screening{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", price=" + price +
+                ", is3D=" + is3D +
+                ", isDolby=" + isDolby +
+                ", movie=" + movie +
+                ", theater=" + theater +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
     }
 }
 

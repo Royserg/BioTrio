@@ -27,7 +27,6 @@ public class BookingRepository {
     }
 
     public int addBooking(Booking newBooking){
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         String sql = "INSERT INTO bookings VALUES(null, ?, ?);";

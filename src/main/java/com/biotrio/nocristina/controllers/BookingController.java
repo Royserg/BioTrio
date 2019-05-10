@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @Controller
@@ -15,18 +14,20 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
-    @GetMapping("/api/screenings/{movieId}")
-    @ResponseBody
-    public List<Screening> screenings(@PathVariable int movieId) {
-        return bookingService.getByMovieId(movieId);
-    }
 
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> bookings() {
         List<Booking> bookings = bookingService.getAllBookings();
-        System.out.println(bookingService);
         return bookings;
+    }
+
+    @PostMapping("/api/bookings/add")
+    @ResponseBody
+    public int saveBooking(@RequestBody Booking newBooking) {
+        bookingService.addBooking(newBooking);
+
+        return newBooking.getId();
     }
 
     @GetMapping("/bookings")
@@ -36,28 +37,17 @@ public class BookingController {
         return "bookings";
     }
 
-    // Show form to add bookings
+    // Open page for adding new booking,
+    // fetch only list of movies
     @GetMapping("/bookings/add")
     public String addBookings(Model model) {
-        Booking newBooking = new Booking();
-        model.addAttribute("bookingForm", newBooking);
-
         // Pass all movies to frontend
         model.addAttribute("movieList", bookingService.getAllMovies());
-        // Testing: Pass all screenings
-        model.addAttribute("screeningList", bookingService.getAllScreenings());
 
         return "add-booking";
     }
 //
 
-    @PostMapping("/api/bookings/add")
-    @ResponseBody
-    public int saveBooking(@RequestBody Booking newBooking) {
-        bookingService.addBooking(newBooking);
-
-        return newBooking.getId();
-    }
 
 //    // Post method for form handling
 //    @PostMapping("/bookings/add")
