@@ -41,7 +41,7 @@ public class ScreeningRepository {
     }
 
     public Screening findByBookingId(int bookingId) {
-        String sql ="SELECT * from screenings JOIN bookings b on screenings.id = b.screening_id where b.id=" + bookingId;
+        String sql ="SELECT screenings.* from screenings JOIN bookings b on screenings.id = b.screening_id where b.id=" + bookingId;
         Screening screening = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Screening.class));
         return screening;
     }

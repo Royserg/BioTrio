@@ -46,7 +46,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Something</button>
                             </div>
                         </div>
                     </div>
@@ -86,9 +85,9 @@
                                     </a>
                                 </td>
                                 <td class="col-1">
-                                    <a href="#" class="btn btn-danger">
+                                    <button th:attr="data-bookingid=${booking.id}" class="btn btn-danger">
                                         <span class="fas fa-trash"></span>
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

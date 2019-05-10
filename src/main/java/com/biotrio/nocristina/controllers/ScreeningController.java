@@ -19,11 +19,17 @@ public class ScreeningController {
     @ResponseBody
     public List<Screening> showScreenings() {
         List<Screening> screenings = screeningService.getAllScreenings();
-        for (Screening screening : screenings) {
-            System.out.println(screening);
-        }
         return screenings;
     }
+
+    // return JSON list of screenings for provided movieId
+    @GetMapping("/api/screenings/{movieId}")
+    @ResponseBody
+    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
+        return screeningService.getByMovieId(movieId);
+    }
+
+
        /* @GetMapping("/screenings")
         public String showScreeningsT(Model model) {
         List<Screening> screenings = screeningService.getAllScreenings();

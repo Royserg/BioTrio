@@ -33,4 +33,25 @@ $(function() {
   })
 
 
+  // Delete booking with confirmation popup
+  $('table').on('click', '.btn-danger', function() {
+    const button = $(this);
+    const bookingId = $(this).data('bookingid');
+    // Get confirmation for deleting
+    const remove = confirm(`You sure, u want to remove booking: ${bookingId}`);
+    if (remove) {
+        $.ajax({
+          url: `/api/bookings/${bookingId}`,
+          method: 'DELETE',
+          success: function(data) {
+            // Remove html table row with fading animation
+            button.closest('tr').css('background', 'tomato');
+            button.closest('tr').fadeOut(800, function() {
+              $(this).remove();
+            })
+          }
+        })
+    }
+
+  });
 });
