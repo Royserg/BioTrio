@@ -25,7 +25,6 @@ public class BookingService {
     @Autowired
     private ScreeningRepository screeningRepo;
 
-
     @Autowired
     private ScreeningService screeningService;
 

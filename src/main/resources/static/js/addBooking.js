@@ -17,7 +17,6 @@ $(function() {
 
   // onClick event for each movie in the list
   movieList.on('click', 'a', function() {
-
     const movieId = $(this).data('id');
     // once movie clicked - clear screenings and times and seats
     screeningList.html('');
@@ -168,12 +167,14 @@ $(function() {
         data: JSON.stringify(booking),
         contentType: "application/json; charset=utf-8",
         success: function(data){
+
+
           // redirect to /bookings once request is successfull
           $(location).attr('href','/bookings');
         }
       })
 
-      console.log('request sent');
+
     })
 
 })

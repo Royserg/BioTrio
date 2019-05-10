@@ -15,6 +15,17 @@ public class TicketController {
     @Autowired
     TicketRepository ticketRepo;
 
+    /**
+     * Get list of tickets for particular booking
+     * @param bookingId - (int) id of the booking
+     * @return JSON array of Ticket objects
+     */
+    @GetMapping("/api/tickets/{bookingId}")
+    @ResponseBody
+    public List<Ticket> ticketsForBooking(@PathVariable int bookingId) {
+        return ticketRepo.findTicketsByBookingId(bookingId);
+    }
+
     @GetMapping("/tickets/add")
     public String addTicket(Model model){
         Ticket newTicket = new Ticket();
