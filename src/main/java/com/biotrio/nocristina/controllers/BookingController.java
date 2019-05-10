@@ -30,6 +30,16 @@ public class BookingController {
         return newBooking.getId();
     }
 
+    // Delete booking of provided id
+    @DeleteMapping("api/bookings/{bookingId}")
+    @ResponseBody
+    public int deleteBooking(@PathVariable int bookingId) {
+        bookingService.deleteBooking(bookingId);
+
+        return bookingId;
+    }
+
+
     @GetMapping("/bookings")
     public String showBookings(Model m){
 

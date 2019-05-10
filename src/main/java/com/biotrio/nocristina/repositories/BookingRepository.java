@@ -45,16 +45,16 @@ public class BookingRepository {
     }
 
 
-//    public void editBooking (int id, Booking edit){
+//    public void editBooking(int id, Booking edit) {
 //        Booking previousBooking = findBooking(id);
 //        bookingList.remove(previousBooking);
 //        bookingList.add(edit);
 //    }
 //
-//    public void deleteBooking (int id){
-//        Booking bookingToDelete = findBooking(id);
-//        bookingList.remove(bookingToDelete);
-//
-//    }
+    public void deleteBooking(int bookingId) {
+        String sql = "DELETE FROM bookings WHERE id = ?";
+        jdbc.update(sql, bookingId);
+
+    }
 
 }

@@ -32,8 +32,6 @@ public class BookingService {
     private ScreeningService screeningService;
 
 
-
-
     public List<Booking> getAllBookings() {
         List<Booking> bookings = bookingRepo.findAll();
 
@@ -70,4 +68,10 @@ public class BookingService {
 
     }
 
+    public void deleteBooking(int bookingId) {
+        // Delete booking and associated tickets
+        // once booking is deleted, tickets that are connected
+        // to that booking via foreign key are deleted (ON DELETE CASCADE)
+        bookingRepo.deleteBooking(bookingId);
+    }
 }
