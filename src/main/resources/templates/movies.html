@@ -15,6 +15,32 @@
 
         <div class="col-10 mt-3">
             <div class="container" >
+
+                <!-- Modal -->
+                <div class="modal fade" id="editMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editMovieTitle">Edit Movie</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="editTitle" placeholder="title" maxlength="50">
+
+                                <label for="durationInMinutes">Duration in Minutes</label>
+                                <input type="text" class="form-control" id="editDurationInMinutes" placeholder="Duration in minutes">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitChanges" action="/movies">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- List of available movies -->
                 <table class="table table-hover">
                     <caption>List of movies</caption>
@@ -31,8 +57,13 @@
                     <tr class="d-flex" th:each="movie : ${movieList}">
                         <td class="col-5" th:text="${movie.title}" />
                         <td class="col-5" th:text="${movie.durationInMinutes}"/>
-                        <td class="col-1"><button class="btn btn-warning">Edit</button></td>
-                        <td class="col-1"><button class="btn btn-danger">Delete</button></td>
+                        <td class="col-1"><a href="#"
+                                             id = "editButton"
+                                             class="btn btn-warning"
+                                             data-toggle="modal"
+                                             data-target="#editMovie"
+                                             th:attr="data-movieID = ${movie.id}"><span class="fas fa-edit"></span></a></td>
+                        <td class="col-1"><a class="btn btn-danger" th:href="@{'/movies/delete/' + ${movie.id}}"><span class = "fas fa-trash"></span></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -65,5 +96,13 @@
         </div>
     </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script th:src="@{/js/movie.js}"></script>
+
 </body>
 </html>
