@@ -35,7 +35,7 @@ public class TheaterController {
     }
 
     @PostMapping("/theaters")
-    public String saveTheater(@ModelAttribute Theater newTheater){
+    public String saveTheater(@ModelAttribute Theater newTheater) {
         theaterRepo.saveTheater(newTheater);
         return "redirect:/theaters";
     }
@@ -47,16 +47,24 @@ public class TheaterController {
     }
 
     @GetMapping("/theaters/edit/{id}")
-    public String editTheater(Model m, @PathVariable(name = "id") int id){
-        Theater theater= theaterRepo.findOne(id);
+    public String editTheater(Model m, @PathVariable(name = "id") int id) {
+        Theater theater = theaterRepo.findOne(id);
         m.addAttribute("edittheaterform", theater);
-        return "theaters";
-
+        return "id01";
     }
-    @GetMapping("/theaters/delete/{id}")
-    public String deleteTheater(@PathVariable(name = "id") int id){
-        theaterRepo.delete(id);
+
+    @PostMapping("/theaters/update")
+    public String saveupdatedTheater(@ModelAttribute Theater theater) {
+        theaterRepo.update(theater);
         return "redirect:/theaters";
     }
-}
 
+
+    @GetMapping("/theaters/delete/{id}")
+    public String deleteTheater(@PathVariable(name = "id") int id) {
+        theaterRepo.delete(id);
+        return "redirect:/theaters";
+
+
+    }
+}
