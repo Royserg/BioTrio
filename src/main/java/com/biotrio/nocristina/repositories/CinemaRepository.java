@@ -40,9 +40,16 @@ public class CinemaRepository {
         );
     }
 
-    public void deleteMovieById(int movieId){
-        String sql = "DELETE from movies WHERE id = " + movieId;
-        jdbc.update(sql);
+    public void deleteCinemaById(int cinemaId){
+        String sql = "DELETE from cinemas WHERE id = ?";
+        jdbc.update(sql, cinemaId);
+    }
+
+    public void editCinemaById(int cinemaId, Cinema cinemaToEdit) {
+
+        String sql = "UPDATE cinemas SET name = ? WHERE id = ?;";
+        jdbc.update(sql, cinemaToEdit.getName(), cinemaId);
+
     }
 
 }
