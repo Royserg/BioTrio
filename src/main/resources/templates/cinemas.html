@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments/fragments :: head(title='Cinemas')" >
+    <link rel="stylesheet" type="text/css" href="jquery-ui.min">
+</head>
+<body>
+<!--this is for the navigation bar-->
+
+<nav th:replace="fragments/fragments :: navbar" />
+
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/fragments :: sidebar" />
+
+        <div class="col-10 mt-3">
+            <div class="container" >
+                <!-- List of available cinemas -->
+                <table class="table table-hover">
+                    <caption>List of cinemas</caption>
+                    <thead class="thead-dark">
+                    <tr class="d-flex">
+                        <th class="col-5">Id</th>
+                        <th class="col-5">Name</th>
+                        <!-- columns for edit and delete button -->
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="d-flex" th:each="cinema : ${cinemaList}">
+                        <td class="col-5" th:text="${cinema.id}" />
+                        <td class="col-5" th:text="${cinema.name}"/>
+                        <td class="col-1"><button class="btn btn-warning">Edit</button></td>
+                        <td class="col-1"><button class="btn btn-danger">Delete</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <!-- Form for adding a cinema -->
+                <!-- <h1 class="display-4">Add New Movie</h1> -->
+
+                <details>
+                    <summary>Add new cinema</summary>
+                    <p>
+                    <p class="lead">
+                    <form method="post" th:object="${newCinema}">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}">
+                        </div>
+
+                        <input type="submit" class="btn btn-outline-dark" value="Add cinema"/>
+                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
+                    </form>
+                    </p>
+                    </p>
+                </details>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
