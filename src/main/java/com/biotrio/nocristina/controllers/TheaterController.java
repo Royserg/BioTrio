@@ -31,6 +31,7 @@ public class TheaterController {
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
         model.addAttribute("theaterList", theaterRepo.findAll());
+
         return "theaters";
     }
 

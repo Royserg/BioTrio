@@ -31,7 +31,7 @@ public class TheaterRepository {
     }
 
     public Theater findbyScreeningId(int theaterId){
-        String sql ="SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" +theaterId;
+        String sql ="SELECT theaters.* FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" +theaterId;
         Theater theater = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
         return theater;
     }

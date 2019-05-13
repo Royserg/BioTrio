@@ -6,7 +6,8 @@ public class Movie {
     private String title;
     private int durationInMinutes;
 
-    public Movie(){}
+    public Movie() {
+    }
 
     public Movie(int id, String title, int durationInMinutes) {
         this.id = id;
@@ -37,4 +38,14 @@ public class Movie {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", durationInMinutes=" + durationInMinutes +
+                '}';
+    }
 }
+

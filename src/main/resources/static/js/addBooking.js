@@ -29,6 +29,7 @@ $(function() {
         success: function (data) {// success callback function
           // save Screening data for the movie in the array
           screeningsData = data;
+          console.log(screeningsData);
           // filtrate the data array and remove duplicates
           const datesList = data.map(screening => screening.date);
           // convert datesList into Set and back to array

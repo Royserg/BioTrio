@@ -1,4 +1,6 @@
 package com.biotrio.nocristina.models;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,9 +18,9 @@ public class Screening {
     private boolean isDolby = false;
     private Movie movie;
     private Theater theater;
+    //@DateTimeFormat(pattern = "dd/mm/yyyy")
     private LocalDate date;
     private LocalTime time;
-
 
     public Screening(){}
 
@@ -107,6 +109,22 @@ public class Screening {
     public void setDolby(boolean dolby) {
         isDolby = dolby;
     }
+
+    @Override
+    public String toString() {
+        return "Screening{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", price=" + price +
+                ", is3D=" + is3D +
+                ", isDolby=" + isDolby +
+                ", movie=" + movie +
+                ", theater=" + theater +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
+    }
+
 }
 
 
