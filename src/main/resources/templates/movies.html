@@ -35,7 +35,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitChanges" action="/movies">Save changes</button>
+                                <button type="submit" class="btn btn-warning" id="submitChanges" >Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                              data-toggle="modal"
                                              data-target="#editMovie"
                                              th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
-                        <td class="col-1"><a class="btn btn-danger" th:href="@{'/movies/delete/' + ${movie.id}}"><span class = "fas fa-trash"></span></a></td>
+                        <td class="col-1"><a class="btn btn-danger" th:attr="movieID=${movie.id}"><span class = "fas fa-trash"></span></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -97,6 +97,8 @@
     </div>
     </div>
 
+
+<!--scripts for jquery and js-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

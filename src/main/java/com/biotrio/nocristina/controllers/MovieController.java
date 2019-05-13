@@ -45,13 +45,14 @@ public class MovieController {
         return id;
     }
 
-    @GetMapping("/movies/delete/{id}")
-    public String deleteMovie(@PathVariable int id){
+    @DeleteMapping("/movies/delete/{id}")
+    @ResponseBody
+    public int deleteMovie(@PathVariable int id){
 
         movieRepo.deleteMovie(id);
         System.out.println("movie" + id + " deleted");
 
-        return "redirect:/movies";
+        return id;
     }
 
 }
