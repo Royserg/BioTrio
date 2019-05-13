@@ -32,44 +32,8 @@
                                 <td class="col-2" th:text="${theater.rowsNumber}"/>
                                 <td class="col-2" th:text="${theater.rowsNumber}"/>
                                 <td class="col-3" th:text="${theater.can3d}"/>
-                                <td class="col-1"><button class="btn btn-warning" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Edit</button>
-                                    <div id="id01" class="modal">
-                                        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-                                        <form action="/theaters/update" method="post" th:object="${edittheaterform}">
-                                            <input type="hidden" th:field="${edittheaterform.id}">
-                                            <div class="form-group">
-                                                <label for="theaterName">Name</label>
-                                                <input type="text" class="form-control" th:field="${edittheaterform.name}" id="name" placeholder="Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rowsNumber">RowsNumber</label>
-                                                <input type="text" class="form-control" th:field="${edittheaterform.rowsNumber}" id="Rows" placeholder="Rows">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="columnsNumber">Columns</label>
-                                                <input type="color" class="form-control" th:field="${edittheaterform.columnsNumber}" id="Columns" placeholder="Columns">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="can3D">can3D</label>
-                                                <input type="can3d" class="form-control" th:field="${edittheaterform.isCan3d()}" id="3d?" placeholder="Can3D" min="0" max="1">
-                                            </div>
-                                            <div class="clearfix">
-                                            <button type="Submit" class="btn btn-primary">Save Theater</button>
-                                            <button type="Reset" class="btn btn-primary">Cancel</button>
-                                            </div>
-                                    </div>
+                                <td class="col-1"><button class="btn btn-warning">Edit</button>
 
-                                    <script>
-
-                                        var modal = document.getElementById('id01')
-
-
-                                        window.onclick = function(event) {
-                                            if (event.target == modal) {
-                                                modal.style.display = "none";
-                                            }
-                                        }
-                                    </script>
                                 </td>
                                 <td> <a class="col-1" th:href="@{'/theaters/delete/' + ${theater.id}}"><button class="btn btn-danger">Delete<a/></button></td>
                             </tr>

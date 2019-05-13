@@ -50,7 +50,7 @@ public class TheaterController {
     public String editTheater(Model m, @PathVariable(name = "id") int id) {
         Theater theater = theaterRepo.findOne(id);
         m.addAttribute("edittheaterform", theater);
-        return "id01";
+        return "theaters";
     }
 
     @PostMapping("/theaters/update")
