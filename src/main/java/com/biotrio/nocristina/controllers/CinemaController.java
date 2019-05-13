@@ -40,4 +40,20 @@ public class CinemaController {
         cinemaRepository.addCinema(newCinema);
         return "redirect:/cinemas";
     }
+
+    @GetMapping("/cinemas/delete/{id}")
+    public String deleteCinema(@PathVariable int id){
+        cinemaRepository.deleteCinemaById(id);
+        return "redirect:/cinemas";
+    }
+
+    @PostMapping("/cinemas/edit/{id}")
+    @ResponseBody
+    public int editCinema(@PathVariable int id, @RequestBody Cinema cinemaToEdit){
+        System.out.println("name of cinema we are editing: " + cinemaToEdit.getName());
+
+        cinemaRepository.editCinemaById(id, cinemaToEdit);
+
+        return id;
+    }
 }
