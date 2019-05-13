@@ -14,7 +14,7 @@ $(function() {
   let screeningsData = [];
 
   // onClick event for each movie in the list
-  movieList.on('click', 'a', function() {
+  movieList.on('click', 'li', function() {
     const movieId = $(this).data('id');
     // once movie clicked - clear screenings and times and seats
     screeningList.html('');

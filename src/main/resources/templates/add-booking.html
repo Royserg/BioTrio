@@ -36,16 +36,15 @@
                     <!-- List of movies and Calendar with Showings underneath -->
                     <div class="row container mt-4">
                         <div class="col-md-4">
-                            <div class="list-group" id="movieList">
+                            <ul class="list-group" id="movieList">
                                 <!-- Adding data attribute to each element (id of the movie) -->
-                               <a
-                                  href="#"
+                               <li
                                   class="list-group-item list-group-item-action"
                                   th:each="movie : ${movieList}"
                                   th:text="${movie.title}"
                                   th:attr="data-id=${movie.id}"
-                               ></a>
-                            </div>
+                               ></li>
+                            </ul>
                         </div>
                         <div class="col-md-8">
                             Calendar
@@ -81,9 +80,9 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-                crossorigin="anonymous"></script>
+        <!-- jQuery library -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <!-- Custom script -->
         <script th:src="@{/js/addBooking.js}"></script>
     </body>
 </html>
