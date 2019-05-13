@@ -24,6 +24,12 @@ public class TheaterController {
         return theaters;
     }
 
+    @GetMapping("/api/theater/{id}")
+    @ResponseBody
+    public Theater findById(@PathVariable int id) {
+        return theaterRepo.findOne(id);
+    }
+
     @GetMapping("/theaters")
     public String addTheater(Model model) {
         // TODO: implement Cinema Repo, model and controller => below dummy list of integers

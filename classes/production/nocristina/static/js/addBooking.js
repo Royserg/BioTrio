@@ -1,6 +1,4 @@
 
-
-
 $(function() {
 
   const movieList = $('#movieList');
@@ -169,7 +167,7 @@ $(function() {
         data: JSON.stringify(booking),
         contentType: "application/json; charset=utf-8",
         success: function(data){
-          // redirect to /bookings once request is successfull
+          // redirect to /bookings once request is successful
           $(location).attr('href','/bookings');
         }
       })

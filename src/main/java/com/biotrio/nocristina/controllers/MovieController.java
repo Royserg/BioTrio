@@ -5,10 +5,7 @@ import com.biotrio.nocristina.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,12 @@ public class MovieController {
     @ResponseBody
     public List<Movie> moviesList() {
         return movieRepo.FindAll();
+    }
+
+    @GetMapping("api/movie/{id}")
+    @ResponseBody
+    public Movie findById(@PathVariable int id) {
+        return movieRepo.findById(id);
     }
 
 

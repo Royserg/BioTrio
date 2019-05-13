@@ -65,7 +65,7 @@
                         <label for="movie">Select Movie</label>
                         <select class="form-control" id="movie" aria-describedby="movie" >
                             <option hidden></option>
-                            <option th:each="movie : ${movieList}" th:value="${movie}" th:text="${movie.title}"/>
+                            <option th:each="movie : ${movieList}" th:value="${movie}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
                         </select>
                          </div>
 
@@ -73,12 +73,12 @@
                         <label for="theater">Select Theater</label>
                         <select class="form-control" id="theater" aria-describedby="theater">
                             <option style="display:none;"></option>
-                            <option th:each="theater : ${theaterList}" th:value="${theater}" th:field="*{theater}" th:text="${theater.name}"/>
+                            <option th:each="theater : ${theaterList}" th:value="${theater}" th:attr="data-theater_id=${theater.id}" th:field="*{theater}" th:text="${theater.name}"/>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="screeningDate">Date</label>
-                        <input type="date" class="form-control" id="screeningDate" placeholder="screeningDate"  th:field="*{date}">
+                        <input type="date" class="form-control" id="screeningDate" placeholder="screeningDate" th:field="*{date}">
                     </div>
                     <div class="form-group">
                         <label for="screeningTime">Time</label>
@@ -88,7 +88,7 @@
                         <label for="price">Price</label>
                         <input type="number" class="form-control" id="price" placeholder="price" th:field="*{price}">
                     </div>
-                        <input type="submit" class="btn btn-outline-dark" value="Add Screening"/>
+                    <btn style="color: white" class="btn btn-dark mt-3" id="addScreening">Add screening</btn>
                         <button type="reset" class="btn btn-outline-dark">Cancel</button>
                     </form>
                     </p>
@@ -108,5 +108,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script th:src="@{/js/deleteScreening.js}"></script>
+<script th:src="@{/js/addScreening.js}"></script>
 </body>
 </html>

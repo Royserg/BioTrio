@@ -65,18 +65,13 @@ public class ScreeningController {
     }
     */
 
-    @PostMapping("/screenings")
-    public String saveScreening(@RequestParam("date") String screeningDate, @RequestParam("time") String screeningStart, @RequestParam("price") String screeningPrice,@RequestParam("movie") String movie){
-        Screening newScreening = new Screening();
 
-        newScreening.setDate(LocalDate.parse(screeningDate));
-        newScreening.setTime(LocalTime.parse(screeningStart));
-        newScreening.setPrice(new BigDecimal(screeningPrice));
-
-
+    @PostMapping("/api/screenings/add")
+    @ResponseBody
+    public int saveScreening(@RequestBody Screening newScreening) {
+        System.out.println(newScreening);
         screeningService.addScreening(newScreening);
-
-        return "redirect:/screenings";
+        return newScreening.getId();
     }
 
     @DeleteMapping("/screenings/delete/{id}")
@@ -86,14 +81,7 @@ public class ScreeningController {
         return "redirect:/screenings";
     }
 
-   /* @GetMapping("/screenings/delete/{id}")
-    public String deleteScreening(@PathVariable int id){
 
-        screeningService.deleteScreening(id);
-        System.out.println("Screening " + id + " deleted");
-
-        return "redirect:/screenings";
-    }
 
     /*@ExceptionHandler(MissingServletRequestParameterException.class)
     public void handleMissingParams(MissingServletRequestParameterException ex) {
