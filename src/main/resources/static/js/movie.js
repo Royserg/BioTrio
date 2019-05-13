@@ -1,8 +1,6 @@
 
 $(function() {
 
-    console.log('jquery loaded');
-
     // Edit movie
 
         $('td a').click(function() {
@@ -56,8 +54,6 @@ $(function() {
 
 
         // Delete movie
-
-        console.log("connected");
 
             $('.btn-danger').click(function () {
 
