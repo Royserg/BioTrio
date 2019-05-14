@@ -11,15 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.time.LocalDateTime.of;
 
 @Controller
 public class ScreeningController {
@@ -87,7 +80,21 @@ public class ScreeningController {
         return "redirect:/screenings";
     }
 
+    @GetMapping("/screenings/find/{id}")
+    @ResponseBody
+    public Screening findById(@PathVariable int id) {
+        return screeningService.findById(id);
+    }
 
+    @PostMapping("/screenings/edit/{id}")
+    @ResponseBody
+    public int editMovie(@RequestBody Screening screeningToEdit){
+
+        screeningService.editScreening(screeningToEdit);
+        System.out.println("screening " + screeningToEdit.getId() + " edited");
+
+        return screeningToEdit.getId();
+    }
 
     /*@ExceptionHandler(MissingServletRequestParameterException.class)
     public void handleMissingParams(MissingServletRequestParameterException ex) {

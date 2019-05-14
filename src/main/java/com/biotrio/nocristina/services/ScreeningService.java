@@ -74,4 +74,13 @@ public class ScreeningService {
         screeningRepo.deleteScreening(screeningId);
     }
 
+    public Screening findById(int screeningId) {
+        Screening screening = screeningRepo.findById(screeningId);
+        populateScreeningData(screening);
+        return screening;
+    }
+
+    public void editScreening(Screening screening){
+        screeningRepo.editScreening(screening);
+    }
 }

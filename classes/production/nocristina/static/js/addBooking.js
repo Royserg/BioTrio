@@ -15,16 +15,15 @@ $(function() {
 
   // onClick event for each movie in the list
   movieList.on('click', 'a', function() {
-
     const movieId = $(this).data('id');
     // once movie clicked - clear screenings and times and seats
     screeningList.html('');
     timeList.html('');
     seatsContainer.html('');
-
     $.ajax(`/api/screenings/${movieId}`,   // request url
       {
-        success: function (data) {// success callback function
+        success: function (data) {
+          // success callback function
           // save Screening data for the movie in the array
           screeningsData = data;
           console.log(screeningsData);
@@ -52,7 +51,7 @@ $(function() {
 
     screeningsData.forEach((screening) => {
       if(screening.date === clickedDate){
-        timeList.append(`<a href="#" data-screening-id="${screening.id}" data-theater-id="${screening.theaterId}" class="list-group-item list-group-item-action">${screening.time}</a>`)
+        timeList.append(`<a href="#" data-screening-id="${screening.id}" data-theater-id="${screening.theater.id}" class="list-group-item list-group-item-action">${screening.time}</a>`)
       }
     })
 
@@ -62,6 +61,9 @@ $(function() {
   timeList.on('click', 'a', function() {
     screeningId = $(this).data('screening-id');
     const theaterId = $(this).data('theater-id');
+
+    // console.log('screenings', screeningsData);
+    // console.log('screening Id', screeningId);
 
     let theaterData;
     let ticketData;
@@ -114,8 +116,7 @@ $(function() {
 
     })
 
-
-  })
+  });
 
 
   // Select and unselect seats.
@@ -151,28 +152,30 @@ $(function() {
 
         }
 
-    })
+    });
 
     bookButton.click(function() {
       let booking = {
-        "screeningId": screeningId,
-        "customerPhoneNumber": phoneNum.val(),
-        "tickets": selectedSeats
-      }
+        'customerPhoneNumber': phoneNum.val(),
+        'tickets': selectedSeats,
+        'screening': screeningsData.find(screening => screening.id === screeningId)
+      };
+
 
       $.ajax({
-        type: "POST",
-        url:"/api/bookings/add",
-        dataType: "json",
+        type: 'POST',
+        url:'/api/bookings/add',
+        dataType: 'json',
         data: JSON.stringify(booking),
-        contentType: "application/json; charset=utf-8",
+        contentType: 'application/json; charset=utf-8',
         success: function(data){
+
           // redirect to /bookings once request is successful
           $(location).attr('href','/bookings');
         }
       })
 
-      console.log('request sent');
+
     })
 
 })
