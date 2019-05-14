@@ -19,7 +19,6 @@ $(function()
 
         // https://stackoverflow.com/a/2888447
         movieId = $(this).children(":selected").data('movie_id');
-        console.log(movieId);
 
         // gets the selected movie
         $.ajax(`/api/movie/${movieId}`,   // request url
@@ -27,7 +26,6 @@ $(function()
                 success: function (data) {// success callback function
 
                     movie = data;
-                    console.log(movie);
                 }
             });
     })
@@ -36,14 +34,12 @@ $(function()
 
         // https://stackoverflow.com/a/2888447
         theaterId = $(this).children(":selected").data('theater_id');
-        console.log(theaterId);
 
         $.ajax(`/api/theater/${theaterId}`,   // request url
             {
                 success: function (data) {// success callback function
 
                     theater = data;
-                    console.log(theater);
                 }
             });
     })
@@ -56,6 +52,7 @@ $(function()
                 "date":screeningDate.val(),
                 "time":screeningTime.val()
                             }
+
 
     $.ajax({
         type: "POST",

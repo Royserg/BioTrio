@@ -47,7 +47,9 @@ public class ScreeningRepository {
     }
 
     public void addScreening(Screening newScreening){
-        String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price, is3D, isDolby) VALUES(?,?,?,?,?,?,?);";
+
+
+        String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price) VALUES(?,?,?,?,?);";
         System.out.println(newScreening);
         jdbc.update((Connection connection)->{
 
@@ -57,12 +59,10 @@ public class ScreeningRepository {
                         ps.setInt(2, newScreening.getTheater().getId());
 
                     //ps.setDate(1,java.sql.Date.valueOf(screening.getScreening_date()));
-                    ps.setObject(3,java.sql.Time.valueOf(newScreening.getTime()));
-                    ps.setObject(4,java.sql.Date.valueOf(newScreening.getDate()));
+                    ps.setObject(3,newScreening.getTime());
+                    ps.setObject(4,newScreening.getDate());
     //    Conversion  LocalDateTime to Object and back - https://stackoverflow.com/a/43039615/8421735
                         ps.setBigDecimal(5, newScreening.getPrice());
-                        ps.setBoolean(6, false);
-                        ps.setBoolean(7, false);
 
                     return ps;
                 }
