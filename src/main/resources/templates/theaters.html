@@ -23,23 +23,23 @@
                                 </div>
                                 <div class="modal-body">
                                     <label for="theaterName">Theater name</label>
-                                    <input type="text" class="form-control" id="editName" placeholder="edit name" maxlength="50">
+                                    <input type="text" class="form-control" id="editname" placeholder="Edit name" maxlength="50">
                                 </div>
                                 <div class="modal-body">
                                     <label for="rowsNumber">Rows</label>
-                                    <input type="number" class="form-control" id="editRows" placeholder="Edit amount of rows">
+                                    <input type="number" class="form-control" id="editrowsNumber" placeholder="Edit amount of rows" min="0">
                                 </div>
                                 <div class="modal-body">
                                     <label for="columnsNumber">Columns</label>
-                                    <input type="number" class="form-control" id="editColumns" placeholder="Edit amount of columns">
+                                    <input type="number" class="form-control" id="editcolumnsNumber" placeholder="Edit amount of columns" min="0">
                                 </div>
                                 <div class="modal-body">
                                     <label for="can3D">3D option</label>
-                                    <input type="checkbox" class="form-control" id="check3D">
+                                    <input type="checkbox" class="form-control" id="editcan3D">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-warning" id="submitChanges" data-toggle="modal">Save changes</button>
+                                    <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
                                 </div>
                             </div>
                         </div>

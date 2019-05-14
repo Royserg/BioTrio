@@ -49,8 +49,7 @@ public class TheaterController {
     @PostMapping("/theaters/edit/{id}")
     @ResponseBody
     public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
-        System.out.println("We are editing " +   theater.getName());
-
+        theater.setId(id);
         theaterRepo.update(theater);
         return id;
     }

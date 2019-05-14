@@ -56,13 +56,8 @@ public class TheaterRepository {
     }
 
     public void update(Theater theater) {
-        jdbc.update("UPDATE theaters SET " +
-                "cinemaId='" + theater.getCinemaId() + "', " +
-                "name='" + theater.getName() + "', " +
-                "rowsnumber='" + theater.getRowsNumber() + "', " +
-                "columsnumber='" + theater.getColumnsNumber() + "' " +
-                "can3d='" + theater.isCan3d() + "' " +
-                "WHERE id=" + theater.getId());
+        String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ? WHERE id = ?";
+        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.getId());
     }
 
     public void delete(int id) {
