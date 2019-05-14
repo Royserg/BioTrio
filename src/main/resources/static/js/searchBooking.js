@@ -7,17 +7,18 @@ $(function() {
 
     //event triggered eachtime input field of '#searchBar' is updated
     searchBar.bind('input', function() {
-        searchVal = searchBar.val()
+        searchVal = searchBar.val().toLowerCase();
 
         //iterates over each row entry (1 for each booking)
         for(let i = 0; i < rows.length; i++) {
 
             //stores the phoneNumber associated with the booking in variable
             var phoneNum = rows[i].getAttribute("data:phone");
+            var movie    = rows[i].getAttribute("data:movie").toLowerCase();
 
 
             //compares the phoneNum with the value of input field (startsWith is native js, to compare strings)
-            if(phoneNum.startsWith(searchVal)){
+            if(phoneNum.startsWith(searchVal) || movie.startsWith(searchVal)){
 
                 //if rows associated phonenumber matches the value being searched for,
                 //remove class 'd-none' (this class is bootstrap to hide an element)
