@@ -31,7 +31,14 @@
                                 <input type="text" class="form-control title" id="editTitle" maxlength="50">
 
                                 <label for="durationInMinutes">Duration in Minutes</label>
-                                <input type="text" class="form-control duration" id="editDurationInMinutes">
+                                <input type="number" class="form-control duration" id="editDurationInMinutes" min="10">
+
+                                <label for="is3D">3D Movie</label>
+                                <input type="checkbox" class="form-control" id="editIs3D">
+
+                                <label for="isDolby">Dolby Movie</label>
+                                <input type="checkbox" class="form-control" id="editIsDolby">
+
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -47,16 +54,22 @@
                     <thead class="thead-dark">
                     <tr class="d-flex">
                         <th class="col-5">Title</th>
-                        <th class="col-5">Duration in minutes</th>
+                        <th class="col-3">Duration in minutes</th>
+                        <th class="col-1">3D</th>
+                        <th class="col-1">Dolby</th>
                         <!-- columns for edit and delete button -->
                         <th class="col-1">Edit</th>
                         <th class="col-1">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="d-flex" th:each="movie : ${movieList}">
+                    <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}">
                         <td class="col-5 title" th:text="${movie.title}" />
-                        <td class="col-5 duration" th:text="${movie.durationInMinutes}"/>
+                        <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
+                        <td class="col-1 3D" th:text="${movie.is3D}"/>
+                        <td class="col-1 Dolby" th:text="${movie.dolby}"/>
+                        <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
+                        <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
                         <td class="col-1"><a href="#"
                                              id = "editButton"
                                              class="btn btn-warning"
@@ -83,7 +96,15 @@
                     </div>
                     <div class="form-group">
                         <label for="durationInMinutes">Duration in Minutes</label>
-                        <input type="number" class="form-control" id="durationInMinutes" placeholder="Duration" th:field="*{durationInMinutes}">
+                        <input type="number" class="form-control" id="durationInMinutes" placeholder="Duration" min="10" th:field="*{durationInMinutes}">
+                    </div>
+                    <div class="form-group">
+                        <label for="is3D">3D Movie</label>
+                        <input type="checkbox" class="form-control" id="is3D" th:field="*{is3D}">
+                    </div>
+                    <div class="form-group">
+                        <label for="isDolby">Dolby soundtrack</label>
+                        <input type="checkbox" class="form-control" id="isDolby" th:field="*{dolby}">
                     </div>
 
                     <input type="submit" class="btn btn-outline-dark" value="Add Movie"/>

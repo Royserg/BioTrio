@@ -25,13 +25,15 @@ public class MovieController {
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
-        model.addAttribute("movieList", movieRepo.FindAll());
+        model.addAttribute("movieList", moviesList());
+
         return "movies";
     }
 
     @PostMapping("/movies")
     public String saveMovie(@ModelAttribute Movie newMovie){
         movieRepo.addMovie(newMovie);
+        System.out.println(newMovie.isIs3D() + " " + newMovie.isDolby());
         return "redirect:/movies";
     }
 
@@ -40,6 +42,7 @@ public class MovieController {
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
         movieRepo.editMovie(id, movieToEdit);
+        System.out.println(movieToEdit.isIs3D() + " " + movieToEdit.isDolby());
         System.out.println("movie " + id + "edited");
 
         return id;

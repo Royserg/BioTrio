@@ -5,13 +5,23 @@ public class Movie {
     private int id;
     private String title;
     private int durationInMinutes;
+    private boolean is3D;
+    private boolean dolby;
 
     public Movie(){}
 
-    public Movie(int id, String title, int durationInMinutes) {
+//    public Movie(int id, String title, int durationInMinutes) {
+//        this.id = id;
+//        this.title = title;
+//        this.durationInMinutes = durationInMinutes;
+//    }
+
+    public Movie(int id, String title, int durationInMinutes, boolean is3D, boolean dolby) {
         this.id = id;
         this.title = title;
         this.durationInMinutes = durationInMinutes;
+        this.is3D = is3D;
+        this.dolby = dolby;
     }
 
     public String getTitle() {
@@ -36,5 +46,21 @@ public class Movie {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isIs3D() {
+        return is3D;
+    }
+
+    public void setIs3D(boolean is3D) {
+        this.is3D = is3D;
+    }
+
+    public boolean isDolby() {
+        return dolby;
+    }
+
+    public void setDolby(boolean dolby) {
+        dolby = dolby;
     }
 }
