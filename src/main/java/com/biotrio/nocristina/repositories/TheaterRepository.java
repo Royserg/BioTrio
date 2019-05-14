@@ -30,8 +30,9 @@ public class TheaterRepository {
         return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
     }
 
-    public Theater findByScreeningId(int theaterId){
-        String sql ="SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" +theaterId;
+
+    public Theater findbyScreeningId(int theaterId) {
+        String sql = "SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" + theaterId;
         Theater theater = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
         return theater;
     }
@@ -54,4 +55,15 @@ public class TheaterRepository {
         return theater;
 
     }
+
+    public void update(Theater theater) {
+        String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ? WHERE id = ?";
+        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.getId());
+    }
+
+    public void delete(int id) {
+
+        jdbc.update("DELETE FROM theaters WHERE id = " + id);
+    }
 }
+
