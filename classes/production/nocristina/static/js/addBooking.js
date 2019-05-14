@@ -1,6 +1,4 @@
 
-
-
 $(function() {
 
   const movieList = $('#movieList');
@@ -29,6 +27,7 @@ $(function() {
         success: function (data) {// success callback function
           // save Screening data for the movie in the array
           screeningsData = data;
+          console.log(screeningsData);
           // filtrate the data array and remove duplicates
           const datesList = data.map(screening => screening.date);
           // convert datesList into Set and back to array
@@ -168,7 +167,7 @@ $(function() {
         data: JSON.stringify(booking),
         contentType: "application/json; charset=utf-8",
         success: function(data){
-          // redirect to /bookings once request is successfull
+          // redirect to /bookings once request is successful
           $(location).attr('href','/bookings');
         }
       })

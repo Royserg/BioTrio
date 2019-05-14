@@ -18,14 +18,21 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
+    }
+
+
+    @GetMapping("api/movie/{id}")
+    @ResponseBody
+    public Movie findById(@PathVariable int id) {
+        return movieRepo.findById(id);
     }
 
     @GetMapping("/movies")
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
-        model.addAttribute("movieList", movieRepo.FindAll());
+        model.addAttribute("movieList", movieRepo.findAll());
         return "movies";
     }
 

@@ -18,7 +18,7 @@ public class MovieRepository {
     private JdbcTemplate jdbc;
 
 
-    public List<Movie> FindAll(){
+    public List<Movie> findAll(){
 
         String sql = "SELECT * FROM movies";
         List<Movie> movies = jdbc.query(sql, new BeanPropertyRowMapper<>(Movie.class));
@@ -27,7 +27,7 @@ public class MovieRepository {
     }
 
     public Movie findByScreeningId(int screeningId){
-        String sql ="SELECT movies.id, movies.title, movies.duration_in_minutes FROM movies JOIN screenings AS s ON movies.id = s.movie_id WHERE s.id = " +screeningId;
+        String sql ="SELECT movies.* FROM movies JOIN screenings s ON movies.id = s.movie_id WHERE s.id =" +screeningId;
         Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
         return movie;
     }

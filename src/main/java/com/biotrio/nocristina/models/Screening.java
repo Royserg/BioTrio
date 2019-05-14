@@ -1,4 +1,6 @@
 package com.biotrio.nocristina.models;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,11 +16,10 @@ public class Screening {
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
-    private Movie movie = null;
-    private Theater theater = null;
+    private Movie movie;
+    private Theater theater;
     private LocalDate date;
     private LocalTime time;
-
 
     public Screening(){}
 
