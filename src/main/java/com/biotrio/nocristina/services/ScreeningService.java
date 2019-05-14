@@ -21,30 +21,47 @@ public class ScreeningService {
     private MovieRepository movieRepo;
 
 
+    // Function that fetches movie and theater object
+    // and attaches it to the screening
+    public void populateScreeningData(Screening screening) {
+        // set Movie for the screening by id of the movie
+        screening.setMovie(movieRepo.findByScreeningId(screening.getId()));
+        // set Theater for the screening by id of the theater
+        screening.setTheater(theaterRepo.findByScreeningId(screening.getId()));
+
+        // separate Date and Time of the screening
+        screening.setDate(screening.getStartTime().toLocalDate());
+        screening.setTime(screening.getStartTime().toLocalTime());
+    }
+
     public List<Screening> getAllScreenings() {
         List<Screening> screenings = screeningRepo.findAll();
 
         for (Screening screening : screenings) {
-            // set Movie for the screening by id of the movie
-            screening.setMovie(movieRepo.findbyScreeningId(screening.getId()));
-            // set Theater for the screening by id of the theater
-            screening.setTheater(theaterRepo.findbyScreeningId(screening.getId()));
-
-            // separate Date and Time of the screening
-            screening.setDate(screening.getStartTime().toLocalDate());
-            screening.setTime(screening.getStartTime().toLocalTime());
+            populateScreeningData(screening);
         }
         return screenings;
     }
+
     public List<Movie> getAllMovies() {
         return movieRepo.FindAll();
     }
 
-    public Screening findByBookingId(int screeningId) {
+    public Screening findByBookingId(int bookingId) {
+        Screening screening = screeningRepo.findByBookingId(bookingId);
 
-        getAllScreenings();
-        Screening screening = screeningRepo.findByBookingId(screeningId);
+        populateScreeningData(screening);
+
         return screening;
+    }
+
+    public List<Screening> getByMovieId(int movieId) {
+        List<Screening> screenings = screeningRepo.findByMovieId(movieId);
+        for (Screening screening : screenings) {
+            populateScreeningData(screening);
+        }
+
+        return screenings;
     }
 
 }

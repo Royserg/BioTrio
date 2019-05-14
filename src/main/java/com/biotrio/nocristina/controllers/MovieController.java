@@ -5,10 +5,7 @@ import com.biotrio.nocristina.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,6 @@ public class MovieController {
         return movieRepo.FindAll();
     }
 
-
     @GetMapping("/movies")
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
@@ -37,6 +33,26 @@ public class MovieController {
     public String saveMovie(@ModelAttribute Movie newMovie){
         movieRepo.addMovie(newMovie);
         return "redirect:/movies";
+    }
+
+    @PostMapping("/movies/edit/{id}")
+    @ResponseBody
+    public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
+
+        movieRepo.editMovie(id, movieToEdit);
+        System.out.println("movie " + id + "edited");
+
+        return id;
+    }
+
+    @DeleteMapping("/movies/delete/{id}")
+    @ResponseBody
+    public int deleteMovie(@PathVariable int id){
+
+        movieRepo.deleteMovie(id);
+        System.out.println("movie" + id + " deleted");
+
+        return id;
     }
 
 }
