@@ -92,12 +92,13 @@ $(function() {
                 // Fancy css and close the modal
                 button.closest('tr').css('background', 'gold');
                 button.closest('tr').fadeOut(300, function() {
-                    $(this).fadeIn(300);
+                    $(this).fadeIn(1000);
                     $(this).css('background', 'white');
                     setTimeout(function(){ $('#editScreening').modal('hide');},100);
                 })
 
-                $(location).attr('href','/screenings');
+                //refresh the table only
+                $("#screeningTable").load(window.location + " #screeningTable");
             }
         });
     });

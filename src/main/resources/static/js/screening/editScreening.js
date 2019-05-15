@@ -97,7 +97,8 @@ $(function() {
                     setTimeout(function(){ $('#editScreening').modal('hide');},100);
                 })
 
-                $(location).attr('href','/screenings');
+                //refresh the table only
+                $("#screeningTable").load(window.location + " #screeningTable");
             }
         });
     });
