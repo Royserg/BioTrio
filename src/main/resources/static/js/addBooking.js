@@ -1,166 +1,230 @@
 
 $(function() {
-
-  const movieList = $('#movieList');
-  const timeList = $('#screeningTimes');
-  const screeningList = $('#screeningList');
-  const seatsContainer = $('#seats');
-  const phoneNum = $('#phoneNum');
-  const bookButton = $('#bookButton');
-  let screeningId;
-  let seatsArrangement;
-
-  let selectedSeats = [];
+  // Store Screenings data for chosen movie
   let screeningsData = [];
 
-  // onClick event for each movie in the list
-  movieList.on('click', 'li', function() {
+  // References to particular html list <ul>
+  const moviesList = $('#moviesList');
+  const timesList = $('#screeningTimes');
+  const datesList = $('#screeningDates');
+
+  const seats = $('#seats'); // Reference to the <div> container for seats
+  let screeningId;           // Holds screeningId after screening time is pressed
+  let ticketPrice;           // Holds a ticket price of a chosen screening
+
+  // == Util Function ==
+  // Remove selection class from siblings and add
+  // selected class to clicked element
+  function toggleListItemSelectedClass(element) {
+    // Remove selected class from all items
+    element.siblings('li').removeClass('list-group-item__selected');
+    // Add selected class to the clicked item
+    element.toggleClass('list-group-item__selected');
+  }
+
+
+  // == Movie Clicked ==
+  // Fetch screenings for chosen movie
+  moviesList.on('click', 'li', function() {
+    // Read movie id from clicked element's data attribute
     const movieId = $(this).data('id');
-    // once movie clicked - clear screenings and times and seats
-    screeningList.html('');
-    timeList.html('');
-    seatsContainer.html('');
-    $.ajax(`/api/screenings/${movieId}`,   // request url
+
+    // Add selected class
+    toggleListItemSelectedClass($(this));
+
+    // hide other containers (if shown)
+    $('.times-container').fadeOut('slow');
+    $('.seats-container').fadeOut('slow');
+
+    // Fetch screenings for selected movie
+    $.ajax(`/api/screenings/${movieId}`,
       {
-        success: function (data) {
-          // success callback function
-          // save Screening data for the movie in the array
-          screeningsData = data;
-          // filtrate the data array and remove duplicates
-          const datesList = data.map(screening => screening.date);
-          // convert datesList into Set and back to array
-          const uniqueDates = [...new Set(datesList)];
+        success: function (screenings) {
+          // Reveal Dates container
+          $('.dates-container').fadeIn('slow');
 
-          $.each(uniqueDates, function (index, screening) {
-            screeningList.append(`<a href="#" class="list-group-item list-group-item-action">${screening}</a>`)
-          })
+          // Save all screenings data for the movie into array
+          screeningsData = screenings;
+
+          // Get only array of dates
+          const dates = screenings.map(screening => screening.date);
+          // Remove duplicates, convert dates array into Set and back to array
+          const uniqueDates = [...new Set(dates)];
+
+          // Show/update dates list
+          $(datesList).fadeOut(100, function() {
+            // Clear the list
+            datesList.html('');
+            // Reveal the list
+            datesList.fadeIn("slow");
+
+            // Insert each date into list
+            if (uniqueDates.length === 0) {
+              datesList.append(`<span class="list-group-item">No Dates available</span>`)
+            } else {
+              $.each(uniqueDates, function(index, date) {
+                datesList.append(`<li class="list-group-item">${date}</li>`)
+              })
+            }
+          });
+
         }
       });
-
     }
-  )
+  );
 
-  // OnClick event for each date
-  screeningList.on('click', 'a', function() {
 
+  // == Date Clicked ==
+  // Display Screening times for selected date option
+  datesList.on('click', 'li', function() {
     const clickedDate = $(this).text();
+    // Add selected class
+    toggleListItemSelectedClass($(this));
+
+    // Reveal times container
+    $('.times-container').fadeIn('slow');
+
+    // Hide seats container
+    $('.seats-container').fadeOut(100);
+
     // clear time list and seats
-    timeList.html('');
-    seatsContainer.html('');
+    $(timesList).fadeOut(100, function() {
+      // Clear the list
+      timesList.html('');
+      // Reveal the list
+      timesList.fadeIn('slow');
 
-    screeningsData.forEach((screening) => {
-      if(screening.date === clickedDate){
-        timeList.append(`<a href="#" data-screening-id="${screening.id}" data-theater-id="${screening.theater.id}" class="list-group-item list-group-item-action">${screening.time}</a>`)
-      }
-    })
-
-  })
-
-  // OnClick event for a screening Time
-  timeList.on('click', 'a', function() {
-    screeningId = $(this).data('screening-id');
-    const theaterId = $(this).data('theater-id');
-
-    // console.log('screenings', screeningsData);
-    // console.log('screening Id', screeningId);
-
-    let theaterData;
-    let ticketData;
-
-    // clear seats container
-    seatsContainer.html('');
-
-  //  Get data about the theater(column and rows) and all tickets for the screening(calculate reserved seats)
-    $.when(
-      $.ajax(`/api/theaters/${theaterId}`, {
-        success: function(data){
-          theaterData = data;
+      // Insert times for selected screening date
+      $.each(screeningsData, function(index, screening) {
+        if(screening.date === clickedDate){
+          timesList.append(`<li data-screening-id="${screening.id}" class="list-group-item">${screening.time}</li>`)
         }
-      }),
-      $.ajax(`/api/tickets/reservedSeats/${screeningId}`, {
-          success: function(data){
-            ticketData = data;
-          }
       })
-    ).then(function() {
-      const rows = theaterData.rowsNumber;
-      const columns = theaterData.columnsNumber;
-
-      seatsArrangement = new Array(rows);
-      for (let i = 0; i < rows; i++) {
-        seatsArrangement[i] = new Array(columns);
-      }
-
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-          // set all seats to be available a.k.a true
-          seatsArrangement[i][j] = true;
-        }
-      }
-
-      // set taken seats -> seats start from 1 that's why need to minus them
-      ticketData.forEach(function(ticket) {
-        seatsArrangement[ticket.rowNo - 1][ticket.columnNo - 1] = false;
-      });
-
-
-      $.each(seatsArrangement, function(rowIndex, row) {
-        seatsContainer.append(`<div id=row-${rowIndex} class="d-flex justify-content-center align-items-center"></div>`);
-
-        $.each(row, function(columnIndex, column) {
-          $(`#row-${rowIndex}`)
-            .append(`<span data-row="${rowIndex}" data-column="${columnIndex}" style="font-size: 1.4em" class="seat ${column ? 'far fa-square' : 'fas fa-square'} mx-2 my-2 ${column ? '' : 'text-danger'}"></span>`)
-        })
-      })
-
-    })
-
+    });
   });
 
 
-  // Select and unselect seats.
-  seatsContainer.on('click', 'span', function(){
 
-      let row = this.getAttribute('data-row');
-      let column = this.getAttribute('data-column');
+  // == TIME Clicked ==
+  // OnClick event for a screening Time
+  timesList.on('click', 'li', function() {
 
+    // Add selected class
+    toggleListItemSelectedClass($(this));
 
-        if (!this.classList.contains('selectedSeat')){
+    // Retrieve screening id from data- attribute of clicked html element
+    screeningId = $(this).data('screening-id');
+    // Save selected screening price, find screening and access price attribute
+    ticketPrice = screeningsData.find(screening => screening.id === screeningId)['price'];
 
-          if(selectedSeats.length < 4) {
+      // Reveal Seats container
+    $('.seats-container').fadeIn('slow');
 
-              $(this).addClass("text-success fas fa-square selectedSeat");
+    //  Get all tickets for the screening(calculate reserved seats)
+    $.ajax(`/api/tickets/screening/${screeningId}`, {
+      success: function (tickets) {
+        console.log('tickets', tickets);
 
-              selectedSeats.push({'rowNo': row, 'columnNo': column});
-              // seatsArrangement[row][column] = false;
+        // Show/update seats list
+        seats.fadeOut(100, function () {
+          // Clear the seats
+          seats.html('');
+          // Reveal the seats
+          seats.fadeIn('slow');
 
-          } else {
+          // Find theater attached to the screening from screeningData already fetched
+          let theater = screeningsData.find(screening => screening.id === screeningId)['theater'];
+          console.log('theater', theater);
 
-              alert("You can't select more than 4 seats!");
+          const rows = theater['rowsNumber'];
+          const columns = theater['columnsNumber'];
 
+          // === Create 2 dimensions array for seats grid ===
+          const seatsArrangement = new Array(rows);
+          for (let i = 0; i < rows; i++) {
+            seatsArrangement[i] = new Array(columns);
           }
 
-        } else {
+          for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+              // set all seats to be available a.k.a true
+              seatsArrangement[i][j] = true;
+            }
+          }
+          // === Creating 2 dimensions array - end
 
-            $(this).removeClass("text-success fas fa-square selectedSeat");
-            $(this).addClass("far fa-square");
+          // Set taken seats (false)
+          // rows and columns count starts from 1 but arrays start counting from 0, so both need to be reduced
+          // first Seat { row: 1, column: 1 } in array will be at seatsArrangements[0][0] -> (row: 0, column: 0)
+          tickets.forEach(function (ticket) {
+            seatsArrangement[ticket.rowNo - 1][ticket.columnNo - 1] = false;
+          });
 
-            let index = selectedSeats.findIndex(x => (x.rowNo === row) && (x.columnNo === column));
+          $.each(seatsArrangement, function (rowIndex, row) {
+            seats.append(`<div id=row-${rowIndex} class="d-flex justify-content-center align-items-center"></div>`);
 
-            selectedSeats.splice(index, 1);
+            // Iterate over each seat in a row (each holds true/false value)
+            // Tooltips will show shifted rows and column info by 1, to reflect counting from 1
+            $.each(row, function (columnIndex, seatFree) {
+              $(`#row-${rowIndex}`)
+                .append(`<span data-toggle="tooltip" title="row: ${rowIndex + 1} col: ${columnIndex + 1}" data-row="${rowIndex}" data-column="${columnIndex}" class="seat ${seatFree ? 'seat__free' : 'seat__reserved'} mx-2 my-2"></span>`)
+            })
+          })
 
-        }
+          // Initialize seats tooltips (row and column information box above each seat after hover)
+          $('[data-toggle="tooltip"]').tooltip();
 
+        }) // end of fadeOut callback
+
+
+      } // end of success function
     });
+  });
 
-    bookButton.click(function() {
+
+  // == SEAT Clicked ==
+  // Select and unselect seats.
+  seats.on('click', '.seat__free', function(){
+
+    if($('.seat__selected').length < 4) {
+
+      $(this).toggleClass('seat__selected');
+
+    } else if($(this).hasClass('seat__selected')) {
+      $(this).toggleClass('seat__selected');
+    } else {
+      alert("Max 4 seats available");
+    }
+
+    const seatCount = $('.seat__selected').length;
+      // Update tickets count
+    $('#ticketsCount').text(seatCount);
+    // Update total price
+    $('#price').text(`${seatCount * ticketPrice} dkk`);
+
+  });
+
+    $('#bookButton').click(function() {
+
+      // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
+      // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
+      const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
+        return {
+          rowNo: seat.dataset.row,
+          columnNo: seat.dataset.column
+        }
+      });
+
+      console.log('seats', selectedSeats);
+
+      // Create representation of an booking object for sending to Backend
       let booking = {
-        'customerPhoneNumber': phoneNum.val(),
+        'customerPhoneNumber': $('#phoneNum').val(),
         'tickets': selectedSeats,
         'screening': screeningsData.find(screening => screening.id === screeningId)
       };
 
-
+      // Send post request to save the booking into Database
       $.ajax({
         type: 'POST',
         url:'/api/bookings/add',
@@ -169,19 +233,14 @@ $(function() {
         contentType: 'application/json; charset=utf-8',
         success: function(data){
 
-
-          // Redirect to /bookings once request is successfull
+          // Redirect to /bookings once request is successful = booking is saved
           $(location).attr('href','/bookings');
         }
       })
 
-
     })
+});
 
-})
-
-
-    //TODO: count selected seats, calculate the ticket price -> controller or... sth
 
 
 
