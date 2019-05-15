@@ -46,6 +46,13 @@ public class ScreeningRepository {
         return screening;
     }
 
+    public List<Screening> findByDate(String date) {
+        String sql = "SELECT * from screenings WHERE date = '" + date + "'";
+
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+
+    }
+
     public void addScreening(Screening newScreening){
         String sql = "INSERT INTO screenings(movie_id, theater_id, start_time, price, is3D, isDolby) VALUES(?,?,?,?,?,?);";
         jdbc.update((Connection connection)->{
