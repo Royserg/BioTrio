@@ -29,6 +29,13 @@ public class ScreeningController {
         return screeningService.getByMovieId(movieId);
     }
 
+    // return JSON list of screenings between 2 dates
+    @GetMapping("/api/screenings/dates/{date1}/{date2}")
+    @ResponseBody
+    public List<Screening> screeningsForMovie(@PathVariable(name = "date1") String date1, @PathVariable(name = "date2") String date2) {
+        return screeningService.getBetweenDates(date1, date2);
+    }
+
 
        /* @GetMapping("/screenings")
         public String showScreeningsT(Model model) {
