@@ -46,8 +46,6 @@ public class MovieRepository {
                 ps.setBoolean(3, newMovie.isIs3D());
                 ps.setBoolean(4, newMovie.isDolby());
 
-            System.out.println("add movie " + newMovie.isDolby());
-
                 return ps;
             }
         );
@@ -57,9 +55,6 @@ public class MovieRepository {
 
         String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, isDolby = ? WHERE id = ?;";
         jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
-
-        System.out.println("edit movie " + movieToEdit.isDolby());
-
 
     }
 

@@ -18,11 +18,14 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
+
         return movieRepo.FindAll();
+
     }
 
     @GetMapping("/movies")
     public String addMovie(Model model) {
+
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
         model.addAttribute("movieList", moviesList());
@@ -32,8 +35,10 @@ public class MovieController {
 
     @PostMapping("/movies")
     public String saveMovie(@ModelAttribute Movie newMovie){
+
         movieRepo.addMovie(newMovie);
-        System.out.println(newMovie.isIs3D() + " " + newMovie.isDolby());
+        System.out.println("new movie " + newMovie.getId() + " added");
+
         return "redirect:/movies";
     }
 
@@ -42,8 +47,7 @@ public class MovieController {
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
         movieRepo.editMovie(id, movieToEdit);
-        System.out.println(movieToEdit.isIs3D() + " " + movieToEdit.isDolby());
-        System.out.println("movie " + id + "edited");
+        System.out.println("movie " + id + " edited");
 
         return id;
     }
@@ -53,7 +57,7 @@ public class MovieController {
     public int deleteMovie(@PathVariable int id){
 
         movieRepo.deleteMovie(id);
-        System.out.println("movie" + id + " deleted");
+        System.out.println("movie " + id + " deleted");
 
         return id;
     }

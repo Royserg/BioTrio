@@ -32,11 +32,16 @@ $(function() {
                     'dolby': $('#editIsDolby').is(':checked')
                 };
 
-                if(movieToEdit.durationInMinutes < 10) {
+                //check if the screening time is less than 10 minutes
+                if (movieToEdit.durationInMinutes < 10) {
                     alert("Invalid input. Please check the duration again.");
 
+                //unable to have 3D and dolby movie as of now since Bio Trio doesn't support 3D and dolby screenings
+                } else if (movieToEdit.is3D === true || movieToEdit.dolby === true) {
+                    alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
+
                 } else {
-                    console.log("after else  ", movieToEdit.dolby);
+
                     $.ajax({
 
                         type: 'POST',
@@ -45,8 +50,6 @@ $(function() {
                         data: JSON.stringify(movieToEdit),
                         contentType: 'application/json; charset=utf-8',
                         success: function (data) {
-
-                            console.log("after ajax success  ", movieToEdit.dolby);
 
                             // Reload the data
                             editButton.parent().siblings('td')[0].innerHTML = movieToEdit.title;
@@ -63,7 +66,6 @@ $(function() {
                                 setTimeout(function () {
                                     $('#editMovie').modal('hide');
                                 }, 100);
-                                console.log("after everything's over ", movieToEdit.dolby);
 
                             })
 

@@ -49,35 +49,35 @@
                 </div>
 
                 <!-- List of available movies -->
-                <table class="table table-hover">
+                <table class="table table-hover" id="sorTable">
                     <caption>List of movies</caption>
                     <thead class="thead-dark">
-                    <tr class="d-flex">
-                        <th class="col-5">Title</th>
-                        <th class="col-3">Duration in minutes</th>
-                        <th class="col-1">3D</th>
-                        <th class="col-1">Dolby</th>
-                        <!-- columns for edit and delete button -->
-                        <th class="col-1">Edit</th>
-                        <th class="col-1">Delete</th>
-                    </tr>
+                        <tr class="d-flex">
+                            <th class="col-5" onclick="sortTable(0)">Title</th>
+                            <th class="col-3" onclick="sortTable(1)">Duration in minutes</th>
+                            <th class="col-1">3D</th>
+                            <th class="col-1">Dolby</th>
+                            <!-- columns for edit and delete button -->
+                            <th class="col-1">Edit</th>
+                            <th class="col-1">Delete</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}">
-                        <td class="col-5 title" th:text="${movie.title}" />
-                        <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
-                        <td class="col-1 3D" th:text="${movie.is3D}"/>
-                        <td class="col-1 Dolby" th:text="${movie.dolby}"/>
-                        <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
-                        <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
-                        <td class="col-1"><a href="#"
-                                             id = "editButton"
-                                             class="btn btn-warning"
-                                             data-toggle="modal"
-                                             data-target="#editMovie"
-                                             th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
-                        <td class="col-1"><a class="btn btn-danger" th:attr="movieID=${movie.id}"><span class = "fas fa-trash"></span></a></td>
-                    </tr>
+                        <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}">
+                            <td class="col-5 title" th:text="${movie.title}" />
+                            <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
+                            <td class="col-1 3D" th:text="${movie.is3D}"/>
+                            <td class="col-1 Dolby" th:text="${movie.dolby}"/>
+                            <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
+                            <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
+                            <td class="col-1"><a href="#"
+                                                 id = "editButton"
+                                                 class="btn btn-warning"
+                                                 data-toggle="modal"
+                                                 data-target="#editMovie"
+                                                 th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
+                            <td class="col-1"><a class="btn btn-danger" th:attr="movieID=${movie.id}"><span class = "fas fa-trash"></span></a></td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -100,12 +100,17 @@
                     </div>
                     <div class="form-group">
                         <label for="is3D">3D Movie</label>
-                        <input type="checkbox" class="form-control" id="is3D" th:field="*{is3D}">
+                        <input type="checkbox" class="form-control" id="is3D" th:field="*{is3D}" onchange="sendAlert()">
                     </div>
                     <div class="form-group">
                         <label for="isDolby">Dolby soundtrack</label>
-                        <input type="checkbox" class="form-control" id="isDolby" th:field="*{dolby}">
+                        <input type="checkbox" class="form-control" id="isDolby" th:field="*{dolby}" onchange="sendAlert()">
                     </div>
+                        <script type="text/javascript">
+                            function sendAlert() {
+                                alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
+                            }
+                        </script>
 
                     <input type="submit" class="btn btn-outline-dark" value="Add Movie"/>
                     <button type="reset" class="btn btn-outline-dark">Cancel</button>
