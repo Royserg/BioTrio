@@ -79,7 +79,7 @@
                 <form method="post" th:object="${newMovie}">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Title" maxlength="50" th:field="*{title}">
+                        <input type="text" class="form-control" id="title" placeholder="Title" maxlength="255" th:field="*{title}">
                     </div>
                     <div class="form-group">
                         <label for="durationInMinutes">Duration in Minutes</label>
