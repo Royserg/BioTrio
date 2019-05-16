@@ -1,13 +1,55 @@
 $(function() {
 
-    var searchBar = $('#searchBar');
-    var searchVal = "";
+    const searchBar = $('#searchBar');
+    let searchVal = "";
     tableBody = $('#tableBody');
     rows = tableBody.children();
 
     //event triggered eachtime input field of '#searchBar' is updated
     searchBar.bind('input', function() {
         searchVal = searchBar.val().toLowerCase();
+
+        // if (searchVal.length > 1)
+        if(1 < searchVal.length){
+
+            $.ajax(`/api/bookings/phone/${searchVal}`, {
+                success: (data) => {
+
+                    //remove all bookings made with thymeleaf
+                    tableBody.html("");
+
+                    //generate new html with data from query
+                    console.log(data);
+
+                }
+            })
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
 
         //iterates over each row entry (1 for each booking)
         for(let i = 0; i < rows.length; i++) {
@@ -37,6 +79,8 @@ $(function() {
         if(searchBar.val() === ""){
             tableBody.children().removeClass("d-none");
         }
+
+        */
 
     })
 

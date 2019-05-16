@@ -29,6 +29,14 @@ public class Screening {
         this.startTime = startTime;
         this.price = price;
     }
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price) {
+        this.id = id;
+        //this.movieId = movieId;
+        //this.theaterId = theaterId;
+        this.time = time;
+        this.date = date;
+        this.price = price;
+    }
 
     public void getFormattedDate() {
         // TODO:

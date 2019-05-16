@@ -26,6 +26,15 @@ public class BookingRepository {
         return bookings;
     }
 
+    public List<Booking> findByPhone(String phoneNumber) {
+
+        String sql = "SELECT * FROM bookings WHERE customer_phone_number LIKE '" + phoneNumber + "%'";
+        List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+
+        return bookings;
+
+    }
+
     public int addBooking(Booking newBooking){
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
