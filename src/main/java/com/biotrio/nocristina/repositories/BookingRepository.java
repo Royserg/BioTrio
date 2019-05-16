@@ -20,14 +20,14 @@ public class BookingRepository {
 
     public List<Booking> findAll() {
 
-        String sql = "SELECT * FROM bookings";
+        String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 15;";
         List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
 
         return bookings;
     }
 
     public List<Booking> findByPhone(String phoneNumber) {
-
+        System.out.println(phoneNumber);
         String sql = "SELECT * FROM bookings WHERE customer_phone_number LIKE '" + phoneNumber + "%'";
         List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
 
