@@ -36,13 +36,18 @@ public class TheaterController {
         model.addAttribute("dummyCinema", 1);
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
-        model.addAttribute("theaterList", theaterRepo.findAll());
+        List <Theater> tlist = theaterRepo.findAll();
+        for (Theater theater : tlist) {
+            System.out.println(theater);
+        }
+        model.addAttribute("theaterList", tlist);
 
         return "theaters";
     }
 
     @PostMapping("/theaters")
-    public String saveTheater(@ModelAttribute Theater newTheater) {
+    public String saveTheater(@RequestBody Theater newTheater) {
+        System.out.println(newTheater);
         theaterRepo.saveTheater(newTheater);
         return "redirect:/theaters";
     }
@@ -56,8 +61,8 @@ public class TheaterController {
     @PostMapping("/theaters/edit/{id}")
     @ResponseBody
     public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
-        theater.setId(id);
         theaterRepo.update(theater);
+        System.out.println(theater);
         return id;
     }
 

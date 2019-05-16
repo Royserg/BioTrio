@@ -41,12 +41,13 @@ public class TheaterRepository {
         PreparedStatementCreator psc = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?)");
+                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?,?)");
                 ps.setInt(1, theater.getCinemaId());
                 ps.setString(2, theater.getName());
                 ps.setInt(3, theater.getRowsNumber());
                 ps.setInt(4, theater.getColumnsNumber());
                 ps.setBoolean(5, theater.isCan3d());
+                ps.setBoolean(6, theater.isDolby());
                 return ps;
 
             }
@@ -57,8 +58,8 @@ public class TheaterRepository {
     }
 
     public void update(Theater theater) {
-        String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ? WHERE id = ?";
-        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.getId());
+        String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ?, dolby = ? WHERE id = ?";
+        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.isDolby(), theater.getId());
     }
 
     public void delete(int id) {
