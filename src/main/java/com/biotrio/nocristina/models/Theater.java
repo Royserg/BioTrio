@@ -2,6 +2,7 @@ package com.biotrio.nocristina.models;
 
 public class Theater {
 
+    private int id;
     private int cinemaId;
     private String name;
     private int rowsNumber;
@@ -17,6 +18,14 @@ public class Theater {
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
         this.can3d=can3d;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCinemaId() {

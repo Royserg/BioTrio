@@ -5,18 +5,18 @@ import java.util.List;
 public class Booking {
 
     private int id;
-    private int screeningId;
     private String customerPhoneNumber;
     private List<Ticket> tickets;
     private Screening screening;
 
     public Booking(){}
 
-    public Booking(int id, int screeningId, String customerPhoneNumber) {
+    public Booking(int id, String customerPhoneNumber) {
         this.id = id;
-        this.screeningId = screeningId;
         this.customerPhoneNumber = customerPhoneNumber;
     }
+
+
 
     public int getId() {
         return id;
@@ -42,19 +42,21 @@ public class Booking {
         this.tickets = tickets;
     }
 
-    public int getScreeningId() {
-        return screeningId;
-    }
-
-    public void setScreeningId(int screeningId) {
-        this.screeningId = screeningId;
-    }
-
     public Screening getScreening() {
         return screening;
     }
 
     public void setScreening(Screening screening) {
         this.screening = screening;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", tickets=" + tickets +
+                ", screening=" + screening +
+                '}';
     }
 }

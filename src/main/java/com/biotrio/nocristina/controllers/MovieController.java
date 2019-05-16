@@ -5,10 +5,7 @@ import com.biotrio.nocristina.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,15 +18,21 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
     }
 
+
+    @GetMapping("api/movie/{id}")
+    @ResponseBody
+    public Movie findById(@PathVariable int id) {
+        return movieRepo.findById(id);
+    }
 
     @GetMapping("/movies")
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
-        model.addAttribute("movieList", movieRepo.FindAll());
+        model.addAttribute("movieList", movieRepo.findAll());
         return "movies";
     }
 
@@ -37,6 +40,26 @@ public class MovieController {
     public String saveMovie(@ModelAttribute Movie newMovie){
         movieRepo.addMovie(newMovie);
         return "redirect:/movies";
+    }
+
+    @PostMapping("/movies/edit/{id}")
+    @ResponseBody
+    public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
+
+        movieRepo.editMovie(id, movieToEdit);
+        System.out.println("movie " + id + "edited");
+
+        return id;
+    }
+
+    @DeleteMapping("/movies/delete/{id}")
+    @ResponseBody
+    public int deleteMovie(@PathVariable int id){
+
+        movieRepo.deleteMovie(id);
+        System.out.println("movie" + id + " deleted");
+
+        return id;
     }
 
 }

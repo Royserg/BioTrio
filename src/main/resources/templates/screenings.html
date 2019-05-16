@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/fragments :: head(title='Screenings')" >
+    <link rel="stylesheet" type="text/css" href="jquery-ui.min">
+</head>
+<body>
+<!--this is for the navigation bar-->
+<nav th:replace="fragments/fragments :: navbar" />
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/fragments :: sidebar" />
+        <div class="col-10 mt-3">
+            <div class="container" >
+                <!-- Modal -->
+                <div class="modal fade" id="editScreening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" >Edit Screening</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="editMovie">Movie</label>
+                                <select class="form-control" id="editMovie" aria-describedby="movie" >
+                                    <option hidden></option>
+                                    <option th:each="movie : ${movieList}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
+                                </select>
+                                <label for="editTheater">Theater</label>
+                                <select class="form-control" id="editTheater" aria-describedby="theater">
+                                    <option style="display:none;"></option>
+                                    <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                                </select>
+                                <label for="editDate">Date</label>
+                                <input type="date" class="form-control" id="editDate" placeholder="screeningDate">
+                                <label for="editTime">Time</label>
+                                <input type="time" class="form-control" id="editTime">
+                                <label for="editPrice">Price</label>
+                                <input type="number" class="form-control" id="editPrice">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitButton" >Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- List of available movies -->
+                <table class="table table-hover" id="screeningTable">
+                    <caption>List of screenings</caption>
+                    <thead class="thead-dark">
+                    <tr class="d-flex">
+                        <th class="col-2">Movie Title</th>
+                        <th class="col-2">Theater room</th>
+                        <th class="col-2">Date</th>
+                        <th class="col-2">Time</th>
+                        <th class="col-2">Price</th>
+                        <!-- columns for edit and delete button -->
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="d-flex" th:each="screening : ${screeningList}">
+                        <td class="col-2" th:text="${screening.movie.title}" />
+                        <td class="col-2" th:text="${screening.theater.name}"/>
+                        <td class="col-2" th:text="${screening.date}"/>
+                        <td class="col-2" th:text="${screening.time}"/>
+                        <td class="col-2" th:text="${screening.price}"/>
+                        <td class="col-1">
+                            <a href="#"
+                               id = "editButton"
+                               class="btn btn-warning"
+                               data-toggle="modal"
+                               data-target="#editScreening"
+                               th:attr="data-screeningid=${screening.id}">
+                                <span class="fas fa-edit"></span>
+                            </a>
+                        </td>
+                        <td class="col-1">
+                            <button th:attr="data-screeningid=${screening.id}, data-screeningmovie=${screening.movie.title}" class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- Form for adding a screening -->
+                <details>
+                    <summary>Add new screening</summary>
+                    <p>
+                    <p class="lead">
+                    <form method="post" th:object="${newScreening}">
+                        <div class="form-group">
+                            <label for="movie">Select Movie</label>
+                            <select class="form-control" id="movie" aria-describedby="movie" >
+                                <option hidden></option>
+                                <option th:each="movie : ${movieList}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="theater">Select Theater</label>
+                            <select class="form-control" id="theater" aria-describedby="theater">
+                                <option style="display:none;"></option>
+                                <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="screeningDate">Date</label>
+                            <input type="date" class="form-control" id="screeningDate" placeholder="screeningDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="screeningTime">Time</label>
+                            <input type="time" class="form-control" id="screeningTime" placeholder="screeningTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" placeholder="price">
+                        </div>
+                        <btn style="color: white" class="btn btn-dark mt-3" id="addScreening">Add screening</btn>
+                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
+                    </form>
+                    </p>
+                    </p>
+                </details>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<!-- Bootstrap scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script th:src="@{/js/screening/deleteScreening.js}"></script>
+<script th:src="@{/js/screening/addScreening.js}"></script>
+<script th:src="@{/js/screening/editScreening.js}"></script>
+</body>
+</html>

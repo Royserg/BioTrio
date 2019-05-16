@@ -7,9 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -35,12 +33,11 @@ public class TicketRepository {
 
 
     public Ticket saveTicket(Ticket ticket){
-        System.out.println(ticket.getColumnNo());
         PreparedStatementCreator psc = connection -> {
             PreparedStatement ps = connection.prepareStatement("insert into tickets values (null, ?,?,?)");
             ps.setInt(1,ticket.getBookingId());
-            ps.setInt(2,ticket.getRowNo());
-            ps.setInt(3,ticket.getColumnNo());
+            ps.setInt(2,ticket.getRowNo()+1);
+            ps.setInt(3,ticket.getColumnNo()+1);
             return ps;
         };
         jdbc.update(psc);
@@ -56,4 +53,5 @@ public class TicketRepository {
 
         return reservedSeats;
     }
+
 }

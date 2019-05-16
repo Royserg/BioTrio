@@ -1,7 +1,6 @@
 package com.biotrio.nocristina.controllers;
-import com.biotrio.nocristina.models.Screening;
+import com.biotrio.nocristina.models.*;
 import com.biotrio.nocristina.services.BookingService;
-import com.biotrio.nocristina.models.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +14,31 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
-    @GetMapping("/api/screenings/{movieId}")
-    @ResponseBody
-    public List<Screening> screenings(@PathVariable int movieId) {
-        return bookingService.getByMovieId(movieId);
-    }
 
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> bookings() {
-        return bookingService.getAllBookings();
+        List<Booking> bookings = bookingService.getAllBookings();
+        return bookings;
     }
+
+    @PostMapping("/api/bookings/add")
+    @ResponseBody
+    public int saveBooking(@RequestBody Booking newBooking) {
+        bookingService.addBooking(newBooking);
+
+        return newBooking.getId();
+    }
+
+    // Delete booking of provided id
+    @DeleteMapping("api/bookings/{bookingId}")
+    @ResponseBody
+    public int deleteBooking(@PathVariable int bookingId) {
+        bookingService.deleteBooking(bookingId);
+
+        return bookingId;
+    }
+
 
     @GetMapping("/bookings")
     public String showBookings(Model m){
@@ -34,24 +47,22 @@ public class BookingController {
         return "bookings";
     }
 
-    // Show form to add bookings
+    // Open page for adding new booking,
+    // fetch only list of movies
     @GetMapping("/bookings/add")
     public String addBookings(Model model) {
-        Booking newBooking = new Booking();
-        model.addAttribute("bookingForm", newBooking);
-
         // Pass all movies to frontend
         model.addAttribute("movieList", bookingService.getAllMovies());
-        // Testing: Pass all screenings
-        model.addAttribute("screeningList", bookingService.getAllScreenings());
 
         return "add-booking";
     }
 //
+
+
 //    // Post method for form handling
 //    @PostMapping("/bookings/add")
 //    public String saveBooking(@ModelAttribute Booking booking) {
-//        bookingRepo.getBookingList().add(booking);
+//        bookingService.getBookingList().add(booking);
 //        return "redirect:/add";
 //    }
 //

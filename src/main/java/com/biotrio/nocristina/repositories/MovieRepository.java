@@ -18,14 +18,22 @@ public class MovieRepository {
     private JdbcTemplate jdbc;
 
 
-    public List<Movie> FindAll(){
+    public List<Movie> findAll(){
+
         String sql = "SELECT * FROM movies";
         List<Movie> movies = jdbc.query(sql, new BeanPropertyRowMapper<>(Movie.class));
 
         return movies;
     }
 
+    public Movie findByScreeningId(int screeningId){
+        String sql ="SELECT movies.* FROM movies JOIN screenings s ON movies.id = s.movie_id WHERE s.id =" +screeningId;
+        Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
+        return movie;
+    }
+
     public Movie findById(int movieId) {
+
         String sql = "SELECT * FROM movies WHERE id = ?";
         Movie movie = jdbc.queryForObject(sql, new Object[] {movieId}, new BeanPropertyRowMapper<>(Movie.class));
 
@@ -33,6 +41,7 @@ public class MovieRepository {
     }
 
     public void addMovie(Movie newMovie){
+
         String sql = "INSERT INTO movies(title, duration_in_minutes) VALUES(?,?);";
         jdbc.update((Connection connection)->{
 
@@ -45,6 +54,20 @@ public class MovieRepository {
                 return ps;
             }
         );
+    }
+
+    public void editMovie(int id, Movie movieToEdit){
+
+        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? WHERE id = ?;";
+        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), id);
+
+    }
+
+    public void deleteMovie(int id){
+
+        String sql = "DELETE FROM movies WHERE id =?";
+        jdbc.update(sql, id);
+
     }
 
 }
