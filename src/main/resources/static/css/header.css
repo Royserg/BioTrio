@@ -6,6 +6,7 @@
     color: #232323;
     border-bottom: 1px solid transparent;
     transition: .4s border ease-in;
+    padding: .7em 0;
 }
 
 .nav-link__active {
