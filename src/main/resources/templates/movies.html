@@ -107,17 +107,17 @@
                     </div>
                     <div class="form-group">
                         <label for="is3D">3D Movie</label>
-                        <input type="checkbox" class="form-control" id="is3D" th:field="*{is3D}" onchange="sendAlert()">
+                        <input type="checkbox" class="form-control" id="is3D" th:field="*{is3D}">
                     </div>
                     <div class="form-group">
                         <label for="isDolby">Dolby soundtrack</label>
-                        <input type="checkbox" class="form-control" id="isDolby" th:field="*{dolby}" onchange="sendAlert()">
+                        <input type="checkbox" class="form-control" id="isDolby" th:field="*{dolby}">
                     </div>
-                        <script type="text/javascript">
-                            function sendAlert() {
-                                alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
-                            }
-                        </script>
+                        <!--<script type="text/javascript">-->
+                            <!--function sendAlert() {-->
+                                <!--alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");-->
+                            <!--}-->
+                        <!--</script>-->
 
                     <input type="submit" class="btn btn-outline-dark" value="Add Movie"/>
                     <button type="reset" class="btn btn-outline-dark">Cancel</button>

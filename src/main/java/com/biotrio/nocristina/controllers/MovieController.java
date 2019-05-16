@@ -37,8 +37,6 @@ public class MovieController {
     public String saveMovie(@ModelAttribute Movie newMovie){
 
         movieRepo.addMovie(newMovie);
-        System.out.println("new movie " + newMovie.getId() + " added");
-
         return "redirect:/movies";
     }
 

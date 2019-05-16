@@ -61,6 +61,17 @@ public class Movie {
     }
 
     public void setDolby(boolean dolby) {
-        dolby = dolby;
+        this.dolby = dolby;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", durationInMinutes=" + durationInMinutes +
+                ", is3D=" + is3D +
+                ", dolby=" + dolby +
+                '}';
     }
 }

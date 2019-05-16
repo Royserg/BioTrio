@@ -36,7 +36,7 @@ public class MovieRepository {
 
     public void addMovie(Movie newMovie){
 
-        String sql = "INSERT INTO movies(title, duration_in_minutes, is3D, isDolby) VALUES(?,?,?,?);";
+        String sql = "INSERT INTO movies(title, duration_in_minutes, is3D, dolby) VALUES(?,?,?,?);";
         jdbc.update((Connection connection)->{
 
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class MovieRepository {
 
     public void editMovie(int id, Movie movieToEdit){
 
-        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, isDolby = ? WHERE id = ?;";
+        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
         jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
 
     }
