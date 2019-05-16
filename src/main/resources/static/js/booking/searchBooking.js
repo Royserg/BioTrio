@@ -1,51 +1,63 @@
 $(function() {
 
     const searchBar = $('#searchBar');
-    //let searchVal = "";
     const tableBody = $('tbody');
 
-    //event triggered eachtime input field of '#searchBar' is updated
+    // Initialize a timeout variable
+    // https://schier.co/blog/2014/12/08/wait-for-user-to-stop-typing-using-javascript.html
+    let timeout = null;
+    const DELAY = 500;
+
+    // Event triggered eachtime input field of '#searchBar' is updated
     searchBar.bind('input', function() {
-
+        // Save typed value into input field
         const searchVal = searchBar.val();
-        //console.log("inputs: " + searchVal)
 
-        // if (searchVal.length > 1)
-        if(1 < searchVal.length){
+        // Clear timeout if it has already been set.
+        // prevents previous task from executing if
+        // time passed is less than DELAY;
+        clearTimeout(timeout);
 
-            $.ajax(`/api/bookings/phone/${searchVal}`, {
-                success: (data) => {
+        // Set action to be fired after value in input changed and delay passed
+        timeout = setTimeout(function() {
 
-                    updateTableBody(data)
-                    //generate new html with data from query
-                    console.log(data);
-                }
-            })
+            // Johan's if statement below translated into normal => if (searchVal.length > 1)
+            if(1 < searchVal.length){
+                // Fetch bookings that start with provided phone number
+                $.ajax(`/api/bookings/phone/${searchVal}`, {
+                    success: (bookings) => {
+                        // Generate new html with data from query
+                        updateTableBody(bookings)
+                        console.log(bookings);
+                    }
+                });
+            }
 
-        }
+            // Search field is empty - should fetch most recent bookings
+            if(searchVal.length === 0){
+                $.ajax('/api/bookings', {
+                    success: (bookings) => {
+                        // Generate new html with data from query
+                        updateTableBody(bookings);
+                        //generate new html with data from query
+                        console.log(bookings);
+                    }
+                })
+            }
+        }, DELAY);
 
-        if(searchVal.length === 0){
+    });
 
-            $.ajax('/api/bookings', {
-                success: (data) => {
 
-                    updateTableBody(data)
-
-                    //generate new html with data from query
-                    console.log(data);
-
-                }
-            })
-        }
-
-    })
-
-    function updateTableBody (data) {
+    // Function that loops over the array of Bookings objects,
+    // creates row html element with all neccessary information
+    // and inserts into table body
+    function updateTableBody (bookings) {
 
         //remove all bookings made with thymeleaf
         tableBody.html("");
 
-        for(let booking of data){
+        for(let booking of bookings){
             const { customerPhoneNumber, id, screening } = booking;
             const row = `
                     <tr class="row">
@@ -73,12 +85,9 @@ $(function() {
             // append full row to the tbody
             tableBody.append(row);
         }   //for ends
-
     }
 
-
-
-})
+});
 
 
 
