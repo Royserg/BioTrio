@@ -1,9 +1,6 @@
 
 $(function() {
 
-<<<<<<< HEAD
-    // Edit movie
-=======
     console.log('jquery loaded');
 
 
@@ -42,7 +39,6 @@ $(function() {
 
 
         // Edit movie
->>>>>>> feature/movie-with-dolby-working
 
         $('td a').click(function() {
 
