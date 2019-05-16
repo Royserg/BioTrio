@@ -18,7 +18,7 @@ public class MovieRepository {
     private JdbcTemplate jdbc;
 
 
-    public List<Movie> FindAll(){
+    public List<Movie> findAll(){
 
         String sql = "SELECT * FROM movies";
         List<Movie> movies = jdbc.query(sql, new BeanPropertyRowMapper<>(Movie.class));
@@ -27,7 +27,7 @@ public class MovieRepository {
     }
 
     public Movie findByScreeningId(int screeningId){
-        String sql ="SELECT movies.id, movies.title, movies.duration_in_minutes FROM movies JOIN screenings AS s ON movies.id = s.movie_id WHERE s.id = " +screeningId;
+        String sql ="SELECT movies.* FROM movies JOIN screenings s ON movies.id = s.movie_id WHERE s.id =" +screeningId;
         Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
         return movie;
     }
@@ -42,14 +42,15 @@ public class MovieRepository {
 
     public void addMovie(Movie newMovie){
 
-        String sql = "INSERT INTO movies(title, duration_in_minutes) VALUES(?,?);";
+        String sql = "INSERT INTO movies(title, duration_in_minutes, is3D, dolby) VALUES(?,?,?,?);";
         jdbc.update((Connection connection)->{
 
             PreparedStatement ps = connection.prepareStatement(sql);
 
                 ps.setString(1, newMovie.getTitle());
                 ps.setInt(2, newMovie.getDurationInMinutes());
-                //ps.executeUpdate();
+                ps.setBoolean(3, newMovie.isIs3D());
+                ps.setBoolean(4, newMovie.isDolby());
 
                 return ps;
             }
@@ -58,8 +59,8 @@ public class MovieRepository {
 
     public void editMovie(int id, Movie movieToEdit){
 
-        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), id);
+        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
+        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
 
     }
 

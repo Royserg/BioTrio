@@ -11,6 +11,40 @@
             <nav th:replace="fragments/fragments :: sidebar" />
             <div class="col-md-10 mt-3">
                 <div class="container">
+
+                    <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editTheaters">Edit Theaters</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="theaterName">Theater name</label>
+                                    <input type="text" class="form-control" id="editname" placeholder="Edit name" maxlength="50">
+                                </div>
+                                <div class="modal-body">
+                                    <label for="rowsNumber">Rows</label>
+                                    <input type="number" class="form-control" id="editrowsNumber" placeholder="Edit amount of rows" min="0">
+                                </div>
+                                <div class="modal-body">
+                                    <label for="columnsNumber">Columns</label>
+                                    <input type="number" class="form-control" id="editcolumnsNumber" placeholder="Edit amount of columns" min="0">
+                                </div>
+                                <div class="modal-body">
+                                    <label for="can3D">3D option</label>
+                                    <input type="checkbox" class="form-control" id="editcan3D">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- List of available theaters -->
                     <!--<h3>Theaters:</h3>-->
                     <table class="table table-hover">
@@ -22,18 +56,27 @@
                                 <th class="col-2">Columns number</th>
                                 <th class="col-3">Can 3D?</th>
                                 <!-- columns for edit and delete button -->
-                                <th class="col-1"></th>
-                                <th class="col-1"></th>
+                                <th class="col-1">edit</th>
+                                <th class="col-1">delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="d-flex" th:each="theater : ${theaterList}">
-                                <td class="col-3" th:text="${theater.name}" />
+                        <tr class="d-flex" th:each="theater : ${theaterList}">
+                                <td class="col-3" th:text="${theater.name}"/>
                                 <td class="col-2" th:text="${theater.rowsNumber}"/>
-                                <td class="col-2" th:text="${theater.rowsNumber}"/>
+                                <td class="col-2" th:text="${theater.columnsNumber}"/>
                                 <td class="col-3" th:text="${theater.can3d}"/>
-                                <td class="col-1"><button class="btn btn-warning">Edit</button></td>
-                                <td class="col-1"><button class="btn btn-danger">Delete</button></td>
+                                <td class="col-1"><a href="#"
+                                                     id = "editButton"
+                                                     class="btn btn-warning"
+                                                     data-toggle="modal"
+                                                     data-target="#editTheater"
+                                                     th:attr="data-theaterid = ${theater.id}"><span class="fas fa-edit"></span></a></td>
+                                <td class="col-1">
+                                    <button th:attr="data-theaterid=${theater.id}, data-theatername=${theater.name}" class="btn btn-danger"  >
+                                        <span class="fas fa-trash"></span>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -68,6 +111,11 @@
                         <input type="submit" class="btn btn-outline-dark" value="Add Theater"/>
                         <button type="reset" class="btn btn-outline-dark">Cancel</button>
                     </form>
+                        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+                        <script th:src="@{/js/Delete/DeleteTheaters.js}"></script>
+                        <script th:src="@{/js/EditModalTheater.js}"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
                         </p>
                     </details>
                 </div>

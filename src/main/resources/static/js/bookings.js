@@ -36,9 +36,10 @@ $(function() {
   $('table').on('click', '.btn-danger', function() {
     const button = $(this);
     const bookingId = $(this).data('bookingid');
-      // Get confirmation for deleting
-      const remove = confirm(`You sure, u want to remove booking: ${bookingId}`);
-      if (remove) {
+
+    // Get confirmation for deleting
+    const remove = confirm(`Are you sure to remove booking: ${bookingId} and its tickets?`);
+    if (remove) {
         $.ajax({
           url: `/api/bookings/${bookingId}`,
           method: 'DELETE',

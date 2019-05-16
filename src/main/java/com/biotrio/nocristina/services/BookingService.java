@@ -60,7 +60,7 @@ public class BookingService {
     }
 
     public List<Movie> getAllMovies() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
     }
 
     // testing: , get all of them
