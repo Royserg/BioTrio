@@ -11,7 +11,8 @@
     <div class="row">
         <nav th:replace="fragments/fragments :: sidebar" />
         <div class="col-10 mt-3">
-            <div class="container" >
+            <h4 th:replace="fragments/fragments :: heading(text='Screenings')" />
+            <div class="container mt-4" >
                 <!-- Modal -->
                 <div class="modal fade" id="editScreening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -47,21 +48,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- List of available movies -->
+                <!-- List of available screenings -->
+                <div style="overflow-x:auto;height:400px;">
                 <table class="table table-hover" id="screeningTable">
                     <caption>List of screenings</caption>
                     <thead class="thead-dark">
                     <tr class="d-flex">
-                        <th class="col-2">Movie Title</th>
-                        <th class="col-2">Theater room</th>
-                        <th class="col-2">Date</th>
-                        <th class="col-2">Time</th>
-                        <th class="col-2">Price</th>
+                        <th class="col-2 sticky-header">Movie Title</th>
+                        <th class="col-2 sticky-header">Theater room</th>
+                        <th class="col-2 sticky-header">Date</th>
+                        <th class="col-2 sticky-header">Time</th>
+                        <th class="col-2 sticky-header">Price</th>
                         <!-- columns for edit and delete button -->
                         <th class="col-1"></th>
                         <th class="col-1"></th>
                     </tr>
                     </thead>
+
                     <tbody>
                     <tr class="d-flex" th:each="screening : ${screeningList}">
                         <td class="col-2" th:text="${screening.movie.title}" />
@@ -87,8 +90,9 @@
                     </tr>
                     </tbody>
                 </table>
+                </div>
                 <!-- Form for adding a screening -->
-                <details>
+                <details id="details">
                     <summary>Add new screening</summary>
                     <p>
                     <p class="lead">
@@ -119,7 +123,7 @@
                             <label for="price">Price</label>
                             <input type="number" class="form-control" id="price" placeholder="price">
                         </div>
-                        <btn style="color: white" class="btn btn-dark mt-3" id="addScreening">Add screening</btn>
+                        <btn style="color: white" class="btn btn-dark" id="addScreening">Add screening</btn>
                         <button type="reset" class="btn btn-outline-dark">Cancel</button>
                     </form>
                     </p>

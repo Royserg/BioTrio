@@ -21,6 +21,14 @@ public class Screening {
         this.id = id;
         this.price = price;
     }
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price) {
+        this.id = id;
+        //this.movieId = movieId;
+        //this.theaterId = theaterId;
+        this.time = time;
+        this.date = date;
+        this.price = price;
+    }
 
     public int getId() {
         return id;
