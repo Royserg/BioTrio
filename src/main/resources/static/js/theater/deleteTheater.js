@@ -1,6 +1,6 @@
 // Delete booking with confirmation popup
-$(function()
-{
+$(function() {
+
     $('table').on('click', '.btn-danger', function () {
         const button = $(this);
         const theaterId = $(this).data('theaterid');

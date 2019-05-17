@@ -10,54 +10,67 @@
         <div class="row">
             <nav th:replace="fragments/fragments :: sidebar" />
             <div class="col-md-10 mt-3">
-                <div class="container">
+                <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
-                    <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editTheaters">Edit Theaters</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <label for="theaterName">Theater name</label>
-                                    <input type="text" class="form-control" id="editname" placeholder="Edit name" maxlength="50">
-                                </div>
-                                <div class="modal-body">
-                                    <label for="rowsNumber">Rows</label>
-                                    <input type="number" class="form-control" id="editrowsNumber" placeholder="Edit amount of rows" min="0">
-                                </div>
-                                <div class="modal-body">
-                                    <label for="columnsNumber">Columns</label>
-                                    <input type="number" class="form-control" id="editcolumnsNumber" placeholder="Edit amount of columns" min="0">
-                                </div>
-                                <div class="modal-body">
-                                    <label for="can3D">3D option</label>
-                                    <input type="checkbox" class="form-control" id="editcan3D">
-                                </div>
-                                <div class="modal-body">
-                                    <label for="canDolby">Dolby option</label>
-                                    <input type="checkbox" class="form-control" id="editcanDolby">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
-                                </div>
+                <!-- Button opening Modal for adding new Theater -->
+                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn btn-primary">Add Theater</button>
+                </div>
+
+
+                <!-- TODO: Theater Modal for adding and editing, please read below
+                     Could you check https://getbootstrap.com/docs/4.0/components/modal/, modal-body class
+                    is just a container for everything that is between modal header and footer, so it is not neccessary to
+                    add for each element extra container with class="modal-body"
+                    naming is confusing, when you use half of the words in just small caps and then camel-case last word
+                    id: editname, editrowsNumber, editcolumnsNumber
+                    suggestion: nameField, rowsNumberField, columnNumberField
+                 -->
+                <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="theaterModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Edit Theaters</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="theaterName">Theater name</label>
+                                <input type="text" class="form-control" id="editname" placeholder="Edit name" maxlength="50">
+                            </div>
+                            <div class="modal-body">
+                                <label for="rowsNumber">Rows</label>
+                                <input type="number" class="form-control" id="editrowsNumber" placeholder="Edit amount of rows" min="0">
+                            </div>
+                            <div class="modal-body">
+                                <label for="columnsNumber">Columns</label>
+                                <input type="number" class="form-control" id="editcolumnsNumber" placeholder="Edit amount of columns" min="0">
+                            </div>
+                            <div class="modal-body">
+                                <label for="can3D">3D option</label>
+                                <input type="checkbox" class="form-control" id="editcan3D">
+                            </div>
+                            <div class="modal-body">
+                                <label for="canDolby">Dolby option</label>
+                                <input type="checkbox" class="form-control" id="editcanDolby">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
                             </div>
                         </div>
                     </div>
+                </div>
 
                     <!-- List of available theaters -->
-                    <!--<h3>Theaters:</h3>-->
                     <table class="table table-hover">
                         <caption>List of theaters</caption>
                         <thead class="thead-dark">
                             <tr class="d-flex">
                                 <th class="col-2">Name</th>
-                                <th class="col-2">Rows number</th>
-                                <th class="col-2">Columns number</th>
+                                <th class="col-2">Rows no.</th>
+                                <th class="col-2">Columns no.</th>
                                 <th class="col-2">Can 3D?</th>
                                 <th class="col-2">Can Dolby?</th>
                                 <!-- columns for edit and delete button -->
@@ -66,7 +79,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr class="d-flex" th:each="theater : ${theaterList}">
+                            <tr class="d-flex" th:each="theater : ${theaterList}">
                                 <td class="col-2" th:text="*{theater.name}" th:value="${theater}"/>
                                 <td class="col-2" th:text="${theater.rowsNumber}"/>
                                 <td class="col-2" th:text="${theater.columnsNumber}"/>
@@ -88,6 +101,14 @@
                     </table>
 
                     <!-- Add new Theater form -->
+                    <!-- TODO: We agreed today that this <details> would be better to just replace with a modal
+                        Could you just make that one modal Above able to Edit and Add Theater?
+                        Would be better to have addTheater.js file that let's us add dynamically a theater and show it
+                        right away on the page instead of refreshing the website.
+                        So the modal above could be used for adding and editing.
+                        Also it helps when you open a modal when wanting to edit, and the information about the
+                        editing Theater are populated in the proper fields
+                     -->
                     <details>
                         <summary>Add new theater</summary>
                         <p>
@@ -119,18 +140,18 @@
                             <label class="form-check-label" for="canDolby">Can Dolby?</label>
                         </div>
                         <input type="submit" class="btn btn-outline-dark" value="Add Theater"/>
-                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
+                        <button class="btn btn-outline-dark">Cancel</button>
                     </form>
                         </p>
                     </details>
-                </div>
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script th:src="@{/js/theater/DeleteTheaters.js}"></script>
-    <script th:src="@{/js/theater/EditModalTheater.js}"></script>
+    <script th:src="@{/js/theater/deleteTheater.js}"></script>
+    <script th:src="@{/js/theater/editTheater.js}"></script>
     </body>
 </html>
