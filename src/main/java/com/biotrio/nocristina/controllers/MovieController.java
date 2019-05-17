@@ -50,7 +50,7 @@ public class MovieController {
         return newMovie.getId();
     }
 
-    @PostMapping("/movies/edit/{id}")
+    @PutMapping("/movies/edit/{id}")
     @ResponseBody
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 

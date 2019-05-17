@@ -79,7 +79,7 @@ $(function() {
 
                     $.ajax({
 
-                        type: 'POST',
+                        type: 'PUT',
                         url: `/movies/edit/${id}`,
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
