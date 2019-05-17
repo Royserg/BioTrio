@@ -86,9 +86,9 @@ public class ScreeningController {
         return screeningService.findById(id);
     }
 
-    @PostMapping("/screenings/edit/{id}")
+    @PutMapping("/screenings/")
     @ResponseBody
-    public int editMovie(@RequestBody Screening screeningToEdit){
+    public int editScreening(@RequestBody Screening screeningToEdit){
 
         screeningService.editScreening(screeningToEdit);
         System.out.println("screening " + screeningToEdit.getId() + " edited");

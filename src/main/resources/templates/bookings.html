@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="input-group col-4">
-                            <input class="form-control" type="text" placeholder="Search Booking..."  />
+                            <input class="form-control" id="searchBar" type="text" placeholder="Search Booking..."  />
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-search"></span>
@@ -58,9 +58,9 @@
                         <caption>List of bookings</caption>
                         <thead class="thead-dark">
                             <tr class="row">
-                                <th class="col-1">id</th>
                                 <th class="col-3">movie</th>
-                                <th class="col-2">datetime</th>
+                                <th class="col-2">date</th>
+                                <th class="col-1">time</th>
                                 <th class="col-3">phone</th>
                                 <!-- columns for tickets edit and delete button -->
                                 <th class="col-1">tickets</th>
@@ -68,11 +68,12 @@
                                 <th class="col-1">delete</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr class="row" th:each="booking : ${bookings}">
-                                <th class="col-1" th:text="${booking.id}">id</th>
                                 <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
-                                <td class="col-2" th:text="${booking.screening.time}">datetime</td>
+                                <td class="col-2" th:text="${booking.screening.date}">date</td>
+                                <td class="col-1" th:text="${booking.screening.time}">date</td>
                                 <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
                                 <td class="col-1">
                                     <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
@@ -103,6 +104,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Custom js -->
-    <script th:src="@{/js/bookings.js}"></script>
+    <script th:src="@{/js/booking/bookings.js}"></script>
+    <script th:src="@{/js/booking/searchBooking.js}"></script>
 </body>
 </html>
