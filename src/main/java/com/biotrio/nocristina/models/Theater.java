@@ -8,20 +8,29 @@ public class Theater {
     private int rowsNumber;
     private int columnsNumber;
     private boolean can3d;
-
+    private boolean dolby;
 
     public Theater(){}
 
-    public Theater(int cinemaId,String name, int rowsNumber, int columnsNumber, boolean can3d) {
+    public Theater(int cinemaId,String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
         this.cinemaId=cinemaId;
         this.name = name;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
         this.can3d=can3d;
+        this.dolby=dolby;
     }
 
     public int getId() {
         return id;
+    }
+
+    public boolean isDolby() {
+        return dolby;
+    }
+
+    public void setDolby(boolean dolby) {
+        this.dolby = dolby;
     }
 
     public void setId(int id) {
@@ -76,6 +85,7 @@ public class Theater {
                 ", rowsNumber=" + rowsNumber +
                 ", columnsNumber=" + columnsNumber +
                 ", can3d=" + can3d +
+                ", dolby=" + dolby +
                 '}';
     }
 }
