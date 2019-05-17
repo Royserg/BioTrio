@@ -84,6 +84,7 @@ $(function() {
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
                         contentType: 'application/json',
+
                         success: function (data) {
 
                             // Reload the data
