@@ -166,7 +166,6 @@ $(function() {
                     success: function () {
 
                         // Refresh the table
-                        // $("#movieTable").load(window.location + " #movieTable");
                         $("#movieTable").load("movies.html #movieTable");
 
                     }
