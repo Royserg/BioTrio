@@ -14,7 +14,9 @@
         <nav th:replace="fragments/fragments :: sidebar" />
 
         <div class="col-10 mt-3">
-            <div class="container" >
+            <h4 th:replace="fragments/fragments :: heading(text='Movies')" />
+
+            <div class="container mt-4" >
 
 
                 <!-- Modal -->
@@ -80,7 +82,7 @@
                                                      data-toggle="modal"
                                                      data-target="#editMovie"
                                                      th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
-                                <td class="col-1"><a class="btn btn-danger" th:attr="movieID=${movie.id}"><span class = "fas fa-trash"></span></a></td>
+                                <td class="col-1"><a class="btn btn-danger" th:attr="movieID=${movie.id}"><span class = "fas fa-trash text-white"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
