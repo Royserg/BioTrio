@@ -41,10 +41,13 @@ public class MovieController {
     }
 
     @PostMapping("/movies")
-    public String saveMovie(@ModelAttribute Movie newMovie){
+    @ResponseBody
+    public int saveMovie(@RequestBody Movie newMovie){
 
         movieRepo.addMovie(newMovie);
-        return "redirect:/movies";
+        System.out.println("new movie added");
+
+        return newMovie.getId();
     }
 
     @PostMapping("/movies/edit/{id}")

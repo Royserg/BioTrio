@@ -83,7 +83,7 @@ $(function() {
                         url: `/movies/edit/${id}`,
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
-                        contentType: 'application/json; charset=utf-8',
+                        contentType: 'application/json',
                         success: function (data) {
 
                             // Reload the data
@@ -106,8 +106,8 @@ $(function() {
 
                         }
 
-
                 });
+
                 }
 
             });
@@ -141,6 +141,38 @@ $(function() {
                         }
                     })
                 }
+            });
+
+
+
+         // Add movie
+
+            $('#addNewMovie').click(function () {
+
+                let newMovie = {
+                    'title': $('#newTitle').val(),
+                    'durationInMinutes': $('#newDurationInMinutes').val(),
+                    'is3D': $('#new3D').is(":checked"),
+                    'dolby': $('#newDolby').is(":checked")
+                };
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: `/movies`,
+                    dataType: 'json',
+                    data: JSON.stringify(newMovie),
+                    contentType: 'application/json',
+                    success: function () {
+
+                        // Refresh the table
+                        // $("#movieTable").load(window.location + " #movieTable");
+                        $("#movieTable").load("movies.html #movieTable");
+
+                    }
+
+                });
+
             });
 
     }
