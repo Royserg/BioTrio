@@ -12,6 +12,7 @@ $(function()
     let movieId;
     let theaterId;
 
+    let cinema;
     let movie;
     let theater;
 
@@ -39,9 +40,39 @@ $(function()
             {
                 success: function (data) {// success callback function
 
+                    console.log(theater);
                     theater = data;
+
+
+                    $.ajax(`/api/cinemas/${theater.cinemaId}`,   // request url
+                        {
+                            success: function (data) {// success callback function
+
+                                cinema = data;
+                                console.log(cinema);
+                            }
+                        })
+
+
+
                 }
             });
+    })
+
+    //when u select a time for screening
+    screeningTime.change(() => {
+
+        console.log(cinema);
+        console.log(screeningTime.val());
+
+        //TODO: give feedback to user based on time selected
+        if(screeningTime.val() < cinema.openingHour){
+
+            console.log("too early sry");
+        } else {
+            console.log("good time sir");
+        }
+
     })
 
     addScreening.click(function() {
