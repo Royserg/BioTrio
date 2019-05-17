@@ -32,7 +32,9 @@ public class TheaterController {
 
     @GetMapping("/theaters")
     public String addTheater(Model model) {
-        // TODO: implement Cinema Repo, model and controller => below dummy list of integers
+        // TODO: implement Cinema Repo, model and controller => below dummy Cinema
+        // TODO: Could you pull the list of cinemas and push it to the model?
+        // And if you need it for the <select> tag
         model.addAttribute("dummyCinema", 1);
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
@@ -73,3 +75,12 @@ public class TheaterController {
         return "redirect:/theaters";
     }
 }
+
+// TODO:
+// we were speaking today about keeping proper methods for HTTP requests
+// examples
+// (READ)GET: /theaters
+//            /theaters/id
+// (UPDATE) PUT: /theaters
+// (CREATE) POST: /theaters
+// (DELETE) DELETE: /theaters/id
