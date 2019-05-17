@@ -14,7 +14,8 @@
         <nav th:replace="fragments/fragments :: sidebar" />
 
         <div class="col-10 mt-3">
-            <div class="container" >
+            <h4 th:replace="fragments/fragments :: heading(text='Cinemas')" />
+            <div class="container mt-4" >
 
                 <!-- modal info -->
                 <div class="modal fade" id="editCinema" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

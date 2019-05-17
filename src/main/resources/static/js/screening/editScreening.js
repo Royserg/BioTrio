@@ -99,6 +99,8 @@ $(function() {
 
                 //refresh the table only
                 $("#screeningTable").load(window.location + " #screeningTable");
+                collapse.click();
+
             }
         });
     });

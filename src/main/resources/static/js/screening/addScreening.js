@@ -8,6 +8,8 @@ $(function()
     const price = $('#price');
     const screeningDate = $('#screeningDate');
     const screeningTime = $('#screeningTime');
+    const details = $('#details');
+
 
     let movieId;
     let theaterId;
@@ -61,8 +63,12 @@ $(function()
         data: JSON.stringify(screening),
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            // redirect to /bookings once request is successful
-            $(location).attr('href','/screenings');
+            // refresh the table only
+            $("#screeningTable").load(window.location + " #screeningTable").scrollTop("#screeningTable".scrollHeight);
+            window.scrollTo(0,0);
+            details.removeAttribute("open");
+
+
         }
     })
         console.log('request sent');

@@ -72,7 +72,7 @@
                             <tr class="row" th:each="booking : ${bookings}">
                                 <th class="col-1" th:text="${booking.id}">id</th>
                                 <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
-                                <td class="col-2" th:text="${booking.screening.startTime}">datetime</td>
+                                <td class="col-2" th:text="${booking.screening.time}">datetime</td>
                                 <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
                                 <td class="col-1">
                                     <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
