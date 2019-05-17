@@ -44,20 +44,20 @@ public class MovieController {
     @ResponseBody
     public int saveMovie(@RequestBody Movie newMovie){
 
-        movieRepo.addMovie(newMovie);
-        System.out.println("new movie added");
+        int newMovieID = movieRepo.addMovie(newMovie);
+        System.out.println("new movie " + newMovieID + " added");
 
-        return newMovie.getId();
+        return newMovieID;
     }
 
-    @PutMapping("/movies/edit/{id}")
+    @PutMapping("/movies")
     @ResponseBody
-    public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
+    public int editMovie(@RequestBody Movie movieToEdit){
 
-        movieRepo.editMovie(id, movieToEdit);
-        System.out.println("movie " + id + " edited");
+        movieRepo.editMovie(movieToEdit);
+        System.out.println("movie " + movieToEdit.getId() + " edited");
 
-        return id;
+        return movieToEdit.getId();
     }
 
     @DeleteMapping("/movies/delete/{id}")

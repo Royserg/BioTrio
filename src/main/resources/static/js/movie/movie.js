@@ -40,7 +40,7 @@ $(function() {
 
         // Edit movie
 
-        $('td a').click(function() {
+        $('#movieTable').on("click", "td a", function() {
 
             const id = $(this).attr('data-movieID');
             const editButton = $(this);
@@ -61,6 +61,7 @@ $(function() {
             $('#submitChanges').unbind().on('click', function () {
 
                 let movieToEdit = {
+                    'id': id,
                     'title': $('#editTitle').val(),
                     'durationInMinutes': $('#editDurationInMinutes').val(),
                     'is3D': $('#editIs3D').is(":checked"),
@@ -80,7 +81,7 @@ $(function() {
                     $.ajax({
 
                         type: 'PUT',
-                        url: `/movies/edit/${id}`,
+                        url: `/movies`,
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
                         contentType: 'application/json',
@@ -118,10 +119,10 @@ $(function() {
 
         // Delete movie
 
-            $('.btn-danger').click(function () {
+            $('#movieTable').on("click", ".btn-danger", function () {
 
                 const button = $(this);
-                const id = $(this).attr('movieID');
+                const id = $(this).attr('data-movieID');
 
                 // Get confirmation for deleting
                 const remove = confirm(`Are you sure you want to delete this movie?`);
@@ -147,7 +148,9 @@ $(function() {
 
          // Add movie
 
-            $('#addNewMovie').click(function () {
+            $('#addNewMovie').click(function (e) {
+
+                e.preventDefault();
 
                 let newMovie = {
                     'title': $('#newTitle').val(),
@@ -163,10 +166,30 @@ $(function() {
                     dataType: 'json',
                     data: JSON.stringify(newMovie),
                     contentType: 'application/json',
-                    success: function () {
+                    success: function (newMovieID) {
 
-                        // Refresh the table
-                        $("#movieTable").load("movies.html #movieTable");
+                        // add new row to the table with the newly added movie
+
+                        let newRow = `<tr class="d-flex">
+                                        <td class="col-5 title">${newMovie.title}</td>
+                                        <td class="col-3 duration">${newMovie.durationInMinutes}</td>
+                                        <td class="col-1 3D">${newMovie.is3D}</td>
+                                        <td class="col-1 Dolby">${newMovie.dolby}</td>
+                                        <td class="col-1"><a href="#"
+                                                     id = "editButton"
+                                                     class="btn btn-warning"
+                                                     data-toggle="modal"
+                                                     data-target="#editMovie"
+                                                     data-movieID="${newMovieID}"><span class="fas fa-edit"></span></a></td>
+                                        <td class="col-1"><a class="btn btn-danger" data-movieID="${newMovieID}"><span class = "fas fa-trash text-white"></span></a></td>
+                                      </tr>`
+
+                        $('#movieTable tbody').append(newRow);
+                        // $('#movieTable').scrollTo($('#movieTable').height());
+                        // $('#movieTable tbody:last').css('background', 'Green').fadeIn(300);
+                        //
+
+                        //TODO: make add-movie into modal and scroll to the bottom of the table when added.
 
                     }
 
