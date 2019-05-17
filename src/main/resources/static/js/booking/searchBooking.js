@@ -22,13 +22,12 @@ $(function() {
         timeout = setTimeout(function() {
 
             // Johan's if statement below translated into normal => if (searchVal.length > 1)
-            if(1 < searchVal.length){
+            if(0 < searchVal.length){
                 // Fetch bookings that start with provided phone number
                 $.ajax(`/api/bookings/phone/${searchVal}`, {
                     success: (bookings) => {
                         // Generate new html with data from query
                         updateTableBody(bookings)
-                        console.log(bookings);
                     }
                 });
             }
@@ -39,8 +38,6 @@ $(function() {
                     success: (bookings) => {
                         // Generate new html with data from query
                         updateTableBody(bookings);
-                        //generate new html with data from query
-                        console.log(bookings);
                     }
                 })
             }
