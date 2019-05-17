@@ -82,8 +82,8 @@ $(function() {
 
         $.ajax({
 
-            type: 'POST',
-            url: `/screenings/edit/${screeningId}`,
+            type: 'PUT',
+            url: `/screenings/`,
             dataType: 'json',
             data: JSON.stringify(selectedScreening),
             contentType: 'application/json; charset=utf-8',
