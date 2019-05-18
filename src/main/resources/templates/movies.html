@@ -19,7 +19,7 @@
             <div class="container mt-4" >
 
 
-                <!-- Modal -->
+                <!-- Modal for Edit -->
 
                 <div class="modal fade" id="editMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -32,7 +32,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="editTitle">Title</label>
-                                <input type="text" class="form-control" id="editTitle" maxlength="50">
+                                <input type="text" class="form-control" id="editTitle" maxlength="255">
 
                                 <label for="editDurationInMinutes">Duration in Minutes</label>
                                 <input type="number" class="form-control duration" id="editDurationInMinutes" min="10">
@@ -53,9 +53,53 @@
                 </div>
 
 
-                <div class="d-flex justify-content-end mb-4">
-                    <button class="btn btn-primary">Add Movie</button>
+                <!-- Modal for Add -->
+
+                <div class="modal fade" id="addMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addMovieTitle">Add New Movie</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="addTitle">Title</label>
+                                <input type="text" class="form-control" id="addTitle" maxlength="255">
+
+                                <label for="addDurationInMinutes">Duration in Minutes</label>
+                                <input type="number" class="form-control" id="addDurationInMinutes" min="10">
+
+                                <label for="addIs3D">3D Movie</label>
+                                <input type="checkbox" class="form-control" id="addIs3D">
+
+                                <label for="addIsDolby">Dolby Movie</label>
+                                <input type="checkbox" class="form-control" id="addIsDolby">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="addNewMovie">Save</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
+
+
+                <!-- Button for adding movie -->
+
+                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn btn-primary"
+                            type="button"
+                            id="addButton"
+                            data-toggle="modal"
+                            data-target="#addMovie">Add Movie</button>
+                </div>
+
 
 
                 <!-- List of available movies -->
@@ -97,49 +141,50 @@
                     <br>Click on 'Title' in order to sort by the title of movies.
                     <br>Click on 'Duration in minutes' in order to sort by the duration of movies.</p>
 
-                <!-- Form for adding a movie -->
-               <!-- <h1 class="display-4">Add New Movie</h1> -->
 
-                <details style="margin-top:2px;">
+               <!-- <h1 class="display-4">Add New Movie</h1> -->
+                <!--<details style="margin-top:2px;">-->
                     <!--<summary>Add new movie</summary>-->
                     <!--<p>-->
-                <p class="lead">
-                <form>
-                    <div class="form-group">
-                        <label for="newTitle">Title</label>
-                        <input type="text" class="form-control" id="newTitle" placeholder="Title" maxlength="255">
-                    </div>
-                    <div class="form-group">
-                        <label for="newDurationInMinutes">Duration in Minutes</label>
-                        <input type="number" class="form-control" id="newDurationInMinutes" placeholder="Duration" min="10">
-                    </div>
-                    <div class="form-group">
-                        <label for="new3D">3D Movie</label>
-                        <input type="checkbox" class="form-control" id="new3D">
-                    </div>
-                    <div class="form-group">
-                        <label for="newDolby">Dolby soundtrack</label>
-                        <input type="checkbox" class="form-control" id="newDolby">
-                    </div>
+                <!--<p class="lead">-->
+                <!--<form>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="newTitle">Title</label>-->
+                        <!--<input type="text" class="form-control" id="newTitle" placeholder="Title" maxlength="255">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="newDurationInMinutes">Duration in Minutes</label>-->
+                        <!--<input type="number" class="form-control" id="newDurationInMinutes" placeholder="Duration" min="10">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="new3D">3D Movie</label>-->
+                        <!--<input type="checkbox" class="form-control" id="new3D">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="newDolby">Dolby soundtrack</label>-->
+                        <!--<input type="checkbox" class="form-control" id="newDolby">-->
+                    <!--</div>-->
                         <!--<script type="text/javascript">-->
                             <!--function sendAlert() {-->
                                 <!--alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");-->
                             <!--}-->
                         <!--</script>-->
 
-                    <input type="submit" class="btn btn-outline-dark" value="Add Movie" id="addNewMovie"/>
-                    <button type="reset" class="btn btn-outline-dark">Cancel</button>
-                </form>
-                </p>
-                    </p>
-                </details>
+                    <!--<input type="submit" class="btn btn-outline-dark" value="Add Movie" id="addNewMovie"/>-->
+                    <!--<button type="reset" class="btn btn-outline-dark">Cancel</button>-->
+                <!--</form>-->
+                <!--</p>-->
+                    <!--</p>-->
+                <!--</details>-->
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
-<!--scripts for jquery and js-->
+
+<!-- scripts for jquery and js -->
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

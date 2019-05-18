@@ -42,12 +42,13 @@ public class MovieController {
 
     @PostMapping("/movies")
     @ResponseBody
-    public int saveMovie(@RequestBody Movie newMovie){
+    public Movie saveMovie(@RequestBody Movie newMovie){
 
-        int newMovieID = movieRepo.addMovie(newMovie);
-        System.out.println("new movie " + newMovieID + " added");
+        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        System.out.println("new movie " + newMovieAdded.getId() + " added");
+        System.out.println(newMovieAdded.toString());
 
-        return newMovieID;
+        return newMovieAdded;
     }
 
     @PutMapping("/movies")

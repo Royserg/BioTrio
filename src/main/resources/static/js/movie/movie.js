@@ -40,7 +40,7 @@ $(function() {
 
         // Edit movie
 
-        $('#movieTable').on("click", "td a", function() {
+        $('#movieTable').on("click", ".btn-warning", function() {
 
             const id = $(this).attr('data-movieID');
             const editButton = $(this);
@@ -55,7 +55,6 @@ $(function() {
             $("#editDurationInMinutes").val(movieDuration);
             // $("#editIs3D").val(movie3D);
             // $("#editIsDolby").val(movieDolby);
-
 
             // Unbind so that it doesn't have anything working on the back
             $('#submitChanges').unbind().on('click', function () {
@@ -120,83 +119,83 @@ $(function() {
 
         // Delete movie
 
-            $('#movieTable').on("click", ".btn-danger", function () {
+        $('#movieTable').on("click", ".btn-danger", function () {
 
-                const button = $(this);
-                const id = $(this).attr('data-movieID');
+            const button = $(this);
+            const id = $(this).attr('movieid');
 
-                // Get confirmation for deleting
-                const remove = confirm(`Are you sure you want to delete this movie?`);
-                if (remove) {
+            // Get confirmation for deleting
+            const remove = confirm(`Are you sure you want to delete this movie?`);
+            if (remove) {
 
-                    $.ajax({
+                $.ajax({
 
-                        url: `/movies/delete/${id}`,
-                        method: 'DELETE',
-                        success: function (data) {
+                    url: `/movies/delete/${id}`,
+                    method: 'DELETE',
+                    success: function (data) {
 
-                            // Remove html table row with fading animation
-                            button.closest('tr').css('background', 'tomato');
-                            button.closest('tr').fadeOut(800, function () {
-                                $(this).remove();
-                            })
-                        }
-                    })
-                }
-            });
+                        // Remove html table row with fading animation
+                        button.closest('tr').css('background', 'tomato');
+                        button.closest('tr').fadeOut(800, function () {
+                            $(this).remove();
+                        })
+                    }
+                })
+            }
+        });
 
 
 
          // Add movie
 
-            $('#addNewMovie').click(function (e) {
+        $('#addNewMovie').click(function (e) {
 
-                e.preventDefault();
+            e.preventDefault();
 
-                let newMovie = {
-                    'title': $('#newTitle').val(),
-                    'durationInMinutes': $('#newDurationInMinutes').val(),
-                    'is3D': $('#new3D').is(":checked"),
-                    'dolby': $('#newDolby').is(":checked")
-                };
+            let newMovie = {
+                'title': $('#addTitle').val(),
+                'durationInMinutes': $('#addDurationInMinutes').val(),
+                'is3D': $('#addIs3D').is(":checked"),
+                'dolby': $('#addIsDolby').is(":checked")
+            };
 
-                $.ajax({
+            $.ajax({
 
-                    type: 'POST',
-                    url: `/movies`,
-                    dataType: 'json',
-                    data: JSON.stringify(newMovie),
-                    contentType: 'application/json',
-                    success: function (newMovieID) {
+                type: 'POST',
+                url: `/movies`,
+                dataType: 'json',
+                data: JSON.stringify(newMovie),
+                contentType: 'application/json',
+                success: function (newMovieAdded) {
 
-                        // add new row to the table with the newly added movie
+                    // add new row to the table with the newly added movie
 
-                        let newRow = `<tr class="d-flex">
-                                        <td class="col-5 title">${newMovie.title}</td>
-                                        <td class="col-3 duration">${newMovie.durationInMinutes}</td>
-                                        <td class="col-1 3D">${newMovie.is3D}</td>
-                                        <td class="col-1 Dolby">${newMovie.dolby}</td>
-                                        <td class="col-1"><a href="#"
-                                                     id = "editButton"
-                                                     class="btn btn-warning"
-                                                     data-toggle="modal"
-                                                     data-target="#editMovie"
-                                                     data-movieID="${newMovieID}"><span class="fas fa-edit"></span></a></td>
-                                        <td class="col-1"><a class="btn btn-danger" data-movieID="${newMovieID}"><span class = "fas fa-trash text-white"></span></a></td>
-                                      </tr>`
+                    let newRow = `<tr class="d-flex">
+                                    <td class="col-5 title">${newMovieAdded.title}</td>
+                                    <td class="col-3 duration">${newMovieAdded.durationInMinutes}</td>
+                                    <td class="col-1 3D">${newMovieAdded.is3D}</td>
+                                    <td class="col-1 Dolby">${newMovieAdded.dolby}</td>
+                                    <td class="col-1"><a href="#"
+                                                 id = "editButton"
+                                                 class="btn btn-warning"
+                                                 data-toggle="modal"
+                                                 data-target="#editMovie"
+                                                 data-movieID="${newMovieAdded.id}"><span class="fas fa-edit"></span></a></td>
+                                    <td class="col-1"><a class="btn btn-danger" data-movieID="${newMovieAdded.id}"><span class = "fas fa-trash text-white"></span></a></td>
+                                  </tr>`
 
-                        $('#movieTable tbody').append(newRow);
-                        // $('#movieTable').scrollTo($('#movieTable').height());
-                        // $('#movieTable tbody:last').css('background', 'Green').fadeIn(300);
-                        //
+                    $('#movieTable tbody').append(newRow);
+                    setTimeout(function () {
+                        $('#addMovie').modal('hide');
+                    }, 100);
 
-                        //TODO: make add-movie into modal and scroll to the bottom of the table when added.
+                    //TODO: scroll to the bottom of the table when added.
 
-                    }
-
-                });
+                }
 
             });
+
+        });
 
     }
 );
