@@ -2,6 +2,7 @@ $(function() {
     console.log("loaded jquery and bootstrap");
     var bookings = [];
     var screenings = [];
+    var tickets = [];
     var currentDate = new Date();
     console.log(currentDate);
     var currentDay = currentDate.getDay();
@@ -17,8 +18,6 @@ $(function() {
 
     }
 
-    //Get all bookings, store in 'bookings' array
-
     $.ajax(`/api/screenings/`,
         {
             // success callback function
@@ -32,21 +31,30 @@ $(function() {
 
             }
         });
+
+
+    //Get all bookings, store in 'bookings' array
     $.ajax(`/api/bookings/`,
         {
             // success callback function
             success: (data) => {
-                console.log(data);
-                console.log("-------");
 
                 $.each(data, (index, booking) => {
                     bookings.push(booking);
+
+                    $.each(booking.tickets, (index, ticket) => {
+
+                        tickets.push(ticket);
+
+
+                    })
+
                 })
 
+                console.log("tickets: ");
+                console.log(tickets);
             }
         });
-
-
 
 
 
@@ -68,6 +76,8 @@ $(function() {
 
     chart = new ApexCharts(document.querySelector("#chart-3"), options);
     chart.render();
+
+
 
 
 });
