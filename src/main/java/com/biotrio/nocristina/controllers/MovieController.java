@@ -41,20 +41,26 @@ public class MovieController {
     }
 
     @PostMapping("/movies")
-    public String saveMovie(@ModelAttribute Movie newMovie){
+    @ResponseBody
+    public Movie saveMovie(@RequestBody Movie newMovie){
 
-        movieRepo.addMovie(newMovie);
-        return "redirect:/movies";
+        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        System.out.println("new movie " + newMovieAdded.getId() + " added");
+        System.out.println(newMovieAdded.toString());
+
+        return newMovieAdded;
     }
 
-    @PostMapping("/movies/edit/{id}")
+    @PutMapping("/movies/{id}")
     @ResponseBody
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
-        movieRepo.editMovie(id, movieToEdit);
-        System.out.println("movie " + id + " edited");
+        movieRepo.editMovie(movieToEdit);
+        System.out.println("movie " + movieToEdit.getId() + " edited");
+        System.out.println("movie id " + id + " edited");
 
-        return id;
+
+        return movieToEdit.getId();
     }
 
     @DeleteMapping("/movies/delete/{id}")

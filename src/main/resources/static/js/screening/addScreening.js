@@ -53,7 +53,6 @@ $(function()
                 "time":screeningTime.val()
                             }
 
-
     $.ajax({
         type: "POST",
         url:"/api/screenings/add",

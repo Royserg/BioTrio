@@ -11,12 +11,6 @@ public class Movie {
     public Movie() {
     }
 
-//    public Movie(int id, String title, int durationInMinutes) {
-//        this.id = id;
-//        this.title = title;
-//        this.durationInMinutes = durationInMinutes;
-//    }
-
     public Movie(int id, String title, int durationInMinutes, boolean is3D, boolean dolby) {
         this.id = id;
         this.title = title;
@@ -24,6 +18,14 @@ public class Movie {
         this.is3D = is3D;
         this.dolby = dolby;
     }
+
+    // constructor without id
+//    public Movie(String title, int durationInMinutes, boolean is3D, boolean dolby) {
+//        this.title = title;
+//        this.durationInMinutes = durationInMinutes;
+//        this.is3D = is3D;
+//        this.dolby = dolby;
+//    }
 
     public String getTitle() {
         return title;

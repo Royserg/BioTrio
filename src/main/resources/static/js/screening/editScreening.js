@@ -101,6 +101,7 @@ $(function() {
                 $("#screeningTable").load(window.location + " #screeningTable");
                 collapse.click();
 
+
             }
         });
     });

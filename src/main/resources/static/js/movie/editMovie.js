@@ -1,7 +1,7 @@
 
 $(function() {
 
-    console.log('jquery loaded');
+    console.log('edit jquery loaded');
 
 
         // sort table
@@ -40,7 +40,7 @@ $(function() {
 
         // Edit movie
 
-        $('td a').click(function() {
+        $('#movieTable').on("click", ".btn-warning", function() {
 
             const id = $(this).attr('data-movieID');
             const editButton = $(this);
@@ -56,11 +56,11 @@ $(function() {
             // $("#editIs3D").val(movie3D);
             // $("#editIsDolby").val(movieDolby);
 
-
             // Unbind so that it doesn't have anything working on the back
-            $('#submitChanges').unbind().on('click', function () {
+            $('#submitChanges').off('click').on('click', function () {
 
                 let movieToEdit = {
+                    'id': id,
                     'title': $('#editTitle').val(),
                     'durationInMinutes': $('#editDurationInMinutes').val(),
                     'is3D': $('#editIs3D').is(":checked"),
@@ -79,11 +79,11 @@ $(function() {
 
                     $.ajax({
 
-                        type: 'POST',
-                        url: `/movies/edit/${id}`,
+                        type: 'PUT',
+                        url: `/movies/${movieToEdit.id}`,
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
-                        contentType: 'application/json; charset=utf-8',
+                        contentType: 'application/json',
                         success: function (data) {
 
                             // Reload the data
@@ -106,42 +106,13 @@ $(function() {
 
                         }
 
-
                 });
+
                 }
 
             });
 
         });
-
-
-
-        // Delete movie
-
-            $('.btn-danger').click(function () {
-
-                const button = $(this);
-                const id = $(this).attr('movieID');
-
-                // Get confirmation for deleting
-                const remove = confirm(`Are you sure you want to delete this movie?`);
-                if (remove) {
-
-                    $.ajax({
-
-                        url: `/movies/delete/${id}`,
-                        method: 'DELETE',
-                        success: function (data) {
-
-                            // Remove html table row with fading animation
-                            button.closest('tr').css('background', 'tomato');
-                            button.closest('tr').fadeOut(800, function () {
-                                $(this).remove();
-                            })
-                        }
-                    })
-                }
-            });
 
     }
 );
