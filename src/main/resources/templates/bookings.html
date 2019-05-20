@@ -3,6 +3,29 @@
 
 <head th:replace="fragments/fragments :: head(title='Bookings')" />
 
+<style>
+    .seat {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .seat__reserved {
+        background-color: crimson;
+    }
+
+    .seat__free {
+        background-color: white;
+        border: 2px solid black;
+    }
+
+    .seat__selected {
+        background-color: forestgreen;
+        border: none;
+    }
+</style>
+
 <body>
     <nav th:replace="fragments/fragments :: navbar" />
 
@@ -70,6 +93,17 @@
 
                                 <!-- TODO: fetch seats and display the grid  -->
 
+                                <!--  Seats Container  -- Start  -->
+                                <div class="seats-container">
+                                    <hr>
+                                    <!-- Seats to select -->
+                                    <h4 class="text-center">Seats</h4>
+                                    <div class="screen mx-auto mb-5"></div>
+                                    <div class="mt-3 mb-4" id="seats">
+                                        Seats for the tickets
+                                    </div>
+                                </div>
+                                <!-- Seats Container -- End-->
 
                             </div>
                             <div class="modal-footer">

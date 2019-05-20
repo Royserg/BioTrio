@@ -167,8 +167,8 @@ $(function() {
             $.each(row, function (columnIndex, seatFree) {
               $(`#row-${rowIndex}`)
                 .append(`<span data-toggle="tooltip" title="row: ${rowIndex + 1} col: ${columnIndex + 1}" data-row="${rowIndex}" data-column="${columnIndex}" class="seat ${seatFree ? 'seat__free' : 'seat__reserved'} mx-2 my-2"></span>`)
-            })
-          })
+            });
+          });
 
           // Initialize seats tooltips (row and column information box above each seat after hover)
           $('[data-toggle="tooltip"]').tooltip();
