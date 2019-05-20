@@ -57,7 +57,7 @@ $(function() {
             // $("#editIsDolby").val(movieDolby);
 
             // Unbind so that it doesn't have anything working on the back
-            $('#submitChanges').unbind().on('click', function () {
+            $('#submitChanges').off('click').on('click', function () {
 
                 let movieToEdit = {
                     'id': id,
@@ -80,11 +80,10 @@ $(function() {
                     $.ajax({
 
                         type: 'PUT',
-                        url: `/movies`,
+                        url: `/movies/${movieToEdit.id}`,
                         dataType: 'json',
                         data: JSON.stringify(movieToEdit),
                         contentType: 'application/json',
-
                         success: function (data) {
 
                             // Reload the data

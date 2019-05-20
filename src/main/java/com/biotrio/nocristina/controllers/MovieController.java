@@ -51,12 +51,14 @@ public class MovieController {
         return newMovieAdded;
     }
 
-    @PutMapping("/movies")
+    @PutMapping("/movies/{id}")
     @ResponseBody
-    public int editMovie(@RequestBody Movie movieToEdit){
+    public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
         movieRepo.editMovie(movieToEdit);
         System.out.println("movie " + movieToEdit.getId() + " edited");
+        System.out.println("movie id " + id + " edited");
+
 
         return movieToEdit.getId();
     }
