@@ -47,6 +47,14 @@ public class BookingController {
         return "bookings";
     }
 
+    @GetMapping("/api/bookings/phone/{phoneNumber}")
+    @ResponseBody
+    public List<Booking> showBookings(@PathVariable String phoneNumber){
+
+
+        return bookingService.getBookingByPhone(phoneNumber);
+    }
+
     // Open page for adding new booking,
     // fetch only list of movies
     @GetMapping("/bookings/add")

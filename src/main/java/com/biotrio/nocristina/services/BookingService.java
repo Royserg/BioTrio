@@ -45,8 +45,22 @@ public class BookingService {
         return bookings;
     }
 
+    public List<Booking> getBookingByPhone(String phoneNumber) {
+        List<Booking> bookings = bookingRepo.findByPhone(phoneNumber);
+
+        for (Booking booking : bookings) {
+            // Fetch tickets for that booking
+            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
+            //fetch info from db for screening
+            booking.setScreening(screeningService.findByBookingId(booking.getId()));
+        }
+
+        return bookings;
+
+    }
+
     public List<Movie> getAllMovies() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
     }
 
     // testing: , get all of them

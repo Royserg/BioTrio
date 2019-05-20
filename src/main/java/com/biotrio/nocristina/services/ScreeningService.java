@@ -2,6 +2,7 @@ package com.biotrio.nocristina.services;
 
 import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
+import com.biotrio.nocristina.models.Theater;
 import com.biotrio.nocristina.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class ScreeningService {
     }
 
     public List<Movie> getAllMovies() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
     }
 
     public Screening findByBookingId(int bookingId) {
@@ -69,6 +70,27 @@ public class ScreeningService {
         }
 
         return screenings;
+
     }
 
+    public List<Theater> getAllTheaters () {return theaterRepo.findAll();}
+
+    public void addScreening(Screening newScreening){
+        screeningRepo.addScreening(newScreening);
+
+    }
+
+    public void deleteScreening(int screeningId){
+        screeningRepo.deleteScreening(screeningId);
+    }
+
+    public Screening findById(int screeningId) {
+        Screening screening = screeningRepo.findById(screeningId);
+        populateScreeningData(screening);
+        return screening;
+    }
+
+    public void editScreening(Screening screening){
+        screeningRepo.editScreening(screening);
+    }
 }
