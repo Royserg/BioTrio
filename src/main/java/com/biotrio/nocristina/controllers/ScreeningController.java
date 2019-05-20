@@ -34,6 +34,15 @@ public class ScreeningController {
         return screeningService.getByMovieId(movieId);
     }
 
+    // return JSON list of screenings for provided date
+    @GetMapping("/api/screenings/date/{date}")
+    @ResponseBody
+    public List<Screening> screeningsByDate(@PathVariable String date) {
+        System.out.println("date requested in controller: " + date);
+        return screeningService.getScreeningsByDate(date);
+
+    }
+  
     // return JSON list of screenings between 2 dates
     @GetMapping("/api/screenings/dates/{date1}/{date2}")
     @ResponseBody

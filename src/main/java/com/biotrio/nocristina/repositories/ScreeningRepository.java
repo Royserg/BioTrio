@@ -46,8 +46,12 @@ public class ScreeningRepository {
         return screening;
     }
 
+    public List<Screening> findByDate(String date) {
+        String sql = "SELECT * from screenings WHERE date = '" + date + "'";
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+    }
+  
     public List<Screening> findBetweenDates(String date1, String date2){
-
         String sql = "SELECT * FROM screenings WHERE date BETWEEN '" + date1 + "' AND '" + date2 + "'";
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
     }

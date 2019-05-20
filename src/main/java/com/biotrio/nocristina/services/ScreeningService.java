@@ -29,7 +29,6 @@ public class ScreeningService {
         screening.setMovie(movieRepo.findByScreeningId(screening.getId()));
         // set Theater for the screening by id of the theater
         screening.setTheater(theaterRepo.findByScreeningId(screening.getId()));
-
     }
 
     public List<Screening> getAllScreenings() {
@@ -41,8 +40,11 @@ public class ScreeningService {
         return screenings;
     }
 
+    public List<Screening> getScreeningsByDate(String date) {
+        List<Screening> screenings = screeningRepo.findByDate(date);
+    }
+  
     public List<Screening> getBetweenDates(String date1, String date2) {
-
         List<Screening> screenings = screeningRepo.findBetweenDates(date1, date2);
         for (Screening screening : screenings) {
             populateScreeningData(screening);
