@@ -1,5 +1,4 @@
 
-
 $(function()
 {
     const movieList = $('#movie');
@@ -8,7 +7,6 @@ $(function()
     const price = $('#price');
     const screeningDate = $('#screeningDate');
     const screeningTime = $('#screeningTime');
-    const details = $('#details');
 
 
     let movieId;
@@ -63,11 +61,23 @@ $(function()
         data: JSON.stringify(screening),
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            // refresh the table only
-            $("#screeningTable").load(window.location + " #screeningTable").scrollTop("#screeningTable".scrollHeight);
-            window.scrollTo(0,0);
-            details.removeAttribute("open");
 
+            let newRow = `<tr class="d-flex">
+                        <td class="col-2" ${screening.movie.title} />
+                        <td class="col-2" ${screening.theater.name}/>
+                        <td class="col-2" ${screening.date}/>
+                        <td class="col-2" ${screening.time}/>
+                        <td class="col-2" ${screening.price}/>
+                        <td class="col-1">`
+
+            //appends the latest movie to the table
+            $('#screeningTable tbody').append(newRow);
+
+            //scroll to the bottom of the table
+            $('#screeningTable').scrollTop($('#screeningTable')[0].scrollHeight);
+
+            //scroll to the top of the page
+            window.scrollTo(0,0);
 
         }
     })
