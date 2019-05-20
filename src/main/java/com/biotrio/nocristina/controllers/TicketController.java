@@ -51,10 +51,15 @@ public class TicketController {
         return "ticket";
     }
 
-    @GetMapping("/api/tickets/reservedSeats/{id}")
+    /**
+     * Method returning list of tickets for particular screening
+     * @param screeningId (int)
+     * @return (List) of Ticket objects
+     */
+    @GetMapping("/api/tickets/screening/{screeningId}")
     @ResponseBody
-    public List<Ticket> showReservedSeats(@PathVariable int id){
+    public List<Ticket> showReservedSeats(@PathVariable int screeningId){
 
-        return ticketRepo.findTicketsForScreening(id);
+        return ticketRepo.findTicketsForScreening(screeningId);
     }
 }

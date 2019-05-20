@@ -18,6 +18,7 @@ public class TheaterRepository {
     @Autowired
     private JdbcTemplate jdbc;
 
+  
     public List<Theater> findAll() {
         String sql = "SELECT * FROM theaters";
         List<Theater> theaters = jdbc.query(sql, new BeanPropertyRowMapper<>(Theater.class));
@@ -30,9 +31,9 @@ public class TheaterRepository {
         return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
     }
 
-
     public Theater findByScreeningId(int theaterId) {
         String sql = "SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" + theaterId;
+
         Theater theater = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
         return theater;
     }

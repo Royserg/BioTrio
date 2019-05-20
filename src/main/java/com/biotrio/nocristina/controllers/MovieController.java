@@ -18,31 +18,49 @@ public class MovieController {
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> moviesList() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
+    }
+
+
+    @GetMapping("api/movie/{id}")
+    @ResponseBody
+    public Movie findById(@PathVariable int id) {
+
+        return movieRepo.findById(id);
+
     }
 
     @GetMapping("/movies")
     public String addMovie(Model model) {
+
         Movie newMovie = new Movie();
         model.addAttribute("newMovie", newMovie);
-        model.addAttribute("movieList", movieRepo.FindAll());
+        model.addAttribute("movieList", moviesList());
+
         return "movies";
     }
 
     @PostMapping("/movies")
-    public String saveMovie(@ModelAttribute Movie newMovie){
-        movieRepo.addMovie(newMovie);
-        return "redirect:/movies";
+    @ResponseBody
+    public Movie saveMovie(@RequestBody Movie newMovie){
+
+        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        System.out.println("new movie " + newMovieAdded.getId() + " added");
+        System.out.println(newMovieAdded.toString());
+
+        return newMovieAdded;
     }
 
-    @PostMapping("/movies/edit/{id}")
+    @PutMapping("/movies/{id}")
     @ResponseBody
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
-        movieRepo.editMovie(id, movieToEdit);
-        System.out.println("movie " + id + "edited");
+        movieRepo.editMovie(movieToEdit);
+        System.out.println("movie " + movieToEdit.getId() + " edited");
+        System.out.println("movie id " + id + " edited");
 
-        return id;
+
+        return movieToEdit.getId();
     }
 
     @DeleteMapping("/movies/delete/{id}")
@@ -50,7 +68,7 @@ public class MovieController {
     public int deleteMovie(@PathVariable int id){
 
         movieRepo.deleteMovie(id);
-        System.out.println("movie" + id + " deleted");
+        System.out.println("movie " + id + " deleted");
 
         return id;
     }
