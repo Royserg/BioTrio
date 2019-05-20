@@ -41,6 +41,16 @@ public class ScreeningService {
         return screenings;
     }
 
+    public List<Screening> getBetweenDates(String date1, String date2) {
+
+        List<Screening> screenings = screeningRepo.findBetweenDates(date1, date2);
+        for (Screening screening : screenings) {
+            populateScreeningData(screening);
+        }
+        return screenings;
+
+    }
+
     public List<Movie> getAllMovies() {
         return movieRepo.findAll();
     }
