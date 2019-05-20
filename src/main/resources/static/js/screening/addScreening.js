@@ -9,6 +9,8 @@ $(function()
     const screeningDate = $('#screeningDate');
     const screeningTime = $('#screeningTime');
 
+    let goodTime = false;
+
     let movieId;
     let theaterId;
 
@@ -62,15 +64,11 @@ $(function()
     //when u select a time for screening
     screeningTime.change(() => {
 
-        console.log(cinema);
-        console.log(screeningTime.val());
-
         //TODO: give feedback to user based on time selected
-        if(screeningTime.val() < cinema.openingHour){
-
-            console.log("too early sry");
+        if(screeningTime.val() < cinema.openingHour || screeningTime.val() > cinema.closingHour){
+            goodTime = false;
         } else {
-            console.log("good time sir");
+            goodTime = true;
         }
 
     })
@@ -82,22 +80,25 @@ $(function()
                 "price": price.val(),
                 "date":screeningDate.val(),
                 "time":screeningTime.val()
-                            }
+            }
 
 
-    $.ajax({
-        type: "POST",
-        url:"/api/screenings/add",
-        dataType: "json",
-        data: JSON.stringify(screening),
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            // redirect to /bookings once request is successful
-            $(location).attr('href','/screenings');
-        }
+            if(goodTime) {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/screenings/add",
+                    dataType: "json",
+                    data: JSON.stringify(screening),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        // redirect to /bookings once request is successful
+                        $(location).attr('href', '/screenings');
+                    }
+                })
+
+            } else {
+                alert("Please choose a time within the cinemas opening hours");
+            }
     })
-        console.log('request sent');
-    })
 
-}
-)
+});
