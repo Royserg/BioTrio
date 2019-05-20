@@ -16,26 +16,21 @@ public class TheaterController {
     TheaterRepository theaterRepo;
 
 
-    @GetMapping("/api/theaters")
-    @ResponseBody
+    @GetMapping("/theaters")
     public List<Theater> theaters() {
         List<Theater> theaters = theaterRepo.findAll();
 
         return theaters;
     }
 
-    @GetMapping("/api/theater/{id}")
+    @GetMapping("/theaters/{id}")
     @ResponseBody
     public Theater findById(@PathVariable int id) {
         return theaterRepo.findOne(id);
     }
 
-    @GetMapping("/theaters")
+    @GetMapping("/theaters/add")
     public String addTheater(Model model) {
-        // TODO: implement Cinema Repo, model and controller => below dummy Cinema
-        // TODO: Could you pull the list of cinemas and push it to the model?
-        // And if you need it for the <select> tag
-        model.addAttribute("dummyCinema", 1);
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
         List <Theater> tlist = theaterRepo.findAll();
@@ -48,19 +43,14 @@ public class TheaterController {
     }
 
     @PostMapping("/theaters")
-    public String saveTheater(@RequestBody Theater newTheater) {
-        System.out.println(newTheater);
-        theaterRepo.saveTheater(newTheater);
-        return "redirect:/theaters";
-    }
-
-    @GetMapping("/api/theaters/{id}")
     @ResponseBody
-    public Theater oneTheater(@PathVariable int id) {
-        return theaterRepo.findOne(id);
+    public Theater saveTheater(@RequestBody Theater newTheater) {
+        theaterRepo.saveTheater(newTheater);
+        return newTheater;
     }
 
-    @PostMapping("/theaters/edit/{id}")
+
+    @PutMapping("/theaters/edit/{id}")
     @ResponseBody
     public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
         theaterRepo.update(theater);
@@ -68,7 +58,7 @@ public class TheaterController {
         return id;
     }
 
-    @DeleteMapping("/theaters/delete/{id}")
+    @DeleteMapping("/theaters/{id}")
     @ResponseBody
     public String deleteTheater(@PathVariable(name = "id") int id) {
         theaterRepo.delete(id);

@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Generated;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -41,7 +45,7 @@ public class TheaterRepository {
         PreparedStatementCreator psc = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?,?)");
+                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, theater.getCinemaId());
                 ps.setString(2, theater.getName());
                 ps.setInt(3, theater.getRowsNumber());
@@ -52,7 +56,9 @@ public class TheaterRepository {
 
             }
         };
-        jdbc.update(psc);
+        KeyHolder id = new GeneratedKeyHolder();
+        jdbc.update(psc, id);
+        theater.setId(id.getKey().intValue());
         return theater;
 
     }

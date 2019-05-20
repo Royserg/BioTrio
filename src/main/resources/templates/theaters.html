@@ -35,26 +35,23 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <label for="theaterName">Theater name</label>
-                                <input type="text" class="form-control" id="editname" placeholder="Edit name" maxlength="50">
-                            </div>
-                            <div class="modal-body">
-                                <label for="rowsNumber">Rows</label>
-                                <input type="number" class="form-control" id="editrowsNumber" placeholder="Edit amount of rows" min="0">
-                            </div>
-                            <div class="modal-body">
-                                <label for="columnsNumber">Columns</label>
-                                <input type="number" class="form-control" id="editcolumnsNumber" placeholder="Edit amount of columns" min="0">
-                            </div>
-                            <div class="modal-body">
-                                <label for="can3D">3D option</label>
-                                <input type="checkbox" class="form-control" id="editcan3D">
-                            </div>
-                            <div class="modal-body">
-                                <label for="canDolby">Dolby option</label>
-                                <input type="checkbox" class="form-control" id="editcanDolby">
-                            </div>
+
+                                <label for="nameField">Theater name</label>
+                                <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="50">
+
+                                <label for="rowsNumberField">Rows</label>
+                                <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="0">
+
+                                <label for="columnsNumberField">Columns</label>
+                                <input type="number" class="form-control" id="columnsNumberField" placeholder="Edit amount of columns" min="0">
+
+
+                                <label for="is3D">3D option</label>
+                                <input type="checkbox" class="form-control" id="is3D">
+
+                                <label for="isDolby">Dolby option</label>
+                                <input type="checkbox" class="form-control" id="isDolby">
+
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
@@ -64,7 +61,7 @@
                 </div>
 
                     <!-- List of available theaters -->
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="theaterTable">
                         <caption>List of theaters</caption>
                         <thead class="thead-dark">
                             <tr class="d-flex">
@@ -74,8 +71,8 @@
                                 <th class="col-2">Can 3D?</th>
                                 <th class="col-2">Can Dolby?</th>
                                 <!-- columns for edit and delete button -->
-                                <th class="col-1">edit</th>
-                                <th class="col-1">delete</th>
+                                <th class="col-1">Edit</th>
+                                <th class="col-1">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,41 +106,37 @@
                         Also it helps when you open a modal when wanting to edit, and the information about the
                         editing Theater are populated in the proper fields
                      -->
-                    <details>
-                        <summary>Add new theater</summary>
-                        <p>
-                    <form method="post" th:object="${theaterForm}" >
+                <details id="details">
+                    <summary>Add new theater</summary>
+                    <p>
+                    <p class="lead">
+                    <form method="post" th:object="${theaterForm}">
                         <div class="form-group">
-                            <label for="cinemaID">Select Cinema</label>
-                            <select class="form-control" id="cinemaID" aria-describedby="cinemaName">
-                                <option th:each="cinema : ${cinemaList}" th:attr="data-cinema_id=${cinema.id}" th:text="${cinema.name}"/>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="theaterName">Theater Name</label>
-                            <input th:field="*{name}" type="text" class="form-control" id="theaterName" placeholder="Theater Name">
+                            <label for="addNameField">Name</label>
+                            <input type="text" class="form-control" id="addNameField" placeholder="Enter name">
                         </div>
                         <div class="form-group">
-                            <label for="rowsNumber">Rows number</label>
-                            <input th:field="*{rowsNumber}" type="number" value="1" min="1" class="form-control" id="rowsNumber" placeholder="Rows Number">
+                            <label for="addRowsField">Rows</label>
+                            <input type="number" class="form-control" id="addRowsField" placeholder="Enter amount of rows">
                         </div>
                         <div class="form-group">
-                            <label for="columnsNumber">Columns number</label>
-                            <input th:field="*{columnsNumber}" type="number" value="1" min="1" class="form-control" id="columnsNumber" placeholder="Columns Number">
+                            <label for="addColumnsField">Columns</label>
+                            <input type="number" class="form-control" id="addColumnsField" placeholder="Enter amount of columns">
                         </div>
-                        <div class="form-check">
-                            <input th:field="*{can3d}" type="checkbox" class="form-check-input" id="can3D">
-                            <label class="form-check-label" for="can3D">Can 3d?</label>
-                        </div>
-                        <div class="form-check">
-                            <input th:field="*{dolby}" type="checkbox" class="form-check-input" id="canDolby">
-                            <label class="form-check-label" for="canDolby">Can Dolby?</label>
-                        </div>
-                        <input type="submit" class="btn btn-outline-dark" value="Add Theater"/>
-                        <button class="btn btn-outline-dark">Cancel</button>
+                    <div class="form-group">
+                    <label for="change3D">3D</label>
+                    <input type="checkbox" class="form-control" id="change3D">
+                </div>
+                    <div class="form-group">
+                        <label for="changeDolby">Dolby</label>
+                        <input type="checkbox" class="form-control" id="changeDolby">
+                    </div>
+                        <btn style="color: white" class="btn btn-dark" id="addTheater">Add Theater</btn>
+                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
                     </form>
-                        </p>
-                    </details>
+                    </p>
+                    </p>
+                </details>
             </div>
         </div>
     </div>
@@ -153,5 +146,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script th:src="@{/js/theater/deleteTheater.js}"></script>
     <script th:src="@{/js/theater/editTheater.js}"></script>
+    <script th:src="@{/js/theater/addTheater.js}"></script>
     </body>
 </html>
