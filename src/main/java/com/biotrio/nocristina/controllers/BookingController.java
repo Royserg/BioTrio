@@ -22,6 +22,19 @@ public class BookingController {
         return bookings;
     }
 
+
+    @GetMapping("/api/bookings/{id}")
+    @ResponseBody
+    public Booking getBooking(@PathVariable int id) {
+        System.out.println("Requested Booking object with all data: " + id);
+
+        Booking booking = bookingService.getBookingById(id);
+
+//        Booking test = new Booking(99, "12345");
+        return booking;
+    }
+
+
     @PostMapping("/api/bookings/add")
     @ResponseBody
     public int saveBooking(@RequestBody Booking newBooking) {
@@ -41,7 +54,7 @@ public class BookingController {
 
 
     @GetMapping("/bookings")
-    public String showBookings(Model m){
+    public String showBookingsPage(Model m){
 
         m.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
@@ -49,7 +62,7 @@ public class BookingController {
 
     @GetMapping("/api/bookings/phone/{phoneNumber}")
     @ResponseBody
-    public List<Booking> showBookings(@PathVariable String phoneNumber){
+    public List<Booking> getBookingsForPhone(@PathVariable String phoneNumber){
 
 
         return bookingService.getBookingByPhone(phoneNumber);

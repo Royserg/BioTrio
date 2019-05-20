@@ -56,7 +56,22 @@ public class BookingService {
         }
 
         return bookings;
+    }
 
+    /**
+     * Function that retrieves queried booking by its id,
+     * and attaches other objects connected with that booking
+     * @param id (int) id of the booking to get
+     * @return (Booking) with populated attributes
+     */
+    public Booking getBookingById(int id) {
+        Booking booking = bookingRepo.findOne(id);
+
+        // TODO: Get other objects related to the booking
+        booking.setScreening(screeningService.findByBookingId(id));
+        booking.setTickets(ticketRepo.findTicketsByBookingId(id));
+
+        return booking;
     }
 
     public List<Movie> getAllMovies() {
