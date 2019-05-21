@@ -3,7 +3,7 @@ $(function() {
         let editButton;
         let id;
 
-        $('td a').on('click', function() {
+        $('#theaterTable').on('click','td a', function() {
 
             console.log("klikkede")
 
@@ -46,9 +46,12 @@ $(function() {
             data: JSON.stringify(theaterToEdit),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $(location).attr('href','/theaters');
-                console.log(theaterToEdit);
-
+               // $(location).attr('href','/theaters');
+                editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
+                editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
+                editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
+                editButton.parent().siblings('td')[3].innerHTML = theaterToEdit.can3d;
+                editButton.parent().siblings('td')[4].innerHTML = theaterToEdit.dolby;
             }
 
         });

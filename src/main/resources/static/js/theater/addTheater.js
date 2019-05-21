@@ -1,6 +1,5 @@
 $(function()
     {
-        const addTheater= $('#addTheater');
 
         const cinemaList= $('#cinemaSelect');
         const name= $('#addNameField');
@@ -29,8 +28,13 @@ $(function()
         })
 
 
-        addTheater.click(function() {
+        $('#submitNewTheater').unbind().on('click', function (e) {
+
+            e.preventDefault();
+
             let theater= {
+
+
 
                 "cinemaId": 1,
 
@@ -40,8 +44,12 @@ $(function()
                 "can3d":is3d.is(':checked'),
                 "dolby":isDolby.is(':checked')
             }
+            name.val('');
+            rows.val('');
+            columns.val('');
+            $("#change3D").prop("checked", false);
+            $("#changeDolby").prop("checked", false);
 
-console.log(theater);
            $.ajax({
                 type: "POST",
                 url:"/theaters",
@@ -61,9 +69,9 @@ console.log(theater);
                                                      class="btn btn-warning"
                                                      data-toggle="modal"
                                                      data-target="#editTheater"
-                                                     th:attr="data-theaterid=${data.id}"><span class="fas fa-edit"></span></a></td>
+                                                     data-theaterid=${data.id}><span class="fas fa-edit"></span></a></td>
                                                      <td class="col-1">
-                                    <button th:attr="data-theaterid=${data.id}, data-theatername=${data.name}" class="btn btn-danger"  >
+                                    <button data-theaterid=${data.id} data-theatername=${data.name}" class="btn btn-danger"  >
                                         <span class="fas fa-trash"></span>
                                     </button>
                                 </td>
@@ -72,11 +80,7 @@ console.log(theater);
                     //appends the latest movie to the table
                     $('#theaterTable tbody').append(newRow);
 
-                    //scroll to the bottom of the table
-                    $('#theaterTable').scrollTop($('#theaterTable')[0].scrollHeight);
 
-                    //scroll to the top of the page
-                    window.scrollTo(0,0);
 
                 }
             })

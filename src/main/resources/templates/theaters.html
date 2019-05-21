@@ -12,11 +12,6 @@
             <div class="col-md-10 mt-3">
                 <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
-                <!-- Button opening Modal for adding new Theater -->
-                <div class="d-flex justify-content-end mb-4">
-                    <button class="btn btn-primary">Add Theater</button>
-                </div>
-
 
                 <!-- TODO: Theater Modal for adding and editing, please read below
                      Could you check https://getbootstrap.com/docs/4.0/components/modal/, modal-body class
@@ -26,6 +21,7 @@
                     id: editname, editrowsNumber, editcolumnsNumber
                     suggestion: nameField, rowsNumberField, columnNumberField
                  -->
+            <!-- Modal for edit theater -->
                 <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="theaterModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -40,10 +36,10 @@
                                 <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="50">
 
                                 <label for="rowsNumberField">Rows</label>
-                                <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="0">
+                                <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="1">
 
                                 <label for="columnsNumberField">Columns</label>
-                                <input type="number" class="form-control" id="columnsNumberField" placeholder="Edit amount of columns" min="0">
+                                <input type="number" class="form-control" id="columnsNumberField" placeholder="Edit amount of columns" min="1">
 
 
                                 <label for="is3D">3D option</label>
@@ -60,9 +56,55 @@
                     </div>
                 </div>
 
+                <!--Modal for adding new theaters -->
+                <div class="modal fade" id="addTheater" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addNewTheater">Add a new theater</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="addNameField">Name of theater</label>
+                                <input type="text" class="form-control" id="addNameField" maxlength="255">
+
+                                <label for="addRowsField">Amount of rows</label>
+                                <input type="number" class="form-control" id="addRowsField" min="1">
+
+                                <label for="addColumnsField">Amount of columns</label>
+                                <input type="number" class="form-control" id="addColumnsField" min="1">
+
+                                <label for="change3D">3D Ready?</label>
+                                <input type="checkbox" class="form-control" id="change3D">
+
+                                <label for="changeDolby">Dolby Ready?</label>
+                                <input type="checkbox" class="form-control" id="changeDolby">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitNewTheater" data-toggle="modal" data-target="#addTheater">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Button that opens up the add theater modal-->
+
+                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn btn-primary"
+                            type="button"
+                            id="addButton"
+                            data-toggle="modal"
+                            data-target="#addTheater">Add a new theater</button>
+                </div>
+
                     <!-- List of available theaters -->
-                    <table class="table table-hover" id="theaterTable">
-                        <caption>List of theaters</caption>
+                <div id="table-container" style="overflow-y:auto; height:400px;">
+                <table class="table table-hover" id="theaterTable">
+                        <caption>End of the list</caption>
                         <thead class="thead-dark">
                             <tr class="d-flex">
                                 <th class="col-2">Name</th>
@@ -96,7 +138,7 @@
                             </tr>
                         </tbody>
                     </table>
-
+                </div>
                     <!-- Add new Theater form -->
                     <!-- TODO: We agreed today that this <details> would be better to just replace with a modal
                         Could you just make that one modal Above able to Edit and Add Theater?
@@ -106,7 +148,7 @@
                         Also it helps when you open a modal when wanting to edit, and the information about the
                         editing Theater are populated in the proper fields
                      -->
-                <details id="details">
+               <!-- <details id="details">
                     <summary>Add new theater</summary>
                     <p>
                     <p class="lead">
@@ -136,7 +178,7 @@
                     </form>
                     </p>
                     </p>
-                </details>
+                </details> -->
             </div>
         </div>
     </div>
