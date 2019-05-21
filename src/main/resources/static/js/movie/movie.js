@@ -107,24 +107,14 @@ $(function() {
             if(isEdit) {
 
                 edit();
-                $("#movieModal").on('hidden.bs.modal', function () {
-                    $(this).data('bs.modal', null);
-                });
 
                 isEdit = false;
-                $(document).remove('modal');
-
 
             } else {
 
                 add(e);
-                $("#movieModal").on('hidden.bs.modal', function () {
-                    $(this).data('bs.modal', null);
-                });
 
                 isEdit = false;
-                $(document).remove('modal');
-
 
             }
 
