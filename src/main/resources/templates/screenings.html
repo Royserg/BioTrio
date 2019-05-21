@@ -98,8 +98,8 @@
                     <p class="lead">
                     <form method="post" th:object="${newScreening}">
                         <div class="form-group">
-                            <label for="movie">Select Movie</label>
-                            <select class="form-control" id="movie" aria-describedby="movie" >
+                            <label for="movieID">Select Movie</label>
+                            <select class="form-control" id="movieID" aria-describedby="movie" >
                                 <option hidden></option>
                                 <option th:each="movie : ${movieList}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
                             </select>
