@@ -92,7 +92,6 @@ $(function() {
 
         function showModal(header, className) {
 
-            console.log('showModal() working');
             $('#movieModalTitle').html(header);
             $('#submitModal').removeAttr('class');
             $('#submitModal').addClass(className);
@@ -124,8 +123,6 @@ $(function() {
 
 
         function edit() {
-
-            console.log('edit(): Is it edit ', isEdit);
             let movieToEdit = {
                 'id': id,
                 'title': $('#modalTitle').val(),
@@ -133,8 +130,6 @@ $(function() {
                 'is3D': $('#modalIs3D').is(":checked"),
                 'dolby': $('#modalDolby').is(":checked")
             };
-
-            console.log(id);
 
             //check if the screening time is less than 10 minutes
             if (movieToEdit.durationInMinutes < 10) {
@@ -188,7 +183,6 @@ $(function() {
 
         function add(e) {
 
-            console.log('add(): Is it edit ', isEdit);
             // Add movie
 
             e.preventDefault();
