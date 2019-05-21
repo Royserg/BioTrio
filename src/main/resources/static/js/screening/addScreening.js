@@ -22,6 +22,7 @@ $(function()
         $('.modal-title').text('Add Screening');
         submitButton.removeClass('btn-warning');
         submitButton.addClass('btn-success')
+
         $("#modal").modal("show");
         isAdd = true;
         console.log(isAdd);
@@ -109,6 +110,13 @@ $(function()
             setTimeout(function(){ $('#modal').modal('hide');},100);
             console.log(isAdd);
             isAdd=false;
+
+            $('#modal').on('hidden.bs.modal', function() {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end();
+            })
         }
     })}
         console.log('request sent');

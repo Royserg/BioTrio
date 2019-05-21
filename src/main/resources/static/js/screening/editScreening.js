@@ -119,6 +119,12 @@ $(function() {
                 console.log("screening ",screeningId, "edited");
                 isEdit=false;
 
+                $('#modal').on('hidden.bs.modal', function() {
+                    $(this)
+                        .find("input,textarea,select")
+                        .val('')
+                        .end();
+                })
 
             }
         });}
