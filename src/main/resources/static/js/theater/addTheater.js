@@ -52,7 +52,7 @@ $(function()
 
            $.ajax({
                 type: "POST",
-                url:"/theaters",
+                url:"api/theaters",
                 dataType: "json",
                 data: JSON.stringify(theater),
                 contentType: "application/json; charset=utf-8",
@@ -61,7 +61,7 @@ $(function()
                     let newRow = `<tr class="d-flex">
                         <td class="col-2">${theater.name}</td>
                         <td class="col-2">${theater.rowsNumber}</td> 
-                        <td class="col-2"> ${theater.columnsNumber}</td>
+                        <td class="col-2">${theater.columnsNumber}</td>
                         <td class="col-2">${theater.can3d}</td>
                         <td class="col-2">${theater.dolby}</td>
                         <td class="col-1"><a href="#"
@@ -80,6 +80,8 @@ $(function()
                     //appends the latest movie to the table
                     $('#theaterTable tbody').append(newRow);
 
+                    //Scroll to bottom of container
+                    $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
 
 
                 }

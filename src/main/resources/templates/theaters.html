@@ -12,15 +12,6 @@
             <div class="col-md-10 mt-3">
                 <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
-
-                <!-- TODO: Theater Modal for adding and editing, please read below
-                     Could you check https://getbootstrap.com/docs/4.0/components/modal/, modal-body class
-                    is just a container for everything that is between modal header and footer, so it is not neccessary to
-                    add for each element extra container with class="modal-body"
-                    naming is confusing, when you use half of the words in just small caps and then camel-case last word
-                    id: editname, editrowsNumber, editcolumnsNumber
-                    suggestion: nameField, rowsNumberField, columnNumberField
-                 -->
             <!-- Modal for edit theater -->
                 <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="theaterModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -33,7 +24,7 @@
                             </div>
 
                                 <label for="nameField">Theater name</label>
-                                <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="50">
+                                <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="15">
 
                                 <label for="rowsNumberField">Rows</label>
                                 <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="1">
@@ -43,10 +34,10 @@
 
 
                                 <label for="is3D">3D option</label>
-                                <input type="checkbox" class="form-control" id="is3D">
+                                <input type="checkbox" class="form-control modalCheckbox" id="is3D">
 
                                 <label for="isDolby">Dolby option</label>
-                                <input type="checkbox" class="form-control" id="isDolby">
+                                <input type="checkbox" class="form-control modalCheckbox" id="isDolby">
 
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -68,7 +59,7 @@
                             </div>
                             <div class="modal-body">
                                 <label for="addNameField">Name of theater</label>
-                                <input type="text" class="form-control" id="addNameField" maxlength="255">
+                                <input type="text" class="form-control" id="addNameField" maxlength="15">
 
                                 <label for="addRowsField">Amount of rows</label>
                                 <input type="number" class="form-control" id="addRowsField" min="1">
@@ -124,12 +115,12 @@
                                 <td class="col-2" th:text="${theater.columnsNumber}"/>
                                 <td class="col-2" th:text="${theater.can3d}"/>
                                 <td class="col-2" th:text="${theater.dolby}"/>
-                                <td class="col-1"><a href="#"
+                                <td class="col-1"><button
                                                      id = "editButton"
                                                      class="btn btn-warning"
                                                      data-toggle="modal"
                                                      data-target="#editTheater"
-                                                     th:attr="data-theaterid = ${theater.id}"><span class="fas fa-edit"></span></a></td>
+                                                     th:attr="data-theaterid = ${theater.id}"><span class="fas fa-edit"></span></button></td>
                                 <td class="col-1">
                                     <button th:attr="data-theaterid=${theater.id}, data-theatername=${theater.name}" class="btn btn-danger"  >
                                         <span class="fas fa-trash"></span>
@@ -139,46 +130,6 @@
                         </tbody>
                     </table>
                 </div>
-                    <!-- Add new Theater form -->
-                    <!-- TODO: We agreed today that this <details> would be better to just replace with a modal
-                        Could you just make that one modal Above able to Edit and Add Theater?
-                        Would be better to have addTheater.js file that let's us add dynamically a theater and show it
-                        right away on the page instead of refreshing the website.
-                        So the modal above could be used for adding and editing.
-                        Also it helps when you open a modal when wanting to edit, and the information about the
-                        editing Theater are populated in the proper fields
-                     -->
-               <!-- <details id="details">
-                    <summary>Add new theater</summary>
-                    <p>
-                    <p class="lead">
-                    <form method="post" th:object="${theaterForm}">
-                        <div class="form-group">
-                            <label for="addNameField">Name</label>
-                            <input type="text" class="form-control" id="addNameField" placeholder="Enter name">
-                        </div>
-                        <div class="form-group">
-                            <label for="addRowsField">Rows</label>
-                            <input type="number" class="form-control" id="addRowsField" placeholder="Enter amount of rows">
-                        </div>
-                        <div class="form-group">
-                            <label for="addColumnsField">Columns</label>
-                            <input type="number" class="form-control" id="addColumnsField" placeholder="Enter amount of columns">
-                        </div>
-                    <div class="form-group">
-                    <label for="change3D">3D</label>
-                    <input type="checkbox" class="form-control" id="change3D">
-                </div>
-                    <div class="form-group">
-                        <label for="changeDolby">Dolby</label>
-                        <input type="checkbox" class="form-control" id="changeDolby">
-                    </div>
-                        <btn style="color: white" class="btn btn-dark" id="addTheater">Add Theater</btn>
-                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
-                    </form>
-                    </p>
-                    </p>
-                </details> -->
             </div>
         </div>
     </div>

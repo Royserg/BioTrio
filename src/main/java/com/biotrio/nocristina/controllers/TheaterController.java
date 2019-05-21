@@ -29,20 +29,20 @@ public class TheaterController {
         return theaterRepo.findOne(id);
     }
 
-    @GetMapping("/theaters/add")
+    /*@GetMapping("/theaters/add")
     public String addTheater(Model model) {
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
         List <Theater> tlist = theaterRepo.findAll();
-        for (Theater theater : tlist) {
+       *//* for (Theater theater : tlist) {
             System.out.println(theater);
-        }
+        }*//*
         model.addAttribute("theaterList", tlist);
 
         return "theaters";
-    }
-
-    @PostMapping("/theaters")
+    }*/
+    //Saves the new theaters object
+    @PostMapping("api/theaters")
     @ResponseBody
     public Theater saveTheater(@RequestBody Theater newTheater) {
         theaterRepo.saveTheater(newTheater);
@@ -50,7 +50,7 @@ public class TheaterController {
     }
 
 
-    @PutMapping("/theaters/edit/{id}")
+    @PutMapping("api/theaters/{id}")
     @ResponseBody
     public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
         theaterRepo.update(theater);
@@ -58,7 +58,7 @@ public class TheaterController {
         return id;
     }
 
-    @DeleteMapping("/theaters/{id}")
+    @DeleteMapping("api/theaters/{id}")
     @ResponseBody
     public String deleteTheater(@PathVariable(name = "id") int id) {
         theaterRepo.delete(id);

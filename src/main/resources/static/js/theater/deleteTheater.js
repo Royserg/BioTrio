@@ -11,7 +11,7 @@ $(function() {
         const remove = confirm(`Are you sure you want to delete this theater? By deleting it, you will delete all corresponding data for theater: ` + theaterName);
         if (remove) {
             $.ajax({
-                url: `/theaters/${theaterId}`,
+                url: `api/theaters/${theaterId}`,
                 method: 'DELETE',
                 success: function (data) {
                     // Remove html table row with fading animation
