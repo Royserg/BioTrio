@@ -46,7 +46,6 @@ public class MovieController {
 
         Movie newMovieAdded = movieRepo.addMovie(newMovie);
         System.out.println("new movie " + newMovieAdded.getId() + " added");
-        System.out.println(newMovieAdded.toString());
 
         return newMovieAdded;
     }
@@ -56,8 +55,7 @@ public class MovieController {
     public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
 
         movieRepo.editMovie(movieToEdit);
-        System.out.println("movie " + movieToEdit.getId() + " edited");
-        System.out.println("movie id " + id + " edited");
+        System.out.println("movie " + id + " edited");
 
 
         return movieToEdit.getId();

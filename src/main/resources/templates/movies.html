@@ -20,74 +20,38 @@
             <div class="container mt-4" >
 
 
-                <!-- Modal for Edit -->
+                <!-- Modal for Add and Edit -->
 
-                <div class="modal fade" id="editMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="editMovieTitle">Edit Movie</h5>
+                                <h5 class="modal-title" id="movieModalTitle"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <label for="editTitle">Title</label>
-                                <input type="text" class="form-control" id="editTitle" maxlength="255">
+                                <label for="modalTitle">Title</label>
+                                <input type="text" class="form-control" id="modalTitle" maxlength="255">
 
-                                <label for="editDurationInMinutes">Duration in Minutes</label>
-                                <input type="number" class="form-control duration" id="editDurationInMinutes" min="10">
+                                <label for="modalDurationInMinutes">Duration in Minutes</label>
+                                <input type="number" class="form-control" id="modalDurationInMinutes" min="10">
 
-                                <label for="editIs3D">3D Movie</label>
-                                <input type="checkbox" class="form-control" id="editIs3D">
+                                <label for="modalIs3D">3D Movie</label>
+                                <input type="checkbox" class="form-control modalCheckbox" id="modalIs3D">
 
-                                <label for="editIsDolby">Dolby Movie</label>
-                                <input type="checkbox" class="form-control" id="editIsDolby">
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitChanges" >Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Modal for Add -->
-
-                <div class="modal fade" id="addMovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addMovieTitle">Add New Movie</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <label for="addTitle">Title</label>
-                                <input type="text" class="form-control" id="addTitle" maxlength="255">
-
-                                <label for="addDurationInMinutes">Duration in Minutes</label>
-                                <input type="number" class="form-control" id="addDurationInMinutes" min="10">
-
-                                <label for="addIs3D">3D Movie</label>
-                                <input type="checkbox" class="form-control" id="addIs3D">
-
-                                <label for="addIsDolby">Dolby Movie</label>
-                                <input type="checkbox" class="form-control" id="addIsDolby">
+                                <label for="modalDolby">Dolby Movie</label>
+                                <input type="checkbox" class="form-control modalCheckbox" id="modalDolby">
 
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="addNewMovie">Save</button>
+                                <button type="submit" class="btn btn-warning" id="submitModal">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
 
 
 
@@ -98,7 +62,7 @@
                             type="button"
                             id="addButton"
                             data-toggle="modal"
-                            data-target="#addMovie">Add Movie</button>
+                            data-target="#movieModal">Add Movie</button>
                 </div>
 
 
@@ -122,15 +86,15 @@
                             <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}">
                                 <td class="col-5 title" th:text="${movie.title}" />
                                 <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
-                                <td class="col-1 3D" th:text="${movie.is3D}"/>
-                                <td class="col-1 Dolby" th:text="${movie.dolby}"/>
+                                <td class="col-1 is3D" th:text="${movie.is3D}"/>
+                                <td class="col-1 dolby" th:text="${movie.dolby}"/>
                                 <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
                                 <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
                                 <td class="col-1"><a href="#"
                                                      id = "editButton"
                                                      class="btn btn-warning"
                                                      data-toggle="modal"
-                                                     data-target="#editMovie"
+                                                     data-target="#movieModal"
                                                      th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
                                 <td class="col-1"><a class="btn btn-danger" th:attr="data-movieID=${movie.id}"><span class = "fas fa-trash text-white"></span></a></td>
                             </tr>
@@ -138,7 +102,7 @@
                     </table>
                 </div>
 
-                <p style="color:grey;">List of movies
+                <p style="color:grey; margin-top:10px;">List of movies
                     <br>Click on 'Title' in order to sort by the title of movies.
                     <br>Click on 'Duration in minutes' in order to sort by the duration of movies.</p>
 
@@ -157,8 +121,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script th:src="@{/js/movie/editMovie.js}"></script>
-<script th:src="@{/js/movie/addMovie.js}"></script>
+<script th:src="@{/js/movie/movie.js}"></script>
 <script th:src="@{/js/movie/deleteMovie.js}"></script>
 
 </body>
