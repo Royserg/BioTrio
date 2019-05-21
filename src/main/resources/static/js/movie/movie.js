@@ -123,6 +123,7 @@ $(function() {
 
 
         function edit() {
+
             let movieToEdit = {
                 'id': id,
                 'title': $('#modalTitle').val(),
