@@ -1,19 +1,31 @@
 
 $(function()
 {
-    const movieList = $('#movie');
-    const theaterList = $('#theater');
-    const addScreening = $('#addScreening');
-    const price = $('#price');
-    const screeningDate = $('#screeningDate');
-    const screeningTime = $('#screeningTime');
-
+    const movieList = $('#modalMovie');
+    const theaterList = $('#modalTheater');
+    const addScreening = $('#addScreeningClick');
+    const price = $('#modalPrice');
+    const screeningDate = $('#modalDate');
+    const screeningTime = $('#modalTime');
+    const submitButton = $('#submitButton');
 
     let movieId;
     let theaterId;
 
     let movie;
     let theater;
+
+    let isAdd=false;
+
+    addScreening.click(function () {
+
+        $('.modal-title').text('Add Screening');
+        submitButton.removeClass('btn-warning');
+        submitButton.addClass('btn-success')
+        $("#modal").modal("show");
+        isAdd = true;
+        console.log(isAdd);
+
 
     movieList.change(function() {
 
@@ -44,7 +56,8 @@ $(function()
             });
     })
 
-    addScreening.click(function() {
+    $('.btn-success').click(function() {
+        if(isAdd){
             let screening = {
                 "movie": movie,
                 "theater": theater,
@@ -53,23 +66,37 @@ $(function()
                 "time":screeningTime.val()
                             }
 
-
     $.ajax({
         type: "POST",
         url:"/api/screenings/add",
         dataType: "json",
         data: JSON.stringify(screening),
         contentType: "application/json; charset=utf-8",
-        success: function(data){
+        success: function(id){
 
             let newRow = `<tr class="d-flex">
-                        <td class="col-2" ${screening.movie.title} />
-                        <td class="col-2" ${screening.theater.name}/>
-                        <td class="col-2" ${screening.date}/>
-                        <td class="col-2" ${screening.time}/>
-                        <td class="col-2" ${screening.price}/>
-                        <td class="col-1">`
-
+                        <td class="col-2">${screening.movie.title} </td>
+                        <td class="col-2">${screening.theater.name}</td>
+                        <td class="col-2">${screening.date}</td>
+                        <td class="col-2">${screening.time}</td>
+                        <td class="col-2">${screening.price}</td> <td class="col-1">
+                            <button id = "editButton" 
+                               class="btn btn-warning"
+                               data-toggle="modal"
+                               data-target="#modal"
+                               data-screeningid="${id}">
+                                <span class="fas fa-edit"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button data-screeningid="${id}",
+                                    data-screeningmovie="${screening.movie.title}"
+                                    class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>`
+                console.log("triggered")
             //appends the latest movie to the table
             $('#screeningTable tbody').append(newRow);
 
@@ -79,10 +106,14 @@ $(function()
             //scroll to the top of the page
             window.scrollTo(0,0);
 
+            setTimeout(function(){ $('#modal').modal('hide');},100);
+            console.log(isAdd);
+            isAdd=false;
         }
-    })
+    })}
         console.log('request sent');
-    })
 
+    })
+    });
 }
 )

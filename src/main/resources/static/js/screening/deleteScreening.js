@@ -3,7 +3,7 @@
 
 $(function()
 {
-    console.log("connected");
+
     $('table').on('click', '.btn-danger', function () {
         const button = $(this);
         const screeningId = $(this).data('screeningid');

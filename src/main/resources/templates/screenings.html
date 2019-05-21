@@ -12,38 +12,45 @@
         <nav th:replace="fragments/fragments :: sidebar" />
         <div class="col-10 mt-3">
             <h4 th:replace="fragments/fragments :: heading(text='Screenings')" />
+
+            <div class="d-flex justify-content-end mb-4 col-12">
+                <button class="btn btn-primary"
+                        id="addScreeningClick">Add Screening</button>
+            </div>
+
             <div class="container mt-4" >
+
                 <!-- Modal -->
-                <div class="modal fade" id="editScreening" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" >Edit Screening</h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <label for="editMovie">Movie</label>
-                                <select class="form-control" id="editMovie" aria-describedby="movie" >
+                                <label for="modalMovie">Movie</label>
+                                <select class="form-control" id="modalMovie" aria-describedby="movie" >
                                     <option hidden></option>
                                     <option th:each="movie : ${movieList}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
                                 </select>
-                                <label for="editTheater">Theater</label>
-                                <select class="form-control" id="editTheater" aria-describedby="theater">
+                                <label for="modalTheater">Theater</label>
+                                <select class="form-control" id="modalTheater" aria-describedby="theater">
                                     <option style="display:none;"></option>
                                     <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
                                 </select>
-                                <label for="editDate">Date</label>
-                                <input type="date" class="form-control" id="editDate" placeholder="screeningDate">
-                                <label for="editTime">Time</label>
-                                <input type="time" class="form-control" id="editTime">
-                                <label for="editPrice">Price</label>
-                                <input type="number" class="form-control" id="editPrice">
+                                <label for="modalDate">Date</label>
+                                <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
+                                <label for="modalTime">Time</label>
+                                <input type="time" class="form-control" id="modalTime">
+                                <label for="modalPrice">Price</label>
+                                <input type="number" class="form-control" id="modalPrice">
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitButton" >Save changes</button>
+                                <button type="submit" class="btn btn-warning" id="submitButton" >Save</button>
                             </div>
                         </div>
                     </div>
@@ -64,7 +71,6 @@
                         <th class="col-1"></th>
                     </tr>
                     </thead>
-
                     <tbody>
                     <tr class="d-flex" th:each="screening : ${screeningList}">
                         <td class="col-2" th:text="${screening.movie.title}" />
@@ -73,17 +79,16 @@
                         <td class="col-2" th:text="${screening.time}"/>
                         <td class="col-2" th:text="${screening.price}"/>
                         <td class="col-1">
-                            <a href="#"
-                               id = "editButton"
+                            <button id = "editButton"
                                class="btn btn-warning"
-                               data-toggle="modal"
-                               data-target="#editScreening"
                                th:attr="data-screeningid=${screening.id}">
                                 <span class="fas fa-edit"></span>
-                            </a>
+                            </button>
                         </td>
                         <td class="col-1">
-                            <button th:attr="data-screeningid=${screening.id}, data-screeningmovie=${screening.movie.title}" class="btn btn-danger">
+                            <button th:attr="data-screeningid=${screening.id},
+                                    data-screeningmovie=${screening.movie.title}"
+                                    class="btn btn-danger">
                                 <span class="fas fa-trash"></span>
                             </button>
                         </td>
@@ -91,44 +96,6 @@
                     </tbody>
                 </table>
                 </div>
-                <!-- Form for adding a screening -->
-                <details id="details">
-                    <summary>Add new screening</summary>
-                    <p>
-                    <p class="lead">
-                    <form method="post" th:object="${newScreening}">
-                        <div class="form-group">
-                            <label for="movie">Select Movie</label>
-                            <select class="form-control" id="movie" aria-describedby="movie" >
-                                <option hidden></option>
-                                <option th:each="movie : ${movieList}" th:attr="data-movie_id=${movie.id}" th:text="${movie.title}"/>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="theater">Select Theater</label>
-                            <select class="form-control" id="theater" aria-describedby="theater">
-                                <option style="display:none;"></option>
-                                <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="screeningDate">Date</label>
-                            <input type="date" class="form-control" id="screeningDate" placeholder="screeningDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="screeningTime">Time</label>
-                            <input type="time" class="form-control" id="screeningTime" placeholder="screeningTime">
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="number" class="form-control" id="price" placeholder="price">
-                        </div>
-                        <btn style="color: white" class="btn btn-dark" id="addScreening">Add screening</btn>
-                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
-                    </form>
-                    </p>
-                    </p>
-                </details>
             </div>
         </div>
     </div>
