@@ -47,4 +47,14 @@ public class Ticket {
     public void setColumnNo(int columnNo) {
         this.columnNo = columnNo;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", bookingId=" + bookingId +
+                ", rowNo=" + rowNo +
+                ", columnNo=" + columnNo +
+                '}';
+    }
 }

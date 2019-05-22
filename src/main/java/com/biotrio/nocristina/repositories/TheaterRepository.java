@@ -1,0 +1,77 @@
+package com.biotrio.nocristina.repositories;
+
+import com.biotrio.nocristina.models.Theater;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.Generated;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+@Repository
+public class TheaterRepository {
+
+    @Autowired
+    private JdbcTemplate jdbc;
+
+  
+    public List<Theater> findAll() {
+        String sql = "SELECT * FROM theaters";
+        List<Theater> theaters = jdbc.query(sql, new BeanPropertyRowMapper<>(Theater.class));
+
+        return theaters;
+    }
+
+    public Theater findOne(int id) {
+        String sql = "SELECT * FROM theaters WHERE id=" + id;
+        return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
+    }
+
+    public Theater findByScreeningId(int theaterId) {
+        String sql = "SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" + theaterId;
+
+        Theater theater = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
+        return theater;
+    }
+
+    public Theater saveTheater(Theater theater) {
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, theater.getCinemaId());
+                ps.setString(2, theater.getName());
+                ps.setInt(3, theater.getRowsNumber());
+                ps.setInt(4, theater.getColumnsNumber());
+                ps.setBoolean(5, theater.isCan3d());
+                ps.setBoolean(6, theater.isDolby());
+                return ps;
+
+            }
+        };
+        KeyHolder id = new GeneratedKeyHolder();
+        jdbc.update(psc, id);
+        theater.setId(id.getKey().intValue());
+        return theater;
+
+    }
+
+    public void update(Theater theater) {
+        String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ?, dolby = ? WHERE id = ?";
+        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.isDolby(), theater.getId());
+    }
+
+    public void delete(int id) {
+
+        jdbc.update("DELETE FROM theaters WHERE id = " + id);
+    }
+}
+

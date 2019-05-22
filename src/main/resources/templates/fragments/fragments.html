@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:fragment="head">
+        <meta charset="UTF-8">
+
+        <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}" />
+        <title th:text="${title}"></title>
+
+        <!-- Bootstrap stylesheet -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <!-- custom css -->
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+
+    </head>
+    <body>
+        <!-- Page heading -->
+        <h4 th:fragment="heading" th:text="${text}" class="page-heading"></h4>
+
+        <!-- Navbar -->
+        <nav th:fragment="navbar" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">BioTrio</a>
+        </nav>
+
+        <!-- Sidebar -->
+        <nav th:fragment="sidebar" class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column mt-2">
+                    <li class="nav-item">
+                        <a
+                            th:classappend="${#request.requestURI == '/' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/"
+                        >
+                            <span class="fas fa-home">&nbsp;</span>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            th:classappend="${#request.requestURI == '/bookings' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/bookings"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            th:classappend="${#request.requestURI == '/movies' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/movies"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Movies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                th:classappend="${#request.requestURI == '/screenings' ? 'nav-link__active' : ''}"
+                                class="nav-link" href="/screenings"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Screenings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            th:classappend="${#request.requestURI == '/theaters' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/theaters"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Theaters
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            th:classappend="${#request.requestURI == '/cinemas' ? 'nav-link__active' : ''}"
+                            class="nav-link" href="/cinemas"
+                        >
+                            <span class="far fa-dot-circle">&nbsp;</span>
+                            Cinemas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- other part from sidebar to find: https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+        </nav>
+
+    </body>
+</html>
