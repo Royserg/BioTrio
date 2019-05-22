@@ -62,7 +62,7 @@ $(function() {
             $("#modalIs3D").val(movie3D);
             $("#modalDolby").val(movieDolby);
 
-            // change isEdit into true
+            // Change isEdit into true
             isEdit = true;
 
             showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
@@ -74,10 +74,10 @@ $(function() {
 
         $('body div').on("click", ".btn-primary", function() {
 
-            // change isEdit into false
+            // Change isEdit into false
             isEdit = false;
 
-            // clear the modal
+            // Clear the modal
             $('#modalTitle').val("");
             $('#modalDurationInMinutes').val("");
             $('#modalIs3D').prop("checked", false);
@@ -99,23 +99,15 @@ $(function() {
 
         }
 
+
         // Click save button and edit or add accordingly
-
-
-
 
         $('html body').off('click').on('click', '#submitModal', function (e) {
 
             if(isEdit) {
-
                 edit();
-
             } else {
-
                 add(e);
-
-                isEdit = false;
-
             }
 
         });
@@ -132,7 +124,7 @@ $(function() {
                 'dolby': $('#modalDolby').is(":checked")
             };
 
-            //check if the screening time is less than 10 minutes
+            // Check if the screening time is less than 10 minutes
             if (movieToEdit.durationInMinutes < 10) {
                 alert("Invalid input. Please check the duration again.");
 
@@ -143,22 +135,21 @@ $(function() {
             } else {
 
                 console.log("putting");
-                $.ajax({
-
+                $.ajax( {
 
                     type: 'PUT',
                     url: `/movies`,
-                    dataType: 'json',
+                    dataType: 'html',
                     data: JSON.stringify(movieToEdit),
-                    contentType: 'application/json',
-                    success: function (data) {
+                    contentType: 'application/json'
+                } )
+                    .done(function() {
 
                         // Reload the data
                         editButton.parent().siblings('td')[0].innerHTML = movieToEdit.title;
                         editButton.parent().siblings('td')[1].innerHTML = movieToEdit.durationInMinutes;
                         editButton.parent().siblings('td')[2].innerHTML = movieToEdit.is3D;
                         editButton.parent().siblings('td')[3].innerHTML = movieToEdit.dolby;
-
 
                         // Fancy css and close the modal
                         editButton.closest('tr').css('background', 'gold');
@@ -170,13 +161,8 @@ $(function() {
                             }, 100);
 
 
-
-
                         })
-
-                    }
-
-                });
+                    })
 
             }
 
@@ -202,7 +188,7 @@ $(function() {
                 alert("Invalid input. Please check the duration again.");
 
             } else {
-                console.log("adding");
+
                 $.ajax({
                     type: 'POST',
                     url: `/movies`,
@@ -211,8 +197,7 @@ $(function() {
                     contentType: 'application/json',
                     success: function (id) {
 
-                        // add new row to the table with the newly added movie
-
+                        // Add new row to the table with the newly added movie
                         let newRow = `<tr class="d-flex">
                                     <td class="col-5 title">${newMovie.title}</td>
                                     <td class="col-3 duration">${newMovie.durationInMinutes}</td>
@@ -225,13 +210,15 @@ $(function() {
                                                  data-target="#movieModal"
                                                  data-movieID="${id}"><span class="fas fa-edit"></span></a></td>
                                     <td class="col-1"><a class="btn btn-danger" data-movieID="${id}"><span class = "fas fa-trash text-white"></span></a></td>
-                                  </tr>`
+                                  </tr>`;
 
+                        // Add new row to the table and hide the modal
                         $('#movieTable tbody').append(newRow);
                         setTimeout(function () {
                             $('#movieModal').modal('hide');
                         }, 100);
 
+                        // Scroll down the table so that you can see the newly added movie
                         $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
 
 

@@ -13,19 +13,26 @@ $(function () {
         const remove = confirm(`Are you sure you want to delete this movie?`);
         if (remove) {
 
+            console.log('before ajax');
+
             $.ajax({
 
-                url: `/movies/delete/${id}`,
+                url: `/api/movies/${id}`,
                 method: 'DELETE',
-                success: function (data) {
-
-                    // Remove html table row with fading animation
-                    button.closest('tr').css('background', 'tomato');
-                    button.closest('tr').fadeOut(800, function () {
-                        $(this).remove();
-                    })
-                }
             })
+            .done(function () {
+                console.log('movie ', id, ' deleted');
+
+                // Remove html table row with fading animation
+                button.closest('tr').css('background', 'tomato');
+                button.closest('tr').fadeOut(800, function () {
+                    $(this).remove();
+                })
+            })
+                .fail(function(error){
+                    console.log(error);
+            })
+
         }
     });
 
