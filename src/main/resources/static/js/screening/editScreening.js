@@ -30,7 +30,7 @@ $(function() {
 
                     console.log(data);
                     selectedScreening = data;
-                    console.log("chuvame li se ");
+
                     //populates the modal with data about the selected screening
                     editMovie.val(selectedScreening.movie.title);
                     editTheater.val(selectedScreening.theater.name);

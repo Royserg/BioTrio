@@ -36,6 +36,7 @@ $(function() {
 
         // https://stackoverflow.com/a/2888447
         movieId = $(this).children(":selected").data('movie_id');
+        console.log($(this));
 
         // gets the selected movie
         $.ajax(`/api/movie/${movieId}`,   // request url
@@ -107,7 +108,6 @@ $(function() {
           data: JSON.stringify(screening),
           contentType: "application/json; charset=utf-8",
           success: function(id){
-
 
               let newRow = `<tr class="d-flex">
                           <td class="col-2">${screening.movie.title} </td>
