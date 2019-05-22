@@ -1,3 +1,7 @@
+.modal-body {
+    min-height: 60vh;
+}
+
 .list-group-item {
     cursor: pointer;
 }
@@ -60,12 +64,17 @@
     border: none;
 }
 
-.footer {
+.modal-footer {
     background: #d2d2d8;
-    position: fixed;
-    bottom: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.footer {
+    /*background: #d2d2d8;*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
     height: 100px;
-    width: 90%;
+    width: 100%;
 
     display: flex;
     justify-content: space-between;

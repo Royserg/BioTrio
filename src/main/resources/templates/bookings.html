@@ -3,6 +3,9 @@
 
 <head th:replace="fragments/fragments :: head(title='Bookings')" />
 
+<!-- Add custom styling -->
+<link rel="stylesheet" th:href="@{/css/booking.css}">
+
 <body>
     <nav th:replace="fragments/fragments :: navbar" />
 
@@ -24,12 +27,13 @@
                             </div>
                         </div>
                         <div class="col-2 d-flex justify-content-end">
-                            <a href="/bookings/add" class="btn btn-primary">Add Booking</a>
+                            <button id="addBookingBtn" class="btn btn-primary">Add Booking</button>
                         </div>
                     </div>
                 </div>
+
                 <!-- Modal for tickets -->
-                <div class="modal fade" id="ticketsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade" id="ticketsModal" tabindex="-1" role="dialog" aria-labelledby="ticketsModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -51,9 +55,77 @@
                     </div>
                 </div>
 
+                <!-- Booking Modal For adding and deleting -->
+                <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditTitle">Add Booking</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- List of movies and dates with Showings underneath -->
+                                <div class="row container mt-1">
+                                    <div class="col-md-7">
+                                        <h5>Movies</h5>
+                                        <ul class="list-group" id="moviesList">
+                                            <!-- Fetched list of movies -->
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="dates-container">
+                                            <h5>Dates</h5>
+                                            <ul class="list-group" id="screeningDates">
+                                                <!-- Fetched screenings dates -->
+                                            </ul>
+                                        </div>
+                                        <div class="times-container mt-2">
+                                            <h5>Screening times</h5>
+                                            <ul class="list-group mt-3 screening-times" id="screeningTimes">
+                                                <!-- List of Screening times -->
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="seats-container">
+                                    <hr>
+                                    <!-- Seats to select -->
+                                    <h4 class="text-center">Seats</h4>
+                                    <div class="screen mx-auto mb-5"></div>
+                                    <div class="mt-3 mb-4" id="seats">
+                                    <!-- Dynamically updated seats from js -->
+                                    </div>
+
+
+                                </div>
+                            </div>  <!-- Modal body - end -->
+                            <div class="modal-footer">
+                                <div class="footer">
+                                    <div class="form-container" >
+                                        <input class="form-control" placeholder="Phone Number" name="phoneNum" type="text" id="phoneNum"/>
+                                    </div>
+                                    <div class="footer-information">
+                                        <div>
+                                            Tickets: <span id="ticketsCount" class="badge badge-secondary">0</span>
+                                        </div>
+                                        <div>
+                                            Price: <span id="price" class="badge badge-secondary">0</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-dark" id="bookButton">Book tickets</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Booking modal -- End -->
 
                 <!-- Table -->
-                <div class="container-fluid">
+                <div class="container-fluid" id="bookingsTable">
                     <table class="table table-hover">
                         <caption>List of bookings</caption>
                         <thead class="thead-dark">
@@ -70,10 +142,10 @@
                         </thead>
 
                         <tbody>
-                            <tr class="row" th:each="booking : ${bookings}">
+                            <tr class="row" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
                                 <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
                                 <td class="col-2" th:text="${booking.screening.date}">date</td>
-                                <td class="col-1" th:text="${booking.screening.time}">date</td>
+                                <td class="col-1" th:text="${booking.screening.time}">time</td>
                                 <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
                                 <td class="col-1">
                                     <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
@@ -81,9 +153,9 @@
                                     </button>
                                 </td>
                                 <td class="col-1">
-                                    <a href="#" class="btn btn-warning">
+                                    <button class="btn btn-warning">
                                         <span class="fas fa-edit"></span>
-                                    </a>
+                                    </button>
                                 </td>
                                 <td class="col-1">
                                     <button th:attr="data-bookingid=${booking.id}" class="btn btn-danger">
@@ -100,11 +172,18 @@
 
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Popper js for tooltips-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <!-- Bootstrap scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Custom js -->
-    <script th:src="@{/js/booking/bookings.js}"></script>
     <script th:src="@{/js/booking/searchBooking.js}"></script>
+
+    <script th:src="@{/js/booking/bookings.js}"></script>
+    <script th:src="@{/js/booking/editBooking.js}"></script>
+
+    <!--  File for modals adding and editing booking  -->
+    <script th:src="@{/js/booking/updateBooking.js}"></script>
 </body>
 </html>

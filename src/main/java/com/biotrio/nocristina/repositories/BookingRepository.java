@@ -17,6 +17,19 @@ public class BookingRepository {
     @Autowired
     private JdbcTemplate jdbc;
 
+    /**
+     * Get a booking object of particular id
+     * @param id (int) id of the booking to retrieve
+     * @return (Booking)
+     */
+    public Booking findOne(int id) {
+
+        String sql = "SELECT * FROM bookings WHERE id = ?";
+        Booking booking = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Booking.class));
+
+        return booking;
+    }
+
 
     public List<Booking> findAll() {
 
