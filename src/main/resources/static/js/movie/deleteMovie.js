@@ -13,12 +13,10 @@ $(function () {
         const remove = confirm(`Are you sure you want to delete this movie?`);
         if (remove) {
 
-            console.log('before ajax');
-
             $.ajax({
 
                 url: `/api/movies/${id}`,
-                method: 'DELETE',
+                type: 'DELETE'
             })
             .done(function () {
                 console.log('movie ', id, ' deleted');

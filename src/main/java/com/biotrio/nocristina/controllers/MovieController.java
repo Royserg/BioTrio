@@ -63,6 +63,7 @@ public class MovieController implements IController<Movie>{
 
     //delete one movie
     @DeleteMapping("/api/movies/{id}")
+    @ResponseBody
     public void deleteOne(@PathVariable int id){
         movieRepo.deleteOne(id);
         System.out.println("movie " + id + " deleted.");
