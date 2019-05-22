@@ -3,6 +3,8 @@ import com.biotrio.nocristina.models.Screening;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -46,6 +48,7 @@ public class ScreeningRepository {
         return screening;
     }
 
+
     public List<Screening> findByDate(String date) {
         String sql = "SELECT * from screenings WHERE date = '" + date + "'";
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
@@ -58,25 +61,25 @@ public class ScreeningRepository {
 
     public void addScreening(Screening newScreening){
 
-
         String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price) VALUES(?,?,?,?,?);";
-        System.out.println(newScreening);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
         jdbc.update((Connection connection)->{
 
-                    PreparedStatement ps = connection.prepareStatement(sql);
+                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                         ps.setInt(1, newScreening.getMovie().getId());
                         ps.setInt(2, newScreening.getTheater().getId());
-
-                    //ps.setDate(1,java.sql.Date.valueOf(screening.getScreening_date()));
-                    ps.setObject(3,newScreening.getTime());
-                    ps.setObject(4,newScreening.getDate());
-    //    Conversion  LocalDateTime to Object and back - https://stackoverflow.com/a/43039615/8421735
+                        ps.setObject(3,newScreening.getTime());
+                        ps.setObject(4,newScreening.getDate());
                         ps.setBigDecimal(5, newScreening.getPrice());
 
                     return ps;
-                }
-        );
+                },keyHolder);
+
+        newScreening.setId(keyHolder.getKey().intValue());
+        return newScreening;
     }
 
     public void deleteScreening (int screeningId) {

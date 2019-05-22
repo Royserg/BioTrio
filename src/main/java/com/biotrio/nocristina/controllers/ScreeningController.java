@@ -84,7 +84,6 @@ public class ScreeningController {
     @PostMapping("/api/screenings/add")
     @ResponseBody
     public int saveScreening(@RequestBody Screening newScreening) {
-        System.out.println(newScreening);
         screeningService.addScreening(newScreening);
         return newScreening.getId();
     }

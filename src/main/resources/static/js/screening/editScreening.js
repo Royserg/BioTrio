@@ -1,10 +1,11 @@
+
 $(function() {
 
-    const editMovie = $('#editMovie');
-    const editTheater = $('#editTheater');
-    const editPrice = $('#editPrice');
-    const editDate = $('#editDate');
-    const editTime = $('#editTime');
+    const editMovie = $('#modalMovie');
+    const editTheater = $('#modalTheater');
+    const editPrice = $('#modalPrice');
+    const editDate = $('#modalDate');
+    const editTime = $('#modalTime');
     const submitButton = $('#submitButton');
 
     let movieId;
@@ -16,18 +17,20 @@ $(function() {
     let editedMovie;
 
     let button;
+    let isEdit=false;
 
-    $('td a').click(function(){
+    $("#screeningTable").on('click','.btn-warning', function () {
 
-        screeningId = $(this).attr('data-screeningid');
         button = $(this);
+        screeningId = $(this).attr('data-screeningid');
 
         $.ajax(`/screenings/find/${screeningId}`,   // request url
             {
                 success: function (data) {// success callback function
 
+                    console.log(data);
                     selectedScreening = data;
-
+                    console.log("chuvame li se ");
                     //populates the modal with data about the selected screening
                     editMovie.val(selectedScreening.movie.title);
                     editTheater.val(selectedScreening.theater.name);
@@ -39,7 +42,13 @@ $(function() {
                     editedTheater = selectedScreening.theater;
                 }
             });
-    });
+
+        $('.modal-title').text('Edit Screening');
+        submitButton.removeClass('btn-success');
+        submitButton.addClass('btn-warning')
+        $("#modal").modal("show");
+        isEdit = true;
+
 
     editMovie.change(function() {
 
@@ -70,7 +79,9 @@ $(function() {
             });
     });
 
-    submitButton.click(function() {
+
+    $('.btn-warning').click(function() {
+        if(isEdit){
         selectedScreening = {
             "id":screeningId,
             "movie": editedMovie,
@@ -80,6 +91,8 @@ $(function() {
             "time": editTime.val()
         }
 
+
+            console.log(isEdit);
         $.ajax({
 
             type: 'PUT',
@@ -89,20 +102,32 @@ $(function() {
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
 
-                // Fancy css and close the modal
-                button.closest('tr').css('background', 'gold');
-                button.closest('tr').fadeOut(300, function() {
-                    $(this).fadeIn(300);
-                    $(this).css('background', 'white');
-                    setTimeout(function(){ $('#editScreening').modal('hide');},100);
-                })
-
-                //refresh the table only
+                //TODO: Fix the refresh
                 $("#screeningTable").load(window.location + " #screeningTable");
-                collapse.click();
+
+                // Fancy css and close the modal
+              //  button.closest('tr').css('background', 'gold');
+
+                //button.closest('tr').fadeOut(300, function() {
+                //    $(this).fadeIn(300);
+                //    $(this).css('background', 'white');
+                    setTimeout(function(){ $('#modal').modal('hide');},100);
+                //})
+                //refresh the table only
+
+                console.log(isEdit);
+                console.log("screening ",screeningId, "edited");
+                isEdit=false;
+
+                $('#modal').on('hidden.bs.modal', function() {
+                    $(this)
+                        .find("input,textarea,select")
+                        .val('')
+                        .end();
+                })
 
 
             }
-        });
-    });
+        });}
+    }); });
 });
