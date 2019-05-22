@@ -52,12 +52,12 @@ $(function() {
         // https://stackoverflow.com/a/2888447
         theaterId = $(this).children(":selected").data('theater_id');
 
-        $.ajax(`/api/theater/${theaterId}`,   // request url
+        $.ajax(`/api/theaters/${theaterId}`,   // request url
             {
                 success: function (data) {// success callback function
 
-                    console.log(theater);
                     theater = data;
+                    console.log(theater);
 
 
                     $.ajax(`/api/cinemas/${theater.cinemaId}`,   // request url
