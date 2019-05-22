@@ -44,9 +44,9 @@ public class TheaterController {
     //Saves the new theaters object
     @PostMapping("api/theaters")
     @ResponseBody
-    public Theater saveTheater(@RequestBody Theater newTheater) {
-        theaterRepo.saveTheater(newTheater);
-        return newTheater;
+    public int saveTheater(@RequestBody Theater newTheater) {
+        int theaterId = theaterRepo.addTheater(newTheater);
+        return theaterId;
     }
 
 

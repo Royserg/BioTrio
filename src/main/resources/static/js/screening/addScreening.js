@@ -1,6 +1,6 @@
 
-$(function()
-{
+$(function() {
+
     const movieList = $('#modalMovie');
     const theaterList = $('#modalTheater');
     const addScreening = $('#addScreeningClick');
@@ -89,47 +89,47 @@ $(function()
             goodTime = true;
         }
 
-    })
+    });
 
     addScreening.click(function() {
-            let screening = {
-                "movie": movie,
-                "theater": theater,
-                "price": price.val(),
-                "date":screeningDate.val(),
-                "time":screeningTime.val()
-                            }
+      let screening = {
+          "movie": movie,
+          "theater": theater,
+          "price": price.val(),
+          "date":screeningDate.val(),
+          "time":screeningTime.val()
+      };
 
-    $.ajax({
-        type: "POST",
-        url:"/api/screenings/add",
-        dataType: "json",
-        data: JSON.stringify(screening),
-        contentType: "application/json; charset=utf-8",
-        success: function(id){
+      $.ajax({
+          type: "POST",
+          url:"/api/screenings",
+          dataType: "json",
+          data: JSON.stringify(screening),
+          contentType: "application/json; charset=utf-8",
+          success: function(id){
 
-            let newRow = `<tr class="d-flex">
-                        <td class="col-2">${screening.movie.title} </td>
-                        <td class="col-2">${screening.theater.name}</td>
-                        <td class="col-2">${screening.date}</td>
-                        <td class="col-2">${screening.time}</td>
-                        <td class="col-2">${screening.price}</td> <td class="col-1">
-                            <button id = "editButton" 
-                               class="btn btn-warning"
-                               data-toggle="modal"
-                               data-target="#modal"
-                               data-screeningid="${id}">
-                                <span class="fas fa-edit"></span>
-                            </button>
-                        </td>
-                        <td class="col-1">
-                            <button data-screeningid="${id}",
-                                    data-screeningmovie="${screening.movie.title}"
-                                    class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </td>
-                    </tr>`
+              let newRow = `<tr class="d-flex">
+                          <td class="col-2">${screening.movie.title} </td>
+                          <td class="col-2">${screening.theater.name}</td>
+                          <td class="col-2">${screening.date}</td>
+                          <td class="col-2">${screening.time}</td>
+                          <td class="col-2">${screening.price}</td> <td class="col-1">
+                              <button id = "editButton" 
+                                 class="btn btn-warning"
+                                 data-toggle="modal"
+                                 data-target="#modal"
+                                 data-screeningid="${id}">
+                                  <span class="fas fa-edit"></span>
+                              </button>
+                          </td>
+                          <td class="col-1">
+                              <button data-screeningid="${id}",
+                                      data-screeningmovie="${screening.movie.title}"
+                                      class="btn btn-danger">
+                                  <span class="fas fa-trash"></span>
+                              </button>
+                          </td>
+                      </tr>`
                 console.log("triggered")
             //appends the latest movie to the table
             $('#screeningTable tbody').append(newRow);
@@ -143,9 +143,9 @@ $(function()
                     }
                 })
 
-            } else {
-                alert("Please choose a time within the cinemas opening hours");
-            }
+            // } else {
+            //     alert("Please choose a time within the cinemas opening hours");
+            // }
        })
 
 
@@ -160,11 +160,11 @@ $(function()
                     .end();
             })
         }
-    })}
-        console.log('request sent');
-
-    })
+    // })}
+    //     console.log('request sent');
+    //
+    // })
     });
 }
-)
+)});
 

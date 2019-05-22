@@ -9,7 +9,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Generated;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -36,17 +35,21 @@ public class TheaterRepository {
     }
 
     public Theater findByScreeningId(int theaterId) {
-        String sql = "SELECT * FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" + theaterId;
+        String sql = "SELECT theaters.* FROM theaters JOIN screenings s ON theaters.id = s.theater_id WHERE s.id =" + theaterId;
 
         Theater theater = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Theater.class));
         return theater;
     }
 
-    public Theater saveTheater(Theater theater) {
+    public int addTheater(Theater theater) {
+
+        KeyHolder id = new GeneratedKeyHolder();
+        String sql = "INSERT INTO theaters VALUES (null,?,?,?,?,?,?)";
+
         PreparedStatementCreator psc = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("Insert into theaters values (null,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, theater.getCinemaId());
                 ps.setString(2, theater.getName());
                 ps.setInt(3, theater.getRowsNumber());
@@ -57,11 +60,10 @@ public class TheaterRepository {
 
             }
         };
-        KeyHolder id = new GeneratedKeyHolder();
-        jdbc.update(psc, id);
-        theater.setId(id.getKey().intValue());
-        return theater;
 
+        jdbc.update(psc, id);
+
+        return id.getKey().intValue();
     }
 
     public void update(Theater theater) {

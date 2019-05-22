@@ -24,7 +24,7 @@ $(function() {
         button = $(this);
         screeningId = $(this).attr('data-screeningid');
 
-        $.ajax(`/screenings/find/${screeningId}`,   // request url
+        $.ajax(`/api/screenings/${screeningId}`,   // request url
             {
                 success: function (data) {// success callback function
 
@@ -82,52 +82,53 @@ $(function() {
 
     $('.btn-warning').click(function() {
         if(isEdit){
-        selectedScreening = {
-            "id":screeningId,
-            "movie": editedMovie,
-            "theater": editedTheater,
-            "price": editPrice.val(),
-            "date": editDate.val(),
-            "time": editTime.val()
-        }
+            selectedScreening = {
+                "id":screeningId,
+                "movie": editedMovie,
+                "theater": editedTheater,
+                "price": editPrice.val(),
+                "date": editDate.val(),
+                "time": editTime.val()
+            }
 
-
-            console.log(isEdit);
-        $.ajax({
-
-            type: 'PUT',
-            url: `/screenings/`,
-            dataType: 'json',
-            data: JSON.stringify(selectedScreening),
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-
-                //TODO: Fix the refresh
-                $("#screeningTable").load(window.location + " #screeningTable");
-
-                // Fancy css and close the modal
-              //  button.closest('tr').css('background', 'gold');
-
-                //button.closest('tr').fadeOut(300, function() {
-                //    $(this).fadeIn(300);
-                //    $(this).css('background', 'white');
-                    setTimeout(function(){ $('#modal').modal('hide');},100);
-                //})
-                //refresh the table only
 
                 console.log(isEdit);
-                console.log("screening ",screeningId, "edited");
-                isEdit=false;
+            // TODO: ajax request is fired every time `.btn-warning` is pressed
+            $.ajax({
 
-                $('#modal').on('hidden.bs.modal', function() {
-                    $(this)
-                        .find("input,textarea,select")
-                        .val('')
-                        .end();
-                })
+                type: 'PUT',
+                url: `/screenings/${screeningId}`,
+                dataType: 'json',
+                data: JSON.stringify(selectedScreening),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    //TODO: Fix the refresh
+                    $("#screeningTable").load(window.location + " #screeningTable");
+
+                    // Fancy css and close the modal
+                  //  button.closest('tr').css('background', 'gold');
+
+                    //button.closest('tr').fadeOut(300, function() {
+                    //    $(this).fadeIn(300);
+                    //    $(this).css('background', 'white');
+                        setTimeout(function(){ $('#modal').modal('hide');},100);
+                    //})
+                    //refresh the table only
+
+                    console.log(isEdit);
+                    console.log("screening ",screeningId, "edited");
+                    isEdit=false;
+
+                    $('#modal').on('hidden.bs.modal', function() {
+                        $(this)
+                            .find("input,textarea,select")
+                            .val('')
+                            .end();
+                    })
 
 
-            }
+                }
         });}
     }); });
 });

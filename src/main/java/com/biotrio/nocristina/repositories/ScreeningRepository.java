@@ -59,7 +59,7 @@ public class ScreeningRepository {
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
     }
 
-    public void addScreening(Screening newScreening){
+    public int addScreening(Screening newScreening){
 
         String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price) VALUES(?,?,?,?,?);";
 
@@ -67,19 +67,18 @@ public class ScreeningRepository {
 
         jdbc.update((Connection connection)->{
 
-                    PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
-                        ps.setInt(1, newScreening.getMovie().getId());
-                        ps.setInt(2, newScreening.getTheater().getId());
-                        ps.setObject(3,newScreening.getTime());
-                        ps.setObject(4,newScreening.getDate());
-                        ps.setBigDecimal(5, newScreening.getPrice());
+                ps.setInt(1, newScreening.getMovie().getId());
+                ps.setInt(2, newScreening.getTheater().getId());
+                ps.setObject(3,newScreening.getTime());
+                ps.setObject(4,newScreening.getDate());
+                ps.setBigDecimal(5, newScreening.getPrice());
 
-                    return ps;
-                },keyHolder);
+            return ps;
+        },keyHolder);
 
-        newScreening.setId(keyHolder.getKey().intValue());
-        return newScreening;
+        return keyHolder.getKey().intValue();
     }
 
     public void deleteScreening (int screeningId) {
@@ -87,10 +86,10 @@ public class ScreeningRepository {
         jdbc.update(sql);
     }
 
-    public void editScreening(Screening sc){
+    public void editScreening(int id, Screening sc){
 
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
-        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), sc.getId());
+        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 
     }
 }
