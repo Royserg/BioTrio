@@ -1,147 +1,246 @@
-
 $(function() {
 
-    console.log('jquery loaded');
+    console.log('movie jquery loaded');
+
+    let id;
+    let editButton;
+    let isEdit = false;
+    let movieTitle, movieDuration, movie3D, movieDolby;
 
 
-        // sort table
-        // source: https://codepen.io/JTParrett/pen/rfeao
+            // sort table
+            // source: https://codepen.io/JTParrett/pen/rfeao
 
-        let thIndex = 0,
-            curThIndex = null;
-        let sorting, tbodyHtml, rowId, sortingIndex;
+            let thIndex = 0,
+                curThIndex = null;
+            let sorting, tbodyHtml, rowId, sortingIndex;
 
-        $(function(){
-            $('.sortable').click(function(){
-                thIndex = $(this).index();
-                if(thIndex != curThIndex){
-                    curThIndex = thIndex;
-                    sorting = [];
-                    tbodyHtml = null;
-                    $('table tbody tr').each(function(){
-                        sorting.push($(this).children('td').eq(curThIndex).html() + ', ' + $(this).index());
-                    });
+            $(function(){
+                $('.sortable').click(function(){
+                    thIndex = $(this).index();
+                    if(thIndex != curThIndex){
+                        curThIndex = thIndex;
+                        sorting = [];
+                        tbodyHtml = null;
+                        $('table tbody tr').each(function(){
+                            sorting.push($(this).children('td').eq(curThIndex).html() + ', ' + $(this).index());
+                        });
 
-                    sorting = sorting.sort();
-                    sortIt();
+                        sorting = sorting.sort();
+                        sortIt();
+                    }
+                });
+            })
+
+            function sortIt(){
+                for(sortingIndex = 0; sortingIndex < sorting.length; sortingIndex++){
+                    rowId = parseInt(sorting[sortingIndex].split(', ')[1]);
+                    tbodyHtml = tbodyHtml + $('table tbody tr').eq(rowId)[0].outerHTML;
                 }
-            });
-        })
-
-        function sortIt(){
-            for(sortingIndex = 0; sortingIndex < sorting.length; sortingIndex++){
-                rowId = parseInt(sorting[sortingIndex].split(', ')[1]);
-                tbodyHtml = tbodyHtml + $('table tbody tr').eq(rowId)[0].outerHTML;
+                $('table tbody').html(tbodyHtml);
             }
-            $('table tbody').html(tbodyHtml);
-        }
 
 
 
-        // Edit movie
 
-        $('td a').click(function() {
 
-            const id = $(this).attr('data-movieID');
-            const editButton = $(this);
+        // Click edit movie and then it'll bring the movie info and show it on modal
 
-            const movieTitle = editButton.parent().siblings('td')[0].innerHTML;
-            const movieDuration = editButton.parent().siblings('td')[1].innerHTML;
-            const movie3D = editButton.parent().siblings('td')[2].innerHTML;
-            const movieDolby = editButton.parent().siblings('td')[3].innerHTML;
+        $('#movieTable').on("click", ".btn-warning", function() {
+
+            id = $(this).attr('data-movieID');
+            editButton = $(this);
+
+            movieTitle = editButton.parent().siblings('td')[0].innerHTML;
+            movieDuration = editButton.parent().siblings('td')[1].innerHTML;
+            movie3D = editButton.parent().siblings('td')[2].innerHTML;
+            movieDolby = editButton.parent().siblings('td')[3].innerHTML;
 
             // Show the previous data so that the user can edit onto it
-            $("#editTitle").val(movieTitle);
-            $("#editDurationInMinutes").val(movieDuration);
-            // $("#editIs3D").val(movie3D);
-            // $("#editIsDolby").val(movieDolby);
+            $("#modalTitle").val(movieTitle);
+            $("#modalDurationInMinutes").val(movieDuration);
+            $("#modalIs3D").val(movie3D);
+            $("#modalDolby").val(movieDolby);
+
+            // change isEdit into true
+            isEdit = true;
+
+            showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
+
+        });
 
 
-            // Unbind so that it doesn't have anything working on the back
-            $('#submitChanges').unbind().on('click', function () {
+        // Click add movie and then it'll clear the modal
 
-                let movieToEdit = {
-                    'title': $('#editTitle').val(),
-                    'durationInMinutes': $('#editDurationInMinutes').val(),
-                    'is3D': $('#editIs3D').is(":checked"),
-                    'dolby': $('#editIsDolby').is(":checked")
-                };
+        $('body div').on("click", ".btn-primary", function() {
 
-                //check if the screening time is less than 10 minutes
-                if (movieToEdit.durationInMinutes < 10) {
-                    alert("Invalid input. Please check the duration again.");
+            // change isEdit into false
+            isEdit = false;
 
-                //unable to have 3D and dolby movie as of now since Bio Trio doesn't support 3D and dolby screenings
-                // } else if (movieToEdit.is3D === true || movieToEdit.dolby === true) {
-                //     alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
+            // clear the modal
+            $('#modalTitle').val("");
+            $('#modalDurationInMinutes').val("");
+            $('#modalIs3D').prop("checked", false);
+            $('#modalDolby').prop("checked", false);
 
-                } else {
+            showModal(`<h5>Add Movie</h5>`, 'btn btn-success');
 
-                    $.ajax({
-
-                        type: 'POST',
-                        url: `/movies/edit/${id}`,
-                        dataType: 'json',
-                        data: JSON.stringify(movieToEdit),
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-
-                            // Reload the data
-                            editButton.parent().siblings('td')[0].innerHTML = movieToEdit.title;
-                            editButton.parent().siblings('td')[1].innerHTML = movieToEdit.durationInMinutes;
-                            editButton.parent().siblings('td')[2].innerHTML = movieToEdit.is3D;
-                            editButton.parent().siblings('td')[3].innerHTML = movieToEdit.dolby;
+        });
 
 
-                            // Fancy css and close the modal
-                            editButton.closest('tr').css('background', 'gold');
-                            editButton.closest('tr').fadeOut(300, function () {
-                                $(this).fadeIn(300);
-                                $(this).css('background', 'white');
-                                setTimeout(function () {
-                                    $('#editMovie').modal('hide');
-                                }, 100);
+        // Show modal with different header and button color
 
-                            })
+        function showModal(header, className) {
 
-                        }
+            $('#movieModalTitle').html(header);
+            $('#submitModal').removeAttr('class');
+            $('#submitModal').addClass(className);
+            $('#movieModal').modal('show');
 
+        }
 
-                });
-                }
+        // Click save button and edit or add accordingly
 
-            });
+        $('html body').off('click').on('click', '#submitModal', function (e) {
+
+            if(isEdit) {
+
+                edit();
+
+                isEdit = false;
+
+            } else {
+
+                add(e);
+
+                isEdit = false;
+
+            }
+
 
         });
 
 
 
-        // Delete movie
+        function edit() {
 
-            $('.btn-danger').click(function () {
+            let movieToEdit = {
+                'id': id,
+                'title': $('#modalTitle').val(),
+                'durationInMinutes': $('#modalDurationInMinutes').val(),
+                'is3D': $('#modalIs3D').is(":checked"),
+                'dolby': $('#modalDolby').is(":checked")
+            };
 
-                const button = $(this);
-                const id = $(this).attr('movieID');
+            //check if the screening time is less than 10 minutes
+            if (movieToEdit.durationInMinutes < 10) {
+                alert("Invalid input. Please check the duration again.");
 
-                // Get confirmation for deleting
-                const remove = confirm(`Are you sure you want to delete this movie?`);
-                if (remove) {
+                //unable to have 3D and dolby movie as of now since Bio Trio doesn't support 3D and dolby screenings
+                // } else if (movieToEdit.is3D === true || movieToEdit.dolby === true) {
+                //     alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
 
-                    $.ajax({
+            } else {
 
-                        url: `/movies/delete/${id}`,
-                        method: 'DELETE',
-                        success: function (data) {
+                $.ajax({
 
-                            // Remove html table row with fading animation
-                            button.closest('tr').css('background', 'tomato');
-                            button.closest('tr').fadeOut(800, function () {
-                                $(this).remove();
-                            })
-                        }
-                    })
-                }
-            });
+                    type: 'PUT',
+                    url: `/movies/${movieToEdit.id}`,
+                    dataType: 'json',
+                    data: JSON.stringify(movieToEdit),
+                    contentType: 'application/json',
+                    success: function (data) {
 
-    }
-);
+                        // Reload the data
+                        editButton.parent().siblings('td')[0].innerHTML = movieToEdit.title;
+                        editButton.parent().siblings('td')[1].innerHTML = movieToEdit.durationInMinutes;
+                        editButton.parent().siblings('td')[2].innerHTML = movieToEdit.is3D;
+                        editButton.parent().siblings('td')[3].innerHTML = movieToEdit.dolby;
+
+
+                        // Fancy css and close the modal
+                        editButton.closest('tr').css('background', 'gold');
+                        editButton.closest('tr').fadeOut(300, function () {
+                            $(this).fadeIn(300);
+                            $(this).css('background', 'white');
+                            setTimeout(function () {
+                                $('#movieModal').modal('hide');
+                            }, 100);
+
+
+
+
+                        })
+
+                    }
+
+                });
+
+            }
+
+        }
+
+
+
+        function add(e) {
+
+            // Add movie
+
+            e.preventDefault();
+
+            let newMovie = {
+                'title': $('#modalTitle').val(),
+                'durationInMinutes': $('#modalDurationInMinutes').val(),
+                'is3D': $('#modalIs3D').is(":checked"),
+                'dolby': $('#modalDolby').is(":checked")
+            };
+
+            if (newMovie.durationInMinutes < 10) {
+
+                alert("Invalid input. Please check the duration again.");
+
+            } else {
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: `/movies`,
+                    dataType: 'json',
+                    data: JSON.stringify(newMovie),
+                    contentType: 'application/json',
+                    success: function (newMovieAdded) {
+
+                        // add new row to the table with the newly added movie
+
+                        let newRow = `<tr class="d-flex">
+                                    <td class="col-5 title">${newMovieAdded.title}</td>
+                                    <td class="col-3 duration">${newMovieAdded.durationInMinutes}</td>
+                                    <td class="col-1 is3D">${newMovieAdded.is3D}</td>
+                                    <td class="col-1 dolby">${newMovieAdded.dolby}</td>
+                                    <td class="col-1"><a href="#"
+                                                 id = "editButton"
+                                                 class="btn btn-warning"
+                                                 data-toggle="modal"
+                                                 data-target="#movieModal"
+                                                 data-movieID="${newMovieAdded.id}"><span class="fas fa-edit"></span></a></td>
+                                    <td class="col-1"><a class="btn btn-danger" data-movieID="${newMovieAdded.id}"><span class = "fas fa-trash text-white"></span></a></td>
+                                  </tr>`
+
+                        $('#movieTable tbody').append(newRow);
+                        setTimeout(function () {
+                            $('#movieModal').modal('hide');
+                        }, 100);
+
+                        $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
+
+
+                    }
+
+                });
+
+            }
+
+        }
+
+
+});

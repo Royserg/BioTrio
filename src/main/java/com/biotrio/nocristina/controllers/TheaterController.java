@@ -16,55 +16,61 @@ public class TheaterController {
     TheaterRepository theaterRepo;
 
 
-    @GetMapping("/api/theaters")
-    @ResponseBody
+    @GetMapping("/theaters")
     public List<Theater> theaters() {
         List<Theater> theaters = theaterRepo.findAll();
 
         return theaters;
     }
 
-    @GetMapping("/api/theater/{id}")
+    @GetMapping("/theaters/{id}")
     @ResponseBody
     public Theater findById(@PathVariable int id) {
         return theaterRepo.findOne(id);
     }
 
-    @GetMapping("/theaters")
+    /*@GetMapping("/theaters/add")
     public String addTheater(Model model) {
-        // TODO: implement Cinema Repo, model and controller => below dummy list of integers
-        model.addAttribute("dummyCinema", 1);
         model.addAttribute("theaterForm", new Theater());
         // pass list of theaters
-        model.addAttribute("theaterList", theaterRepo.findAll());
+        List <Theater> tlist = theaterRepo.findAll();
+       *//* for (Theater theater : tlist) {
+            System.out.println(theater);
+        }*//*
+        model.addAttribute("theaterList", tlist);
 
         return "theaters";
-    }
-
-    @PostMapping("/theaters")
-    public String saveTheater(@ModelAttribute Theater newTheater) {
-        theaterRepo.saveTheater(newTheater);
-        return "redirect:/theaters";
-    }
-
-    @GetMapping("/api/theaters/{id}")
+    }*/
+    //Saves the new theaters object
+    @PostMapping("api/theaters")
     @ResponseBody
-    public Theater oneTheater(@PathVariable int id) {
-        return theaterRepo.findOne(id);
+    public Theater saveTheater(@RequestBody Theater newTheater) {
+        theaterRepo.saveTheater(newTheater);
+        return newTheater;
     }
 
-    @PostMapping("/theaters/edit/{id}")
+
+    @PutMapping("api/theaters/{id}")
     @ResponseBody
     public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
-        theater.setId(id);
         theaterRepo.update(theater);
+        System.out.println(theater);
         return id;
     }
 
-    @DeleteMapping("/theaters/delete/{id}")
+    @DeleteMapping("api/theaters/{id}")
     @ResponseBody
     public String deleteTheater(@PathVariable(name = "id") int id) {
         theaterRepo.delete(id);
         return "redirect:/theaters";
     }
 }
+
+// TODO:
+// we were speaking today about keeping proper methods for HTTP requests
+// examples
+// (READ)GET: /theaters
+//            /theaters/id
+// (UPDATE) PUT: /theaters
+// (CREATE) POST: /theaters
+// (DELETE) DELETE: /theaters/id

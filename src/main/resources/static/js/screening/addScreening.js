@@ -9,9 +9,13 @@ $(function()
     const screeningTime = $('#modalTime');
     const submitButton = $('#submitButton');
 
+
+    let goodTime = false;
+
     let movieId;
     let theaterId;
 
+    let cinema;
     let movie;
     let theater;
 
@@ -52,13 +56,42 @@ $(function()
             {
                 success: function (data) {// success callback function
 
+                    console.log(theater);
                     theater = data;
+
+
+                    $.ajax(`/api/cinemas/${theater.cinemaId}`,   // request url
+                        {
+                            success: function (data) {// success callback function
+
+                                cinema = data;
+                                console.log(cinema);
+                            }
+                        })
+
+
+
                 }
             });
     })
 
+
     $('.btn-success').click(function() {
         if(isAdd){
+
+    //when u select a time for screening
+    screeningTime.change(() => {
+
+        //TODO: give feedback to user based on time selected
+        if(screeningTime.val() < cinema.openingHour || screeningTime.val() > cinema.closingHour){
+            goodTime = false;
+        } else {
+            goodTime = true;
+        }
+
+    })
+
+    addScreening.click(function() {
             let screening = {
                 "movie": movie,
                 "theater": theater,
@@ -101,11 +134,20 @@ $(function()
             //appends the latest movie to the table
             $('#screeningTable tbody').append(newRow);
 
-            //scroll to the bottom of the table
-            $('#screeningTable').scrollTop($('#screeningTable')[0].scrollHeight);
+                        //scroll to the bottom of the table
+                        $('#screeningTable').scrollTop($('#screeningTable')[0].scrollHeight);
 
-            //scroll to the top of the page
-            window.scrollTo(0,0);
+                        //scroll to the top of the page
+                        window.scrollTo(0,0);
+
+                    }
+                })
+
+            } else {
+                alert("Please choose a time within the cinemas opening hours");
+            }
+       })
+
 
             setTimeout(function(){ $('#modal').modal('hide');},100);
             console.log(isAdd);
@@ -125,3 +167,4 @@ $(function()
     });
 }
 )
+

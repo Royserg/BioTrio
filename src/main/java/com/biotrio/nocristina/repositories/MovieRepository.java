@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -40,12 +42,13 @@ public class MovieRepository {
         return movie;
     }
 
-    public void addMovie(Movie newMovie){
+    public Movie addMovie(Movie newMovie){
 
-        String sql = "INSERT INTO movies(title, duration_in_minutes, is3D, dolby) VALUES(?,?,?,?);";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
         jdbc.update((Connection connection)->{
 
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                 ps.setString(1, newMovie.getTitle());
                 ps.setInt(2, newMovie.getDurationInMinutes());
@@ -53,14 +56,20 @@ public class MovieRepository {
                 ps.setBoolean(4, newMovie.isDolby());
 
                 return ps;
-            }
-        );
+            }, keyHolder);
+
+        System.out.println("newly generated key is " + keyHolder.getKey());
+        Movie newMovieAdded = newMovie;
+        newMovieAdded.setId(keyHolder.getKey().intValue());
+
+        System.out.println(newMovieAdded.toString());
+        return newMovieAdded;
     }
 
-    public void editMovie(int id, Movie movieToEdit){
+    public void editMovie(Movie movieToEdit){
 
         String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
+        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), movieToEdit.getId());
 
     }
 
