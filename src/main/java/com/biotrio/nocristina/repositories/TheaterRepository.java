@@ -16,7 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class TheaterRepository {
+public class TheaterRepository implements IRepository<Theater>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -66,12 +66,12 @@ public class TheaterRepository {
         return id.getKey().intValue();
     }
 
-    public void update(Theater theater) {
+    public void updateOne(Theater theater) {
         String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ?, dolby = ? WHERE id = ?";
         jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.isDolby(), theater.getId());
     }
 
-    public void delete(int id) {
+    public void deleteOne(int id) {
 
         jdbc.update("DELETE FROM theaters WHERE id = " + id);
     }

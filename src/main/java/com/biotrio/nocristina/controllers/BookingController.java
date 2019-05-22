@@ -9,26 +9,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class BookingController {
+public class BookingController implements IController<Booking>{
 
     @Autowired
     BookingService bookingService;
 
-
+    //Get all bookings
     @GetMapping("/api/bookings")
     @ResponseBody
-    public List<Booking> bookings() {
+    public List<Booking> findAll() {
         List<Booking> bookings = bookingService.getAllBookings();
         return bookings;
     }
 
+    @Override
+    public void updateOne(Booking itemToUpdate) {
+        //TODO: implement?
+    }
 
+
+    //Get one specific booking
     @GetMapping("/api/bookings/{id}")
     @ResponseBody
-    public Booking getBooking(@PathVariable int id) {
+    public Booking findOne(@PathVariable int id) {
         Booking booking = bookingService.getBookingById(id);
 
-//        Booking test = new Booking(99, "12345");
         return booking;
     }
 
@@ -37,9 +42,10 @@ public class BookingController {
      * @param newBooking (Booking) object to be added to the db
      * @return (int) id of the row inserted into db
      */
+    //post one booking
     @PostMapping("/api/bookings")
     @ResponseBody
-    public int saveBooking(@RequestBody Booking newBooking) {
+    public int saveOne(@RequestBody Booking newBooking) {
         int bookingId = bookingService.addBooking(newBooking);
 
         return bookingId;
@@ -48,25 +54,22 @@ public class BookingController {
     // Delete booking of provided id
     @DeleteMapping("api/bookings/{bookingId}")
     @ResponseBody
-    public int deleteBooking(@PathVariable int bookingId) {
+    public void deleteOne(@PathVariable int bookingId) {
         bookingService.deleteBooking(bookingId);
-
-        return bookingId;
     }
 
-
+    //return html page
     @GetMapping("/bookings")
-    public String showBookingsPage(Model m){
+    public String showPage(Model m){
 
         m.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
 
+    //get bookings by a phone number
     @GetMapping("/api/bookings/phone/{phoneNumber}")
     @ResponseBody
     public List<Booking> getBookingsForPhone(@PathVariable String phoneNumber){
-
-
         return bookingService.getBookingByPhone(phoneNumber);
     }
 

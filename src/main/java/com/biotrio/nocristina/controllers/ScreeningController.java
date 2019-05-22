@@ -9,14 +9,14 @@ import java.util.List;
 
 
 @Controller
-public class ScreeningController {
+public class ScreeningController implements IController<Screening>{
 
     @Autowired
     ScreeningService screeningService;
 
     // Show page with the list of screenings
     @GetMapping("/screenings")
-    public String addScreening(Model m) {
+    public String showPage(Model m) {
 
         Screening newScreening = new Screening();
 
@@ -31,7 +31,7 @@ public class ScreeningController {
     // CRUD Operations
     @GetMapping("/api/screenings")
     @ResponseBody
-    public List<Screening> showScreenings() {
+    public List<Screening> findAll() {
         List<Screening> screenings = screeningService.getAllScreenings();
         return screenings;
     }
@@ -39,14 +39,14 @@ public class ScreeningController {
     // Get information about a specific screening
     @GetMapping("/api/screenings/{id}")
     @ResponseBody
-    public Screening findById(@PathVariable int id) {
+    public Screening findOne(@PathVariable int id) {
         return screeningService.findById(id);
     }
 
     // Add new screening
     @PostMapping("/api/screenings")
     @ResponseBody
-    public int saveScreening(@RequestBody Screening newScreening) {
+    public int saveOne(@RequestBody Screening newScreening) {
         int screeningId = screeningService.addScreening(newScreening);
         return screeningId;
     }
@@ -54,19 +54,15 @@ public class ScreeningController {
     // Delete Screening of provided id
     @DeleteMapping("/api/screenings/{id}")
     @ResponseBody
-    public String deleteScreening(@PathVariable(name = "id") int id) {
+    public void deleteOne(@PathVariable(name = "id") int id) {
         screeningService.deleteScreening(id);
-        return "redirect:/screenings";
     }
 
-    // Edit screening of provided id
-    @PutMapping("/api/screenings/{id}")
+    // Edit screening
+    @PutMapping("/api/screenings")
     @ResponseBody
-    public int editScreening(@PathVariable int id, @RequestBody Screening screeningToEdit){
-
-        screeningService.editScreening(id, screeningToEdit);
-
-        return screeningToEdit.getId();
+    public void updateOne( @RequestBody Screening screeningToEdit){
+        screeningService.editScreening(screeningToEdit);
     }
 
 

@@ -45,7 +45,7 @@ public class TicketRepository {
 
     }
 
-    public List<Ticket> findTicketsForScreening(int screeningId) {
+    public List<Ticket> findAllByScreeningId(int screeningId) {
 
         String sql = "SELECT * FROM tickets JOIN bookings ON tickets.booking_id = bookings.id " +
                      "WHERE bookings.screening_id =" + screeningId;

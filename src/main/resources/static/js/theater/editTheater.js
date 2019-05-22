@@ -5,8 +5,6 @@ $(function() {
 
         $('#theaterTable').on('click','td .btn-warning', function() {
 
-            console.log("klikkede")
-
             id = $(this).attr('data-theaterid');
             editButton = $(this);
 
@@ -15,9 +13,6 @@ $(function() {
             const columnsNumber= editButton.parent().siblings('td')[2].innerHTML;
             const can3D = editButton.parent().siblings('td')[3].innerHTML;
             const dolby = editButton.parent().siblings('td')[4].innerHTML;
-
-            console.log(can3D);
-            console.log(dolby);
 
             //Populate the modal fields with current info
 
@@ -44,11 +39,12 @@ $(function() {
         $.ajax({
 
             type: 'PUT',
-            url: `api/theaters/${id}`,
+            url: `api/theaters/`,
             dataType: 'json',
             data: JSON.stringify(theaterToEdit),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                console.log(theaterToEdit)
                 editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
                 editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
                 editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;

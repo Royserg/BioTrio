@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class BookingRepository {
+public class BookingRepository implements IRepository<Booking>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -73,10 +73,15 @@ public class BookingRepository {
 //        bookingList.add(edit);
 //    }
 //
-    public void deleteBooking(int bookingId) {
+    public void deleteOne(int bookingId) {
         String sql = "DELETE FROM bookings WHERE id = ?";
         jdbc.update(sql, bookingId);
 
+    }
+
+    @Override
+    public void updateOne(Booking itemToUpdate) {
+        //TODO: implement ???
     }
 
 }

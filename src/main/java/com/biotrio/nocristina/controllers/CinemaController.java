@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class CinemaController {
+public class CinemaController implements IController<Cinema>{
 
     @Autowired
     CinemaRepository cinemaRepository;
 
     @GetMapping("/api/cinemas")
     @ResponseBody
-    public List<Cinema> cinemaList() {
+    public List<Cinema> findAll() {
         return cinemaRepository.findAll();
     }
 
     @GetMapping("/api/cinemas/{id}")
     @ResponseBody
-    public Cinema getOneCinema(@PathVariable int id){
-        return cinemaRepository.findById(id);
+    public Cinema findOne(@PathVariable int id){
+        return cinemaRepository.findOne(id);
     }
 
     @GetMapping("/cinemas")
-    public String addMovie(Model model) {
+    public String showPage(Model model) {
         Cinema newCinema = new Cinema();
         model.addAttribute("newCinema", newCinema);
         model.addAttribute("cinemaList", cinemaRepository.findAll());
@@ -36,24 +36,20 @@ public class CinemaController {
     }
 
     @PostMapping("/cinemas")
-    public String saveCinema(@ModelAttribute Cinema newCinema){
-        cinemaRepository.addCinema(newCinema);
-        return "redirect:/cinemas";
-    }
-
-    @GetMapping("/cinemas/delete/{id}")
-    public String deleteCinema(@PathVariable int id){
-        cinemaRepository.deleteCinemaById(id);
-        return "redirect:/cinemas";
-    }
-
-    @PostMapping("/cinemas/edit/{id}")
     @ResponseBody
-    public int editCinema(@PathVariable int id, @RequestBody Cinema cinemaToEdit){
-        System.out.println("name of cinema we are editing: " + cinemaToEdit.getName());
+    public int saveOne(@ModelAttribute Cinema newCinema){
+        cinemaRepository.addCinema(newCinema);
+        return newCinema.getId();
+    }
 
-        cinemaRepository.editCinemaById(id, cinemaToEdit);
+    @DeleteMapping("/cinemas/delete/{id}")
+    @ResponseBody
+    public void deleteOne(@PathVariable int id){
+        cinemaRepository.deleteOne(id);
+    }
 
-        return id;
+    @Override
+    public void updateOne(Cinema itemToUpdate) {
+        //TODO: implement??
     }
 }

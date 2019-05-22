@@ -87,16 +87,16 @@ public class ScreeningService {
     }
 
     public void deleteScreening(int screeningId){
-        screeningRepo.deleteScreening(screeningId);
+        screeningRepo.deleteOne(screeningId);
     }
 
     public Screening findById(int screeningId) {
-        Screening screening = screeningRepo.findById(screeningId);
+        Screening screening = screeningRepo.findOne(screeningId);
         populateScreeningData(screening);
         return screening;
     }
 
-    public void editScreening(int id, Screening screening) {
-        screeningRepo.editScreening(id, screening);
+    public void editScreening(Screening screening) {
+        screeningRepo.updateOne(screening);
     }
 }

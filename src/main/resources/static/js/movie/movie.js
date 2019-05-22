@@ -101,13 +101,14 @@ $(function() {
 
         // Click save button and edit or add accordingly
 
+
+
+
         $('html body').off('click').on('click', '#submitModal', function (e) {
 
             if(isEdit) {
 
                 edit();
-
-                isEdit = false;
 
             } else {
 
@@ -116,7 +117,6 @@ $(function() {
                 isEdit = false;
 
             }
-
 
         });
 
@@ -142,10 +142,12 @@ $(function() {
 
             } else {
 
+                console.log("putting");
                 $.ajax({
 
+
                     type: 'PUT',
-                    url: `/movies/${movieToEdit.id}`,
+                    url: `/movies`,
                     dataType: 'json',
                     data: JSON.stringify(movieToEdit),
                     contentType: 'application/json',
@@ -200,30 +202,29 @@ $(function() {
                 alert("Invalid input. Please check the duration again.");
 
             } else {
-
+                console.log("adding");
                 $.ajax({
-
                     type: 'POST',
                     url: `/movies`,
                     dataType: 'json',
                     data: JSON.stringify(newMovie),
                     contentType: 'application/json',
-                    success: function (newMovieAdded) {
+                    success: function (id) {
 
                         // add new row to the table with the newly added movie
 
                         let newRow = `<tr class="d-flex">
-                                    <td class="col-5 title">${newMovieAdded.title}</td>
-                                    <td class="col-3 duration">${newMovieAdded.durationInMinutes}</td>
-                                    <td class="col-1 is3D">${newMovieAdded.is3D}</td>
-                                    <td class="col-1 dolby">${newMovieAdded.dolby}</td>
+                                    <td class="col-5 title">${newMovie.title}</td>
+                                    <td class="col-3 duration">${newMovie.durationInMinutes}</td>
+                                    <td class="col-1 is3D">${newMovie.is3D}</td>
+                                    <td class="col-1 dolby">${newMovie.dolby}</td>
                                     <td class="col-1"><a href="#"
                                                  id = "editButton"
                                                  class="btn btn-warning"
                                                  data-toggle="modal"
                                                  data-target="#movieModal"
-                                                 data-movieID="${newMovieAdded.id}"><span class="fas fa-edit"></span></a></td>
-                                    <td class="col-1"><a class="btn btn-danger" data-movieID="${newMovieAdded.id}"><span class = "fas fa-trash text-white"></span></a></td>
+                                                 data-movieID="${id}"><span class="fas fa-edit"></span></a></td>
+                                    <td class="col-1"><a class="btn btn-danger" data-movieID="${id}"><span class = "fas fa-trash text-white"></span></a></td>
                                   </tr>`
 
                         $('#movieTable tbody').append(newRow);
