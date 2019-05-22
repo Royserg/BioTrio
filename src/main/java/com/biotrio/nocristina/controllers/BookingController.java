@@ -26,21 +26,23 @@ public class BookingController {
     @GetMapping("/api/bookings/{id}")
     @ResponseBody
     public Booking getBooking(@PathVariable int id) {
-        System.out.println("Requested Booking object with all data: " + id);
-
         Booking booking = bookingService.getBookingById(id);
 
 //        Booking test = new Booking(99, "12345");
         return booking;
     }
 
-
-    @PostMapping("/api/bookings/add")
+    /**
+     * Save new booking into database and send back generated id from the db
+     * @param newBooking (Booking) object to be added to the db
+     * @return (int) id of the row inserted into db
+     */
+    @PostMapping("/api/bookings")
     @ResponseBody
     public int saveBooking(@RequestBody Booking newBooking) {
-        bookingService.addBooking(newBooking);
+        int bookingId = bookingService.addBooking(newBooking);
 
-        return newBooking.getId();
+        return bookingId;
     }
 
     // Delete booking of provided id

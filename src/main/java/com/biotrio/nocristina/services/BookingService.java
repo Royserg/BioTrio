@@ -83,18 +83,20 @@ public class BookingService {
         return screeningRepo.findAll();
     }
 
-    //add booking in database and then get booking ID to add tickets in database
-    public void addBooking(Booking newBooking){
+    // Add booking into db and, get Id back to add tickets into db
+    public int addBooking(Booking newBooking){
 
-        int bookingID = bookingRepo.addBooking(newBooking);
+        int bookingId = bookingRepo.addBooking(newBooking);
 
         for (Ticket ticket : newBooking.getTickets()) {
             
-            ticket.setBookingId(bookingID);
+            ticket.setBookingId(bookingId);
             ticketRepo.saveTicket(ticket);
 
         }
 
+        // Return generated id of the new booking
+        return bookingId;
     }
 
     public void deleteBooking(int bookingId) {

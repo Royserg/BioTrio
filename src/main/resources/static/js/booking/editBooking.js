@@ -1,10 +1,7 @@
 $(function() {
 
-
-
   $('table').on('click', '.btn-warning', function() {
     const bookingId = $(this).closest('tr').data('bookingid');
-
 
     $.ajax(`/api/bookings/${bookingId}`, {
       method: 'GET',
@@ -50,6 +47,9 @@ $(function() {
               .append(`<span data-toggle="tooltip" title="row: ${rowIndex + 1} col: ${columnIndex + 1}" data-row="${rowIndex}" data-column="${columnIndex}" class="seat ${seatFree ? 'seat__free' : 'seat__reserved'} mx-2 my-2"></span>`)
           });
         });
+
+        // Initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
 
       }
     })
