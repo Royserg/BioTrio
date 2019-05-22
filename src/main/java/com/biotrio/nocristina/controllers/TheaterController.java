@@ -23,7 +23,7 @@ public class TheaterController {
         return theaters;
     }
 
-    @GetMapping("/theaters/{id}")
+    @GetMapping("api/theater/{id}")
     @ResponseBody
     public Theater findById(@PathVariable int id) {
         return theaterRepo.findOne(id);

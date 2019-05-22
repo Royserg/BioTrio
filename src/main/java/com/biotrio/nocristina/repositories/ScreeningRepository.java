@@ -59,7 +59,7 @@ public class ScreeningRepository {
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
     }
 
-    public void addScreening(Screening newScreening){
+    public Screening addScreening(Screening newScreening){
 
         String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price) VALUES(?,?,?,?,?);";
 
