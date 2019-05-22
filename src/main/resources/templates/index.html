@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row">
             <nav th:replace="fragments/fragments :: sidebar" />
-            <div class="col-10">
+            <div class="col-10 content">
 
                 <div class="row" style="justify-content: space-evenly">
 
@@ -27,24 +27,21 @@
                             <h2>45</h2>
                             <p>planned screenings the next 14 days</p>
                         </div>
-
-                    </div>
-
-
-                    <div class="col-4">
-
-                        <div class="alert alert-info infobox-sm">
-                                <div class="alert alert-info infobox-sm">
-                                <h6>Most booked movie this week</h6>
-                                <p>pirates of aids</p>
-                                </div><div class="alert alert-info infobox-sm">
-                                <h6>Most booked movie this week</h6>
-                                <p>pirates of aids</p>
-                                </div>
+                        <div class="alert alert-primary infobox-lg">
+                            <h2>Pirates of Aids</h2>
+                            <p>Most booked movie next 7 days</p>
                         </div>
 
+                        <div class="alert alert-primary infobox-lg">
+                            <h2>Avengers: Endgame</h2>
+                            <p>6544 hours watched last 7 days</p>
+                        </div>
                     </div>
+                    <div class="col-4">
 
+
+
+                    </div>
 
                     <div class="col-4">
                         <div id="chart-3"></div>
@@ -52,8 +49,11 @@
 
                 </div>
 
+
             </div>
+
         </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
