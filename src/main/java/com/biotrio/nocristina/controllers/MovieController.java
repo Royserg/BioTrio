@@ -57,7 +57,7 @@ public class MovieController implements IController<Movie>{
     @PutMapping("/api/movies/{id}")
     @ResponseBody
     public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
-        movieRepo.updateOne(movieToEdit);
+        movieRepo.updateOne(id, movieToEdit);
         System.out.println("movie " + id + " edited.");
     }
 
