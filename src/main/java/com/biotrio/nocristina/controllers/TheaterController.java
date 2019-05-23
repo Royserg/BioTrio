@@ -10,59 +10,53 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class TheaterController {
+public class TheaterController implements IController<Theater>{
 
     @Autowired
     TheaterRepository theaterRepo;
 
-
-    @GetMapping("/theaters")
-    public List<Theater> theaters() {
+    //get all theaters
+    @GetMapping("/api/theaters")
+    @ResponseBody
+    public List<Theater> findAll() {
         List<Theater> theaters = theaterRepo.findAll();
-
         return theaters;
     }
 
+    //get a specific theater by id
     @GetMapping("/api/theaters/{id}")
     @ResponseBody
-    public Theater findById(@PathVariable int id) {
+    public Theater findOne(@PathVariable int id) {
         return theaterRepo.findOne(id);
     }
 
-    /*@GetMapping("/theaters/add")
-    public String addTheater(Model model) {
-        model.addAttribute("theaterForm", new Theater());
-        // pass list of theaters
-        List <Theater> tlist = theaterRepo.findAll();
-       *//* for (Theater theater : tlist) {
-            System.out.println(theater);
-        }*//*
-        model.addAttribute("theaterList", tlist);
 
-        return "theaters";
-    }*/
-    //Saves the new theaters object
-    @PostMapping("api/theaters")
+    //save new theater
+    @PostMapping("/api/theaters")
     @ResponseBody
-    public int saveTheater(@RequestBody Theater newTheater) {
+    public int saveOne(@RequestBody Theater newTheater) {
         int theaterId = theaterRepo.addTheater(newTheater);
         return theaterId;
     }
 
-
-    @PutMapping("api/theaters/{id}")
+    //update one theater
+    @PutMapping("/api/theaters/{id}")
     @ResponseBody
-    public int editTheater(@PathVariable(name = "id") int id, @RequestBody Theater theater) {
-        theaterRepo.update(theater);
-        System.out.println(theater);
-        return id;
+    public void updateOne(@PathVariable int id, @RequestBody Theater theater) {
+        theaterRepo.updateOne(id, theater);
     }
 
-    @DeleteMapping("api/theaters/{id}")
+    //delete one theater by id
+    @DeleteMapping("/api/theaters/{id}")
     @ResponseBody
-    public String deleteTheater(@PathVariable(name = "id") int id) {
-        theaterRepo.delete(id);
-        return "redirect:/theaters";
+    public void deleteOne(@PathVariable(name = "id") int id) {
+        theaterRepo.deleteOne(id);
+    }
+
+    @GetMapping("/theaters")
+    public String showPage(Model m){
+        m.addAttribute("theaterList",findAll());
+        return "theaters";
     }
 }
 

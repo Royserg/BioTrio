@@ -38,7 +38,7 @@ $(function() {
         movieId = $(this).children(":selected").data('movie_id');
 
         // gets the selected movie
-        $.ajax(`/api/movie/${movieId}`,   // request url
+        $.ajax(`/api/movies/${movieId}`,   // request url
             {
                 success: function (data) {// success callback function
 
@@ -91,7 +91,6 @@ $(function() {
 
     });
 
-    addScreening.click(function() {
       let screening = {
           "movie": movie,
           "theater": theater,
@@ -100,6 +99,7 @@ $(function() {
           "time":screeningTime.val()
       };
 
+      console.log("posted");
       $.ajax({
           type: "POST",
           url:"/api/screenings",
@@ -107,6 +107,7 @@ $(function() {
           data: JSON.stringify(screening),
           contentType: "application/json; charset=utf-8",
           success: function(id){
+
 
               let newRow = `<tr class="d-flex">
                           <td class="col-2">${screening.movie.title} </td>
@@ -146,7 +147,7 @@ $(function() {
             // } else {
             //     alert("Please choose a time within the cinemas opening hours");
             // }
-       })
+       }})
 
 
             setTimeout(function(){ $('#modal').modal('hide');},100);
@@ -159,12 +160,7 @@ $(function() {
                     .val('')
                     .end();
             })
-        }
-    // })}
-    //     console.log('request sent');
-    //
-    // })
+        } )
     });
-}
-)});
+
 

@@ -4,9 +4,7 @@ $(function() {
         let id;
 
         $('#theaterTable').on('click','td .btn-warning', function() {
-
-            console.log("klikkede")
-
+console.log("Pressing Edit")
             id = $(this).attr('data-theaterid');
             editButton = $(this);
 
@@ -15,9 +13,6 @@ $(function() {
             const columnsNumber= editButton.parent().siblings('td')[2].innerHTML;
             const can3D = editButton.parent().siblings('td')[3].innerHTML;
             const dolby = editButton.parent().siblings('td')[4].innerHTML;
-
-            console.log(can3D);
-            console.log(dolby);
 
             //Populate the modal fields with current info
 
@@ -32,6 +27,7 @@ $(function() {
     $('#submitChangesBtn').on('click', function () {
         let theaterToEdit = {
             'id':id,
+            'cinemaId':1,
             'name': $('#nameField').val(),
             'rowsNumber': $('#rowsNumberField').val(),
             'columnsNumber': $('#columnsNumberField').val(),
@@ -40,27 +36,30 @@ $(function() {
 
         };
         console.log(theaterToEdit);
-//Send the newly entered info
+        //Send the newly entered info
         $.ajax({
 
             type: 'PUT',
-            url: `api/theaters/${id}`,
-            dataType: 'json',
+            url: `/api/theaters/${id}`,
             data: JSON.stringify(theaterToEdit),
             contentType: 'application/json; charset=utf-8',
-            success: function (data) {
+        })
+          /*  .fail( function (error) {
+                alert(error);
+
+            })
+            .always( function () {
+                alert("always!")
+            })*/
+            .done (function() {
+                console.log(theaterToEdit);
+                console.log(editButton)
                 editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
                 editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
                 editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
                 editButton.parent().siblings('td')[3].innerHTML = theaterToEdit.can3d;
                 editButton.parent().siblings('td')[4].innerHTML = theaterToEdit.dolby;
-            }
+            })
 
         });
     });
-
-
-
-
-    }
-);

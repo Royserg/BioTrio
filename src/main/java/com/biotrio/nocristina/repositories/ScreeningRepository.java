@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class ScreeningRepository {
+public class ScreeningRepository implements IRepository<Screening>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -26,7 +26,7 @@ public class ScreeningRepository {
     }
 
 //    TODO: convert to prepared statement
-    public Screening findById(int screeningId) {
+    public Screening findOne(int screeningId) {
         String sql = "SELECT * FROM screenings WHERE id = " + screeningId;
         Screening screening = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Screening.class));
 
@@ -81,12 +81,13 @@ public class ScreeningRepository {
         return keyHolder.getKey().intValue();
     }
 
-    public void deleteScreening (int screeningId) {
+    public void deleteOne (int screeningId) {
         String sql = "DELETE FROM screenings WHERE id=" + screeningId;
         jdbc.update(sql);
     }
 
-    public void editScreening(int id, Screening sc){
+
+    public void updateOne(int id, Screening sc){
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
         jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 

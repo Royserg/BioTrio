@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class MovieRepository {
+public class MovieRepository implements IRepository<Movie>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -34,7 +34,7 @@ public class MovieRepository {
         return movie;
     }
 
-    public Movie findById(int movieId) {
+    public Movie findOne(int movieId) {
 
         String sql = "SELECT * FROM movies WHERE id = ?";
         Movie movie = jdbc.queryForObject(sql, new Object[] {movieId}, new BeanPropertyRowMapper<>(Movie.class));
@@ -42,7 +42,7 @@ public class MovieRepository {
         return movie;
     }
 
-    public Movie addMovie(Movie newMovie){
+    public Movie saveOne(Movie newMovie){
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
@@ -66,14 +66,14 @@ public class MovieRepository {
         return newMovieAdded;
     }
 
-    public void editMovie(Movie movieToEdit){
+    public void updateOne(int id, Movie movieToEdit){
 
         String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), movieToEdit.getId());
+        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
 
     }
 
-    public void deleteMovie(int id){
+    public void deleteOne(int id){
 
         String sql = "DELETE FROM movies WHERE id =?";
         jdbc.update(sql, id);
