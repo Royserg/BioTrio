@@ -48,6 +48,7 @@ public class CinemaController implements IController<Cinema>{
         cinemaRepository.deleteOne(id);
     }
 
+
     @PutMapping("/api/cinemas/{id}")
     @Override
     public void updateOne(@PathVariable int id, Cinema itemToUpdate) {
