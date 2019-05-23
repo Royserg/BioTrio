@@ -16,16 +16,19 @@ $(function () {
             $.ajax({
 
                 url: `/api/movies/${id}`,
-                method: 'DELETE',
-                success: function (data) {
-
-                    // Remove html table row with fading animation
-                    button.closest('tr').css('background', 'tomato');
-                    button.closest('tr').fadeOut(800, function () {
-                        $(this).remove();
-                    })
-                }
+                type: 'DELETE'
             })
+            .done(function () {
+
+                console.log('movie ', id, ' deleted');
+
+                // Remove table row with fading animation
+                button.closest('tr').css('background', 'tomato');
+                button.closest('tr').fadeOut(800, function () {
+                    $(this).remove();
+                })
+            })
+
         }
     });
 
