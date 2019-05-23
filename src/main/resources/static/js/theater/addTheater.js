@@ -34,8 +34,6 @@ $(function()
 
             let theater= {
 
-
-
                 "cinemaId": 1,
 
                 "name": name.val(),
@@ -59,7 +57,6 @@ $(function()
            })
                .done(function(theaterId){
 
-                   console.log(theaterId);
                    let newRow = `<tr class="d-flex">
                         <td class="col-2">${theater.name}</td>
                         <td class="col-2">${theater.rowsNumber}</td> 
@@ -90,4 +87,4 @@ $(function()
 
         });
 
-})
+});
