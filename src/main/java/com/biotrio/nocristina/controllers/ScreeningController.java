@@ -1,13 +1,12 @@
 package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.Screening;
-import com.biotrio.nocristina.repositories.ScreeningRepository;
 import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @Controller
 public class ScreeningController {
@@ -15,6 +14,21 @@ public class ScreeningController {
     @Autowired
     ScreeningService screeningService;
 
+    // Show page with the list of screenings
+    @GetMapping("/screenings")
+    public String addScreening(Model m) {
+
+        Screening newScreening = new Screening();
+
+        m.addAttribute("newScreening",newScreening);
+        m.addAttribute("movieList",screeningService.getAllMovies());
+        m.addAttribute("theaterList",screeningService.getAllTheaters());
+        m.addAttribute("screeningList",screeningService.getAllScreenings());
+        return "screenings";
+    }
+
+    // == API ===
+    // CRUD Operations
     @GetMapping("/api/screenings")
     @ResponseBody
     public List<Screening> showScreenings() {
@@ -22,34 +36,61 @@ public class ScreeningController {
         return screenings;
     }
 
-    // return JSON list of screenings for provided movieId
-    @GetMapping("/api/screenings/{movieId}")
+    // Get information about a specific screening
+    @GetMapping("/api/screenings/{id}")
     @ResponseBody
-    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-        return screeningService.getByMovieId(movieId);
+    public Screening findById(@PathVariable int id) {
+        return screeningService.findById(id);
+    }
+
+    // Add new screening
+    @PostMapping("/api/screenings")
+    @ResponseBody
+    public int saveScreening(@RequestBody Screening newScreening) {
+        int screeningId = screeningService.addScreening(newScreening);
+        return screeningId;
+    }
+
+    // Delete Screening of provided id
+    @DeleteMapping("/api/screenings/{id}")
+    @ResponseBody
+    public String deleteScreening(@PathVariable(name = "id") int id) {
+        screeningService.deleteScreening(id);
+        return "redirect:/screenings";
+    }
+
+    // Edit screening of provided id
+    @PutMapping("/api/screenings/{id}")
+    @ResponseBody
+    public int editScreening(@PathVariable int id, @RequestBody Screening screeningToEdit){
+
+        screeningService.editScreening(id, screeningToEdit);
+
+        return screeningToEdit.getId();
     }
 
 
-       /* @GetMapping("/screenings")
-        public String showScreeningsT(Model model) {
-        List<Screening> screenings = screeningService.getAllScreenings();
-        model.addAttribute("screeningList",screenings);
-        return "screenings";
-    } */
+    // return JSON list of screenings for provided movieId
+    // TODO: suggestion for Endpoint => /api/movies/{movieId}/screenings and will be in movies repo
+//    @GetMapping("/api/screenings/{movieId}")
+//    @ResponseBody
+//    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
+//        return screeningService.getByMovieId(movieId);
+//    }
 
-       @GetMapping("/screenings")
-        public String addScreeningT(Model m) {
-        Screening newScreening = new Screening();
-        m.addAttribute("newScreening",newScreening);
-        m.addAttribute("screeningList",screeningService.getAllScreenings());
-        return "screenings";
-    }
+    // return JSON list of screenings for provided date
+    @GetMapping("/api/screenings/date/{date}")
+    @ResponseBody
+    public List<Screening> screeningsByDate(@PathVariable String date) {
+        System.out.println("date requested in controller: " + date);
+        return screeningService.getScreeningsByDate(date);
 
-    /*
-    @PostMapping("/screenings")
-    public String saveScreening(@RequestBody Screening newScreening){
-        screeningService.addScreening(newScreening);
-        return "redirect:/screening";
     }
-*/
+  
+    // return JSON list of screenings between 2 dates
+    @GetMapping("/api/screenings/dates/{date1}/{date2}")
+    @ResponseBody
+    public List<Screening> screeningsForMovie(@PathVariable(name = "date1") String date1, @PathVariable(name = "date2") String date2) {
+        return screeningService.getBetweenDates(date1, date2);
+    }
 }

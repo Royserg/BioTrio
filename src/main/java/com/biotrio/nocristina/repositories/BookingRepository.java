@@ -17,13 +17,35 @@ public class BookingRepository {
     @Autowired
     private JdbcTemplate jdbc;
 
+    /**
+     * Get a booking object of particular id
+     * @param id (int) id of the booking to retrieve
+     * @return (Booking)
+     */
+    public Booking findOne(int id) {
+
+        String sql = "SELECT * FROM bookings WHERE id = ?";
+        Booking booking = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Booking.class));
+
+        return booking;
+    }
+
 
     public List<Booking> findAll() {
 
-        String sql = "SELECT * FROM bookings";
+        String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 15;";
         List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
 
         return bookings;
+    }
+
+    public List<Booking> findByPhone(String phoneNumber) {
+        System.out.println(phoneNumber);
+        String sql = "SELECT * FROM bookings WHERE customer_phone_number LIKE '" + phoneNumber + "%'";
+        List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+
+        return bookings;
+
     }
 
     public int addBooking(Booking newBooking){

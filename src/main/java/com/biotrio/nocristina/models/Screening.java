@@ -1,32 +1,32 @@
 package com.biotrio.nocristina.models;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Screening {
 
     private int id;
-   // private int movieId;
-   // private int theaterId;
-    // atm String, later to implement LocalDateTime
-    private LocalDateTime startTime;
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
-    private Movie movie = null;
-    private Theater theater = null;
+    private Movie movie;
+    private Theater theater;
     private LocalDate date;
     private LocalTime time;
 
-
     public Screening(){}
 
-    public Screening(int id, LocalDateTime startTime, BigDecimal price) {
+    public Screening(int id, BigDecimal price) {
+        this.id = id;
+        this.price = price;
+    }
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price) {
         this.id = id;
         //this.movieId = movieId;
         //this.theaterId = theaterId;
-        this.startTime = startTime;
+        this.time = time;
+        this.date = date;
         this.price = price;
     }public Screening(int id, LocalDate date, LocalTime time, BigDecimal price) {
         this.id = id;
@@ -38,12 +38,6 @@ public class Screening {
         this.price = price;
     }
 
-    public void getFormattedDate() {
-        // TODO:
-        //  make formatted date for displaying on frontend
-        //  and change return type to String
-    }
-
     public int getId() {
         return id;
     }
@@ -52,13 +46,6 @@ public class Screening {
         this.id = id;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime start_time) {
-        this.startTime = start_time;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -120,7 +107,6 @@ public class Screening {
     public String toString() {
         return "Screening{" +
                 "id=" + id +
-                ", startTime=" + startTime +
                 ", price=" + price +
                 ", is3D=" + is3D +
                 ", isDolby=" + isDolby +

@@ -22,12 +22,27 @@ public class BookingController {
         return bookings;
     }
 
-    @PostMapping("/api/bookings/add")
+
+    @GetMapping("/api/bookings/{id}")
+    @ResponseBody
+    public Booking getBooking(@PathVariable int id) {
+        Booking booking = bookingService.getBookingById(id);
+
+//        Booking test = new Booking(99, "12345");
+        return booking;
+    }
+
+    /**
+     * Save new booking into database and send back generated id from the db
+     * @param newBooking (Booking) object to be added to the db
+     * @return (int) id of the row inserted into db
+     */
+    @PostMapping("/api/bookings")
     @ResponseBody
     public int saveBooking(@RequestBody Booking newBooking) {
-        bookingService.addBooking(newBooking);
+        int bookingId = bookingService.addBooking(newBooking);
 
-        return newBooking.getId();
+        return bookingId;
     }
 
     // Delete booking of provided id
@@ -41,10 +56,18 @@ public class BookingController {
 
 
     @GetMapping("/bookings")
-    public String showBookings(Model m){
+    public String showBookingsPage(Model m){
 
         m.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
+    }
+
+    @GetMapping("/api/bookings/phone/{phoneNumber}")
+    @ResponseBody
+    public List<Booking> getBookingsForPhone(@PathVariable String phoneNumber){
+
+
+        return bookingService.getBookingByPhone(phoneNumber);
     }
 
     // Open page for adding new booking,

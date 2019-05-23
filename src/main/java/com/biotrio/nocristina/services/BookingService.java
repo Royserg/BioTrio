@@ -45,8 +45,37 @@ public class BookingService {
         return bookings;
     }
 
+    public List<Booking> getBookingByPhone(String phoneNumber) {
+        List<Booking> bookings = bookingRepo.findByPhone(phoneNumber);
+
+        for (Booking booking : bookings) {
+            // Fetch tickets for that booking
+            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
+            //fetch info from db for screening
+            booking.setScreening(screeningService.findByBookingId(booking.getId()));
+        }
+
+        return bookings;
+    }
+
+    /**
+     * Function that retrieves queried booking by its id,
+     * and attaches other objects connected with that booking
+     * @param id (int) id of the booking to get
+     * @return (Booking) with populated attributes
+     */
+    public Booking getBookingById(int id) {
+        Booking booking = bookingRepo.findOne(id);
+
+        // TODO: Get other objects related to the booking
+        booking.setScreening(screeningService.findByBookingId(id));
+        booking.setTickets(ticketRepo.findTicketsByBookingId(id));
+
+        return booking;
+    }
+
     public List<Movie> getAllMovies() {
-        return movieRepo.FindAll();
+        return movieRepo.findAll();
     }
 
     // testing: , get all of them
@@ -54,18 +83,20 @@ public class BookingService {
         return screeningRepo.findAll();
     }
 
-    //add booking in database and then get booking ID to add tickets in database
-    public void addBooking(Booking newBooking){
+    // Add booking into db and, get Id back to add tickets into db
+    public int addBooking(Booking newBooking){
 
-        int bookingID = bookingRepo.addBooking(newBooking);
+        int bookingId = bookingRepo.addBooking(newBooking);
 
         for (Ticket ticket : newBooking.getTickets()) {
             
-            ticket.setBookingId(bookingID);
+            ticket.setBookingId(bookingId);
             ticketRepo.saveTicket(ticket);
 
         }
 
+        // Return generated id of the new booking
+        return bookingId;
     }
 
     public void deleteBooking(int bookingId) {
