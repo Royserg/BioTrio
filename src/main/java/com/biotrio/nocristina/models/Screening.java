@@ -34,7 +34,6 @@ public class Screening {
         //this.theaterId = theaterId;
         this.date = date;
         this.time = time;
-        this.startTime = startTime;
         this.price = price;
     }
 
