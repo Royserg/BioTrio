@@ -14,12 +14,15 @@ $(function () {
     const addButton = $('#addScreeningButton');
     const submitButton = $('#submitButton');
 
+    let tr;
+    let newRow;
     let movie;
     let theater;
     let screeningId;
     let selectedScreening;
     let isAdd = false;
 
+    //TODO make table header sticky
 
     addButton.click(function () {
 
@@ -33,12 +36,13 @@ $(function () {
     screeningTable.on('click','.btn-warning', function () {
 
         isAdd = false;
+        tr = $(this).closest('tr');
+
         modal.clearModal();
         $('.modal-title').text('Edit Screening');
-        modal.modal("show");
-
         screeningId = $(this).attr('data-screeningid');
         populateEditModal(screeningId);
+        modal.modal("show");
 
     });
 
@@ -62,6 +66,7 @@ $(function () {
                 success: function (id) {
                     screening["id"]=id;
                     updateTable(screening);
+                    tableBody.append(newRow);
                 }
             })
         }
@@ -72,19 +77,19 @@ $(function () {
             $.ajax({
                 type: 'PUT',
                 url: `api/screenings`,
-                dataType: 'json',
+                dataType: 'html',
                 data: JSON.stringify(screening),
                 contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    //screeningTable.load(window.location + screeningTable);
-                    //TODO make the changes show dynamically
-                }
             })
+                .done(function () {
+                    updateTable(screening);
+                    tr.replaceWith(newRow);
+                })
         }
 
         setTimeout(function(){ $('#modal').modal('hide');},100);
         //TODO scroll to the particular row of the table
-    });
+    })
 
     modalMovie.change(function () {
 
@@ -150,7 +155,7 @@ $(function () {
 
     function updateTable(screening){
 
-        let newRow = `<tr class="d-flex">
+        newRow = `<tr class="d-flex">
                           <td class="col-2">${movie.title} </td>
                           <td class="col-2">${theater.name}</td>
                           <td class="col-2">${screening.date}</td>
@@ -173,7 +178,6 @@ $(function () {
                           </td>
                       </tr>`
 
-        tableBody.append(newRow);
     }
 
 });
