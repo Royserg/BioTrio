@@ -80,7 +80,7 @@ public class BookingRepository implements IRepository<Booking>{
     }
 
     @Override
-    public void updateOne(Booking itemToUpdate) {
+    public void updateOne(int id, Booking itemToUpdate) {
         //TODO: implement ???
     }
 

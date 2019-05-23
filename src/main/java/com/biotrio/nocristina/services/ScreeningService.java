@@ -96,7 +96,7 @@ public class ScreeningService {
         return screening;
     }
 
-    public void editScreening(Screening screening) {
-        screeningRepo.updateOne(screening);
+    public void editScreening(int id, Screening screening) {
+        screeningRepo.updateOne(id, screening);
     }
 }

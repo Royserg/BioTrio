@@ -38,7 +38,7 @@ $(function() {
         movieId = $(this).children(":selected").data('movie_id');
 
         // gets the selected movie
-        $.ajax(`/api/movie/${movieId}`,   // request url
+        $.ajax(`/api/movies/${movieId}`,   // request url
             {
                 success: function (data) {// success callback function
 

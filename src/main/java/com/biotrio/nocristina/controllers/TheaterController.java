@@ -40,10 +40,10 @@ public class TheaterController implements IController<Theater>{
     }
 
     //update one theater
-    @PutMapping("/api/theaters")
+    @PutMapping("/api/theaters/{id}")
     @ResponseBody
-    public void updateOne( @RequestBody Theater theater) {
-        theaterRepo.updateOne(theater);
+    public void updateOne(@PathVariable int id, @RequestBody Theater theater) {
+        theaterRepo.updateOne(id, theater);
     }
 
     //delete one theater by id

@@ -21,8 +21,8 @@ $(function() {
 
                 $.ajax({
 
-                    type: 'POST',
-                    url: `/cinemas/edit/${id}`,
+                    type: 'PUT',
+                    url: `/api/cinemas/${id}`,
                     dataType: 'json',
                     data: JSON.stringify(cinemaToEdit),
                     contentType: 'application/json; charset=utf-8',

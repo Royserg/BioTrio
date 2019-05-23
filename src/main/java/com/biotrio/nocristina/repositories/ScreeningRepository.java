@@ -49,6 +49,7 @@ public class ScreeningRepository implements IRepository<Screening>{
     }
 
 
+
     public List<Screening> findByDate(String date) {
         String sql = "SELECT * from screenings WHERE date = '" + date + "'";
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
@@ -64,7 +65,6 @@ public class ScreeningRepository implements IRepository<Screening>{
         String sql = "INSERT INTO screenings(movie_id, theater_id, time, date, price) VALUES(?,?,?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-
         jdbc.update((Connection connection)->{
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
@@ -86,10 +86,10 @@ public class ScreeningRepository implements IRepository<Screening>{
         jdbc.update(sql);
     }
 
-    public void updateOne(Screening sc){
 
+    public void updateOne(int id, Screening sc){
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
-        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), sc.getId());
+        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 
     }
 }

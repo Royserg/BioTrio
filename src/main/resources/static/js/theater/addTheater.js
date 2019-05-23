@@ -18,7 +18,7 @@ $(function()
             cinemaId= $(this).children(":selected").data('cinema_id');
 
             // gets the selected cinema
-            $.ajax(`/api/cinema/${cinemaId}`,   // request url
+            $.ajax(`/api/cinemas/${cinemaId}`,   // request url
                 {
                     success: function (data) {// success callback function
 
@@ -52,7 +52,7 @@ $(function()
 
            $.ajax({
                 type: "POST",
-                url:"api/theaters",
+                url:"/api/theaters",
                 dataType: "json",
                 data: JSON.stringify(theater),
                 contentType: "application/json; charset=utf-8",
