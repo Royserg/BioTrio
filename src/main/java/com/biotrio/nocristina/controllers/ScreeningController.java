@@ -43,6 +43,13 @@ public class ScreeningController implements IController<Screening>{
         return screeningService.findById(id);
     }
 
+    // Get screenings for a specific movie, by the movies id
+    @GetMapping("/api/screenings/movie/{id}")
+    @ResponseBody
+    public List<Screening> findByMovie(@PathVariable int id) {
+        return screeningService.getByMovieId(id);
+    }
+
     // Add new screening
     @PostMapping("/api/screenings")
     @ResponseBody
