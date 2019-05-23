@@ -43,7 +43,7 @@ public class MovieController implements IController<Movie>{
     }
 
     // Save newly created movie
-    @PostMapping("/movies")
+    @PostMapping("/api/movies")
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 

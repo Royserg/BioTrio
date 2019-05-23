@@ -192,7 +192,7 @@ $(function() {
 
                 $.ajax({
                     type: 'POST',
-                    url: `/movies`,
+                    url: `/api/movies`,
                     dataType: 'json',
                     data: JSON.stringify(newMovie),
                     contentType: 'application/json'
