@@ -51,14 +51,16 @@ $(function()
             $("#changeDolby").prop("checked", false);
 
            $.ajax({
-                type: "POST",
-                url:"/api/theaters",
-                dataType: "json",
-                data: JSON.stringify(theater),
-                contentType: "application/json; charset=utf-8",
-                success: function(data){
+               type: "POST",
+               url: "/api/theaters",
+               dataType: "json",
+               data: JSON.stringify(theater),
+               contentType: "application/json; charset=utf-8"
+           })
+               .done(function(theaterId){
 
-                    let newRow = `<tr class="d-flex">
+                   console.log(theaterId);
+                   let newRow = `<tr class="d-flex">
                         <td class="col-2">${theater.name}</td>
                         <td class="col-2">${theater.rowsNumber}</td> 
                         <td class="col-2">${theater.columnsNumber}</td>
@@ -69,24 +71,23 @@ $(function()
                                                      class="btn btn-warning"
                                                      data-toggle="modal"
                                                      data-target="#editTheater"
-                                                     data-theaterid=${data.id}><span class="fas fa-edit"></span></a></td>
+                                                     data-theaterid=${theaterId}><span class="fas fa-edit"></span></a></td>
                                                      <td class="col-1">
-                                    <button data-theaterid=${data.id} data-theatername=${data.name}" class="btn btn-danger"  >
+                                    <button data-theaterid=${theaterId} data-theatername=${theater.name}" class="btn btn-danger">
                                         <span class="fas fa-trash"></span>
                                     </button>
                                 </td>
                         </tr>`
 
-                    //appends the latest movie to the table
-                    $('#theaterTable tbody').append(newRow);
+                   //appends the latest movie to the table
+                   $('#theaterTable tbody').append(newRow);
 
-                    //Scroll to bottom of container
-                    $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
+                   //Scroll to bottom of container
+                   $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
 
 
-                }
-            })
-        })
+               });
 
-    }
-)
+        });
+
+})
