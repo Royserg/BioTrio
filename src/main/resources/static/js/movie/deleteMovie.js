@@ -19,16 +19,14 @@ $(function () {
                 type: 'DELETE'
             })
             .done(function () {
+
                 console.log('movie ', id, ' deleted');
 
-                // Remove html table row with fading animation
+                // Remove table row with fading animation
                 button.closest('tr').css('background', 'tomato');
                 button.closest('tr').fadeOut(800, function () {
                     $(this).remove();
                 })
-            })
-                .fail(function(error){
-                    console.log(error);
             })
 
         }

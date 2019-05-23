@@ -15,14 +15,14 @@ public class MovieController implements IController<Movie>{
     @Autowired
     MovieRepository movieRepo;
 
-    //get all movies
+    // Get all movies
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> findAll() {
         return movieRepo.findAll();
     }
 
-    //get specific movie by id
+    // Get specific movie by id
     @GetMapping("/api/movies/{id}")
     @ResponseBody
     public Movie findOne(@PathVariable int id) {
@@ -31,7 +31,7 @@ public class MovieController implements IController<Movie>{
 
     }
 
-    //return html page
+    // Return html page
     @GetMapping("/movies")
     public String showPage(Model m) {
 
@@ -42,7 +42,7 @@ public class MovieController implements IController<Movie>{
         return "movies";
     }
 
-
+    // Save newly created movie
     @PostMapping("/movies")
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
@@ -53,7 +53,7 @@ public class MovieController implements IController<Movie>{
         return newMovieAdded.getId();
     }
 
-    //update one movie
+    // Update one movie
     @PutMapping("/movies")
     @ResponseBody
     public void updateOne(@RequestBody Movie movieToEdit){
@@ -61,7 +61,7 @@ public class MovieController implements IController<Movie>{
         System.out.println("movie " + movieToEdit.getId() + " edited.");
     }
 
-    //delete one movie
+    // Delete one movie
     @DeleteMapping("/api/movies/{id}")
     @ResponseBody
     public void deleteOne(@PathVariable int id){

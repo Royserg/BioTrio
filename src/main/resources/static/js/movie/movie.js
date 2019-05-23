@@ -30,7 +30,7 @@ $(function() {
                         sortIt();
                     }
                 });
-            })
+            });
 
             function sortIt(){
                 for(sortingIndex = 0; sortingIndex < sorting.length; sortingIndex++){
@@ -44,13 +44,14 @@ $(function() {
 
 
 
-        // Click edit movie and then it'll bring the movie info and show it on modal
+        // Click edit movie and it'll bring the movie info and show it on modal
 
         $('#movieTable').on("click", ".btn-warning", function() {
 
             id = $(this).attr('data-movieID');
             editButton = $(this);
 
+            // Bring the movie data from the table
             movieTitle = editButton.parent().siblings('td')[0].innerHTML;
             movieDuration = editButton.parent().siblings('td')[1].innerHTML;
             movie3D = editButton.parent().siblings('td')[2].innerHTML;
@@ -65,12 +66,13 @@ $(function() {
             // Change isEdit into true
             isEdit = true;
 
+            // Show the modal with yellow button and header
             showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
 
         });
 
 
-        // Click add movie and then it'll clear the modal
+        // Click add movie and it'll clear the modal, getting ready for new info
 
         $('body div').on("click", ".btn-primary", function() {
 
@@ -83,6 +85,7 @@ $(function() {
             $('#modalIs3D').prop("checked", false);
             $('#modalDolby').prop("checked", false);
 
+            // Show the modal with green button and header
             showModal(`<h5>Add Movie</h5>`, 'btn btn-success');
 
         });
@@ -113,7 +116,7 @@ $(function() {
         });
 
 
-
+        // Edit a movie
         function edit() {
 
             let movieToEdit = {
@@ -134,7 +137,6 @@ $(function() {
 
             } else {
 
-                console.log("putting");
                 $.ajax( {
 
                     type: 'PUT',
@@ -169,11 +171,10 @@ $(function() {
         }
 
 
-
+        // Add a movie
         function add(e) {
 
-            // Add movie
-
+            // Prevent default event such as refreshing the whole page after the movie is added
             e.preventDefault();
 
             let newMovie = {
