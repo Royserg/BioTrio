@@ -54,11 +54,11 @@ public class MovieController implements IController<Movie>{
     }
 
     // Update one movie
-    @PutMapping("/movies")
+    @PutMapping("/movies/{id}")
     @ResponseBody
-    public void updateOne(@RequestBody Movie movieToEdit){
+    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
         movieRepo.updateOne(movieToEdit);
-        System.out.println("movie " + movieToEdit.getId() + " edited.");
+        System.out.println("movie " + id + " edited.");
     }
 
     // Delete one movie

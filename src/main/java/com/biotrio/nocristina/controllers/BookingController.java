@@ -22,7 +22,7 @@ public class BookingController implements IController<Booking>{
         return bookings;
     }
 
-    @Override
+//    @Override
     public void updateOne(Booking itemToUpdate) {
         //TODO: implement?
     }
