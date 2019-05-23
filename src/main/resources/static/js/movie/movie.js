@@ -140,7 +140,7 @@ $(function() {
                 $.ajax( {
 
                     type: 'PUT',
-                    url: `/movies/${id}`,
+                    url: `/api/movies/${id}`,
                     dataType: 'html',
                     data: JSON.stringify(movieToEdit),
                     contentType: 'application/json'
