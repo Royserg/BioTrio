@@ -67,6 +67,7 @@ $(function () {
                     screening["id"]=id;
                     updateTable(screening);
                     tableBody.append(newRow);
+                    $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
                 }
             })
         }
@@ -88,7 +89,6 @@ $(function () {
         }
 
         setTimeout(function(){ $('#modal').modal('hide');},100);
-        //TODO scroll to the particular row of the table
     })
 
     modalMovie.change(function () {
