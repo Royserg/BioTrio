@@ -79,9 +79,9 @@ public class BookingRepository implements IRepository<Booking>{
 
     }
 
-    @Override
+   /* @Override
     public void updateOne(Booking itemToUpdate) {
         //TODO: implement ???
-    }
+    }*/
 
 }

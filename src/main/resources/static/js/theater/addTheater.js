@@ -52,7 +52,7 @@ $(function()
 
            $.ajax({
                 type: "POST",
-                url:"api/theaters",
+                url:"/api/theaters",
                 dataType: "json",
                 data: JSON.stringify(theater),
                 contentType: "application/json; charset=utf-8",

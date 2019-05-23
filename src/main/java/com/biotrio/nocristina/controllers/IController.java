@@ -14,7 +14,7 @@ public interface IController<E> {
 
     void deleteOne(int id);
 
-    void updateOne(E itemToUpdate);
+ //   void updateOne(E itemToUpdate);
 
     String showPage(Model model);
 

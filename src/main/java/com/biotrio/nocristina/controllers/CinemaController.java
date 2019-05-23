@@ -48,8 +48,8 @@ public class CinemaController implements IController<Cinema>{
         cinemaRepository.deleteOne(id);
     }
 
-    @Override
+   /* @Override
     public void updateOne(Cinema itemToUpdate) {
         //TODO: implement??
-    }
+    }*/
 }

@@ -10,6 +10,6 @@ public interface IRepository<E> {
 
     void deleteOne(int id);
 
-    void updateOne(E itemToUpdate);
+   // void updateOne(E itemToUpdate);
 
 }
