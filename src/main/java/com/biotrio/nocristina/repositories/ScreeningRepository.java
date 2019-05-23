@@ -86,10 +86,10 @@ public class ScreeningRepository implements IRepository<Screening>{
         jdbc.update(sql);
     }
 
-    public void updateOne(Screening sc){
+    public void updateOne(int id, Screening sc){
 
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
-        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), sc.getId());
+        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 
     }
 }

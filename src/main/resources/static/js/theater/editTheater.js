@@ -39,7 +39,7 @@ $(function() {
         $.ajax({
 
             type: 'PUT',
-            url: `api/theaters/`,
+            url: `/api/theaters/`,
             dataType: 'json',
             data: JSON.stringify(theaterToEdit),
             contentType: 'application/json; charset=utf-8',

@@ -23,7 +23,7 @@ public class MovieController implements IController<Movie>{
     }
 
     //get specific movie by id
-    @GetMapping("/api/movie/{id}")
+    @GetMapping("/api/movies/{id}")
     @ResponseBody
     public Movie findOne(@PathVariable int id) {
 
@@ -43,7 +43,7 @@ public class MovieController implements IController<Movie>{
     }
 
 
-    @PostMapping("/movies")
+    @PostMapping("/api/movies")
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 
@@ -54,10 +54,10 @@ public class MovieController implements IController<Movie>{
     }
 
     //update one movie
-    @PutMapping("/movies")
+    @PutMapping("/api/movies/{id}")
     @ResponseBody
-    public void updateOne(@RequestBody Movie movieToEdit){
-        movieRepo.updateOne(movieToEdit);
+    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
+        movieRepo.updateOne(id, movieToEdit);
     }
 
     //delete one movie

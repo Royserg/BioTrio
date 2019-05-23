@@ -56,7 +56,7 @@ $(function() {
         movieId = $(this).children(":selected").data('movie_id');
 
         // gets the selected movie
-        $.ajax(`/api/movie/${movieId}`,   // request url
+        $.ajax(`/api/movies/${movieId}`,   // request url
             {
                 success: function (data) {// success callback function
 
@@ -70,7 +70,7 @@ $(function() {
         // https://stackoverflow.com/a/2888447
         theaterId = $(this).children(":selected").data('theater_id');
 
-        $.ajax(`/api/theater/${theaterId}`,   // request url
+        $.ajax(`/api/theaters/${theaterId}`,   // request url
             {
                 success: function (data) {// success callback function
 
@@ -97,7 +97,7 @@ $(function() {
             $.ajax({
 
                 type: 'PUT',
-                url: `/screenings/${screeningId}`,
+                url: `/api/screenings/${screeningId}`,
                 dataType: 'json',
                 data: JSON.stringify(selectedScreening),
                 contentType: 'application/json; charset=utf-8',

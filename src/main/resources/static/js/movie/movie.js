@@ -147,7 +147,7 @@ $(function() {
 
 
                     type: 'PUT',
-                    url: `/movies`,
+                    url: `/api/movies`,
                     dataType: 'json',
                     data: JSON.stringify(movieToEdit),
                     contentType: 'application/json',
@@ -205,7 +205,7 @@ $(function() {
                 console.log("adding");
                 $.ajax({
                     type: 'POST',
-                    url: `/movies`,
+                    url: `/api/movies`,
                     dataType: 'json',
                     data: JSON.stringify(newMovie),
                     contentType: 'application/json',

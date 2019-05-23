@@ -66,9 +66,9 @@ public class TheaterRepository implements IRepository<Theater>{
         return id.getKey().intValue();
     }
 
-    public void updateOne(Theater theater) {
+    public void updateOne(int id, Theater theater) {
         String sql = "UPDATE theaters SET name = ?, rows_number = ?, columns_number = ?, can3D = ?, dolby = ? WHERE id = ?";
-        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.isDolby(), theater.getId());
+        jdbc.update(sql, theater.getName(), theater.getRowsNumber(), theater.getColumnsNumber(), theater.isCan3d(), theater.isDolby(), id);
     }
 
     public void deleteOne(int id) {

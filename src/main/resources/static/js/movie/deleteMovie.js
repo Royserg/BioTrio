@@ -15,7 +15,7 @@ $(function () {
 
             $.ajax({
 
-                url: `/movies/delete/${id}`,
+                url: `/api/movies/${id}`,
                 method: 'DELETE',
                 success: function (data) {
 

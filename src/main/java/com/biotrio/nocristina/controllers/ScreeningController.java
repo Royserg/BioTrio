@@ -59,10 +59,10 @@ public class ScreeningController implements IController<Screening>{
     }
 
     // Edit screening
-    @PutMapping("/api/screenings")
+    @PutMapping("/api/screenings/{id}")
     @ResponseBody
-    public void updateOne( @RequestBody Screening screeningToEdit){
-        screeningService.editScreening(screeningToEdit);
+    public void updateOne(@PathVariable int id,  @RequestBody Screening screeningToEdit){
+        screeningService.editScreening(id, screeningToEdit);
     }
 
 
