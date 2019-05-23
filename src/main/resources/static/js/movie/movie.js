@@ -195,8 +195,9 @@ $(function() {
                     url: `/movies`,
                     dataType: 'json',
                     data: JSON.stringify(newMovie),
-                    contentType: 'application/json',
-                    success: function (id) {
+                    contentType: 'application/json'
+                })
+                .done(function (id) {
 
                         // Add new row to the table with the newly added movie
                         let newRow = `<tr class="d-flex">
@@ -223,9 +224,7 @@ $(function() {
                         $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
 
 
-                    }
-
-                });
+                    });
 
             }
 
