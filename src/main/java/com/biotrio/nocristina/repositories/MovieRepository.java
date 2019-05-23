@@ -42,7 +42,7 @@ public class MovieRepository implements IRepository<Movie>{
         return movie;
     }
 
-    public Movie addMovie(Movie newMovie){
+    public Movie saveOne(Movie newMovie){
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
@@ -66,10 +66,10 @@ public class MovieRepository implements IRepository<Movie>{
         return newMovieAdded;
     }
 
-    public void updateOne(Movie movieToEdit){
+    public void updateOne(int id, Movie movieToEdit){
 
         String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), movieToEdit.getId());
+        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
 
     }
 

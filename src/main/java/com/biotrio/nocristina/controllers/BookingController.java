@@ -22,10 +22,12 @@ public class BookingController implements IController<Booking>{
         return bookings;
     }
 
-    /*// @Override
-    public void updateOne(Booking itemToUpdate) {
+
+    @Override
+    public void updateOne(int id, Booking itemToUpdate) {
+
         //TODO: implement?
-    }*/
+    }
 
 
     //Get one specific booking
@@ -52,7 +54,7 @@ public class BookingController implements IController<Booking>{
     }
 
     // Delete booking of provided id
-    @DeleteMapping("api/bookings/{bookingId}")
+    @DeleteMapping("/api/bookings/{bookingId}")
     @ResponseBody
     public void deleteOne(@PathVariable int bookingId) {
         bookingService.deleteBooking(bookingId);

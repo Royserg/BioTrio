@@ -35,21 +35,23 @@ public class CinemaController implements IController<Cinema>{
         return "cinemas";
     }
 
-    @PostMapping("/cinemas")
+    @PostMapping("/api/cinemas")
     @ResponseBody
     public int saveOne(@ModelAttribute Cinema newCinema){
         cinemaRepository.addCinema(newCinema);
         return newCinema.getId();
     }
 
-    @DeleteMapping("/cinemas/delete/{id}")
+    @DeleteMapping("/api/cinemas/{id}")
     @ResponseBody
     public void deleteOne(@PathVariable int id){
         cinemaRepository.deleteOne(id);
     }
 
-   /* @Override
-    public void updateOne(Cinema itemToUpdate) {
+
+    @PutMapping("/api/cinemas/{id}")
+    @Override
+    public void updateOne(@PathVariable int id, Cinema itemToUpdate) {
         //TODO: implement??
-    }*/
+    }
 }

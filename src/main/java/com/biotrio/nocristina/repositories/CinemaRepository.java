@@ -45,10 +45,10 @@ public class CinemaRepository implements IRepository<Cinema>{
         jdbc.update(sql, cinemaId);
     }
 
-    public void updateOne(Cinema cinemaToEdit) {
+    public void updateOne(int id, Cinema cinemaToEdit) {
 
         String sql = "UPDATE cinemas SET name = ? WHERE id = ?;";
-        jdbc.update(sql, cinemaToEdit.getName(), cinemaToEdit.getId());
+        jdbc.update(sql, cinemaToEdit.getName(), id);
 
     }
 

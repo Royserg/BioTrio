@@ -15,15 +15,15 @@ public class MovieController implements IController<Movie>{
     @Autowired
     MovieRepository movieRepo;
 
-    //get all movies
+    // Get all movies
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> findAll() {
         return movieRepo.findAll();
     }
 
-    //get specific movie by id
-    @GetMapping("/api/movie/{id}")
+    // Get specific movie by id
+    @GetMapping("/api/movies/{id}")
     @ResponseBody
     public Movie findOne(@PathVariable int id) {
 
@@ -31,7 +31,7 @@ public class MovieController implements IController<Movie>{
 
     }
 
-    //return html page
+    // Return html page
     @GetMapping("/movies")
     public String showPage(Model m) {
 
@@ -42,28 +42,31 @@ public class MovieController implements IController<Movie>{
         return "movies";
     }
 
-
-    @PostMapping("/movies")
+    // Save newly created movie
+    @PostMapping("/api/movies")
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 
-        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        Movie newMovieAdded = movieRepo.saveOne(newMovie);
         System.out.println("new movie " + newMovieAdded.getId() + " added");
 
         return newMovieAdded.getId();
     }
 
-    //update one movie
-    @PutMapping("/movies")
+    // Update one movie
+    @PutMapping("/api/movies/{id}")
     @ResponseBody
-    public void updateOne(@RequestBody Movie movieToEdit){
+    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
         movieRepo.updateOne(movieToEdit);
+        System.out.println("movie " + id + " edited.");
     }
 
-    //delete one movie
+    // Delete one movie
     @DeleteMapping("/api/movies/{id}")
+    @ResponseBody
     public void deleteOne(@PathVariable int id){
         movieRepo.deleteOne(id);
+        System.out.println("movie " + id + " deleted.");
     }
 
 }
