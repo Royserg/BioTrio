@@ -47,7 +47,7 @@ public class MovieController implements IController<Movie>{
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 
-        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        Movie newMovieAdded = movieRepo.saveOne(newMovie);
         System.out.println("new movie " + newMovieAdded.getId() + " added");
 
         return newMovieAdded.getId();

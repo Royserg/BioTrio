@@ -42,7 +42,7 @@ public class MovieRepository implements IRepository<Movie>{
         return movie;
     }
 
-    public Movie addMovie(Movie newMovie){
+    public Movie saveOne(Movie newMovie){
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
