@@ -1,47 +1,24 @@
-$(function()
-    {
+$(function() {
 
-        const cinemaList= $('#cinemaSelect');
         const name= $('#addNameField');
         const rows= $('#addRowsField');
         const columns= $('#addColumnsField');
         const is3d= $('#change3D');
         const isDolby= $('#changeDolby');
 
-
-        let cinemaId;
-
-        let cinema;
-
-        cinemaList.change(function() {
-
-            cinemaId= $(this).children(":selected").data('cinema_id');
-
-            // gets the selected cinema
-            $.ajax(`/api/cinemas/${cinemaId}`,   // request url
-                {
-                    success: function (data) {// success callback function
-
-                        cinema = data;
-                    }
-                });
-        })
-
-
         $('#submitNewTheater').unbind().on('click', function (e) {
 
             e.preventDefault();
 
             let theater= {
-
                 "cinemaId": 1,
-
                 "name": name.val(),
                 "rowsNumber": rows.val(),
                 "columnsNumber": columns.val(),
                 "can3d":is3d.is(':checked'),
                 "dolby":isDolby.is(':checked')
             }
+            
             name.val('');
             rows.val('');
             columns.val('');
