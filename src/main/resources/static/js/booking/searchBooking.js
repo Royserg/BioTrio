@@ -47,7 +47,7 @@ $(function() {
 
 
     // Function that loops over the array of Bookings objects,
-    // creates row html element with all neccessary information
+    // creates row html element with all necessary information
     // and inserts into table body
     function updateTableBody (bookings) {
 
@@ -55,33 +55,10 @@ $(function() {
         tableBody.html("");
 
         for(let booking of bookings){
-            const { customerPhoneNumber, id, screening } = booking;
-            const row = `
-                    <tr class="row">
-                        <td class="col-3">${screening.movie.title}</td>
-                        <td class="col-2">${screening.date}</td>
-                        <td class="col-1">${screening.time.slice(0, -3)}</td>
-                        <td class="col-3">${customerPhoneNumber}</td>
-                        <td class="col-1">
-                            <button data-bookingid=${id} class="btn btn-info">
-                                <span class="fas fa-ticket-alt"></span>
-                            </button>
-                        </td>
-                        <td class="col-1">
-                            <a href="#" class="btn btn-warning">
-                                <span class="fas fa-edit"></span>
-                            </a>
-                        </td>
-                        <td class="col-1">
-                            <button data-bookingid=${id} class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </td>    
-                    </tr>
-                `;
+            const $row = createBookingRow(booking.id, booking)
             // append full row to the tbody
-            tableBody.append(row);
-        }   //for ends
+            tableBody.append($row);
+        }
     }
 
 });
