@@ -79,6 +79,7 @@ $(function() {
     $('.btn-success').click(function() {
         if(isAdd){
 
+            /*
     //when u select a time for screening
     screeningTime.change(() => {
 
@@ -88,8 +89,8 @@ $(function() {
         } else {
             goodTime = true;
         }
-
     });
+
 
     addScreening.click(function() {
       let screening = {
@@ -143,10 +144,10 @@ $(function() {
                     }
                 })
 
-            // } else {
-            //     alert("Please choose a time within the cinemas opening hours");
-            // }
-       })
+            }) /*else {
+                alert("Please choose a time within the cinemas opening hours");
+            }
+       })*/
 
 
             setTimeout(function(){ $('#modal').modal('hide');},100);
@@ -160,11 +161,9 @@ $(function() {
                     .end();
             })
         }
-    // })}
-    //     console.log('request sent');
-    //
-    // })
-    });
-}
-)});
+    })
+        console.log('request sent');
+
+    })});
+
 
