@@ -67,21 +67,21 @@ public class BookingRepository implements IRepository<Booking>{
     }
 
 
-//    public void editBooking(int id, Booking edit) {
-//        Booking previousBooking = findBooking(id);
-//        bookingList.remove(previousBooking);
-//        bookingList.add(edit);
-//    }
-//
     public void deleteOne(int bookingId) {
         String sql = "DELETE FROM bookings WHERE id = ?";
         jdbc.update(sql, bookingId);
 
     }
 
+    /**
+     * Update phone number of booking with provided id
+     * @param id (int) id of the booking to modify
+     * @param itemToUpdate (Booking) object containing updated information
+     */
     @Override
     public void updateOne(int id, Booking itemToUpdate) {
-        //TODO: implement ???
+        String sql = "UPDATE bookings SET customer_phone_number = ? WHERE id = ?";
+        jdbc.update(sql, itemToUpdate.getCustomerPhoneNumber(), id);
     }
 
 }

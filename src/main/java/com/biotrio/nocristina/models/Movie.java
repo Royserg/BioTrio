@@ -7,6 +7,7 @@ public class Movie {
     private int durationInMinutes;
     private boolean is3D;
     private boolean dolby;
+    // TODO: consider changing and attaching Screenings array to the Movie
 
     public Movie() {
     }

@@ -66,14 +66,6 @@ public class ScreeningController implements IController<Screening>{
     }
 
 
-    // return JSON list of screenings for provided movieId
-    // TODO: suggestion for Endpoint => /api/movies/{movieId}/screenings and will be in movies repo
-//    @GetMapping("/api/screenings/{movieId}")
-//    @ResponseBody
-//    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-//        return screeningService.getByMovieId(movieId);
-//    }
-
     // return JSON list of screenings for provided date
     @GetMapping("/api/screenings/date/{date}")
     @ResponseBody

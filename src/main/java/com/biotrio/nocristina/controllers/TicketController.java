@@ -57,7 +57,7 @@ public class TicketController {
     @GetMapping("/api/tickets/screening/{screeningId}")
     @ResponseBody
     public List<Ticket> showReservedSeats(@PathVariable int screeningId){
-
-        return ticketRepo.findAllByScreeningId(screeningId);
+        List<Ticket> tickets = ticketRepo.findAllByScreeningId(screeningId);
+        return tickets;
     }
 }

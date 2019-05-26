@@ -105,4 +105,26 @@ public class BookingService {
         // to that booking via foreign key are deleted (ON DELETE CASCADE)
         bookingRepo.deleteOne(bookingId);
     }
+
+    /**
+     * Method updating phone number of particular booking and seats.
+     * Other information related to booking cannot be changed.
+     * In real life, if screening time or movie would need to be changed,
+     * easier option is to delete booking and create a new one
+     * @param id (int) id of the booking to modify
+     * @param booking (Booking) object containing updated information
+     */
+    public void editBooking(int id, Booking booking) {
+        // Check if tickets have id already
+        // Delete all tickets for this booking and save new ones
+        ticketRepo.deleteAll(id);
+
+        for (Ticket ticket : booking.getTickets()) {
+            ticketRepo.saveTicket(ticket);
+        }
+
+        // Update phone number of the booking
+        bookingRepo.updateOne(id, booking);
+
+    }
 }

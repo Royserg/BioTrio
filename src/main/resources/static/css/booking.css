@@ -64,9 +64,25 @@
     border: none;
 }
 
+/* Make Modal full screen */
+.modal {
+    padding: 15px;
+}
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+
 .modal-footer {
-    background: #d2d2d8;
+    background: ghostwhite;
     border-radius: 0 0 4px 4px;
+    /*position: sticky;*/
+    /*bottom: 0px;*/
 }
 
 .footer {
