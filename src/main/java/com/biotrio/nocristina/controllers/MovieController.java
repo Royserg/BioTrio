@@ -10,65 +10,63 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class MovieController {
+public class MovieController implements IController<Movie>{
 
     @Autowired
     MovieRepository movieRepo;
 
+    // Get all movies
     @GetMapping("/api/movies")
     @ResponseBody
-    public List<Movie> moviesList() {
+    public List<Movie> findAll() {
         return movieRepo.findAll();
     }
 
-
-    @GetMapping("api/movie/{id}")
+    // Get specific movie by id
+    @GetMapping("/api/movies/{id}")
     @ResponseBody
-    public Movie findById(@PathVariable int id) {
+    public Movie findOne(@PathVariable int id) {
 
-        return movieRepo.findById(id);
+        return movieRepo.findOne(id);
 
     }
 
+    // Return html page
     @GetMapping("/movies")
-    public String addMovie(Model model) {
+    public String showPage(Model m) {
 
         Movie newMovie = new Movie();
-        model.addAttribute("newMovie", newMovie);
-        model.addAttribute("movieList", moviesList());
+        m.addAttribute("newMovie", newMovie);
+        m.addAttribute("movieList", findAll());
 
         return "movies";
     }
 
-    @PostMapping("/movies")
+    // Save newly created movie
+    @PostMapping("/api/movies")
     @ResponseBody
-    public Movie saveMovie(@RequestBody Movie newMovie){
+    public int saveOne(@RequestBody Movie newMovie){
 
-        Movie newMovieAdded = movieRepo.addMovie(newMovie);
+        Movie newMovieAdded = movieRepo.saveOne(newMovie);
         System.out.println("new movie " + newMovieAdded.getId() + " added");
 
-        return newMovieAdded;
+        return newMovieAdded.getId();
     }
 
-    @PutMapping("/movies/{id}")
+    // Update one movie
+    @PutMapping("/api/movies/{id}")
     @ResponseBody
-    public int editMovie(@PathVariable int id, @RequestBody Movie movieToEdit){
-
-        movieRepo.editMovie(movieToEdit);
-        System.out.println("movie " + id + " edited");
-
-
-        return movieToEdit.getId();
+    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
+        movieRepo.updateOne(id, movieToEdit);
+        System.out.println("movie " + id + " edited.");
     }
 
-    @DeleteMapping("/movies/delete/{id}")
+    // Delete one movie
+    @DeleteMapping("/api/movies/{id}")
     @ResponseBody
-    public int deleteMovie(@PathVariable int id){
-
-        movieRepo.deleteMovie(id);
-        System.out.println("movie " + id + " deleted");
-
-        return id;
+    public void deleteOne(@PathVariable int id){
+        movieRepo.deleteOne(id);
+        System.out.println("movie " + id + " deleted.");
     }
 
 }

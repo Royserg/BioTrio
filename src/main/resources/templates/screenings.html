@@ -15,7 +15,7 @@
 
             <div class="d-flex justify-content-end mb-4 col-12">
                 <button class="btn btn-primary"
-                        id="addScreeningClick">Add Screening</button>
+                        id="addScreeningButton">Add Screening</button>
             </div>
 
             <div class="container mt-4" >
@@ -58,10 +58,10 @@
                     </div>
                 </div>
                 <!-- List of available screenings -->
-                <div style="overflow-x:auto;height:400px;">
+                <div id="table-container">
                 <table class="table table-hover" id="screeningTable">
                     <caption>List of screenings</caption>
-                    <thead class="thead-dark">
+                    <thead class="thead-dark" style="top:0px;">
                     <tr class="d-flex">
                         <th class="col-2 sticky-header">Movie Title</th>
                         <th class="col-2 sticky-header">Theater room</th>
@@ -98,6 +98,7 @@
                     </tbody>
                 </table>
                 </div>
+
             </div>
         </div>
     </div>
@@ -110,7 +111,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script th:src="@{/js/screening/deleteScreening.js}"></script>
-<script th:src="@{/js/screening/addScreening.js}"></script>
-<script th:src="@{/js/screening/editScreening.js}"></script>
+<script th:src="@{/js/screening/Screening.js}"></script>
 </body>
 </html>

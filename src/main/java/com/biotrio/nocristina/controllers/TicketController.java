@@ -4,7 +4,6 @@ import com.biotrio.nocristina.models.Ticket;
 import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,40 +25,39 @@ public class TicketController {
         return ticketRepo.findTicketsByBookingId(bookingId);
     }
 
+    /* what does this do?
     @GetMapping("/tickets/add")
     public String addTicket(Model model){
         Ticket newTicket = new Ticket();
         model.addAttribute("newTicket", newTicket);
         return "add-ticket";
-    }
+    } */
 
+    //save a new ticket
     @PostMapping("/api/tickets")
     public String saveTicket(@RequestBody Ticket ticket) {
-        System.out.println("ticket column no: " + ticket.getColumnNo());
         ticketRepo.saveTicket(ticket);
         return "redirect:/index";
     }
 
-//    @PostMapping("/tickets/add")
-//    public String saveTicket(@ModelAttribute Ticket newTicket){
-//        ticketRepo.getTickets().add(newTicket);
-//        return "redirect:/tickets";
-//    }
-
+    /*
     @GetMapping("/tickets")
     public String showTicket(){
         return "ticket";
     }
+    */
 
     /**
      * Method returning list of tickets for particular screening
      * @param screeningId (int)
      * @return (List) of Ticket objects
      */
+
+    //gets all tickets by screening id
     @GetMapping("/api/tickets/screening/{screeningId}")
     @ResponseBody
     public List<Ticket> showReservedSeats(@PathVariable int screeningId){
 
-        return ticketRepo.findTicketsForScreening(screeningId);
+        return ticketRepo.findAllByScreeningId(screeningId);
     }
 }

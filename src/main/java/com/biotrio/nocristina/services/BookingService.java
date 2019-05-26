@@ -103,6 +103,6 @@ public class BookingService {
         // Delete booking and associated tickets
         // once booking is deleted, tickets that are connected
         // to that booking via foreign key are deleted (ON DELETE CASCADE)
-        bookingRepo.deleteBooking(bookingId);
+        bookingRepo.deleteOne(bookingId);
     }
 }

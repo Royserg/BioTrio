@@ -23,61 +23,63 @@ $(function() {
 
     addScreening.click(function () {
 
-        $('.modal-title').text('Add Screening');
-        submitButton.removeClass('btn-warning');
-        submitButton.addClass('btn-success')
+      $('.modal-title').text('Add Screening');
+      submitButton.removeClass('btn-warning');
+      submitButton.addClass('btn-success')
 
-        $("#modal").modal("show");
-        isAdd = true;
-        console.log(isAdd);
+      $("#modal").modal("show");
+      isAdd = true;
+      console.log(isAdd);
 
 
-    movieList.change(function() {
+      movieList.change(function () {
 
         // https://stackoverflow.com/a/2888447
         movieId = $(this).children(":selected").data('movie_id');
 
         // gets the selected movie
-        $.ajax(`/api/movie/${movieId}`,   // request url
-            {
-                success: function (data) {// success callback function
+        $.ajax(`/api/movies/${movieId}`,   // request url
+          {
+            success: function (data) {// success callback function
 
-                    movie = data;
-                }
-            });
-    })
+              movie = data;
+            }
+          });
+      })
 
-    theaterList.change(function() {
+      theaterList.change(function () {
 
         // https://stackoverflow.com/a/2888447
         theaterId = $(this).children(":selected").data('theater_id');
 
         $.ajax(`/api/theaters/${theaterId}`,   // request url
-            {
-                success: function (data) {// success callback function
+          {
+            success: function (data) {// success callback function
 
-                    theater = data;
-                    console.log(theater);
-
-
-                    $.ajax(`/api/cinemas/${theater.cinemaId}`,   // request url
-                        {
-                            success: function (data) {// success callback function
-
-                                cinema = data;
-                                console.log(cinema);
-                            }
-                        })
+              theater = data;
+              console.log(theater);
 
 
+              $.ajax(`/api/cinemas/${theater.cinemaId}`,   // request url
+                {
+                  success: function (data) {// success callback function
 
-                }
-            });
-    })
+                    cinema = data;
+                    console.log(cinema);
+                  }
+                })
 
 
-    $('.btn-success').click(function() {
-        if(isAdd){
+            }
+          });
+      })
+
+
+      $('.btn-success').click(function () {
+        if (isAdd) {
+        }
+      })
+    })})
 
             /*
     //when u select a time for screening
@@ -91,8 +93,6 @@ $(function() {
         }
     });
 
-
-    addScreening.click(function() {
       let screening = {
           "movie": movie,
           "theater": theater,
@@ -101,6 +101,7 @@ $(function() {
           "time":screeningTime.val()
       };
 
+      console.log("posted");
       $.ajax({
           type: "POST",
           url:"/api/screenings",
@@ -108,6 +109,7 @@ $(function() {
           data: JSON.stringify(screening),
           contentType: "application/json; charset=utf-8",
           success: function(id){
+
 
               let newRow = `<tr class="d-flex">
                           <td class="col-2">${screening.movie.title} </td>
@@ -144,10 +146,10 @@ $(function() {
                     }
                 })
 
-            }) /*else {
-                alert("Please choose a time within the cinemas opening hours");
-            }
-       })*/
+            // } else {
+            //     alert("Please choose a time within the cinemas opening hours");
+            // }
+       }})
 
 
             setTimeout(function(){ $('#modal').modal('hide');},100);
@@ -160,10 +162,6 @@ $(function() {
                     .val('')
                     .end();
             })
-        }
-    })
-        console.log('request sent');
-
-    })});
-
-
+        } )
+    });
+*/

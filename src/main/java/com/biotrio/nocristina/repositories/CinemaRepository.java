@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class CinemaRepository {
+public class CinemaRepository implements IRepository<Cinema>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -23,7 +23,7 @@ public class CinemaRepository {
         return cinemas;
     }
 
-    public Cinema findById(int cinemaId) {
+    public Cinema findOne(int cinemaId) {
         String sql = "SELECT * FROM cinemas WHERE id = ?";
         Cinema cinema = jdbc.queryForObject(sql, new Object[] {cinemaId}, new BeanPropertyRowMapper<>(Cinema.class));
 
@@ -40,15 +40,15 @@ public class CinemaRepository {
         );
     }
 
-    public void deleteCinemaById(int cinemaId){
+    public void deleteOne(int cinemaId){
         String sql = "DELETE from cinemas WHERE id = ?";
         jdbc.update(sql, cinemaId);
     }
 
-    public void editCinemaById(int cinemaId, Cinema cinemaToEdit) {
+    public void updateOne(int id, Cinema cinemaToEdit) {
 
         String sql = "UPDATE cinemas SET name = ? WHERE id = ?;";
-        jdbc.update(sql, cinemaToEdit.getName(), cinemaId);
+        jdbc.update(sql, cinemaToEdit.getName(), id);
 
     }
 

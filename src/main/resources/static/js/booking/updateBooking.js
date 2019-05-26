@@ -40,7 +40,7 @@ $(function(){
     $('#phoneNum').val('');
 
     // Fetch list of movies and append to the list
-    $.ajax('/api/movies', {
+      $.ajax('/api/movies', {
       success: function(movies) {
         console.log(movies);
         movies.forEach(movie => {
@@ -67,11 +67,12 @@ $(function(){
     $('.seats-container').fadeOut('slow');
 
     // Fetch screenings for selected movie
-    $.ajax(`/api/screenings/${movieId}`,
+    $.ajax(`/api/screenings/movie/${movieId}`,
       {
         success: function (screenings) {
           // Reveal Dates container
           $('.dates-container').fadeIn('slow');
+          console.log(screenings);
 
           // Save all screenings data for the movie into array
           screeningsData = screenings;
