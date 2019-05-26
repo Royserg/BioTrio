@@ -116,3 +116,34 @@ $('#seatsGrid').on('click', '.seat__free', function() {
   $('#ticketsCount').text($('.seat__selected').length);
   $('#price').text(`${$('.seat__selected').length * ticketPrice} dkk`);
 });
+
+
+// Create html <tr> with subsequent <td> and necessary buttons for operations
+function createBookingRow(bookingId, bookingObj) {
+
+  const $row = $(`
+                    <tr class="d-flex" data-bookingid=${bookingId}>
+                        <td class="col-3">${bookingObj.screening.movie.title}</td>
+                        <td class="col-2">${bookingObj.screening.date}</td>
+                        <td class="col-1">${bookingObj.screening.time.slice(0, -3)}</td>
+                        <td class="col-3">${bookingObj.customerPhoneNumber}</td>
+                        <td class="col-1">
+                            <button class="btn btn-info">
+                                <span class="fas fa-ticket-alt"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-warning">
+                                <span class="fas fa-edit"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                `);
+
+  return $row;
+}

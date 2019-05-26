@@ -125,47 +125,45 @@
                 <!-- Booking modal -- End -->
 
                 <!-- Table -->
-                <div class="container-fluid" id="bookingsTable">
-                    <table class="table table-hover">
-                        <caption>List of bookings</caption>
-                        <thead class="thead-dark">
-                            <tr class="row">
-                                <th class="col-3">movie</th>
-                                <th class="col-2">date</th>
-                                <th class="col-1">time</th>
-                                <th class="col-3">phone</th>
-                                <!-- columns for tickets edit and delete button -->
-                                <th class="col-1">tickets</th>
-                                <th class="col-1">edit</th>
-                                <th class="col-1">delete</th>
-                            </tr>
-                        </thead>
+                <table class="table table-hover" id="bookingsTable">
+                    <caption>List of bookings</caption>
+                    <thead class="thead-dark">
+                        <tr class="d-flex">
+                            <th class="col-3">movie</th>
+                            <th class="col-2">date</th>
+                            <th class="col-1">time</th>
+                            <th class="col-3">phone</th>
+                            <!-- columns for tickets edit and delete button -->
+                            <th class="col-1">tickets</th>
+                            <th class="col-1">edit</th>
+                            <th class="col-1">delete</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <tr class="row" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
-                                <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
-                                <td class="col-2" th:text="${booking.screening.date}">date</td>
-                                <td class="col-1" th:text="${booking.screening.time}">time</td>
-                                <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
-                                <td class="col-1">
-                                    <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
-                                        <span class="fas fa-ticket-alt"></span>
-                                    </button>
-                                </td>
-                                <td class="col-1">
-                                    <button class="btn btn-warning">
-                                        <span class="fas fa-edit"></span>
-                                    </button>
-                                </td>
-                                <td class="col-1">
-                                    <button class="btn btn-danger">
-                                        <span class="fas fa-trash"></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <tr class="d-flex" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
+                            <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
+                            <td class="col-2" th:text="${booking.screening.date}">date</td>
+                            <td class="col-1" th:text="${booking.screening.time}">time</td>
+                            <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
+                            <td class="col-1">
+                                <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
+                                    <span class="fas fa-ticket-alt"></span>
+                                </button>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-warning">
+                                    <span class="fas fa-edit"></span>
+                                </button>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-danger">
+                                    <span class="fas fa-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

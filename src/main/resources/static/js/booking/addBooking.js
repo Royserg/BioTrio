@@ -207,33 +207,12 @@ $(function(){
       contentType: 'application/json; charset=utf-8',
       success: function(bookingId){
 
-        const row = `<tr class="row" data-bookingid=${bookingId}>
-                        <td class="col-3">${booking.screening.movie.title}</td>
-                        <td class="col-2">${booking.screening.date}</td>
-                        <td class="col-1">${booking.screening.time.slice(0, -3)}</td>
-                        <td class="col-3">${booking.customerPhoneNumber}</td>
-                        <td class="col-1">
-                            <button class="btn btn-info">
-                                <span class="fas fa-ticket-alt"></span>
-                            </button>
-                        </td>
-                        <td class="col-1">
-                            <button class="btn btn-warning">
-                                <span class="fas fa-edit"></span>
-                            </button>
-                        </td>
-                        <td class="col-1">
-                            <button class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </td>
-                    </tr>
-        `;
+        const $row = createBookingRow(bookingId, booking);
 
         // Close modal
         $('#bookingModal').modal('hide');
         // Attach new row to the table
-        $('#bookingsTable tbody').prepend(row);
+        $('#bookingsTable tbody').prepend($row);
 
       }
     })
