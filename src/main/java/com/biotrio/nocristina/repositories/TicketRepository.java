@@ -45,13 +45,23 @@ public class TicketRepository {
 
     }
 
+    // Get all tickets for a particular screening
     public List<Ticket> findAllByScreeningId(int screeningId) {
 
-        String sql = "SELECT * FROM tickets JOIN bookings ON tickets.booking_id = bookings.id " +
-                     "WHERE bookings.screening_id =" + screeningId;
-        List<Ticket> reservedSeats = jdbc.query(sql, new BeanPropertyRowMapper<>(Ticket.class));
+        String sql = "SELECT tickets.* FROM tickets JOIN bookings ON tickets.booking_id = bookings.id " +
+                     "WHERE bookings.screening_id = ?;";
+        List<Ticket> reservedSeats = jdbc.query(sql, new Object[] {screeningId}, new BeanPropertyRowMapper<>(Ticket.class));
 
         return reservedSeats;
+    }
+
+    /**
+     * Delete all tickets for particular booking
+     * @param bookingId (int) id of a booking
+     */
+    public void deleteAll(int bookingId) {
+        String sql = "DELETE FROM tickets WHERE booking_id = ?;";
+        jdbc.update(sql, bookingId);
     }
 
 }

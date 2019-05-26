@@ -1,43 +1,66 @@
+$(function(){
 
-$(function() {
-  // Store Screenings data for chosen movie
+  // Keep fetched data about screenings for chosen movie
   let screeningsData = [];
+  // Holds selected screening object
+  let selectedScreening;
 
+  // Reference to the <div> container for seats
+  const seats = $('#seatsGrid');
   // References to particular html list <ul>
   const moviesList = $('#moviesList');
   const timesList = $('#screeningTimes');
   const datesList = $('#screeningDates');
 
-  const seats = $('#seats'); // Reference to the <div> container for seats
-  let screeningId;           // Holds screeningId after screening time is pressed
-  let ticketPrice;           // Holds a ticket price of a chosen screening
 
-  // == Util Function ==
-  // Remove selection class from siblings and add
-  // selected class to clicked element
-  function toggleListItemSelectedClass(element) {
-    // Remove selected class from all items
-    element.siblings('li').removeClass('list-group-item__selected');
-    // Add selected class to the clicked item
-    element.toggleClass('list-group-item__selected');
-  }
+  // Show modal for adding a new booking, with loaded list of movies
+  $('#addBookingBtn').click(function() {
+    // Change Submit Button name and classes
+    $('#submitBtn')
+      .text('Book tickets')
+      .removeClass('btn-warning')
+      .addClass('btn-success');
+
+    // Reset list of movies
+    moviesList.html('');
+    // Hide containers for booking info, so opening modal again doesn't show previous booking info
+    $('.dates-container').fadeOut(100);
+    $('.times-container').fadeOut(100);
+    $('.seats-container').fadeOut(100);
+    $('.modal-footer').fadeOut(100);
+    $('#price').text(0);
+    $('#ticketsCount').text(0);
+    $('#phoneNum').val('');
+
+    // Fetch list of movies and append to the list
+    $.ajax('/api/movies', {
+      success: function(movies) {
+        console.log(movies);
+        movies.forEach(movie => {
+          $('#moviesList').append(`<li class="list-group-item" data-id=${movie.id}>${movie.title}</li>`);
+        });
+      }
+    });
+    // Open modal
+    $('#bookingModal').modal();
+  });
 
 
-  // == Movie Clicked ==
-  // Fetch screenings for chosen movie
+  // == Movie Pressed ==
+  // Fetch screenings for selected movie and show list of dates
   moviesList.on('click', 'li', function() {
     // Read movie id from clicked element's data attribute
     const movieId = $(this).data('id');
 
-    // Add selected class
+    // Toggle selected class to the element
     toggleListItemSelectedClass($(this));
 
-    // hide other containers (if shown)
+    // Hide other containers (if shown)
     $('.times-container').fadeOut('slow');
     $('.seats-container').fadeOut('slow');
 
     // Fetch screenings for selected movie
-    $.ajax(`/api/screenings/${movieId}`,
+    $.ajax(`/api/movies/${movieId}/screenings`,
       {
         success: function (screenings) {
           // Reveal Dates container
@@ -45,39 +68,37 @@ $(function() {
 
           // Save all screenings data for the movie into array
           screeningsData = screenings;
-
+          console.log('screenings', screenings);
           // Get only array of dates
           const dates = screenings.map(screening => screening.date);
           // Remove duplicates, convert dates array into Set and back to array
           const uniqueDates = [...new Set(dates)];
 
           // Show/update dates list
-          $(datesList).fadeOut(100, function() {
-            // Clear the list
-            datesList.html('');
-            // Reveal the list
-            datesList.fadeIn("slow");
+          datesList.fadeOut(100, function() {
+            // Clear the list and reveal the list
+            $(this).html('').fadeIn("slow");
 
             // Insert each date into list
             if (uniqueDates.length === 0) {
               datesList.append(`<span class="list-group-item">No Dates available</span>`)
             } else {
-              $.each(uniqueDates, function(index, date) {
+              uniqueDates.forEach(function(date) {
                 datesList.append(`<li class="list-group-item">${date}</li>`)
-              })
+              });
             }
           });
         }
-      });
-    }
-  );
+      }
+    );
+  });
 
-
-  // == Date Clicked ==
-  // Display Screening times for selected date option
+  // == Date Pressed ===
+  // Get screening times for selected date and display them in the list below
   datesList.on('click', 'li', function() {
     const clickedDate = $(this).text();
-    // Add selected class
+
+    // Toggle selected class to the element
     toggleListItemSelectedClass($(this));
 
     // Reveal times container
@@ -87,37 +108,38 @@ $(function() {
     $('.seats-container').fadeOut(100);
 
     // clear time list and seats
-    $(timesList).fadeOut(100, function() {
+    $(timesList).fadeOut(100, function () {
       // Clear the list
       timesList.html('');
       // Reveal the list
       timesList.fadeIn('slow');
 
       // Insert times for selected screening date
-      $.each(screeningsData, function(index, screening) {
-        if(screening.date === clickedDate){
-          timesList.append(`<li data-screening-id="${screening.id}" class="list-group-item">${screening.time}</li>`)
+      screeningsData.forEach(function (screening) {
+        if (screening.date === clickedDate) {
+          timesList.append(`<li data-screeningid="${screening.id}" class="list-group-item">${screening.time}</li>`)
         }
       })
-    });
+    })
   });
 
-
-
-  // == TIME Clicked ==
-  // OnClick event for a screening Time
+  // == Time Pressed ==
+  // Get Theater and tickets and show available/reserved seats grid
   timesList.on('click', 'li', function() {
 
-    // Add selected class
+    // Toggle selected class to the element
     toggleListItemSelectedClass($(this));
 
     // Retrieve screening id from data- attribute of clicked html element
-    screeningId = $(this).data('screening-id');
-    // Save selected screening price, find screening and access price attribute
-    ticketPrice = screeningsData.find(screening => screening.id === screeningId)['price'];
+    const screeningId = $(this).data('screeningid');
 
-      // Reveal Seats container
+    // Save selectedScreening
+    selectedScreening = screeningsData.find(screening => screening.id === screeningId);
+
+    // Reveal Seats container
     $('.seats-container').fadeIn('slow');
+    // Show footer with booking summary
+    $('.modal-footer').fadeIn('slow');
 
     //  Get all tickets for the screening(calculate reserved seats)
     $.ajax(`/api/tickets/screening/${screeningId}`, {
@@ -126,128 +148,95 @@ $(function() {
 
         // Show/update seats list
         seats.fadeOut(100, function () {
+          // Attach ticket price to seats grid
+          seats.data('ticket-price', selectedScreening.price);
+
           // Clear the seats
           seats.html('');
           // Reveal the seats
           seats.fadeIn('slow');
 
-          // Find theater attached to the screening from screeningData already fetched
-          let theater = screeningsData.find(screening => screening.id === screeningId)['theater'];
+          // Find theater attached to the screening from currently selected Screening
+          let theater = selectedScreening.theater;
           console.log('theater', theater);
 
-          const rows = theater['rowsNumber'];
-          const columns = theater['columnsNumber'];
+          // Prepare 2D array for seat grid
+          const seatsArray = generateSeatsGrid(theater, tickets);
+          // Fill modal with seats grid
+          fillSeatsGrid(seatsArray);
 
-          // === Create 2 dimensions array for seats grid ===
-          const seatsArrangement = new Array(rows);
-          for (let i = 0; i < rows; i++) {
-            seatsArrangement[i] = new Array(columns);
-          }
-
-          for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < columns; j++) {
-              // set all seats to be available a.k.a true
-              seatsArrangement[i][j] = true;
-            }
-          }
-          // === Creating 2 dimensions array - end
-
-          // Set taken seats (false)
-          // rows and columns count starts from 1 but arrays start counting from 0, so both need to be reduced
-          // first Seat { row: 1, column: 1 } in array will be at seatsArrangements[0][0] -> (row: 0, column: 0)
-          tickets.forEach(function (ticket) {
-            seatsArrangement[ticket.rowNo - 1][ticket.columnNo - 1] = false;
-          });
-
-          $.each(seatsArrangement, function (rowIndex, row) {
-            seats.append(`<div id=row-${rowIndex} class="d-flex justify-content-center align-items-center"></div>`);
-
-            // Iterate over each seat in a row (each holds true/false value)
-            // Tooltips will show shifted rows and column info by 1, to reflect counting from 1
-            $.each(row, function (columnIndex, seatFree) {
-              $(`#row-${rowIndex}`)
-                .append(`<span data-toggle="tooltip" title="row: ${rowIndex + 1} col: ${columnIndex + 1}" data-row="${rowIndex}" data-column="${columnIndex}" class="seat ${seatFree ? 'seat__free' : 'seat__reserved'} mx-2 my-2"></span>`)
-            });
-          });
-
-          // Initialize seats tooltips (row and column information box above each seat after hover)
-          $('[data-toggle="tooltip"]').tooltip();
-
-        }) // end of fadeOut callback
-
-
+        });
       } // end of success function
     });
   });
 
+  // Add new booking
+  // Trigger action only when submit button has .btn-success class
+  $('.modal-footer').on('click', '#submitBtn.btn-success', function() {
+    console.log('making a booking, yehhheee');
+    // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
+    // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
+    const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
+      return {
+        rowNo: seat.dataset.row,
+        columnNo: seat.dataset.column
+      }
+    });
 
-  // == SEAT Clicked ==
-  // Select and unselect seats.
-  seats.on('click', '.seat__free', function(){
-
-    if($('.seat__selected').length < 4) {
-
-      $(this).toggleClass('seat__selected');
-
-    } else if($(this).hasClass('seat__selected')) {
-      $(this).toggleClass('seat__selected');
-    } else {
-      alert("Max 4 seats available");
+    // Prevent making a booking without a phone number
+    if (!$('#phoneNum').val()) {
+      alert('Provide phone number');
+      return
     }
 
-    const seatCount = $('.seat__selected').length;
-      // Update tickets count
-    $('#ticketsCount').text(seatCount);
-    // Update total price
-    $('#price').text(`${seatCount * ticketPrice} dkk`);
+    console.log('seats', selectedSeats);
 
-  });
+    // Create representation of an booking object for sending to Backend
+    let booking = {
+      'customerPhoneNumber': $('#phoneNum').val(),
+      'tickets': selectedSeats,
+      'screening': selectedScreening
+    };
 
-    $('#bookButton').click(function() {
+    // Send post request to add new booking into Database
+    $.ajax({
+      type: 'POST',
+      url:'/api/bookings',
+      dataType: 'json',
+      data: JSON.stringify(booking),
+      contentType: 'application/json; charset=utf-8',
+      success: function(bookingId){
 
-      // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
-      // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
-      const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
-        return {
-          rowNo: seat.dataset.row,
-          columnNo: seat.dataset.column
-        }
-      });
+        const row = `<tr class="row" data-bookingid=${bookingId}>
+                        <td class="col-3">${booking.screening.movie.title}</td>
+                        <td class="col-2">${booking.screening.date}</td>
+                        <td class="col-1">${booking.screening.time.slice(0, -3)}</td>
+                        <td class="col-3">${booking.customerPhoneNumber}</td>
+                        <td class="col-1">
+                            <button class="btn btn-info">
+                                <span class="fas fa-ticket-alt"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-warning">
+                                <span class="fas fa-edit"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+        `;
 
-      console.log('seats', selectedSeats);
+        // Close modal
+        $('#bookingModal').modal('hide');
+        // Attach new row to the table
+        $('#bookingsTable tbody').prepend(row);
 
-      // Create representation of an booking object for sending to Backend
-      let booking = {
-        'customerPhoneNumber': $('#phoneNum').val(),
-        'tickets': selectedSeats,
-        'screening': screeningsData.find(screening => screening.id === screeningId)
-      };
-
-      // Send post request to save the booking into Database
-      $.ajax({
-        type: 'POST',
-        url:'/api/bookings/add',
-        dataType: 'json',
-        data: JSON.stringify(booking),
-        contentType: 'application/json; charset=utf-8',
-        success: function(data){
-
-
-          // Redirect to /bookings once request is successful = booking is saved
-          $(location).attr('href','/bookings');
-        }
-      })
-
+      }
     })
+
+  })
 });
-
-
-
-
-
-
-
-
-
-
-

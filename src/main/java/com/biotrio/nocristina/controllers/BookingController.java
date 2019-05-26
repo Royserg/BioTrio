@@ -14,7 +14,15 @@ public class BookingController implements IController<Booking>{
     @Autowired
     BookingService bookingService;
 
-    //Get all bookings
+    // Show page with the list of bookings
+    @GetMapping("/bookings")
+    public String showPage(Model m){
+
+        m.addAttribute("bookings", bookingService.getAllBookings());
+        return "bookings";
+    }
+
+    // Get all bookings
     @GetMapping("/api/bookings")
     @ResponseBody
     public List<Booking> findAll() {
@@ -22,15 +30,6 @@ public class BookingController implements IController<Booking>{
         return bookings;
     }
 
-
-    @Override
-    public void updateOne(int id, Booking itemToUpdate) {
-
-        //TODO: implement?
-    }
-
-
-    //Get one specific booking
     @GetMapping("/api/bookings/{id}")
     @ResponseBody
     public Booking findOne(@PathVariable int id) {
@@ -39,12 +38,20 @@ public class BookingController implements IController<Booking>{
         return booking;
     }
 
+
+    @Override
+    @PutMapping("/api/bookings/{id}")
+    @ResponseBody
+    public void updateOne(@PathVariable int id, @RequestBody Booking itemToUpdate) {
+        bookingService.editBooking(id, itemToUpdate);
+    }
+
+
     /**
      * Save new booking into database and send back generated id from the db
      * @param newBooking (Booking) object to be added to the db
      * @return (int) id of the row inserted into db
      */
-    //post one booking
     @PostMapping("/api/bookings")
     @ResponseBody
     public int saveOne(@RequestBody Booking newBooking) {
@@ -60,13 +67,6 @@ public class BookingController implements IController<Booking>{
         bookingService.deleteBooking(bookingId);
     }
 
-    //return html page
-    @GetMapping("/bookings")
-    public String showPage(Model m){
-
-        m.addAttribute("bookings", bookingService.getAllBookings());
-        return "bookings";
-    }
 
     //get bookings by a phone number
     @GetMapping("/api/bookings/phone/{phoneNumber}")
@@ -74,43 +74,4 @@ public class BookingController implements IController<Booking>{
     public List<Booking> getBookingsForPhone(@PathVariable String phoneNumber){
         return bookingService.getBookingByPhone(phoneNumber);
     }
-
-    // Open page for adding new booking,
-    // fetch only list of movies
-    @GetMapping("/bookings/add")
-    public String addBookings(Model model) {
-        // Pass all movies to frontend
-        model.addAttribute("movieList", bookingService.getAllMovies());
-
-        return "add-booking";
-    }
-//
-
-
-//    // Post method for form handling
-//    @PostMapping("/bookings/add")
-//    public String saveBooking(@ModelAttribute Booking booking) {
-//        bookingService.getBookingList().add(booking);
-//        return "redirect:/add";
-//    }
-//
-//    @GetMapping ("/bookings/edit/{id}")
-//    public String editBooking(@PathVariable int id, Model m){
-//        Booking booking = bookingRepo.findBooking(id);
-//        m.addAttribute("bookingToEdit",booking);
-//        return "edit-booking";
-//    }
-//
-//    @PostMapping("/bookings/edit/{id}")
-//    public String saveEditBooking(@PathVariable int id, @ModelAttribute Booking booking){
-//        bookingRepo.editBooking(id, booking);
-//        return "redirect:/bookings";
-//    }
-//
-//    @PostMapping("/bookings/delete/{id}")
-//    public String deleteBooking(@PathVariable int id){
-//        bookingRepo.deleteBooking(id);
-//        return "redirect:/bookings";
-//
-//    }
 }

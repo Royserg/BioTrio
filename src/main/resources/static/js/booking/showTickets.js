@@ -4,7 +4,8 @@ $(function() {
   // when tickets button clicked
   // tickets button have class ".btn-info"
   $('table').on('click', '.btn-info', function() {
-    const bookingId = $(this).data('bookingid');
+    const row = $(this).closest('tr');
+    const bookingId = row.data('bookingid');
 
     // Clear tickets list
     $('.modal-tickets').html('');
@@ -32,26 +33,4 @@ $(function() {
     $('#ticketsModal').modal('show');
   })
 
-  // Delete booking with confirmation popup
-  $('table').on('click', '.btn-danger', function() {
-    const button = $(this);
-    const bookingId = $(this).data('bookingid');
-
-    // Get confirmation for deleting
-    const remove = confirm(`Are you sure to remove booking: ${bookingId} and its tickets?`);
-    if (remove) {
-        $.ajax({
-          url: `/api/bookings/${bookingId}`,
-          method: 'DELETE',
-          success: function(data) {
-            // Remove html table row with fading animation
-            button.closest('tr').css('background', 'tomato');
-            button.closest('tr').fadeOut(800, function() {
-              $(this).remove();
-            })
-          }
-        })
-    }
-
-  });
 });
