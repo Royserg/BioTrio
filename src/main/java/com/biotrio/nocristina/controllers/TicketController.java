@@ -25,12 +25,6 @@ public class TicketController {
         return ticketRepo.findTicketsByBookingId(bookingId);
     }
 
-    //save a new ticket
-    @PostMapping("/api/tickets")
-    public String saveTicket(@RequestBody Ticket ticket) {
-        ticketRepo.saveTicket(ticket);
-        return "redirect:/index";
-    }
 
     /**
      * Method returning list of tickets for particular screening

@@ -31,7 +31,6 @@ public class BookingService {
     @Autowired
     private ScreeningService screeningService;
 
-
     @Autowired
     private MovieService movieService;
 
@@ -96,10 +95,7 @@ public class BookingService {
         int bookingId = bookingRepo.addBooking(newBooking);
 
         for (Ticket ticket : newBooking.getTickets()) {
-            
-            ticket.setBookingId(bookingId);
-            ticketRepo.saveTicket(ticket);
-
+            ticketRepo.saveTicket(bookingId, ticket);
         }
 
         // Return generated id of the new booking
@@ -127,7 +123,7 @@ public class BookingService {
         ticketRepo.deleteAll(id);
 
         for (Ticket ticket : booking.getTickets()) {
-            ticketRepo.saveTicket(ticket);
+            ticketRepo.saveTicket(booking.getId(), ticket);
         }
 
         // Update phone number of the booking

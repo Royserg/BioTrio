@@ -3,15 +3,13 @@ package com.biotrio.nocristina.models;
 public class Ticket {
 
     private int id;
-    private int bookingId;
     private int rowNo;
     private int columnNo;
 
     public Ticket(){}
 
-    public Ticket(int id, int bookingId, int rowNo, int columnNo) {
+    public Ticket(int id, int rowNo, int columnNo) {
         this.id = id;
-        this.bookingId = bookingId;
         this.rowNo = rowNo;
         this.columnNo = columnNo;
     }
@@ -22,14 +20,6 @@ public class Ticket {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
     }
 
     public int getRowNo() {
@@ -52,7 +42,6 @@ public class Ticket {
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", bookingId=" + bookingId +
                 ", rowNo=" + rowNo +
                 ", columnNo=" + columnNo +
                 '}';

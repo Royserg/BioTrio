@@ -8,6 +8,7 @@ import java.util.List;
 public class Screening {
 
     private int id;
+    // We might not need it if we add a screening through the movies page
     private int movieId;
     private int theaterId;
     private BigDecimal price;
