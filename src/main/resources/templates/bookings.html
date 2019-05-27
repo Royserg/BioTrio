@@ -185,6 +185,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Custom js -->
+
+    <!-- Keep data passed to the model for js manipulation
+    https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#script-inlining-javascript-and-dart  -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      const movies = /*[[${movies}]]*/ 'default';
+      /*]]>*/
+    </script>
+
+
     <!-- General functionality to use in other files  -->
     <script th:src="@{/js/booking/bookingUtilities.js}"></script>
 
@@ -195,7 +205,8 @@
     <!--  Delete Bookings functionality -->
     <script th:src="@{/js/booking/deleteBooking.js}"></script>
     <!--  Add booking functionality -->
-    <script th:src="@{/js/booking/addBooking.js}"></script>
+<!--    <script th:src="@{/js/booking/addBooking.js}"></script>-->
+    <script th:src="@{/js/booking/newaddBooking.js}"></script>
     <!--  Edit booking functionality  -->
     <script th:src="@{/js/booking/editBooking.js}"></script>
 

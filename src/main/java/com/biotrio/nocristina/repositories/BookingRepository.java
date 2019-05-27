@@ -1,8 +1,10 @@
 package com.biotrio.nocristina.repositories;
 import com.biotrio.nocristina.models.Booking;
+import com.biotrio.nocristina.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -12,10 +14,12 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class BookingRepository implements IRepository<Booking>{
+public class BookingRepository implements IRepository<Booking> {
 
     @Autowired
     private JdbcTemplate jdbc;
+
+    private final ResultSetExtractor<List<Ticket>> resultSetExtractor = JdbcTemplate
 
     /**
      * Get a booking object of particular id
@@ -85,6 +89,9 @@ public class BookingRepository implements IRepository<Booking>{
 
 
     public List<Booking> fingByScreeingId(int screeningId) {
+
+
+
         String sql = "SELECT * FROM bookings WHERE screening_id = " + screeningId;
         return jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
     }

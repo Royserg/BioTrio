@@ -24,7 +24,6 @@ public class ScreeningService {
     @Autowired
     private BookingRepository bookingRepo;
 
-
     // Function that fetches movie and theater object
     // and attaches it to the screening
     public void populateBookingsList(Screening screening) {
@@ -66,6 +65,7 @@ public class ScreeningService {
 
     public List<Screening> getByMovieId(int movieId) {
         List<Screening> screenings = screeningRepo.findByMovieId(movieId);
+
         for (Screening screening : screenings) {
             populateBookingsList(screening);
         }

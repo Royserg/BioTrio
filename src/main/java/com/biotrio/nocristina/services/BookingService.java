@@ -41,8 +41,6 @@ public class BookingService {
         for (Booking booking : bookings) {
             // Fetch tickets for that booking
             booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
-            //fetch info from db for screening
-//            booking.setScreening(screeningService.findByBookingId(booking.getId()));
         }
 
         return bookings;
@@ -77,12 +75,17 @@ public class BookingService {
         return booking;
     }
 
-    public List<Movie> getAllMovies() {
-//        return movieRepo.findAll();
-
-        // Give list of movies with screenings list
-        return movieService.getAll();
-    }
+//    public List<Movie> getAllMovies() {
+////        return movieRepo.findAll();
+//
+//        // Give list of movies with screenings list
+//        List<Movie> movies = movieService.getAll();
+//
+//        // Fill tickets for each screening
+//
+//
+//        return movies;
+//    }
 
     // testing: , get all of them
     public List<Screening> getAllScreenings() {

@@ -29,7 +29,6 @@ public class MovieService {
         // Populate list of screenings for each movie
         for (Movie movie : movies) {
             movie.setScreenings(screeningService.getByMovieId(movie.getId()));
-//            movie.setScreenings(screeningRepo.findByMovieId(movie.getId()));
         }
 
         return movies;
