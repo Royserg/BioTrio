@@ -1,5 +1,7 @@
 package com.biotrio.nocristina.models;
 
+import java.util.List;
+
 public class Theater {
 
     private int id;
@@ -9,6 +11,7 @@ public class Theater {
     private int columnsNumber;
     private boolean can3d;
     private boolean dolby;
+    private List<Screening> screenings;
 
     public Theater(){}
 
@@ -77,15 +80,25 @@ public class Theater {
         this.can3d = can3d;
     }
 
+    public List<Screening> getScreenings() {
+        return screenings;
+    }
+
+    public void setScreenings(List<Screening> screenings) {
+        this.screenings = screenings;
+    }
+
     @Override
     public String toString() {
         return "Theater{" +
-                "cinemaId=" + cinemaId +
+                "id=" + id +
+                ", cinemaId=" + cinemaId +
                 ", name='" + name + '\'' +
                 ", rowsNumber=" + rowsNumber +
                 ", columnsNumber=" + columnsNumber +
                 ", can3d=" + can3d +
                 ", dolby=" + dolby +
+                ", screenings=" + screenings +
                 '}';
     }
 }

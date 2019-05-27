@@ -17,8 +17,8 @@ public class BookingController implements IController<Booking>{
     // Show page with the list of bookings
     @GetMapping("/bookings")
     public String showPage(Model m){
+        m.addAttribute("movies", bookingService.getAllMovies());
 
-        m.addAttribute("bookings", bookingService.getAllBookings());
         return "bookings";
     }
 

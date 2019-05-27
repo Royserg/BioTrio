@@ -57,7 +57,7 @@ public class BookingRepository implements IRepository<Booking>{
                     PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                     ps.setString(1, newBooking.getCustomerPhoneNumber());
-                    ps.setInt(2, newBooking.getScreening().getId());
+                    ps.setInt(2, newBooking.getScreeningId());
 
                     return ps;
                 }, keyHolder
@@ -81,6 +81,12 @@ public class BookingRepository implements IRepository<Booking>{
     public void updateOne(int id, Booking itemToUpdate) {
         String sql = "UPDATE bookings SET customer_phone_number = ? WHERE id = ?";
         jdbc.update(sql, itemToUpdate.getCustomerPhoneNumber(), id);
+    }
+
+
+    public List<Booking> fingByScreeingId(int screeningId) {
+        String sql = "SELECT * FROM bookings WHERE screening_id = " + screeningId;
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
     }
 
 }

@@ -55,6 +55,7 @@ public class ScreeningController implements IController<Screening>{
     @ResponseBody
     public int saveOne(@RequestBody Screening newScreening) {
         int screeningId = screeningService.addScreening(newScreening);
+
         return screeningId;
     }
 

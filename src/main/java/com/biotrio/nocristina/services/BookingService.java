@@ -32,6 +32,10 @@ public class BookingService {
     private ScreeningService screeningService;
 
 
+    @Autowired
+    private MovieService movieService;
+
+
     public List<Booking> getAllBookings() {
         List<Booking> bookings = bookingRepo.findAll();
 
@@ -39,7 +43,7 @@ public class BookingService {
             // Fetch tickets for that booking
             booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
             //fetch info from db for screening
-            booking.setScreening(screeningService.findByBookingId(booking.getId()));
+//            booking.setScreening(screeningService.findByBookingId(booking.getId()));
         }
 
         return bookings;
@@ -52,7 +56,7 @@ public class BookingService {
             // Fetch tickets for that booking
             booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
             //fetch info from db for screening
-            booking.setScreening(screeningService.findByBookingId(booking.getId()));
+//            booking.setScreening(screeningService.findByBookingId(booking.getId()));
         }
 
         return bookings;
@@ -68,14 +72,17 @@ public class BookingService {
         Booking booking = bookingRepo.findOne(id);
 
         // TODO: Get other objects related to the booking
-        booking.setScreening(screeningService.findByBookingId(id));
+//        booking.setScreening(screeningService.findByBookingId(id));
         booking.setTickets(ticketRepo.findTicketsByBookingId(id));
 
         return booking;
     }
 
     public List<Movie> getAllMovies() {
-        return movieRepo.findAll();
+//        return movieRepo.findAll();
+
+        // Give list of movies with screenings list
+        return movieService.getAll();
     }
 
     // testing: , get all of them

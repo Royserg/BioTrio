@@ -1,5 +1,7 @@
 package com.biotrio.nocristina.models;
 
+import java.util.List;
+
 public class Movie {
 
     private int id;
@@ -7,7 +9,8 @@ public class Movie {
     private int durationInMinutes;
     private boolean is3D;
     private boolean dolby;
-    // TODO: consider changing and attaching Screenings array to the Movie
+    private List<Screening> screenings;
+
 
     public Movie() {
     }
@@ -68,6 +71,14 @@ public class Movie {
         this.dolby = dolby;
     }
 
+    public List<Screening> getScreenings() {
+        return screenings;
+    }
+
+    public void setScreenings(List<Screening> screenings) {
+        this.screenings = screenings;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -76,6 +87,7 @@ public class Movie {
                 ", durationInMinutes=" + durationInMinutes +
                 ", is3D=" + is3D +
                 ", dolby=" + dolby +
+                ", screenings=" + screenings +
                 '}';
     }
 }

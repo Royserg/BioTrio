@@ -21,22 +21,20 @@ public class ScreeningService {
     @Autowired
     private MovieRepository movieRepo;
 
+    @Autowired
+    private BookingRepository bookingRepo;
+
 
     // Function that fetches movie and theater object
     // and attaches it to the screening
-    public void populateScreeningData(Screening screening) {
-        // set Movie for the screening by id of the movie
-        screening.setMovie(movieRepo.findByScreeningId(screening.getId()));
-        // set Theater for the screening by id of the theater
-        screening.setTheater(theaterRepo.findByScreeningId(screening.getId()));
+    public void populateBookingsList(Screening screening) {
+
+        screening.setBookings(bookingRepo.fingByScreeingId(screening.getId()));
     }
 
     public List<Screening> getAllScreenings() {
         List<Screening> screenings = screeningRepo.findAll();
 
-        for (Screening screening : screenings) {
-            populateScreeningData(screening);
-        }
         return screenings;
     }
 
@@ -48,7 +46,7 @@ public class ScreeningService {
     public List<Screening> getBetweenDates(String date1, String date2) {
         List<Screening> screenings = screeningRepo.findBetweenDates(date1, date2);
         for (Screening screening : screenings) {
-            populateScreeningData(screening);
+            populateBookingsList(screening);
         }
         return screenings;
 
@@ -61,7 +59,7 @@ public class ScreeningService {
     public Screening findByBookingId(int bookingId) {
         Screening screening = screeningRepo.findByBookingId(bookingId);
 
-        populateScreeningData(screening);
+        populateBookingsList(screening);
 
         return screening;
     }
@@ -69,7 +67,7 @@ public class ScreeningService {
     public List<Screening> getByMovieId(int movieId) {
         List<Screening> screenings = screeningRepo.findByMovieId(movieId);
         for (Screening screening : screenings) {
-            populateScreeningData(screening);
+            populateBookingsList(screening);
         }
 
         return screenings;
@@ -92,7 +90,7 @@ public class ScreeningService {
 
     public Screening findById(int screeningId) {
         Screening screening = screeningRepo.findOne(screeningId);
-        populateScreeningData(screening);
+        populateBookingsList(screening);
         return screening;
     }
 

@@ -7,7 +7,9 @@ public class Booking {
     private int id;
     private String customerPhoneNumber;
     private List<Ticket> tickets;
-    private Screening screening;
+    private int screeningId;
+//    private Screening screening;
+
 
     public Booking(){}
 
@@ -42,12 +44,21 @@ public class Booking {
         this.tickets = tickets;
     }
 
-    public Screening getScreening() {
-        return screening;
+//    public Screening getScreening() {
+//        return screening;
+//    }
+//
+//    public void setScreening(Screening screening) {
+//        this.screening = screening;
+//    }
+
+
+    public int getScreeningId() {
+        return screeningId;
     }
 
-    public void setScreening(Screening screening) {
-        this.screening = screening;
+    public void setScreeningId(int screeningId) {
+        this.screeningId = screeningId;
     }
 
     @Override
@@ -56,7 +67,7 @@ public class Booking {
                 "id=" + id +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
                 ", tickets=" + tickets +
-                ", screening=" + screening +
+                ", screeningId=" + screeningId +
                 '}';
     }
 }

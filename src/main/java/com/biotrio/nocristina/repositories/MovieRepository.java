@@ -42,7 +42,7 @@ public class MovieRepository implements IRepository<Movie>{
         return movie;
     }
 
-    public Movie saveOne(Movie newMovie){
+    public int saveOne(Movie newMovie){
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
@@ -58,12 +58,7 @@ public class MovieRepository implements IRepository<Movie>{
                 return ps;
             }, keyHolder);
 
-        System.out.println("newly generated key is " + keyHolder.getKey());
-        Movie newMovieAdded = newMovie;
-        newMovieAdded.setId(keyHolder.getKey().intValue());
-
-        System.out.println(newMovieAdded.toString());
-        return newMovieAdded;
+        return keyHolder.getKey().intValue();
     }
 
     public void updateOne(int id, Movie movieToEdit){

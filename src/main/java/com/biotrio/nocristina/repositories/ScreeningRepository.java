@@ -69,8 +69,8 @@ public class ScreeningRepository implements IRepository<Screening>{
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
-                ps.setInt(1, newScreening.getMovie().getId());
-                ps.setInt(2, newScreening.getTheater().getId());
+                ps.setInt(1, newScreening.getMovieId());
+                ps.setInt(2, newScreening.getTheaterId());
                 ps.setObject(3,newScreening.getTime());
                 ps.setObject(4,newScreening.getDate());
                 ps.setBigDecimal(5, newScreening.getPrice());
@@ -89,7 +89,7 @@ public class ScreeningRepository implements IRepository<Screening>{
 
     public void updateOne(int id, Screening sc){
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
-        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
+        jdbc.update(sql, sc.getMovieId(), sc.getTheaterId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 
     }
 }
