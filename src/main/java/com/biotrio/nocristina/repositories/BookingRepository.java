@@ -1,6 +1,7 @@
 package com.biotrio.nocristina.repositories;
 import com.biotrio.nocristina.models.Booking;
 import com.biotrio.nocristina.models.Ticket;
+import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +20,12 @@ public class BookingRepository implements IRepository<Booking> {
     @Autowired
     private JdbcTemplate jdbc;
 
-    private final ResultSetExtractor<List<Ticket>> resultSetExtractor = JdbcTemplate
+    // Maps one-to-many JOIN query into Bookings and List<Tickets> in each Booking
+    private final ResultSetExtractor<List<Booking>> resultSetExtractor =
+            JdbcTemplateMapperFactory
+                .newInstance()
+                .addKeys("id")
+                .newResultSetExtractor(Booking.class);
 
     /**
      * Get a booking object of particular id
@@ -88,12 +94,22 @@ public class BookingRepository implements IRepository<Booking> {
     }
 
 
-    public List<Booking> fingByScreeingId(int screeningId) {
+    /**
+     * Get list of bookings for a provided screening id
+     * Bookings will contain also list of Tickets thanks to resultSetExtractor
+     * @param screeningId
+     * @return (Booking[]) list of bookings, and each booking will have list of Tickets (Ticket[])
+     */
+    public List<Booking> findByScreeningId(int screeningId) {
 
+        String sql = "SELECT b.id as id, b.customer_phone_number, b.screening_id, " +
+                        "t.id as tickets_id, t.row_no as tickets_row_no, t.column_no as tickets_column_no " +
+                        "FROM bookings b" +
+                        "  JOIN tickets t ON t.booking_id = b.id" +
+                        "  WHERE b.screening_id = ?" +
+                        "  ORDER BY b.id;";
 
-
-        String sql = "SELECT * FROM bookings WHERE screening_id = " + screeningId;
-        return jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+        return jdbc.query(sql, new Object[] {screeningId}, resultSetExtractor);
     }
 
 }

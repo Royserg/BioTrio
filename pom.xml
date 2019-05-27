@@ -46,6 +46,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.simpleflatmapper</groupId>
+            <artifactId>sfm-springjdbc</artifactId>
+            <version>6.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
