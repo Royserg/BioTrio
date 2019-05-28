@@ -69,7 +69,7 @@ $(function() {
 
     // Fetch all tickets for this screening in order to calculate columns, rows and display seats
     return $.ajax({
-      url: `/api/tickets/screening/${booking.screening.id}`,
+      url: `/api/screenings/${booking.screening.id}/tickets`,
       method: 'GET',
       dataType: 'json'
     })

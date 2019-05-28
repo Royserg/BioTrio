@@ -42,11 +42,17 @@ public class ScreeningRepository implements IRepository<Screening>{
        return screenings.get(0);
     }
 
-//    TODO: convert to prepared statement
+    /**
+     * Find all <Screening>s that are connected with provided movie
+     * Screenings also contain Theater info
+     * @param movieId (int) id of a movie
+     * @return (List<Screening>) collection of screenings for particular movie
+     */
     public List<Screening> findByMovieId(int movieId) {
-        String sql = "SELECT * FROM screenings WHERE movie_id = " + movieId;
+//        String sql = "SELECT * FROM screenings WHERE movie_id = " + movieId;
+        String sql = getJoinedQuery() + " WHERE m.id = ?";
 
-        List<Screening> screeningList = jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+        List<Screening> screeningList = jdbc.query(sql, new Object[]{movieId}, resultSetExtractor);
 
         return screeningList;
     }

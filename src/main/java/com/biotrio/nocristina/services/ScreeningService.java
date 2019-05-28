@@ -44,11 +44,8 @@ public class ScreeningService {
   
     public List<Screening> getBetweenDates(String date1, String date2) {
         List<Screening> screenings = screeningRepo.findBetweenDates(date1, date2);
-        for (Screening screening : screenings) {
-            populateBookingsList(screening);
-        }
-        return screenings;
 
+        return screenings;
     }
 
     public List<Movie> getAllMovies() {
@@ -58,17 +55,11 @@ public class ScreeningService {
     public Screening findByBookingId(int bookingId) {
         Screening screening = screeningRepo.findByBookingId(bookingId);
 
-        populateBookingsList(screening);
-
         return screening;
     }
 
     public List<Screening> getByMovieId(int movieId) {
         List<Screening> screenings = screeningRepo.findByMovieId(movieId);
-
-        for (Screening screening : screenings) {
-            populateBookingsList(screening);
-        }
 
         return screenings;
 
@@ -90,7 +81,6 @@ public class ScreeningService {
 
     public Screening findById(int screeningId) {
         Screening screening = screeningRepo.findOne(screeningId);
-        populateBookingsList(screening);
         return screening;
     }
 

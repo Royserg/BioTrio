@@ -1,7 +1,9 @@
 package com.biotrio.nocristina.controllers;
 
 import com.biotrio.nocristina.models.Movie;
+import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.MovieRepository;
+import com.biotrio.nocristina.repositories.ScreeningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ public class MovieController implements IController<Movie>{
 
     @Autowired
     MovieRepository movieRepo;
+
+    @Autowired
+    ScreeningRepository screeningRepo;
 
     // Return html page
     @GetMapping("/movies")
@@ -66,14 +71,14 @@ public class MovieController implements IController<Movie>{
         System.out.println("movie " + id + " deleted.");
     }
 
-    // It is a movie that has multiple screenings (array), not repeating and attaching a movie to each screening
     // return JSON list of screenings for provided movieId
-    // == We are not needing them probably ==
-//    @GetMapping("/api/movies/{movieId}/screenings")
-//    @ResponseBody
-//    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-//        // Later to change screeningService method
-//        return movieRepo.findByScreeningId(movieId);
-//    }
+    @GetMapping("/api/movies/{movieId}/screenings")
+    @ResponseBody
+    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
+        // TODO: I need to get list of screenings for a particular movie
+        // TODO: So we need to add screenings list to Movie
+        // TODO: or connect here Screening Repo
+        return screeningRepo.findByMovieId(movieId);
+    }
 
 }

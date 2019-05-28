@@ -138,13 +138,15 @@ function fadeOutBulk(elements) {
  * @param screening (Screening) object
  * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
  */
-function createBookingRow(bookingId, phoneNumber, title, screening) {
+function createBookingRow(bookingId, booking) {
+  const { screening } = booking;
+  const { movie } = screening;
 
   const $row = $(`<tr class="d-flex" data-bookingid=${bookingId}>
-                        <td class="col-3">${title}</td>
+                        <td class="col-3">${movie.title}</td>
                         <td class="col-2">${screening.date}</td>
                         <td class="col-1">${screening.time.slice(0, -3)}</td>
-                        <td class="col-3">${phoneNumber}</td>
+                        <td class="col-3">${booking.customerPhoneNumber}</td>
                         <td class="col-1">
                             <button class="btn btn-info">
                                 <span class="fas fa-ticket-alt"></span>
@@ -162,6 +164,5 @@ function createBookingRow(bookingId, phoneNumber, title, screening) {
                         </td>
                     </tr>
                `);
-
   return $row;
 }

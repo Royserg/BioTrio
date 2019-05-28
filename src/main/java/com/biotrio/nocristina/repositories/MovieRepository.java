@@ -28,11 +28,11 @@ public class MovieRepository implements IRepository<Movie>{
         return movies;
     }
 
-    public Movie findByScreeningId(int screeningId){
-        String sql ="SELECT movies.* FROM movies JOIN screenings s ON movies.id = s.movie_id WHERE s.id =" +screeningId;
-        Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
-        return movie;
-    }
+//    public Movie findByScreeningId(int screeningId){
+//        String sql ="SELECT movies.* FROM movies JOIN screenings s ON movies.id = s.movie_id WHERE s.id =" +screeningId;
+//        Movie movie = jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Movie.class));
+//        return movie;
+//    }
 
     public Movie findOne(int movieId) {
 

@@ -25,18 +25,4 @@ public class TicketController {
         return ticketRepo.findTicketsByBookingId(bookingId);
     }
 
-
-    /**
-     * Method returning list of tickets for particular screening
-     * @param screeningId (int)
-     * @return (List) of Ticket objects
-     */
-
-    //gets all tickets by screening id
-    @GetMapping("/api/tickets/screening/{screeningId}")
-    @ResponseBody
-    public List<Ticket> showReservedSeats(@PathVariable int screeningId){
-        List<Ticket> tickets = ticketRepo.findAllByScreeningId(screeningId);
-        return tickets;
-    }
 }
