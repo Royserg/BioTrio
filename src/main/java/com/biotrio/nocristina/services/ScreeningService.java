@@ -28,7 +28,7 @@ public class ScreeningService {
     // and attaches it to the screening
     public void populateBookingsList(Screening screening) {
 
-        screening.setBookings(bookingRepo.findByScreeningId(screening.getId()));
+//        screening.setBookings(bookingRepo.findByScreeningId(screening.getId()));
     }
 
     public List<Screening> getAllScreenings() {

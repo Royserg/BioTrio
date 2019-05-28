@@ -34,17 +34,46 @@ public class BookingRepository implements IRepository<Booking> {
      */
     public Booking findOne(int id) {
 
-        String sql = "SELECT * FROM bookings WHERE id = ?";
-        Booking booking = jdbc.queryForObject(sql, new Object[] {id}, new BeanPropertyRowMapper<>(Booking.class));
+        String sql = "SELECT b.id as id, b.customer_phone_number, b.screening_id, " +
+                "t.id as tickets_id, t.row_no as tickets_row_no, t.column_no as tickets_column_no, " +
+                "s.id as screening_id, s.movie_id as screening_movie_id, s.theater_id as screening_theater_id, " +
+                " s.time as screening_time, s.date as screening_date, s.price as screening_price," +
+                "th.id as screening_theater_id, th.name as screening_theater_name, th.rows_number as screening_theater_rows_number," +
+                "th.columns_number as screening_theater_columns_number, th.can3D as screening_theater_can3d, th.dolby as screening_theater_dolby," +
+                "m.id as screening_movie_id, m.title as screening_movie_title, m.duration_in_minutes as screening_movie_duration_in_minutes," +
+                "m.is3D as screening_movie_is3D, m.dolby as screening_movie_dolby" +
+                " FROM bookings b" +
+                " JOIN tickets t ON t.booking_id = b.id" +
+                " JOIN screenings s ON s.id = b.screening_id" +
+                " JOIN theaters th ON th.id = s.theater_id" +
+                " JOIN movies m ON m.id = s.movie_id" +
+                " WHERE b.id = ?";
 
-        return booking;
+        List<Booking> bookings = jdbc.query(sql, new Object[] {id}, resultSetExtractor);
+
+        return bookings.get(0);
     }
 
 
     public List<Booking> findAll() {
 
-        String sql = "SELECT * FROM bookings ORDER BY id DESC LIMIT 15;";
-        List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+        String sql = "SELECT b.id as id, b.customer_phone_number, b.screening_id, " +
+                "t.id as tickets_id, t.row_no as tickets_row_no, t.column_no as tickets_column_no, " +
+                "s.id as screening_id, s.movie_id as screening_movie_id, s.theater_id as screening_theater_id, " +
+                    " s.time as screening_time, s.date as screening_date, s.price as screening_price," +
+                "th.id as screening_theater_id, th.name as screening_theater_name, th.rows_number as screening_theater_rows_number," +
+                "th.columns_number as screening_theater_columns_number, th.can3D as screening_theater_can3d, th.dolby as screening_theater_dolby," +
+                "m.id as screening_movie_id, m.title as screening_movie_title, m.duration_in_minutes as screening_movie_duration_in_minutes," +
+                "m.is3D as screening_movie_is3D, m.dolby as screening_movie_dolby" +
+                " FROM bookings b" +
+                " JOIN tickets t ON t.booking_id = b.id" +
+                " JOIN screenings s ON s.id = b.screening_id" +
+                " JOIN theaters th ON th.id = s.theater_id" +
+                " JOIN movies m ON m.id = s.movie_id" +
+                " ORDER BY b.id " +
+                " DESC LIMIT 15;";
+
+        List<Booking> bookings = jdbc.query(sql, resultSetExtractor);
 
         return bookings;
     }
@@ -67,7 +96,7 @@ public class BookingRepository implements IRepository<Booking> {
                     PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                     ps.setString(1, newBooking.getCustomerPhoneNumber());
-                    ps.setInt(2, newBooking.getScreeningId());
+                    ps.setInt(2, newBooking.getScreening().getId());
 
                     return ps;
                 }, keyHolder

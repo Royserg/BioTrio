@@ -141,33 +141,29 @@
                     </thead>
 
                     <tbody>
-                        <th:block th:each="movie : ${movies}">
-                            <th:block th:each="screening : ${movie.screenings}">
-                                <tr class="d-flex" th:each="booking : ${screening.bookings}" th:attr="data-bookingid=${booking.id}">
+                        <tr class="d-flex" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
 
-                                    <td class="col-3" th:text="${movie.title}">movie</td>
+                            <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
 
-                                    <td class="col-2" th:text="${screening.date}">date</td>
-                                    <td class="col-1" th:text="${screening.time}">time</td>
-                                    <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
-                                    <td class="col-1">
-                                        <button class="btn btn-info">
-                                            <span class="fas fa-ticket-alt"></span>
-                                        </button>
-                                    </td>
-                                    <td class="col-1">
-                                        <button class="btn btn-warning">
-                                            <span class="fas fa-edit"></span>
-                                        </button>
-                                    </td>
-                                    <td class="col-1">
-                                        <button class="btn btn-danger">
-                                            <span class="fas fa-trash"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </th:block>
-                        </th:block>
+                            <td class="col-2" th:text="${booking.screening.date}">date</td>
+                            <td class="col-1" th:text="${booking.screening.time}">time</td>
+                            <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
+                            <td class="col-1">
+                                <button class="btn btn-info">
+                                    <span class="fas fa-ticket-alt"></span>
+                                </button>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-warning">
+                                    <span class="fas fa-edit"></span>
+                                </button>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-danger">
+                                    <span class="fas fa-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -183,15 +179,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Custom js -->
-
-    <!-- Keep data passed to the model for js manipulation
-    https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#script-inlining-javascript-and-dart  -->
-    <script th:inline="javascript">
-      /*<![CDATA[*/
-      const movies = /*[[${movies}]]*/ 'default';
-      /*]]>*/
-    </script>
-
 
     <!-- General functionality to use in other files  -->
     <script th:src="@{/js/booking/bookingUtilities.js}"></script>

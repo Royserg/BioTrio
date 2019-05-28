@@ -9,14 +9,15 @@ public class Screening {
 
     private int id;
     // We might not need it if we add a screening through the movies page
-    private int movieId;
-    private int theaterId;
+//    private int movieId;
+//    private int theaterId;
+    private Theater theater;
+    private Movie movie;
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
     private LocalDate date;
     private LocalTime time;
-    private List<Booking> bookings;
 
     public Screening(){}
 
@@ -33,10 +34,10 @@ public class Screening {
 
     }
 
-    public Screening(int id, int movieId, int theaterId, BigDecimal price, boolean is3D, boolean isDolby, LocalDate date, LocalTime time) {
+    public Screening(int id, Theater theater, Movie movie, BigDecimal price, boolean is3D, boolean isDolby, LocalDate date, LocalTime time) {
         this.id = id;
-        this.movieId = movieId;
-        this.theaterId = theaterId;
+        this.theater = theater;
+        this.movie = movie;
         this.price = price;
         this.is3D = is3D;
         this.isDolby = isDolby;
@@ -93,42 +94,33 @@ public class Screening {
         isDolby = dolby;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public Theater getTheater() {
+        return theater;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public void setTheater(Theater theater) {
+        this.theater = theater;
     }
 
-    public int getTheaterId() {
-        return theaterId;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setTheaterId(int theaterId) {
-        this.theaterId = theaterId;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     @Override
     public String toString() {
         return "Screening{" +
                 "id=" + id +
-                ", movieId=" + movieId +
-                ", theaterId=" + theaterId +
+                ", theater=" + theater +
+                ", movie=" + movie +
                 ", price=" + price +
                 ", is3D=" + is3D +
                 ", isDolby=" + isDolby +
                 ", date=" + date +
                 ", time=" + time +
-                ", bookings=" + bookings +
                 '}';
     }
 }

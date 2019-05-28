@@ -62,20 +62,20 @@ function fillSeatsGrid(seatsArray) {
   // Clear seats grid
   seatsGrid.html('');
   // For each row (length of seatsArray) create a div (container) to which seats are appended
-  // div -> [ seat, seat, seat, seat, seat ]
-  // div -> [ seat, seat, seat, seat, seat ]
+  // div -> [ false, false, true, false ]
+  // div -> [ false,  true, true, true  ]
   for (let i = 0; i < seatsArray.length; i++) {
     let $row = $('<div>', {'class': 'd-flex justify-content-center align-items-center'});
 
     for (let j = 0; j < seatsArray[i].length; j++) {
       // Save boolean from array into a variable
       let isFree = seatsArray[i][j];
-      // Prepare seat element
+      // Prepare seat element, add 1 to row and col, so they start counting from 1
       let $seat = $('<span>', {
         'class': `seat mx-1 my-1 ${isFree ? 'seat__free' : 'seat__reserved'}`,
         'title': `row: ${i + 1} col: ${j + 1}`,
-        'data-row': i,
-        'data-column': j,
+        'data-row': i + 1,
+        'data-column': j + 1,
         'data-toggle': 'tooltip'
       });
 

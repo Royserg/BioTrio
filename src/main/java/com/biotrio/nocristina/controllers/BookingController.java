@@ -1,7 +1,6 @@
 package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.*;
 import com.biotrio.nocristina.services.BookingService;
-import com.biotrio.nocristina.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +14,11 @@ public class BookingController implements IController<Booking>{
     @Autowired
     BookingService bookingService;
 
-    @Autowired
-    MovieService movieService;
-
     // Show page with the list of bookings
     @GetMapping("/bookings")
     public String showPage(Model m){
-        m.addAttribute("movies", movieService.getAll());
+        // Pass just bookings
+        m.addAttribute("bookings", bookingService.getAllBookings());
 
         return "bookings";
     }

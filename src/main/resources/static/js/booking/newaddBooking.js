@@ -1,6 +1,7 @@
 $(function() {
-  // Has access to movies[] that were passed through the model
-  console.log('movies', movies);
+  // Holds fetched array of movies with all subsequent information
+  // about screenings and bookings with tickets
+  let movies;
 
   // Holds selected objects information
   let selectedMovie;
@@ -37,13 +38,19 @@ $(function() {
     $('#ticketsCount').text(0);
     $('#phoneNum').val('');
 
-    // Loop over movies from the global variable and display each as <li>
-    movies.forEach(function(movie) {
-      const $li = $(`<li class="list-group-item" data-id=${movie.id}>${movie.title}</li>`);
-      $('#moviesList').append($li);
-    });
-    // Open modal
-    $('#bookingModal').modal();
+    $.ajax('/api/movies')
+      .done(function(moviesData) {
+        // Save movies data into variable for other operations
+        movies = moviesData;
+
+        // Loop over movies from the global variable and display each as <li>
+        moviesData.forEach(function(movie) {
+          const $li = $(`<li class="list-group-item" data-id=${movie.id}>${movie.title}</li>`);
+          $('#moviesList').append($li);
+        });
+        // Open modal
+        $('#bookingModal').modal();
+      });
   });
 
 
@@ -202,20 +209,12 @@ $(function() {
       .done(function(bookingId){
 
         const $row = createBookingRow(bookingId, booking.customerPhoneNumber, selectedMovie.title, selectedScreening);
-        // Save booking into state
-        movies
-          .find(movie => movie.id === selectedMovie.id)
-          .screenings.find(screening => screening.id === selectedScreening.id)
-          .bookings.push(booking);
 
         // Close modal
         $('#bookingModal').modal('hide');
         // Attach new row to the table
         $('#bookingsTable tbody').prepend($row);
-
-      })
-
+      });
   })
-
 
 });

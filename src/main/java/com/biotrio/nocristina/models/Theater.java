@@ -1,22 +1,18 @@
 package com.biotrio.nocristina.models;
 
-import java.util.List;
 
 public class Theater {
 
     private int id;
-    private int cinemaId;
     private String name;
     private int rowsNumber;
     private int columnsNumber;
     private boolean can3d;
     private boolean dolby;
-    private List<Screening> screenings;
 
     public Theater(){}
 
-    public Theater(int cinemaId,String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
-        this.cinemaId=cinemaId;
+    public Theater(String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
         this.name = name;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
@@ -38,14 +34,6 @@ public class Theater {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
     }
 
     public String getName() {
@@ -80,25 +68,15 @@ public class Theater {
         this.can3d = can3d;
     }
 
-    public List<Screening> getScreenings() {
-        return screenings;
-    }
-
-    public void setScreenings(List<Screening> screenings) {
-        this.screenings = screenings;
-    }
-
     @Override
     public String toString() {
         return "Theater{" +
                 "id=" + id +
-                ", cinemaId=" + cinemaId +
                 ", name='" + name + '\'' +
                 ", rowsNumber=" + rowsNumber +
                 ", columnsNumber=" + columnsNumber +
                 ", can3d=" + can3d +
                 ", dolby=" + dolby +
-                ", screenings=" + screenings +
                 '}';
     }
 }

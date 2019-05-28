@@ -7,9 +7,12 @@ public class Booking {
     private int id;
     private String customerPhoneNumber;
     private List<Ticket> tickets;
-    private int screeningId;
-//    private Screening screening;
+//    private int screeningId;
+    // Screening contains Theater and a Movie
+    private Screening screening;
 
+//    private Theater theater;
+//    private Movie movie;
 
     public Booking(){}
 
@@ -40,6 +43,14 @@ public class Booking {
         return tickets;
     }
 
+    public Screening getScreening() {
+        return screening;
+    }
+
+    public void setScreening(Screening screening) {
+        this.screening = screening;
+    }
+
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
@@ -53,13 +64,13 @@ public class Booking {
 //    }
 
 
-    public int getScreeningId() {
-        return screeningId;
-    }
-
-    public void setScreeningId(int screeningId) {
-        this.screeningId = screeningId;
-    }
+//    public int getScreeningId() {
+//        return screeningId;
+//    }
+//
+//    public void setScreeningId(int screeningId) {
+//        this.screeningId = screeningId;
+//    }
 
     @Override
     public String toString() {
@@ -67,7 +78,6 @@ public class Booking {
                 "id=" + id +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
                 ", tickets=" + tickets +
-                ", screeningId=" + screeningId +
                 '}';
     }
 }

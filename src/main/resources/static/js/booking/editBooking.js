@@ -8,6 +8,8 @@ $(function() {
   // Keep information about fetched booking
   let bookingData = null;
 
+  // Get movie data
+
 
   $('table').on('click', '.btn-warning', function() {
 
@@ -17,8 +19,10 @@ $(function() {
       .removeClass('btn-success')
       .addClass('btn-warning');
 
-    const bookingId = $(this).closest('tr').data('bookingid');
+    const $row = $(this).closest('tr');
+    const bookingId = $row.data('bookingid');
 
+    console.log('bookingId', bookingId);
     // Fetch information about the booking
     //  .then start preparing modal elements with booking information
     //  with information about screening, fetch all tickets already booked and
@@ -26,7 +30,6 @@ $(function() {
     getBookingInfo(bookingId)
       .then(bookingData => handleBookingData(bookingData))
       .then(ticketsData => displayModal(ticketsData))
-
   });
 
 
@@ -45,9 +48,8 @@ $(function() {
     // Save booking information
     bookingData = booking;
 
-    datesContainer.fadeOut(100);
-    timesContainer.fadeOut(100);
-    $('.seats-container').fadeOut(100);
+    // Fade out containers
+    fadeOutBulk([datesContainer, timesContainer, $('.seats-container')]);
 
     // Show movie, dates, screening times containers with filled info
     $('#modalTitle').text('Edit Booking');

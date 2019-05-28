@@ -1,12 +1,8 @@
 package com.biotrio.nocristina.services;
 
 import com.biotrio.nocristina.models.Booking;
-import com.biotrio.nocristina.models.Movie;
-import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.models.Ticket;
-import com.biotrio.nocristina.repositories.MovieRepository;
 import com.biotrio.nocristina.repositories.BookingRepository;
-import com.biotrio.nocristina.repositories.ScreeningRepository;
 import com.biotrio.nocristina.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,26 +18,9 @@ public class BookingService {
     @Autowired
     private TicketRepository ticketRepo;
 
-    @Autowired
-    private ScreeningRepository screeningRepo;
-
-    @Autowired
-    private MovieRepository movieRepo;
-
-    @Autowired
-    private ScreeningService screeningService;
-
-    @Autowired
-    private MovieService movieService;
-
 
     public List<Booking> getAllBookings() {
         List<Booking> bookings = bookingRepo.findAll();
-
-        for (Booking booking : bookings) {
-            // Fetch tickets for that booking
-            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
-        }
 
         return bookings;
     }
@@ -68,28 +47,7 @@ public class BookingService {
     public Booking getBookingById(int id) {
         Booking booking = bookingRepo.findOne(id);
 
-        // TODO: Get other objects related to the booking
-//        booking.setScreening(screeningService.findByBookingId(id));
-        booking.setTickets(ticketRepo.findTicketsByBookingId(id));
-
         return booking;
-    }
-
-//    public List<Movie> getAllMovies() {
-////        return movieRepo.findAll();
-//
-//        // Give list of movies with screenings list
-//        List<Movie> movies = movieService.getAll();
-//
-//        // Fill tickets for each screening
-//
-//
-//        return movies;
-//    }
-
-    // testing: , get all of them
-    public List<Screening> getAllScreenings() {
-        return screeningRepo.findAll();
     }
 
     // Add booking into db and, get Id back to add tickets into db

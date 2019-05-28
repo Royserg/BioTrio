@@ -1,11 +1,7 @@
 package com.biotrio.nocristina.controllers;
 
 import com.biotrio.nocristina.models.Movie;
-import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.MovieRepository;
-import com.biotrio.nocristina.repositories.ScreeningRepository;
-import com.biotrio.nocristina.services.MovieService;
-import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +13,14 @@ import java.util.List;
 public class MovieController implements IController<Movie>{
 
     @Autowired
-    MovieService movieService;
+    MovieRepository movieRepo;
 
     // Return html page
     @GetMapping("/movies")
     public String showPage(Model m) {
 
-        Movie newMovie = new Movie();
-        m.addAttribute("newMovie", newMovie);
+//        Movie newMovie = new Movie();
+//        m.addAttribute("newMovie", newMovie);
         m.addAttribute("movieList", findAll());
 
         return "movies";
@@ -34,7 +30,7 @@ public class MovieController implements IController<Movie>{
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> findAll() {
-        return movieService.getAll();
+        return movieRepo.findAll();
     }
 
     // Get specific movie by id
@@ -42,7 +38,7 @@ public class MovieController implements IController<Movie>{
     @ResponseBody
     public Movie findOne(@PathVariable int id) {
 
-        return movieService.getOne(id);
+        return movieRepo.findOne(id);
 
     }
 
@@ -51,7 +47,7 @@ public class MovieController implements IController<Movie>{
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 
-        int movieId = movieService.saveOne(newMovie);
+        int movieId = movieRepo.saveOne(newMovie);
         return movieId;
     }
 
@@ -59,24 +55,25 @@ public class MovieController implements IController<Movie>{
     @PutMapping("/api/movies/{id}")
     @ResponseBody
     public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
-        movieService.updateOne(id, movieToEdit);
+        movieRepo.updateOne(id, movieToEdit);
     }
 
     // Delete one movie
     @DeleteMapping("/api/movies/{id}")
     @ResponseBody
     public void deleteOne(@PathVariable int id){
-        movieService.deleteOne(id);
+        movieRepo.deleteOne(id);
         System.out.println("movie " + id + " deleted.");
     }
 
     // It is a movie that has multiple screenings (array), not repeating and attaching a movie to each screening
     // return JSON list of screenings for provided movieId
-    @GetMapping("/api/movies/{movieId}/screenings")
-    @ResponseBody
-    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-        // Later to change screeningService method
-        return movieService.getScreeningsByMovieId(movieId);
-    }
+    // == We are not needing them probably ==
+//    @GetMapping("/api/movies/{movieId}/screenings")
+//    @ResponseBody
+//    public List<Screening> screeningsForMovie(@PathVariable int movieId) {
+//        // Later to change screeningService method
+//        return movieRepo.findByScreeningId(movieId);
+//    }
 
 }
