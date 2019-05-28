@@ -12,16 +12,21 @@ public class Theater {
 
     public Theater(){}
 
-    public Theater(String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
+    public Theater(int id, String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
+        this.id = id;
         this.name = name;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
-        this.can3d=can3d;
-        this.dolby=dolby;
+        this.can3d = can3d;
+        this.dolby = dolby;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isDolby() {
@@ -30,10 +35,6 @@ public class Theater {
 
     public void setDolby(boolean dolby) {
         this.dolby = dolby;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -3,46 +3,27 @@ package com.biotrio.nocristina.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 public class Screening {
 
     private int id;
-    // We might not need it if we add a screening through the movies page
-//    private int movieId;
-//    private int theaterId;
-    private Theater theater;
-    private Movie movie;
+    private LocalTime time;
+    private LocalDate date;
     private BigDecimal price;
     private boolean is3D = false;
     private boolean isDolby = false;
-    private LocalDate date;
-    private LocalTime time;
+    private Theater theater;
+    private Movie movie;
 
     public Screening(){}
 
-    public Screening(int id, BigDecimal price) {
-        this.id = id;
-        this.price = price;
-    }
-
-    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price) {
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price, boolean is3D, boolean isDolby) {
         this.id = id;
         this.time = time;
         this.date = date;
-        this.price = price;
-
-    }
-
-    public Screening(int id, Theater theater, Movie movie, BigDecimal price, boolean is3D, boolean isDolby, LocalDate date, LocalTime time) {
-        this.id = id;
-        this.theater = theater;
-        this.movie = movie;
         this.price = price;
         this.is3D = is3D;
         this.isDolby = isDolby;
-        this.date = date;
-        this.time = time;
     }
 
     public int getId() {
