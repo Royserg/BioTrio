@@ -116,3 +116,52 @@ $('#seatsGrid').on('click', '.seat__free', function() {
   $('#ticketsCount').text($('.seat__selected').length);
   $('#price').text(`${$('.seat__selected').length * ticketPrice} dkk`);
 });
+
+
+/**
+ * Function will fadeOut all provided jQuery objects in the array
+ * @param elementsArray (jQuery[])
+ */
+function fadeOutBulk(elements) {
+
+  for (let i = 0; i < elements.length; i++) {
+      elements[i].fadeOut(100);
+  }
+}
+
+
+/**
+ * Create table row with booking information
+ * @param bookingId (int) id of a booking
+ * @param phoneNumber (String) phone number of the customer making a booking
+ * @param title (String) movie title
+ * @param screening (Screening) object
+ * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
+ */
+function createBookingRow(bookingId, phoneNumber, title, screening) {
+
+  const $row = $(`<tr class="d-flex" data-bookingid=${bookingId}>
+                        <td class="col-3">${title}</td>
+                        <td class="col-2">${screening.date}</td>
+                        <td class="col-1">${screening.time.slice(0, -3)}</td>
+                        <td class="col-3">${phoneNumber}</td>
+                        <td class="col-1">
+                            <button class="btn btn-info">
+                                <span class="fas fa-ticket-alt"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-warning">
+                                <span class="fas fa-edit"></span>
+                            </button>
+                        </td>
+                        <td class="col-1">
+                            <button class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+               `);
+
+  return $row;
+}

@@ -105,7 +105,7 @@ $(function(){
     $('.times-container').fadeIn('slow');
 
     // Hide seats container
-    $('.seats-container').fadeOut(100);
+    $('.seats-container').fadeOut('slow');
 
     // clear time list and seats
     $(timesList).fadeOut(100, function () {
@@ -136,7 +136,7 @@ $(function(){
     // Save selectedScreening
     selectedScreening = screeningsData.find(screening => screening.id === screeningId);
 
-    // Reveal Seats container
+    // Show Seats container
     $('.seats-container').fadeIn('slow');
     // Show footer with booking summary
     $('.modal-footer').fadeIn('slow');
