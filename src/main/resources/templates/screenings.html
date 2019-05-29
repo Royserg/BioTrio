@@ -63,7 +63,7 @@
                     <caption>List of screenings</caption>
                     <thead class="thead-dark" style="top:0px;">
                     <tr class="d-flex">
-                        <th class="col-2 sticky-header">Movie Title</th>
+                        <th class="col-2 sticky-header">Movie id</th>
                         <th class="col-2 sticky-header">Theater room</th>
                         <th class="col-2 sticky-header">Date</th>
                         <th class="col-2 sticky-header">Time</th>
@@ -75,7 +75,7 @@
                     </thead>
                     <tbody>
                     <tr class="d-flex" th:each="screening : ${screeningList}">
-                        <td class="col-2" th:text="${screening.movie.title}" />
+                        <td class="col-2" th:text="${screening.movieId}" />
                         <td class="col-2" th:text="${screening.theater.name}"/>
                         <td class="col-2" th:text="${screening.date}"/>
                         <td class="col-2" th:text="${screening.time}"/>
@@ -89,7 +89,7 @@
                         </td>
                         <td class="col-1">
                             <button th:attr="data-screeningid=${screening.id},
-                                    data-screeningmovie=${screening.movie.title}"
+                                    data-screeningmovie=${screening.movieId}"
                                     class="btn btn-danger">
                                 <span class="fas fa-trash"></span>
                             </button>

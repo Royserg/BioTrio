@@ -7,7 +7,6 @@ public class Movie {
     private int durationInMinutes;
     private boolean is3D;
     private boolean dolby;
-    // TODO: consider changing and attaching Screenings array to the Movie
 
     public Movie() {
     }
@@ -20,13 +19,6 @@ public class Movie {
         this.dolby = dolby;
     }
 
-    // constructor without id
-//    public Movie(String title, int durationInMinutes, boolean is3D, boolean dolby) {
-//        this.title = title;
-//        this.durationInMinutes = durationInMinutes;
-//        this.is3D = is3D;
-//        this.dolby = dolby;
-//    }
 
     public String getTitle() {
         return title;

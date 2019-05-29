@@ -7,35 +7,28 @@ import java.time.LocalTime;
 public class Screening {
 
     private int id;
-    private BigDecimal price;
-    private boolean is3D = false;
-    private boolean isDolby = false;
-    private Movie movie;
-    private Theater theater;
-    private LocalDate date;
     private LocalTime time;
+    private LocalDate date;
+    private BigDecimal price;
+    private Theater theater;
+    private int movieId;
 
     public Screening(){}
 
-    public Screening(int id, BigDecimal price) {
-        this.id = id;
-        this.price = price;
-    }
-
-    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price) {
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price,int movieId) {
         this.id = id;
         this.time = time;
         this.date = date;
         this.price = price;
-
+        this.movieId = movieId;
     }
-    public Screening(int id, LocalDate date, LocalTime time, BigDecimal price) {
-        this.id = id;
-        //this.movieId = movieId;
-        //this.theaterId = theaterId;
-        this.date = date;
-        this.time = time;
-        this.price = price;
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public int getId() {
@@ -53,22 +46,6 @@ public class Screening {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public boolean isIs3D() {
-        return is3D;
-    }
-
-    public void setIs3D(boolean is3D) {
-        this.is3D = is3D;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
     }
 
     public LocalDate getDate() {
@@ -95,23 +72,12 @@ public class Screening {
         this.theater = theater;
     }
 
-    public boolean isDolby() {
-        return isDolby;
-    }
-
-    public void setDolby(boolean dolby) {
-        isDolby = dolby;
-    }
-
     @Override
     public String toString() {
         return "Screening{" +
                 "id=" + id +
-                ", price=" + price +
-                ", is3D=" + is3D +
-                ", isDolby=" + isDolby +
-                ", movie=" + movie +
                 ", theater=" + theater +
+                ", price=" + price +
                 ", date=" + date +
                 ", time=" + time +
                 '}';

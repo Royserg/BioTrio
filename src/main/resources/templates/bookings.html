@@ -125,7 +125,7 @@
                 <!-- Booking modal -- End -->
 
                 <!-- Table -->
-                <table class="table table-hover" id="bookingsTable">
+                <table id="bookingsTable" class="table table-hover">
                     <caption>List of bookings</caption>
                     <thead class="thead-dark">
                         <tr class="d-flex">
@@ -142,12 +142,12 @@
 
                     <tbody>
                         <tr class="d-flex" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
-                            <td class="col-3" th:text="${booking.screening.movie.title}">movie</td>
+                            <td class="col-3" th:text="${booking.movie.title}">movie</td>
                             <td class="col-2" th:text="${booking.screening.date}">date</td>
                             <td class="col-1" th:text="${booking.screening.time}">time</td>
                             <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
                             <td class="col-1">
-                                <button th:attr="data-bookingid=${booking.id}" class="btn btn-info">
+                                <button class="btn btn-info">
                                     <span class="fas fa-ticket-alt"></span>
                                 </button>
                             </td>
@@ -177,6 +177,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Custom js -->
+
     <!-- General functionality to use in other files  -->
     <script th:src="@{/js/booking/bookingUtilities.js}"></script>
 

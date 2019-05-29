@@ -8,6 +8,7 @@ public class Cinema {
     private int id;
     private LocalTime opening_hour;
     private LocalTime closing_hour;
+    // TODO: list of theaters to implement
 
     public Cinema(String name, int id) {
         this.name = name;

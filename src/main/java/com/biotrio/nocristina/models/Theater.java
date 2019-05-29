@@ -1,9 +1,9 @@
 package com.biotrio.nocristina.models;
 
+
 public class Theater {
 
     private int id;
-    private int cinemaId;
     private String name;
     private int rowsNumber;
     private int columnsNumber;
@@ -12,17 +12,21 @@ public class Theater {
 
     public Theater(){}
 
-    public Theater(int cinemaId,String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
-        this.cinemaId=cinemaId;
+    public Theater(int id, String name, int rowsNumber, int columnsNumber, boolean can3d, boolean dolby) {
+        this.id = id;
         this.name = name;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
-        this.can3d=can3d;
-        this.dolby=dolby;
+        this.can3d = can3d;
+        this.dolby = dolby;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isDolby() {
@@ -31,18 +35,6 @@ public class Theater {
 
     public void setDolby(boolean dolby) {
         this.dolby = dolby;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
     }
 
     public String getName() {
@@ -80,7 +72,7 @@ public class Theater {
     @Override
     public String toString() {
         return "Theater{" +
-                "cinemaId=" + cinemaId +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", rowsNumber=" + rowsNumber +
                 ", columnsNumber=" + columnsNumber +

@@ -7,7 +7,9 @@ public class Booking {
     private int id;
     private String customerPhoneNumber;
     private List<Ticket> tickets;
+    // Screening Contains Theater object
     private Screening screening;
+    private Movie movie;
 
     public Booking(){}
 
@@ -16,7 +18,13 @@ public class Booking {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
+    public Movie getMovie() {
+        return movie;
+    }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
 
     public int getId() {
         return id;
@@ -38,10 +46,6 @@ public class Booking {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
     public Screening getScreening() {
         return screening;
     }
@@ -50,13 +54,16 @@ public class Booking {
         this.screening = screening;
     }
 
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
                 "id=" + id +
                 ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
                 ", tickets=" + tickets +
-                ", screening=" + screening +
                 '}';
     }
 }

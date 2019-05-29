@@ -4,7 +4,6 @@ import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.MovieRepository;
 import com.biotrio.nocristina.repositories.ScreeningRepository;
-import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +18,20 @@ public class MovieController implements IController<Movie>{
     MovieRepository movieRepo;
 
     @Autowired
-    ScreeningService screeningService;
+    ScreeningRepository screeningRepo;
 
-    //get all movies
+    // Return html page
+    @GetMapping("/movies")
+    public String showPage(Model m) {
+
+//        Movie newMovie = new Movie();
+//        m.addAttribute("newMovie", newMovie);
+        m.addAttribute("movieList", findAll());
+
+        return "movies";
+    }
+
+    // Get all movies
     @GetMapping("/api/movies")
     @ResponseBody
     public List<Movie> findAll() {
@@ -37,26 +47,13 @@ public class MovieController implements IController<Movie>{
 
     }
 
-    // Return html page
-    @GetMapping("/movies")
-    public String showPage(Model m) {
-
-        Movie newMovie = new Movie();
-        m.addAttribute("newMovie", newMovie);
-        m.addAttribute("movieList", findAll());
-
-        return "movies";
-    }
-
     // Save newly created movie
     @PostMapping("/api/movies")
     @ResponseBody
     public int saveOne(@RequestBody Movie newMovie){
 
-        Movie newMovieAdded = movieRepo.saveOne(newMovie);
-        System.out.println("new movie " + newMovieAdded.getId() + " added");
-
-        return newMovieAdded.getId();
+        int movieId = movieRepo.saveOne(newMovie);
+        return movieId;
     }
 
     // Update one movie
@@ -64,7 +61,6 @@ public class MovieController implements IController<Movie>{
     @ResponseBody
     public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
         movieRepo.updateOne(id, movieToEdit);
-        System.out.println("movie " + id + " edited.");
     }
 
     // Delete one movie
@@ -75,16 +71,14 @@ public class MovieController implements IController<Movie>{
         System.out.println("movie " + id + " deleted.");
     }
 
-    // TODO: Consider attaching Screenings to the Movie, not other way around
-    // It is a movie that has multiple screenings (array), not repeating and attaching a movie to each screening
-    // This also would allow by clicking a movie to see all screenings which would be a cleaner solution
-    // suggestion for Endpoint => /api/movies/{movieId}/screenings and will be in movies repo
     // return JSON list of screenings for provided movieId
     @GetMapping("/api/movies/{movieId}/screenings")
     @ResponseBody
     public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-        // Later to change screeningService method
-        return screeningService.getByMovieId(movieId);
+        // TODO: I need to get list of screenings for a particular movie
+        // TODO: So we need to add screenings list to Movie
+        // TODO: or connect here Screening Repo
+        return screeningRepo.findByMovieId(movieId);
     }
 
 }

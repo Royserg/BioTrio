@@ -25,39 +25,4 @@ public class TicketController {
         return ticketRepo.findTicketsByBookingId(bookingId);
     }
 
-    /* what does this do?
-    @GetMapping("/tickets/add")
-    public String addTicket(Model model){
-        Ticket newTicket = new Ticket();
-        model.addAttribute("newTicket", newTicket);
-        return "add-ticket";
-    } */
-
-    //save a new ticket
-    @PostMapping("/api/tickets")
-    public String saveTicket(@RequestBody Ticket ticket) {
-        ticketRepo.saveTicket(ticket);
-        return "redirect:/index";
-    }
-
-    /*
-    @GetMapping("/tickets")
-    public String showTicket(){
-        return "ticket";
-    }
-    */
-
-    /**
-     * Method returning list of tickets for particular screening
-     * @param screeningId (int)
-     * @return (List) of Ticket objects
-     */
-
-    //gets all tickets by screening id
-    @GetMapping("/api/tickets/screening/{screeningId}")
-    @ResponseBody
-    public List<Ticket> showReservedSeats(@PathVariable int screeningId){
-        List<Ticket> tickets = ticketRepo.findAllByScreeningId(screeningId);
-        return tickets;
-    }
 }

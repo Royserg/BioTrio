@@ -1,5 +1,7 @@
 package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.Screening;
+import com.biotrio.nocristina.models.Ticket;
+import com.biotrio.nocristina.repositories.TicketRepository;
 import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ public class ScreeningController implements IController<Screening>{
 
     @Autowired
     ScreeningService screeningService;
+
+    @Autowired
+    TicketRepository ticketRepo;
 
     // Show page with the list of screenings
     @GetMapping("/screenings")
@@ -55,6 +60,7 @@ public class ScreeningController implements IController<Screening>{
     @ResponseBody
     public int saveOne(@RequestBody Screening newScreening) {
         int screeningId = screeningService.addScreening(newScreening);
+
         return screeningId;
     }
 
@@ -87,5 +93,18 @@ public class ScreeningController implements IController<Screening>{
     @ResponseBody
     public List<Screening> screeningsForMovie(@PathVariable(name = "date1") String date1, @PathVariable(name = "date2") String date2) {
         return screeningService.getBetweenDates(date1, date2);
+    }
+
+
+    /**
+     * Method returning list of all tickets for particular screening
+     * @param screeningId (int)
+     * @return (List) of Ticket objects
+     */
+    @GetMapping("/api/screenings/{screeningId}/tickets")
+    @ResponseBody
+    public List<Ticket> showReservedSeats(@PathVariable int screeningId){
+        List<Ticket> tickets = ticketRepo.findByScreeningId(screeningId);
+        return tickets;
     }
 }

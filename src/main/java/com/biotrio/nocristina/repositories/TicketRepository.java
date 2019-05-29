@@ -32,12 +32,12 @@ public class TicketRepository {
 
 
 
-    public Ticket saveTicket(Ticket ticket){
+    public Ticket saveTicket(int bookingId, Ticket ticket){
         PreparedStatementCreator psc = connection -> {
             PreparedStatement ps = connection.prepareStatement("insert into tickets values (null, ?,?,?)");
-            ps.setInt(1,ticket.getBookingId());
-            ps.setInt(2,ticket.getRowNo()+1);
-            ps.setInt(3,ticket.getColumnNo()+1);
+            ps.setInt(1, bookingId);
+            ps.setInt(2, ticket.getRowNo());
+            ps.setInt(3, ticket.getColumnNo());
             return ps;
         };
         jdbc.update(psc);
@@ -46,7 +46,7 @@ public class TicketRepository {
     }
 
     // Get all tickets for a particular screening
-    public List<Ticket> findAllByScreeningId(int screeningId) {
+    public List<Ticket> findByScreeningId(int screeningId) {
 
         String sql = "SELECT tickets.* FROM tickets JOIN bookings ON tickets.booking_id = bookings.id " +
                      "WHERE bookings.screening_id = ?;";

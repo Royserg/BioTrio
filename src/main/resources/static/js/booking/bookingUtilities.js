@@ -62,20 +62,20 @@ function fillSeatsGrid(seatsArray) {
   // Clear seats grid
   seatsGrid.html('');
   // For each row (length of seatsArray) create a div (container) to which seats are appended
-  // div -> [ seat, seat, seat, seat, seat ]
-  // div -> [ seat, seat, seat, seat, seat ]
+  // div -> [ false, false, true, false ]
+  // div -> [ false,  true, true, true  ]
   for (let i = 0; i < seatsArray.length; i++) {
     let $row = $('<div>', {'class': 'd-flex justify-content-center align-items-center'});
 
     for (let j = 0; j < seatsArray[i].length; j++) {
       // Save boolean from array into a variable
       let isFree = seatsArray[i][j];
-      // Prepare seat element
+      // Prepare seat element, add 1 to row and col, so they start counting from 1
       let $seat = $('<span>', {
         'class': `seat mx-1 my-1 ${isFree ? 'seat__free' : 'seat__reserved'}`,
         'title': `row: ${i + 1} col: ${j + 1}`,
-        'data-row': i,
-        'data-column': j,
+        'data-row': i + 1,
+        'data-column': j + 1,
         'data-toggle': 'tooltip'
       });
 
@@ -117,16 +117,34 @@ $('#seatsGrid').on('click', '.seat__free', function() {
   $('#price').text(`${$('.seat__selected').length * ticketPrice} dkk`);
 });
 
+/**
+ * Function will fadeOut all provided jQuery objects in the array
+ * @param elementsArray (jQuery[])
+ */
+function fadeOutBulk(elements) {
 
-// Create html <tr> with subsequent <td> and necessary buttons for operations
-function createBookingRow(bookingId, bookingObj) {
+  for (let i = 0; i < elements.length; i++) {
+      elements[i].fadeOut(100);
+  }
+}
 
-  const $row = $(`
-                    <tr class="d-flex" data-bookingid=${bookingId}>
-                        <td class="col-3">${bookingObj.screening.movie.title}</td>
-                        <td class="col-2">${bookingObj.screening.date}</td>
-                        <td class="col-1">${bookingObj.screening.time.slice(0, -3)}</td>
-                        <td class="col-3">${bookingObj.customerPhoneNumber}</td>
+
+/**
+ * Create table row with booking information
+ * @param bookingId (int) id of a booking
+ * @param phoneNumber (String) phone number of the customer making a booking
+ * @param title (String) movie title
+ * @param screening (Screening) object
+ * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
+ */
+function createBookingRow(bookingId, booking) {
+  const { screening, movie } = booking;
+
+  const $row = $(`<tr class="d-flex" data-bookingid=${bookingId}>
+                        <td class="col-3">${movie.title}</td>
+                        <td class="col-2">${screening.date}</td>
+                        <td class="col-1">${screening.time.slice(0, -3)}</td>
+                        <td class="col-3">${booking.customerPhoneNumber}</td>
                         <td class="col-1">
                             <button class="btn btn-info">
                                 <span class="fas fa-ticket-alt"></span>
@@ -143,7 +161,6 @@ function createBookingRow(bookingId, bookingObj) {
                             </button>
                         </td>
                     </tr>
-                `);
-
+               `);
   return $row;
 }
