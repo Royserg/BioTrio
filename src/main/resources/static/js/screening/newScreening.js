@@ -29,8 +29,9 @@ $(function () {
 
     movieTable.on('click','.title', function () {
 
-        movieId = $(this).closest('tr').attr('data-movieid');
-        movieTitle = $(this).closest('tr').attr('data-movieTitle');
+        let row = $(this).closest('tr');
+        movieId = row.attr('data-movieid');
+        movieTitle = row.attr('data-movieTitle');
 
         $('.carousel').carousel('next');
 
@@ -38,7 +39,6 @@ $(function () {
         addButton.text("Add Screening");
         addButton.removeClass("add-movie");
         addButton.addClass("add-scr");
-        prevButton.removeClass("invisible");
 
         populateScreeningTable(movieId);
 
@@ -74,10 +74,16 @@ $(function () {
             .done(function(response) {
                 screeningsList=response;
 
-                screeningsList.forEach(function (s) {
-                    buildTableRow(s);
-                    screeningTableBody.append(newRow);
-                })
+                if(screeningsList.length>0){
+                    screeningsList.forEach(function (s) {
+                        buildTableRow(s);
+                        screeningTableBody.append(newRow);
+                    })
+                }
+
+                else {
+                    prevButton.removeClass("invisible");
+                }
             })
     }
 
@@ -115,15 +121,14 @@ $(function () {
 
     function buildTableRow(screening) {
          newRow = `<tr class="d-flex" data-screeningid=${screening.id}>
-                                <td class="col-2"> ${movieTitle} </td>
+                                <td class="col-2 title"> ${movieTitle} </td>
                                 <td class="col-2"> ${screening.theater.name} </td>
                                 <td class="col-2"> ${screening.date} </td>
                                 <td class="col-2"> ${screening.time.slice(0,-3)} </td>
                                 <td class="col-2"> ${screening.price} DKK</td>
                                 <td class="col-1">
                                 <button id = "editButton" 
-                                 class="btn btn-warning"
-                                 data-target="#modal">
+                                 class="btn btn-warning">
                                   <span class="fas fa-edit"></span>
                               </button>
                           </td>
@@ -189,6 +194,8 @@ $(function () {
          setTimeout(function(){ modal.modal('hide');},100);
     })
 
+
+
     prevButton.click(function () {
         $('.carousel').carousel('prev');
         prevButton.addClass("invisible");
@@ -197,6 +204,18 @@ $(function () {
         addButton.removeClass("add-scr");
         addButton.addClass("add-movie");
         screeningTableBody.html("");
+    })
+
+    screeningTableBody.on('click','.title', function () {
+
+        $('.carousel').carousel('prev');
+        prevButton.addClass("invisible");
+        $('h4').text('Movies');
+        addButton.text("Add Movie");
+        addButton.removeClass("add-scr");
+        addButton.addClass("add-movie");
+        screeningTableBody.html("");
+
     })
 
 });
