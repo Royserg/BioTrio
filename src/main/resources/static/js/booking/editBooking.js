@@ -10,7 +10,6 @@ $(function() {
 
   // Get movie data
 
-
   $('table').on('click', '.btn-warning', function() {
 
     // Change Submit Button name
@@ -32,7 +31,6 @@ $(function() {
       .then(ticketsData => displayModal(ticketsData))
   });
 
-
   function getBookingInfo(bookingId) {
     return $.ajax({
       url: `/api/bookings/${bookingId}`,
@@ -40,7 +38,6 @@ $(function() {
       dataType: 'json'
     })
   }
-
 
   function handleBookingData(booking) {
 
@@ -53,7 +50,7 @@ $(function() {
 
     // Show movie, dates, screening times containers with filled info
     $('#modalTitle').text('Edit Booking');
-    $('#moviesList').html(`<p class="list-group-item list-group-item__selected">${booking.screening.movie.title}</p>`);
+    $('#moviesList').html(`<p class="list-group-item list-group-item__selected">${booking.movie.title}</p>`);
 
     datesContainer.fadeIn(100);
     $('#screeningDates').html(`<p class="list-group-item list-group-item__selected">${booking.screening.date}</p>`);
@@ -74,8 +71,6 @@ $(function() {
       dataType: 'json'
     })
   }
-
-
 
   function displayModal(screeningTickets) {
 

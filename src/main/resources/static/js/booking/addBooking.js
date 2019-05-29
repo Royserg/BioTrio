@@ -1,9 +1,11 @@
 $(function(){
-
+  // Keep fetched list of movies
+  let moviesData = [];
   // Keep fetched data about screenings for chosen movie
   let screeningsData = [];
-  // Holds selected screening object
+  // Holds selected screening and movie object
   let selectedScreening;
+  let selectedMovie;
 
   // References to particular html list <ul>
   const moviesList = $('#moviesList');
@@ -38,6 +40,9 @@ $(function(){
     // Fetch list of movies and append to the list
     $.ajax('/api/movies')
       .done(movies => {
+            // Save movies into array
+            moviesData = movies;
+            // Loop over each movie and display list items with movie info
             movies.forEach(movie => {
               const $li = $(`<li class="list-group-item" data-id=${movie.id}>${movie.title}</li>`);
               $('#moviesList').append($li);
@@ -54,6 +59,8 @@ $(function(){
   moviesList.on('click', 'li', function() {
     // Read movie id from clicked element's data attribute
     const movieId = $(this).data('id');
+    // Save selected movie into variable
+    selectedMovie = moviesData.find(movie => movie.id === movieId);
 
     // Toggle selected class to the element
     toggleListItemSelectedClass($(this));
@@ -195,6 +202,7 @@ $(function(){
     let booking = {
       'customerPhoneNumber': $('#phoneNum').val(),
       'tickets': selectedSeats,
+      'movie': selectedMovie,
       'screening': selectedScreening
     };
 

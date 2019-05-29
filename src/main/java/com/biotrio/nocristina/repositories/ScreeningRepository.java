@@ -115,7 +115,8 @@ public class ScreeningRepository implements IRepository<Screening>{
                 " th.columns_number as theater_columns_number," +
                 " th.can3D as theater_can3d, th.dolby as theater_dolby" +
                 " FROM screenings s" +
-                " JOIN theaters th ON th.id = s.theater_id";
+                " JOIN theaters th ON th.id = s.theater_id" +
+                " JOIN movies m ON m.id = s.movie_id";
         return query;
 
     }

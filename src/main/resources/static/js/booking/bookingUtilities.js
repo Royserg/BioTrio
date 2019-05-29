@@ -139,8 +139,7 @@ function fadeOutBulk(elements) {
  * @returns {*|jQuery.fn.init|jQuery|HTMLElement}
  */
 function createBookingRow(bookingId, booking) {
-  const { screening } = booking;
-  const { movie } = screening;
+  const { screening, movie } = booking;
 
   const $row = $(`<tr class="d-flex" data-bookingid=${bookingId}>
                         <td class="col-3">${movie.title}</td>
