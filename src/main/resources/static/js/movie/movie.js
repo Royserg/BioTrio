@@ -6,9 +6,11 @@ $(function() {
     let editButton;
     let isEdit = false;
     let movieTitle, movieDuration, movie3D, movieDolby;
+    const addButton = $('#addButton');
 
+    addButton.addClass("add-movie");
 
-            // sort table
+    // sort table
             // source: https://codepen.io/JTParrett/pen/rfeao
 
             let thIndex = 0,
@@ -74,7 +76,7 @@ $(function() {
 
         // Click add movie and it'll clear the modal, getting ready for new info
 
-        $('body div').on("click", ".btn-primary", function() {
+        $(document).on("click", '#addButton.add-movie', function() {
 
             // Change isEdit into false
             isEdit = false;

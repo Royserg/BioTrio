@@ -2,14 +2,15 @@
 
 $(function()
 {
-    $('table').on('click', '.btn-danger', function () {
+    const screeningTable = $('#screeningTable');
 
-        const button = $(this);
-        const screeningId = $(this).data('screeningid');
-        const screeningMovie = $(this).data('screeningmovie');
+    screeningTable.on('click', '.btn-danger', function () {
+
+        const row = $(this).closest('tr');
+        const screeningId = row.data('screeningid');
 
         // Get confirmation for deleting
-        const remove = confirm(`Are you sure you want to delete this screening? By deleting it, you will remove all corresponding bookings for the screening of: \n \n` + screeningMovie);
+        const remove = confirm(`Are you sure you want to delete this screening? By deleting it, you will remove all corresponding bookings.`);
 
         if (remove) {
             $.ajax({
@@ -17,8 +18,8 @@ $(function()
                 method: 'DELETE',
                 success: function (data) {
                     // Remove html table row with fading animation
-                    button.closest('tr').css('background', 'tomato');
-                    button.closest('tr').fadeOut(800, function () {
+                    row.css('background', 'tomato');
+                    row.fadeOut(800, function () {
                         $(this).remove();
                     })
                 }
