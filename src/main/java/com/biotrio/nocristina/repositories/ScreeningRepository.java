@@ -19,6 +19,7 @@ public class ScreeningRepository implements IRepository<Screening>{
     @Autowired
     private JdbcTemplate jdbc;
 
+    // https://arnaudroger.github.io/blog/2017/06/13/jdbc-template-one-to-many.html
     private final ResultSetExtractor<List<Screening>> resultSetExtractor =
             JdbcTemplateMapperFactory
                     .newInstance()
@@ -84,7 +85,7 @@ public class ScreeningRepository implements IRepository<Screening>{
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
-                ps.setInt(1, newScreening.getMovie().getId());
+                ps.setInt(1, newScreening.getMovieId());
                 ps.setInt(2, newScreening.getTheater().getId());
                 ps.setObject(3,newScreening.getTime());
                 ps.setObject(4,newScreening.getDate());
@@ -104,20 +105,17 @@ public class ScreeningRepository implements IRepository<Screening>{
 
     public void updateOne(int id, Screening sc){
         String sql = "UPDATE screenings SET movie_id = ?, theater_id = ?, time = ?, date = ?, price = ? WHERE id = ?;";
-        jdbc.update(sql, sc.getMovie().getId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
+        jdbc.update(sql, sc.getMovieId(), sc.getTheater().getId(),sc.getTime(),sc.getDate(),sc.getPrice(), id);
 
     }
 
     private String getJoinedQuery(){
-        String query = "SELECT s.id AS id, s.time, s.date, s.price," +
+        String query = "SELECT s.id AS id, s.time, s.date, s.price, s.movie_id," +
                 " th.id as theater_id, th.name as theater_name, th.rows_number as theater_rows_number," +
                 " th.columns_number as theater_columns_number," +
-                " th.can3D as theater_can3d, th.dolby as theater_dolby," +
-                " m.id AS movie_id, m.title AS movie_title, m.duration_in_minutes AS movie_duration_in_minutes, " +
-                " m.is3D as movie_is3D, m.dolby as movie_dolby" +
+                " th.can3D as theater_can3d, th.dolby as theater_dolby" +
                 " FROM screenings s" +
-                " JOIN theaters th ON th.id = s.theater_id" +
-                " JOIN movies m ON m.id = s.movie_id";
+                " JOIN theaters th ON th.id = s.theater_id";
         return query;
 
     }

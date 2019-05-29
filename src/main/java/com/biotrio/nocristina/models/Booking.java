@@ -7,12 +7,9 @@ public class Booking {
     private int id;
     private String customerPhoneNumber;
     private List<Ticket> tickets;
-//    private int screeningId;
-    // Screening contains Theater and a Movie
+    // Screening Contains Theater object
     private Screening screening;
-
-//    private Theater theater;
-//    private Movie movie;
+    private Movie movie;
 
     public Booking(){}
 
@@ -21,7 +18,13 @@ public class Booking {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
+    public Movie getMovie() {
+        return movie;
+    }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
 
     public int getId() {
         return id;
@@ -54,23 +57,6 @@ public class Booking {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
-
-//    public Screening getScreening() {
-//        return screening;
-//    }
-//
-//    public void setScreening(Screening screening) {
-//        this.screening = screening;
-//    }
-
-
-//    public int getScreeningId() {
-//        return screeningId;
-//    }
-//
-//    public void setScreeningId(int screeningId) {
-//        this.screeningId = screeningId;
-//    }
 
     @Override
     public String toString() {
