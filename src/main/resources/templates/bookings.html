@@ -142,9 +142,7 @@
 
                     <tbody>
                         <tr class="d-flex" th:each="booking : ${bookings}" th:attr="data-bookingid=${booking.id}">
-
                             <td class="col-3" th:text="${booking.movie.title}">movie</td>
-
                             <td class="col-2" th:text="${booking.screening.date}">date</td>
                             <td class="col-1" th:text="${booking.screening.time}">time</td>
                             <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>

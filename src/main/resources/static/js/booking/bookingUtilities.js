@@ -117,7 +117,6 @@ $('#seatsGrid').on('click', '.seat__free', function() {
   $('#price').text(`${$('.seat__selected').length * ticketPrice} dkk`);
 });
 
-
 /**
  * Function will fadeOut all provided jQuery objects in the array
  * @param elementsArray (jQuery[])
