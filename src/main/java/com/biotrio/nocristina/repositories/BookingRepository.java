@@ -120,7 +120,7 @@ public class BookingRepository implements IRepository<Booking> {
                 " JOIN tickets t ON t.booking_id = b.id" +
                 " JOIN screenings s ON s.id = b.screening_id" +
                 " JOIN theaters th ON th.id = s.theater_id" +
-                " JOIN movies m on m.id = s.movie_id";
+                " JOIN movies m ON m.id = s.movie_id";
 
         return query;
     }
