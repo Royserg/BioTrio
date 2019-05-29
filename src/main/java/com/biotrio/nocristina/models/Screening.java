@@ -10,20 +10,25 @@ public class Screening {
     private LocalTime time;
     private LocalDate date;
     private BigDecimal price;
-    private boolean is3D = false;
-    private boolean isDolby = false;
     private Theater theater;
-    private Movie movie;
+    private int movieId;
 
     public Screening(){}
 
-    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price, boolean is3D, boolean isDolby) {
+    public Screening(int id, LocalTime time, LocalDate date, BigDecimal price,int movieId) {
         this.id = id;
         this.time = time;
         this.date = date;
         this.price = price;
-        this.is3D = is3D;
-        this.isDolby = isDolby;
+        this.movieId = movieId;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public int getId() {
@@ -43,14 +48,6 @@ public class Screening {
         this.price = price;
     }
 
-    public boolean isIs3D() {
-        return is3D;
-    }
-
-    public void setIs3D(boolean is3D) {
-        this.is3D = is3D;
-    }
-
     public LocalDate getDate() {
         return date;
     }
@@ -67,14 +64,6 @@ public class Screening {
         this.time = time;
     }
 
-    public boolean isDolby() {
-        return isDolby;
-    }
-
-    public void setDolby(boolean dolby) {
-        isDolby = dolby;
-    }
-
     public Theater getTheater() {
         return theater;
     }
@@ -83,23 +72,12 @@ public class Screening {
         this.theater = theater;
     }
 
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
     @Override
     public String toString() {
         return "Screening{" +
                 "id=" + id +
                 ", theater=" + theater +
-                ", movie=" + movie +
                 ", price=" + price +
-                ", is3D=" + is3D +
-                ", isDolby=" + isDolby +
                 ", date=" + date +
                 ", time=" + time +
                 '}';
