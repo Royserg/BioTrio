@@ -1,14 +1,12 @@
 package com.biotrio.nocristina.models;
 
-import java.time.LocalTime;
+import java.util.List;
 
 public class Cinema {
 
     private String name;
     private int id;
-    private LocalTime opening_hour;
-    private LocalTime closing_hour;
-    // TODO: list of theaters to implement
+    private List<Day> schedule;
 
     public Cinema(String name, int id) {
         this.name = name;
@@ -21,20 +19,12 @@ public class Cinema {
 
     public Cinema() {}
 
-    public LocalTime getOpeningHour() {
-        return opening_hour;
+    public List<Day> getSchedule() {
+        return schedule;
     }
 
-    public void setOpeningHour(LocalTime openingHour) {
-        this.opening_hour = openingHour;
-    }
-
-    public LocalTime getClosingHour() {
-        return closing_hour;
-    }
-
-    public void setClosingHour(LocalTime closingHour) {
-        this.closing_hour = closingHour;
+    public void setSchedule(List<Day> schedule) {
+        this.schedule = schedule;
     }
 
     public String getName() {
