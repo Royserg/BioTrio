@@ -95,7 +95,7 @@ $(function () {
                     modalMovie.val(movieTitle);
                     modalTheater.val(s.theater.name);
                     modalDate.val(s.date);
-                    modalTime.val(s.time).slice(0,-3);
+                    modalTime.val(s.time);
                     modalPrice.val(s.price);
 
                     theater = s.theater;
@@ -181,6 +181,7 @@ $(function () {
                 contentType: 'application/json; charset=utf-8',
             })
                 .done(function () {
+                    screening.time.slice(0,-3);
                     buildTableRow(screening);
                     tr.replaceWith(newRow);
                 })
