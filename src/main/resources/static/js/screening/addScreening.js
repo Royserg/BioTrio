@@ -1,6 +1,6 @@
 
 $(function() {
-
+    /*
     const movieList = $('#modalMovie');
     const theaterList = $('#modalTheater');
     const addScreening = $('#addScreeningClick');
@@ -163,5 +163,6 @@ $(function() {
                     .end();
             })
         } )
-    });
+
 */
+});

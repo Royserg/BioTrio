@@ -3,7 +3,7 @@ package com.biotrio.nocristina.controllers;
 import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.repositories.MovieRepository;
-import com.biotrio.nocristina.repositories.ScreeningRepository;
+import com.biotrio.nocristina.services.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,15 +18,14 @@ public class MovieController implements IController<Movie>{
     MovieRepository movieRepo;
 
     @Autowired
-    ScreeningRepository screeningRepo;
+    ScreeningService screeningService;
 
     // Return html page
     @GetMapping("/movies")
     public String showPage(Model m) {
 
-//        Movie newMovie = new Movie();
-//        m.addAttribute("newMovie", newMovie);
         m.addAttribute("movieList", findAll());
+        m.addAttribute("theaterList",screeningService.getAllTheaters());
 
         return "movies";
     }
@@ -78,7 +77,7 @@ public class MovieController implements IController<Movie>{
         // TODO: I need to get list of screenings for a particular movie
         // TODO: So we need to add screenings list to Movie
         // TODO: or connect here Screening Repo
-        return screeningRepo.findByMovieId(movieId);
+        return screeningService.getByMovieId(movieId);
     }
 
 }

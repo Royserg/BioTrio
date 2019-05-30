@@ -19,8 +19,7 @@
 
             <div class="container mt-4" >
 
-
-                <!-- Modal for Add and Edit -->
+                <!-- Modal for Add and Edit a Movie -->
 
                 <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -53,67 +52,139 @@
                     </div>
                 </div>
 
+                <!-- Modal for Add and Edit Screening-->
+                <div class="modal fade" id="screeningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <label for="modalScreeningMovie">Movie</label>
+                                    <input type="text" class="form-control" id="modalScreeningMovie" readonly>
+                                    <label for="modalTheater">Theater</label>
+                                    <select class="form-control" id="modalTheater" aria-describedby="theater">
+                                        <option style="display:none;"></option>
+                                        <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                                    </select>
+                                    <label for="modalDate">Date</label>
+                                    <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
+                                    <label for="modalTime">Time</label>
+                                    <input type="time" class="form-control" id="modalTime">
+                                    <label for="modalPrice">Price</label>
+                                    <input type="number" class="form-control" id="modalPrice">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitButton" >Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Button for adding and going back -->
 
-                <!-- Button for adding movie -->
+                <div class="d-flex justify-content-between mb-4">
 
-                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn invisible" style="background-color: Transparent;"
+                            id="prev">
+                        <span class="fas fa-chevron-left" style="font-size: 100%"></span></button>
+
                     <button class="btn btn-primary"
-                            type="button"
-                            id="addButton"
-                            data-toggle="modal"
-                            data-target="#movieModal">Add Movie</button>
+                     id="addButton">Add Movie</button>
+
                 </div>
+                <!--Carousel for displaying both tables-->
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <!--table for displaying the list of movies-->
+                            <div id="movie-table-container" >
+                                <table class="table table-hover" id="movieTable">
+                                    <caption>List of movies</caption>
+                                    <thead class="thead-dark">
+                                    <tr class="d-flex">
+                                        <th class="col-3">Title</th>
+                                        <th class="col-5">Duration in minutes</th>
+                                        <th class="col-1">3D</th>
+                                        <th class="col-1">Dolby</th>
+                                        <!-- columns for edit and delete button -->
+                                        <th class="col-1">Edit</th>
+                                        <th class="col-1">Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="d-flex"  th:each="movie : ${movieList}" th:object="${movie}"
+                                                                        th:attr="data-movieid=${movie.id},
+                                                                                 data-movietitle=${movie.title}">
 
-
-
-                <!-- List of available movies -->
-
-                <div id="table-container" style="overflow-y:auto; height:400px;">
-                    <table class="table table-hover" id="movieTable">
-                        <thead class="thead-dark">
-                            <tr class="d-flex">
-                                <th class="col-5 sortable" style="cursor:pointer">Title</th>
-                                <th class="col-3 sortable" style="cursor:pointer">Duration in minutes</th>
-                                <th class="col-1">3D</th>
-                                <th class="col-1">Dolby</th>
-                                <!-- columns for edit and delete button -->
-                                <th class="col-1">Edit</th>
-                                <th class="col-1">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}">
-                                <td class="col-5 title" th:text="${movie.title}" />
-                                <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
-                                <td class="col-1 is3D" th:text="${movie.is3D}"/>
-                                <td class="col-1 dolby" th:text="${movie.dolby}"/>
-                                <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
-                                <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
-                                <td class="col-1"><a href="#"
-                                                     id = "editButton"
-                                                     class="btn btn-warning"
-                                                     data-toggle="modal"
-                                                     data-target="#movieModal"
-                                                     th:attr="data-movieID=${movie.id}"><span class="fas fa-edit"></span></a></td>
-                                <td class="col-1"><a class="btn btn-danger" th:attr="data-movieID=${movie.id}"><span class = "fas fa-trash text-white"></span></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <td class="col-3 cool-pointer" th:text="${movie.title}" />
+                                        <td class="col-5 duration" th:text="${movie.durationInMinutes}"/>
+                                        <td class="col-1 is3D " th:text="${movie.is3D}"/>
+                                        <td class="col-1 dolby" th:text="${movie.dolby}"/>
+                                        <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
+                                        <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
+                                        <td class="col-1"><button
+                                                             id = "editButton"
+                                                             class="btn btn-warning"
+                                                             data-toggle="modal"
+                                                             data-target="#movieModal"><span class="fas fa-edit"></span></button></td>
+                                        <td class="col-1"><a class="btn btn-danger" ><span class="fas fa-trash text-white"></span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <!-- table for displaying the list of available screenings -->
+                            <div id="screening-table-container">
+                                <table class="table table-hover" id="screeningTable">
+                                    <caption>List of screenings</caption>
+                                    <thead class="thead-dark" style="top:0px;">
+                                    <tr class="d-flex">
+                                        <th class="col-2 sticky-header">Movie</th>
+                                        <th class="col-2 sticky-header">Theater room</th>
+                                        <th class="col-2 sticky-header">Date</th>
+                                        <th class="col-2 sticky-header">Time</th>
+                                        <th class="col-2 sticky-header">Price</th>
+                                        <!-- columns for edit and delete button -->
+                                        <th class="col-1"></th>
+                                        <th class="col-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- the table body will be filled dynamically from jquery depending on which movie
+                                         has been selected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a class="carousel-control-prev" href="#" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a> -->
                 </div>
-
-                <p style="color:grey; margin-top:10px;">List of movies
-                    <br>Click on 'Title' in order to sort by the title of movies.
-                    <br>Click on 'Duration in minutes' in order to sort by the duration of movies.</p>
-
-
             </div>
         </div>
     </div>
 </div>
 
-
-
+//https://stackoverflow.com/a/25688291
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let theaterList =  /*[[${theaterList}]]*/ 'default';
+/*]]>*/
+</script>
 <!-- scripts for jquery and js -->
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -123,6 +194,8 @@
 
 <script th:src="@{/js/movie/movie.js}"></script>
 <script th:src="@{/js/movie/deleteMovie.js}"></script>
+<script th:src="@{/js/screening/newScreening.js}"></script>
+<script th:src="@{/js/screening/deleteScreening.js}"></script>
 
 </body>
 </html>

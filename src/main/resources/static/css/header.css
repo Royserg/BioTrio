@@ -29,10 +29,22 @@
     border-bottom: 1px solid #343434;
 }
 
+.cool-pointer{
+    cursor:pointer;
+}
+
 /* Make only table body scrollable */
 table tbody {
     display: block;
     max-height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+table td{
+    text-align: center;
+}
+
+table tr{
+    text-align: center;
 }

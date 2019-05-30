@@ -1,6 +1,6 @@
 
 $(function () {
-
+    /*
     const modal = $('#modal');
     const modalMovie = $('#modalMovie');
     const modalTheater = $('#modalTheater');
@@ -179,5 +179,5 @@ $(function () {
                       </tr>`
 
     }
-
+*/
 });

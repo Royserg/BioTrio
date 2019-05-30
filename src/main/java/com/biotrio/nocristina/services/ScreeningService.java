@@ -21,15 +21,6 @@ public class ScreeningService {
     @Autowired
     private MovieRepository movieRepo;
 
-    @Autowired
-    private BookingRepository bookingRepo;
-
-    // Function that fetches movie and theater object
-    // and attaches it to the screening
-    public void populateBookingsList(Screening screening) {
-
-//        screening.setBookings(bookingRepo.findByScreeningId(screening.getId()));
-    }
 
     public List<Screening> getAllScreenings() {
         List<Screening> screenings = screeningRepo.findAll();

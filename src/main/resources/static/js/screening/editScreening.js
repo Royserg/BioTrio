@@ -1,6 +1,6 @@
 
 $(function() {
-
+    /*
     const editMovie = $('#modalMovie');
     const editTheater = $('#modalTheater');
     const editPrice = $('#modalPrice');
@@ -131,4 +131,5 @@ $(function() {
                 }
         });}
     }); });
+    */
 });
