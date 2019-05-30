@@ -91,12 +91,11 @@
 
                 <div class="d-flex justify-content-between mb-4">
 
-                    <button class="btn btn-primary invisible"
-                      type="button"
-                      id="prev">Go back</button>
+                    <button class="btn invisible" style="background-color: Transparent;"
+                            id="prev">
+                        <span class="fas fa-chevron-left" style="font-size: 100%"></span></button>
 
                     <button class="btn btn-primary"
-                     type="button"
                      id="addButton">Add Movie</button>
 
                 </div>
@@ -123,8 +122,8 @@
                                     </thead>
                                     <tbody>
                                     <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}"
-                                                                        th:attr="data-movieID=${movie.id},
-                                                                                 data-movieTitle=${movie.title}">
+                                                                        th:attr="data-movieid=${movie.id},
+                                                                                 data-movietitle=${movie.title}">
 
                                         <td class="col-5 title" th:text="${movie.title}" />
                                         <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>

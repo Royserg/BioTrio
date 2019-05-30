@@ -39,6 +39,7 @@ $(function () {
         addButton.text("Add Screening");
         addButton.removeClass("add-movie");
         addButton.addClass("add-scr");
+        prevButton.removeClass("invisible");
 
         populateScreeningTable(movieId);
 
@@ -72,41 +73,35 @@ $(function () {
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
             .done(function(response) {
-                screeningsList=response;
 
-                if(screeningsList.length>0){
+                //edits the date attribute of the response
+                //so that it shows only the hour and minutes without seconds
+                //in order to be displayed in the screenings table
+                screeningsList = response.map(screening => { return { ...screening, time: screening.time.slice(0,-3) } });
+
                     screeningsList.forEach(function (s) {
                         buildTableRow(s);
                         screeningTableBody.append(newRow);
                     })
-                }
-
-                else {
-                    prevButton.removeClass("invisible");
-                }
             })
     }
-
     function populateEditModal(screeningId){
 
-        screeningsList.forEach(function(s){
-            //the id of the screening object is of type int
-            //the passed data attribute screeningId is a string
-            //that is why they should be compared only with ==
-            //in order to find the particular screening from the list
-            if(s.id==screeningId){
+        $.getJSON(`/api/screenings/${screeningId}`)
+            .done(function(response) {
 
-                modalMovie.val(movieTitle);
-                modalTheater.val(s.theater.name);
-                modalDate.val(s.date);
-                modalTime.val(s.time);
-                modalPrice.val(s.price);
+                     // s = response.map(screening => { return { ...screening, time: screening.time.slice(0,-3) } });
+                    let s = response;
+                    modalMovie.val(movieTitle);
+                    modalTheater.val(s.theater.name);
+                    modalDate.val(s.date);
+                    modalTime.val(s.time).slice(0,-3);
+                    modalPrice.val(s.price);
 
-                theater = s.theater;
-            }
-        })
+                    theater = s.theater;
+                }
+            )
     }
-
     modalTheater.change(function () {
 
         // https://stackoverflow.com/a/2888447
@@ -124,7 +119,7 @@ $(function () {
                                 <td class="col-2 title"> ${movieTitle} </td>
                                 <td class="col-2"> ${screening.theater.name} </td>
                                 <td class="col-2"> ${screening.date} </td>
-                                <td class="col-2"> ${screening.time.slice(0,-3)} </td>
+                                <td class="col-2"> ${screening.time} </td>
                                 <td class="col-2"> ${screening.price} DKK</td>
                                 <td class="col-1">
                                 <button id = "editButton" 
@@ -170,7 +165,7 @@ $(function () {
                     screening["id"]=id;
                     buildTableRow(screening);
                     screeningTableBody.append(newRow);
-                    // $('#table-container').scrollTop($('#table-container')[0].scrollHeight);
+                    screeningTableBody.scrollTop($('#screeningTable tbody')[0].scrollHeight);
                 }
             })
         }

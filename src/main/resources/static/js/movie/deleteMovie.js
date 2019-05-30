@@ -6,8 +6,8 @@ $(function () {
 
     $('#movieTable').on("click", ".btn-danger", function () {
 
-        const button = $(this);
-        const id = $(this).attr('data-movieID');
+        const row = $(this).closest('tr');
+        const id = row.data('movieid');
 
         // Get confirmation for deleting
         const remove = confirm(`Are you sure you want to delete this movie?`);
@@ -23,8 +23,8 @@ $(function () {
                 console.log('movie ', id, ' deleted');
 
                 // Remove table row with fading animation
-                button.closest('tr').css('background', 'tomato');
-                button.closest('tr').fadeOut(800, function () {
+                row.css('background', 'tomato');
+                row.fadeOut(800, function () {
                     $(this).remove();
                 })
             })
