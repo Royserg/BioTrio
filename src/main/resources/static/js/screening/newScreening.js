@@ -27,7 +27,7 @@ $(function () {
     let screeningId;
     let newRow;
 
-    movieTable.on('click','.title', function () {
+    movieTable.on('click','.cool-pointer', function () {
 
         let row = $(this).closest('tr');
         movieId = row.attr('data-movieid');
@@ -116,7 +116,7 @@ $(function () {
 
     function buildTableRow(screening) {
          newRow = `<tr class="d-flex" data-screeningid=${screening.id}>
-                                <td class="col-2 title"> ${movieTitle} </td>
+                                <td class="col-2 cool-pointer"> ${movieTitle} </td>
                                 <td class="col-2"> ${screening.theater.name} </td>
                                 <td class="col-2"> ${screening.date} </td>
                                 <td class="col-2"> ${screening.time} </td>
@@ -201,7 +201,7 @@ $(function () {
         screeningTableBody.html("");
     })
 
-    screeningTableBody.on('click','.title', function () {
+    screeningTableBody.on('click','.cool-pointer', function () {
 
         $('.carousel').carousel('prev');
         prevButton.addClass("invisible");

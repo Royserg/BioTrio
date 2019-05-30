@@ -1,82 +1,44 @@
 $(function() {
 
-    console.log('movie jquery loaded');
+    const addButton = $('#addButton');
 
     let id;
-    let editButton;
     let isEdit = false;
     let movieTitle, movieDuration, movie3D, movieDolby;
-    const addButton = $('#addButton');
     let row;
 
+    //add class to the add button
     addButton.addClass("add-movie");
 
-    // sort table
-            // source: https://codepen.io/JTParrett/pen/rfeao
+    // Click edit movie and it'll bring the movie info and show it on modal
 
-            let thIndex = 0,
-                curThIndex = null;
-            let sorting, tbodyHtml, rowId, sortingIndex;
+    $('#movieTable').on("click", ".btn-warning", function() {
 
-            $(function(){
-                $('.sortable').click(function(){
-                    thIndex = $(this).index();
-                    if(thIndex != curThIndex){
-                        curThIndex = thIndex;
-                        sorting = [];
-                        tbodyHtml = null;
-                        $('table tbody tr').each(function(){
-                            sorting.push($(this).children('td').eq(curThIndex).html() + ', ' + $(this).index());
-                        });
+        row = $(this).closest('tr');
+        id= row.data('movieid');
+        console.log(id);
 
-                        sorting = sorting.sort();
-                        sortIt();
-                    }
-                });
-            });
+        // Bring the movie data from the table
+        movieTitle = row.children('td')[0].innerHTML;
+        movieDuration = row.children('td')[1].innerHTML;
+        movie3D = row.children('td')[2].innerHTML;
+        movieDolby = row.children('td')[3].innerHTML;
 
-            function sortIt(){
-                for(sortingIndex = 0; sortingIndex < sorting.length; sortingIndex++){
-                    rowId = parseInt(sorting[sortingIndex].split(', ')[1]);
-                    tbodyHtml = tbodyHtml + $('table tbody tr').eq(rowId)[0].outerHTML;
-                }
-                $('table tbody').html(tbodyHtml);
-            }
+        // Show the previous data so that the user can edit onto it
+        $("#modalTitle").val(movieTitle);
+        $("#modalDurationInMinutes").val(movieDuration);
+        $("#modalIs3D").val(movie3D);
+        $("#modalDolby").val(movieDolby);
 
+        // Change isEdit into true
+        isEdit = true;
 
+        // Show the modal with yellow button and header
+        showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
 
+    });
 
-
-        // Click edit movie and it'll bring the movie info and show it on modal
-
-        $('#movieTable').on("click", ".btn-warning", function() {
-
-            row = $(this).closest('tr');
-            id= row.data('movieid');
-            console.log(id);
-
-            // Bring the movie data from the table
-            movieTitle = row.children('td')[0].innerHTML;
-            movieDuration = row.children('td')[1].innerHTML;
-            movie3D = row.children('td')[2].innerHTML;
-            movieDolby = row.children('td')[3].innerHTML;
-
-            // Show the previous data so that the user can edit onto it
-            $("#modalTitle").val(movieTitle);
-            $("#modalDurationInMinutes").val(movieDuration);
-            $("#modalIs3D").val(movie3D);
-            $("#modalDolby").val(movieDolby);
-
-            // Change isEdit into true
-            isEdit = true;
-
-            // Show the modal with yellow button and header
-            showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
-
-        });
-
-
-        // Click add movie and it'll clear the modal, getting ready for new info
+    // Click add movie and it'll clear the modal, getting ready for new info
     //https://stackoverflow.com/a/28108858
     $(document).on("click", '#addButton.add-movie', function() {
 
@@ -94,9 +56,7 @@ $(function() {
 
         });
 
-
         // Show modal with different header and button color
-
         function showModal(header, className) {
 
             $('#movieModalTitle').html(header);
@@ -106,9 +66,7 @@ $(function() {
 
         }
 
-
         // Click save button and edit or add accordingly
-
         $('html body').off('click').on('click', '#submitModal', function (e) {
 
             if(isEdit) {
@@ -118,7 +76,6 @@ $(function() {
             }
 
         });
-
 
         // Edit a movie
         function edit() {
@@ -166,14 +123,10 @@ $(function() {
                                 $('#movieModal').modal('hide');
                             }, 100);
 
-
                         })
                     })
-
             }
-
         }
-
 
         // Add a movie
         function add(e) {
@@ -205,8 +158,8 @@ $(function() {
 
                         // Add new row to the table with the newly added movie
                         let newRow = `<tr class="d-flex" data-movieid="${id}", data-movietitle="${newMovie.title}">
-                                    <td class="col-5 title">${newMovie.title}</td>
-                                    <td class="col-3 duration">${newMovie.durationInMinutes}</td>
+                                    <td class="col-3 title cool-pointer">${newMovie.title}</td>
+                                    <td class="col-5 duration">${newMovie.durationInMinutes}</td>
                                     <td class="col-1 is3D">${newMovie.is3D}</td>
                                     <td class="col-1 dolby">${newMovie.dolby}</td>
                                     <td class="col-1"><button
@@ -225,13 +178,7 @@ $(function() {
 
                         // Scroll down the table so that you can see the newly added movie
                          $('#movieTable tbody').scrollTop($('#movieTable tbody')[0].scrollHeight);
-
-
                     });
-
             }
-
         }
-
-
 });

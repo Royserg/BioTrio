@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <!-- Button for adding  -->
+                <!-- Button for adding and going back -->
 
                 <div class="d-flex justify-content-between mb-4">
 
@@ -99,20 +99,18 @@
                      id="addButton">Add Movie</button>
 
                 </div>
-
+                <!--Carousel for displaying both tables-->
                 <div id="carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <!--table for displaying the list of movies-->
                             <div id="movie-table-container" >
                                 <table class="table table-hover" id="movieTable">
-                                    <caption>List of movies
-                                        <br>Click on 'Title' to sort by the alphabetical order.
-                                        <br>Click on 'Duration in minutes' to sort by the duration.</caption>
+                                    <caption>List of movies</caption>
                                     <thead class="thead-dark">
                                     <tr class="d-flex">
-                                        <th class="col-5 sortable" style="cursor:pointer">Title</th>
-                                        <th class="col-3 sortable" style="cursor:pointer">Duration in minutes</th>
+                                        <th class="col-3">Title</th>
+                                        <th class="col-5">Duration in minutes</th>
                                         <th class="col-1">3D</th>
                                         <th class="col-1">Dolby</th>
                                         <!-- columns for edit and delete button -->
@@ -121,13 +119,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="d-flex" th:each="movie : ${movieList}" th:object="${movie}"
+                                    <tr class="d-flex"  th:each="movie : ${movieList}" th:object="${movie}"
                                                                         th:attr="data-movieid=${movie.id},
                                                                                  data-movietitle=${movie.title}">
 
-                                        <td class="col-5 title" th:text="${movie.title}" />
-                                        <td class="col-3 duration" th:text="${movie.durationInMinutes}"/>
-                                        <td class="col-1 is3D" th:text="${movie.is3D}"/>
+                                        <td class="col-3 cool-pointer" th:text="${movie.title}" />
+                                        <td class="col-5 duration" th:text="${movie.durationInMinutes}"/>
+                                        <td class="col-1 is3D " th:text="${movie.is3D}"/>
                                         <td class="col-1 dolby" th:text="${movie.dolby}"/>
                                         <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
                                         <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
