@@ -1,11 +1,12 @@
 $(function() {
-    console.log("loaded jquery and bootstrap");
+    console.log("loaded jquery");
     var bookings = [];
     var screenings = [];
     var tickets = [];
     var currentDate = new Date();
     console.log(currentDate);
     var currentDay = currentDate.getDay();
+    console.log("today ", currentDay);
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     //shift days array so current day is first element
