@@ -4,6 +4,7 @@
 
 .list-group-item {
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 .list-group-item:hover {
@@ -23,13 +24,40 @@
     display: none;
 }
 
+/* Make containers scrollable on y axis */
+.movies-list,
+.dates-list,
+.times-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
-.screening-times {
+.movies-list {
+    max-height: 240px;
+}
+
+.dates-list {
+    max-height: 197px;
+}
+
+.times-list {
+
+}
+
+
+.times-list {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+
+/*.screening-times {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: flex-start;*/
+/*    flex-wrap: wrap;*/
+/*}*/
 
 
 .seats-container {

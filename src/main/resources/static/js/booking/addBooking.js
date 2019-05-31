@@ -66,7 +66,7 @@ $(function(){
     toggleListItemSelectedClass($(this));
 
     // Hide other containers (if shown)
-    fadeOutBulk([$('.times-container'), $('.seats-container')]);
+    fadeOutBulk([$('.times-container'), $('.seats-container'), $('.modal-footer')]);
 
     // Fetch screenings for selected movie
     $.ajax(`/api/movies/${movieId}/screenings`)
@@ -84,7 +84,7 @@ $(function(){
     // Transform array of screenings objects into array of screening dates
     const dates = screenings.map(screening => screening.date);
     // Remove duplicates, convert dates array into Set and back to array
-    const uniqueDates = [...new Set(dates)];
+    const uniqueDates = [...new Set(dates)].sort();
 
     // Show/update dates list
     datesList.fadeOut(100, function() {
@@ -112,7 +112,7 @@ $(function(){
     toggleListItemSelectedClass($(this));
 
     // Hide seats container
-    fadeOutBulk([$('.seats-container')]);
+    fadeOutBulk([$('.seats-container'), $('.modal-footer')]);
 
     // Reveal times container
     $('.times-container').fadeIn('slow');
@@ -127,7 +127,7 @@ $(function(){
       // Insert times for selected screening date
       screeningsData.forEach(function (screening) {
         if (screening.date === clickedDate) {
-          timesList.append(`<li data-screeningid="${screening.id}" class="list-group-item">${screening.time}</li>`)
+          timesList.append(`<li data-screeningid="${screening.id}" class="list-group-item">${screening.time.slice(0,-3)}</li>`)
         }
       })
     })
@@ -149,6 +149,9 @@ $(function(){
     $('.seats-container').fadeIn('slow');
     // Show footer with booking summary
     $('.modal-footer').fadeIn('slow');
+    // Reset ticket count and total price
+    $('#ticketsCount').text(0);
+    $('#price').text(0);
 
     //  Get all tickets for the screening to calculate grid and show reserved seats
     // $.ajax(`/api/tickets/screening/${screeningId}`)
@@ -219,7 +222,7 @@ $(function(){
   })
 
 
-  function addBookingRow (bookingId, booking){
+  function addBookingRow(bookingId, booking) {
     const $row = createBookingRow(bookingId, booking);
     // Close modal
     $('#bookingModal').modal('hide');

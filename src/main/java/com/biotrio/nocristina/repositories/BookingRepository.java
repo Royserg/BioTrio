@@ -2,7 +2,6 @@ package com.biotrio.nocristina.repositories;
 import com.biotrio.nocristina.models.Booking;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -46,8 +45,8 @@ public class BookingRepository implements IRepository<Booking> {
 
     public List<Booking> findByPhone(String phoneNumber) {
         System.out.println(phoneNumber);
-        String sql = "SELECT * FROM bookings WHERE customer_phone_number LIKE '" + phoneNumber + "%'";
-        List<Booking> bookings = jdbc.query(sql, new BeanPropertyRowMapper<>(Booking.class));
+        String sql = getJoinedQuery() + " WHERE b.customer_phone_number LIKE ?";
+        List<Booking> bookings = jdbc.query(sql, new String[] {phoneNumber + "%"}, resultSetExtractor);
 
         return bookings;
 
@@ -58,7 +57,6 @@ public class BookingRepository implements IRepository<Booking> {
 
         String sql = "INSERT INTO bookings VALUES(null, ?, ?);";
         jdbc.update((Connection connection)->{
-
                     PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
                     ps.setString(1, newBooking.getCustomerPhoneNumber());
@@ -124,5 +122,4 @@ public class BookingRepository implements IRepository<Booking> {
 
         return query;
     }
-
 }
