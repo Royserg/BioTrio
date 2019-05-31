@@ -17,7 +17,7 @@
         <div class="col-10 mt-3">
             <h4 th:replace="fragments/fragments :: heading(text='Movies')" />
 
-            <div class="container mt-4" >
+            <div class="mt-4" >
 
                 <!-- Modal for Add and Edit a Movie -->
 
@@ -37,11 +37,15 @@
                                 <label for="modalDurationInMinutes">Duration in Minutes</label>
                                 <input type="number" class="form-control" id="modalDurationInMinutes" min="10">
 
-                                <label for="modalIs3D">3D Movie</label>
-                                <input type="checkbox" class="form-control modalCheckbox" id="modalIs3D">
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" class="form-check-input modalCheckbox" id="modalIs3D">
+                                    <label class="form-check-label" for="modalIs3D">3D Movie</label>
+                                </div>
 
-                                <label for="modalDolby">Dolby Movie</label>
-                                <input type="checkbox" class="form-control modalCheckbox" id="modalDolby">
+                                <div class="form-check mt-1">
+                                    <input type="checkbox" class="form-check-input modalCheckbox" id="modalDolby">
+                                    <label class="form-check-label" for="modalDolby">Dolby Movie</label>
+                                </div>
 
                             </div>
                             <div class="modal-footer">
@@ -109,13 +113,13 @@
                                     <caption>List of movies</caption>
                                     <thead class="thead-dark">
                                     <tr class="d-flex">
-                                        <th class="col-3">Title</th>
-                                        <th class="col-5">Duration in minutes</th>
+                                        <th class="col-4">Title</th>
+                                        <th class="col-4">Duration(mins)</th>
                                         <th class="col-1">3D</th>
                                         <th class="col-1">Dolby</th>
                                         <!-- columns for edit and delete button -->
-                                        <th class="col-1">Edit</th>
-                                        <th class="col-1">Delete</th>
+                                        <th class="col-1"></th>
+                                        <th class="col-1"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -123,9 +127,9 @@
                                                                         th:attr="data-movieid=${movie.id},
                                                                                  data-movietitle=${movie.title}">
 
-                                        <td class="col-3 cool-pointer" th:text="${movie.title}" />
-                                        <td class="col-5 duration" th:text="${movie.durationInMinutes}"/>
-                                        <td class="col-1 is3D " th:text="${movie.is3D}"/>
+                                        <td class="col-4 cool-pointer" th:text="${movie.title}" />
+                                        <td class="col-4 duration" th:text="${movie.durationInMinutes}"/>
+                                        <td class="col-1 is3D" th:text="${movie.is3D}"/>
                                         <td class="col-1 dolby" th:text="${movie.dolby}"/>
                                         <!--<td class="col-1 3D" th:text="${movie.is3D != null ? movie.is3D : 'NOT FOUND'}"/>-->
                                         <!--<td class="col-1 Dolby" th:text="${movie.isDolby!= null ? movie.isDolby : 'NOT FOUND'}"/>-->
@@ -145,7 +149,7 @@
                             <div id="screening-table-container">
                                 <table class="table table-hover" id="screeningTable">
                                     <caption>List of screenings</caption>
-                                    <thead class="thead-dark" style="top:0px;">
+                                    <thead class="thead-dark">
                                     <tr class="d-flex">
                                         <th class="col-2 sticky-header">Movie</th>
                                         <th class="col-2 sticky-header">Theater room</th>
