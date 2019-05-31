@@ -1,7 +1,11 @@
 $(function() {
 
+
     let editButton;
     let id;
+    let isEdit;
+
+
 
     $('#theaterTable').on('click', 'td .btn-warning', function () {
         console.log("Pressing Edit")
@@ -16,52 +20,72 @@ $(function() {
 
         //Populate the modal fields with current info
 
-        $("#nameField").val(name);
-        $("#rowsNumberField").val(rowsNumber);
-        $("#columnsNumberField").val(columnsNumber);
+        $("#NameField").val(name);
+        $("#RowsField").val(rowsNumber);
+        $("#ColumnsField").val(columnsNumber);
         $("#is3D").prop("checked", can3D === "true" ? true : false);
         $("#isDolby").prop("checked", dolby === "true" ? true : false);
+
+        isEdit = true;
+
+
     });
 
-//Create a function for savebutton
-    $('#submitChangesBtn').on('click', function () {
-        let theaterToEdit = {
-            'id': id,
-            'cinemaId': 1,
-            'name': $('#nameField').val(),
-            'rowsNumber': $('#rowsNumberField').val(),
-            'columnsNumber': $('#columnsNumberField').val(),
-            'can3d': $('#is3D').is(':checked'),
-            'dolby': $('#isDolby').is(':checked')
+    //This determines wether the button pressed is add or edit
+    $('html body').off('click').on('click', '#submitTheater', function (e) {
 
-        };
-        console.log(theaterToEdit);
-        //Send the newly entered info
-        $.ajax({
+        if (isEdit) {
 
-            type: 'PUT',
-            url: `/api/theaters/${id}`,
-            data: JSON.stringify(theaterToEdit),
-            contentType: 'application/json; charset=utf-8',
-        })
-            .done(function () {
+            edit();
 
-                editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
-                editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
-                editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
-                editButton.parent().siblings('td')[3].innerHTML = theaterToEdit.can3d;
-                editButton.parent().siblings('td')[4].innerHTML = theaterToEdit.dolby;
+            //isEdit = false;
 
-                editButton.closest('tr').css('background', 'gold');
-                editButton.closest('tr').fadeOut(300, function () {
-                    $(this).fadeIn(300);
-                    $(this).css('background', 'white');
-                    setTimeout(function () {
-                        $('#movieModal').modal('hide');
-                    }, 100);
+        } else {
 
-                })
+            add(e);
 
-            });
+            isEdit = false;
+
+        }
+
+        function edit() {
+            let theaterToEdit = {
+                'id': id,
+                'cinemaId': 1,
+                'name': $('#NameField').val(),
+                'rowsNumber': $('#RowsField').val(),
+                'columnsNumber': $('#ColumnsField').val(),
+                'can3d': $('#is3D').is(':checked'),
+                'dolby': $('#isDolby').is(':checked')
+
+            };
+            //Send the newly entered info
+            $.ajax({
+
+                type: 'PUT',
+                url: `/api/theaters/${id}`,
+                dataType: 'json',
+                data: JSON.stringify(theaterToEdit),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
+                    editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
+                    editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
+                    editButton.parent().siblings('td')[3].innerHTML = theaterToEdit.can3d;
+                    editButton.parent().siblings('td')[4].innerHTML = theaterToEdit.dolby;
+
+                    editButton.closest('tr').css('background', 'gold');
+                    editButton.closest('tr').fadeOut(300, function () {
+                        $(this).fadeIn(300);
+                        $(this).css('background', 'white');
+                        setTimeout(function () {
+                            $('#TheaterModal').modal('hide');
+                        }, 100);
+
+                    });
+                }
+        });
+        }
     });
 });
