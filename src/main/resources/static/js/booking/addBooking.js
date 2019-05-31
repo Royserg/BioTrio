@@ -84,7 +84,7 @@ $(function(){
     // Transform array of screenings objects into array of screening dates
     const dates = screenings.map(screening => screening.date);
     // Remove duplicates, convert dates array into Set and back to array
-    const uniqueDates = [...new Set(dates)];
+    const uniqueDates = [...new Set(dates)].sort();
 
     // Show/update dates list
     datesList.fadeOut(100, function() {
@@ -127,7 +127,7 @@ $(function(){
       // Insert times for selected screening date
       screeningsData.forEach(function (screening) {
         if (screening.date === clickedDate) {
-          timesList.append(`<li data-screeningid="${screening.id}" class="list-group-item">${screening.time}</li>`)
+          timesList.append(`<li data-screeningid="${screening.id}" class="list-group-item">${screening.time.slice(0,-3)}</li>`)
         }
       })
     })
