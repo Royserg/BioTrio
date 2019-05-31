@@ -11,44 +11,59 @@
     <div class="container-fluid">
         <div class="row">
             <nav th:replace="fragments/fragments :: sidebar" />
-            <div class="col-10 content">
+            <div class="col-10 content" style="margin-top: 10px;">
 
                 <div class="row" style="justify-content: space-evenly">
 
+                        <div class="col-4">
+                            <div class="alert alert-primary infobox-lg">
+                                <h2 class="total-screenings"></h2>
+                                <p>screenings planned in total</p>
+                            </div>
+
+                            <div class="alert alert-primary infobox-lg ">
+                                <h2 class="total-bookings"></h2>
+                                <p>bookings made in total</p>
+                            </div>
+
+                            <div class="alert alert-primary infobox-lg ">
+                                <h2 class="total-tickets"></h2>
+                                <p>tickets booked in total</p>
+                            </div>
+
+
+                            <!--<div id="chart-3"></div>-->
+
+                        </div>
+
+                        <div class="col-4">
+                            <div class="alert alert-primary infobox-lg">
+                                <h2 class="total-sales"></h2>
+                                <p>total price of the ticket sales</p>
+                            </div>
+
+                            <div class="alert alert-primary infobox-lg">
+                                <h2 class="future-screenings"></h2>
+                                <p>planned screenings in the future</p>
+                            </div>
+                        </div>
+
 
                     <div class="col-4">
 
-                        <div class="alert alert-primary infobox-lg">
-                            <h2>267</h2>
-                            <p>tickets booked for upcoming screenings</p>
-                        </div>
+                        <div class ="alert alert-secondary infobox-lg">
+                            <h3>Opening Hours</h3>
+                            <ul class="list-group list-group-flush" id="openingHours">
+                                <li class="list-group-item d-flex justify-content-between" th:each="day : ${schedule}">
+                                    <span th:text="${days[day.dayNo - 1]}"></span>
+                                    <span th:text="${day.openingHour} + ' - ' + ${day.closingHour}"></span>
+                                </li>
 
-                        <div class="alert alert-primary infobox-lg">
-                            <h2>45</h2>
-                            <p>planned screenings the next 14 days</p>
+                            </ul>
                         </div>
-                        <div class="alert alert-primary infobox-lg">
-                            <h2>Pirates of Aids</h2>
-                            <p>Most booked movie next 7 days</p>
-                        </div>
-
-                        <div class="alert alert-primary infobox-lg">
-                            <h2>Avengers: Endgame</h2>
-                            <p>6544 hours watched last 7 days</p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-
-
 
                     </div>
-
-                    <div class="col-4">
-                        <div id="chart-3"></div>
-                    </div>
-
                 </div>
-
             </div>
 
         </div>
