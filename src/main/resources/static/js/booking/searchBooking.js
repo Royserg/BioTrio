@@ -24,23 +24,21 @@ $(function() {
             // Johan's if statement below translated into normal => if (searchVal.length > 1)
             if(0 < searchVal.length){
                 // Fetch bookings that start with provided phone number
-                $.ajax(`/api/bookings/phone/${searchVal}`, {
-                    success: (bookings) => {
-                        // Generate new html with data from query
-                        updateTableBody(bookings)
-                    }
-                });
-            }
+                $.ajax(`/api/bookings/phone/${searchVal}`)
+                  .done(bookings => {
+                      // Generate new html with data from query
+                      updateTableBody(bookings)
+                  })
+            };
 
             // Search field is empty - should fetch most recent bookings
             if(searchVal.length === 0){
-                $.ajax('/api/bookings', {
-                    success: (bookings) => {
-                        // Generate new html with data from query
-                        updateTableBody(bookings);
-                    }
-                })
-            }
+                $.ajax('/api/bookings')
+                  .done(booknigs => {
+                      // Generate new html with data from query
+                      updateTableBody(bookings);
+                  });
+            };
         }, DELAY);
 
     });
@@ -50,7 +48,7 @@ $(function() {
     // creates row html element with all necessary information
     // and inserts into table body
     function updateTableBody (bookings) {
-
+        console.log('bookings', bookings);
         //remove all bookings made with thymeleaf
         tableBody.html("");
 
