@@ -57,8 +57,8 @@ $(function() {
                 'columnsNumber': $('#ColumnsField').val(),
                 'can3d': $('#is3D').is(':checked'),
                 'dolby': $('#isDolby').is(':checked')
-
             };
+            console.log(theaterToEdit);
             //Send the newly entered info
             $.ajax({
 
