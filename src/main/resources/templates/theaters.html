@@ -12,44 +12,6 @@
             <div class="col-md-10 mt-3">
                 <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
-            <!-- Modal for edit theater -->
-                <!--<div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="theaterModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalTitle">Edit Theaters</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                                <label for="nameField">Theater name</label>
-                                <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="15">
-
-                                <label for="rowsNumberField">Rows</label>
-                                <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="1">
-
-                                <label for="columnsNumberField">Columns</label>
-                                <input type="number" class="form-control" id="columnsNumberField" placeholder="Edit amount of columns" min="1">
-
-                                <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input modalCheckbox" id="is3D">
-                                    <label for="is3D" class="form-check-label">3D option</label>
-                                </div>
-
-                                <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input modalCheckbox" id="isDolby">
-                                    <label for="isDolby" class="form-check-label">Dolby option</label>
-                                </div>
-
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
                 <!--Modal for adding new theaters -->
                 <div class="modal fade" id="TheaterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -145,7 +107,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script th:src="@{/js/theater/deleteTheater.js}"></script>
-    <script th:src="@{/js/theater/editTheater.js}"></script>
+    <script th:src="@{/js/theater/Theater.js}"></script>
+<!--
     <script th:src="@{/js/theater/addTheater.js}"></script>
+-->
     </body>
 </html>
