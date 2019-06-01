@@ -12,78 +12,40 @@
             <div class="col-md-10 mt-3">
                 <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
-            <!-- Modal for edit theater -->
-                <div class="modal fade" id="editTheater" tabindex="-1" role="dialog" aria-labelledby="theaterModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalTitle">Edit Theaters</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                                <label for="nameField">Theater name</label>
-                                <input type="text" class="form-control" id="nameField" placeholder="Edit name" maxlength="15">
-
-                                <label for="rowsNumberField">Rows</label>
-                                <input type="number" class="form-control" id="rowsNumberField" placeholder="Edit amount of rows" min="1">
-
-                                <label for="columnsNumberField">Columns</label>
-                                <input type="number" class="form-control" id="columnsNumberField" placeholder="Edit amount of columns" min="1">
-
-                                <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input modalCheckbox" id="is3D">
-                                    <label for="is3D" class="form-check-label">3D option</label>
-                                </div>
-
-                                <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input modalCheckbox" id="isDolby">
-                                    <label for="isDolby" class="form-check-label">Dolby option</label>
-                                </div>
-
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitChangesBtn" data-toggle="modal" data-target="#editTheater">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!--Modal for adding new theaters -->
-                <div class="modal fade" id="addTheater" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="TheaterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addNewTheater">Add a new theater</h5>
+                                <h5 class="modal-title" id="ModalTheater"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <label for="addNameField">Name of theater</label>
-                                <input type="text" class="form-control" id="addNameField" maxlength="15">
+                                <label for="NameField">Name of theater</label>
+                                <input type="text" class="form-control" id="NameField" minlength="1" maxlength="15">
 
-                                <label for="addRowsField">Amount of rows</label>
-                                <input type="number" class="form-control" id="addRowsField" min="1">
+                                <label for="RowsField">Amount of rows</label>
+                                <input type="number" class="form-control" id="RowsField" min="1">
 
-                                <label for="addColumnsField">Amount of columns</label>
-                                <input type="number" class="form-control" id="addColumnsField" min="1">
+                                <label for="ColumnsField">Amount of columns</label>
+                                <input type="number" class="form-control" id="ColumnsField" min="1">
 
                                 <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input" id="change3D">
-                                    <label for="change3D" class="form-check-label">3D Ready?</label>
+                                    <input type="checkbox" class="form-check-input" id="is3D">
+                                    <label for="is3D" class="form-check-label">3D Ready?</label>
                                 </div>
 
                                 <div class="form-check mt-2">
-                                    <input type="checkbox" class="form-check-input" id="changeDolby">
-                                    <label for="changeDolby" class="form-check-label">Dolby Ready?</label>
+                                    <input type="checkbox" class="form-check-input" id="isDolby">
+                                    <label for="isDolby" class="form-check-label">Dolby Ready?</label>
                                 </div>
 
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning" id="submitNewTheater" data-toggle="modal" data-target="#addTheater">Save</button>
+                                <button type="submit" class="btn btn-warning" id="submitTheater">Save</button>
                             </div>
                         </div>
                     </div>
@@ -96,7 +58,7 @@
                             type="button"
                             id="addButton"
                             data-toggle="modal"
-                            data-target="#addTheater">Add a new theater</button>
+                            data-target="#TheaterModal">Add a new theater</button>
                 </div>
 
                     <!-- List of available theaters -->
@@ -126,7 +88,7 @@
                                                      id = "editButton"
                                                      class="btn btn-warning"
                                                      data-toggle="modal"
-                                                     data-target="#editTheater"
+                                                     data-target="#TheaterModal"
                                                      th:attr="data-theaterid = ${theater.id}"><span class="fas fa-edit"></span></button></td>
                                 <td class="col-1">
                                     <button th:attr="data-theaterid=${theater.id}, data-theatername=${theater.name}" class="btn btn-danger"  >
@@ -145,7 +107,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script th:src="@{/js/theater/deleteTheater.js}"></script>
-    <script th:src="@{/js/theater/editTheater.js}"></script>
+    <script th:src="@{/js/theater/Theater.js}"></script>
+<!--
     <script th:src="@{/js/theater/addTheater.js}"></script>
+-->
     </body>
 </html>
