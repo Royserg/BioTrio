@@ -36,7 +36,7 @@ $(function() {
 
                     // calculate the total number of future screenings
                     screeningDate = screening.date;
-                    if(new Date(screeningDate >= today)) {
+                    if(screeningDate >= today) {
                         futureScreening += 1;
                     }
                 });
