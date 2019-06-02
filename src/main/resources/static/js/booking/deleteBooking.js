@@ -1,5 +1,5 @@
 // Delete booking with confirmation popup
-$('table').on('click', '.btn-danger', function() {
+$('table').on('click', '.btn-delete', function() {
   const row = $(this).closest('tr');
   const bookingId = row.data('bookingid');
 

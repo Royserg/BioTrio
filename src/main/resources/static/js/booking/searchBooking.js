@@ -8,7 +8,7 @@ $(function() {
     let timeout = null;
     const DELAY = 500;
 
-    // Event triggered eachtime input field of '#searchBar' is updated
+    // Event triggered each time input field of '#searchBar' is updated
     searchBar.bind('input', function() {
         // Save typed value into input field
         const searchVal = searchBar.val();
@@ -34,7 +34,7 @@ $(function() {
             // Search field is empty - should fetch most recent bookings
             if(searchVal.length === 0){
                 $.ajax('/api/bookings')
-                  .done(booknigs => {
+                  .done(bookings => {
                       // Generate new html with data from query
                       updateTableBody(bookings);
                   });
@@ -48,7 +48,6 @@ $(function() {
     // creates row html element with all necessary information
     // and inserts into table body
     function updateTableBody (bookings) {
-        console.log('bookings', bookings);
         //remove all bookings made with thymeleaf
         tableBody.html("");
 
