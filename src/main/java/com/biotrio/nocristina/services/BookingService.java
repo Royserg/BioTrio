@@ -25,15 +25,14 @@ public class BookingService {
         return bookings;
     }
 
+    /**
+     * Method returning list of bookings that match passed phone number beginning
+     * with any random end of the phone number
+     * @param phoneNumber (String) input phone number
+     * @return (Booking[]) list of bookings matching beginning of the phone number
+     */
     public List<Booking> getBookingByPhone(String phoneNumber) {
         List<Booking> bookings = bookingRepo.findByPhone(phoneNumber);
-
-        for (Booking booking : bookings) {
-            // Fetch tickets for that booking
-            booking.setTickets(ticketRepo.findTicketsByBookingId(booking.getId()));
-            //fetch info from db for screening
-//            booking.setScreening(screeningService.findByBookingId(booking.getId()));
-        }
 
         return bookings;
     }

@@ -18,10 +18,10 @@ $(function() {
         id= row.data('movieid');
 
         // Bring the movie data from the table
-        movieTitle = row.children('td')[0].innerHTML;
-        movieDuration = row.children('td')[1].innerHTML;
-        movie3D = row.children('td')[2].innerHTML;
-        movieDolby = row.children('td')[3].innerHTML;
+        movieTitle = row.children('td')[1].innerHTML;
+        movieDuration = row.children('td')[2].innerHTML;
+        movie3D = row.children('td')[3].innerHTML;
+        movieDolby = row.children('td')[4].innerHTML;
 
         // Show the previous data so that the user can edit onto it
         $("#modalTitle").val(movieTitle);
@@ -90,11 +90,6 @@ $(function() {
             // Check if the screening time is less than 10 minutes
             if (movieToEdit.durationInMinutes < 10) {
                 alert("Invalid input. Please check the duration again.");
-
-                //unable to have 3D and dolby movie as of now since Bio Trio doesn't support 3D and dolby screenings
-                // } else if (movieToEdit.is3D === true || movieToEdit.dolby === true) {
-                //     alert("Bio Trio doesn't have any theater that supports 3D or dolby screening yet. Please check again.");
-
             } else {
 
                 $.ajax( {
@@ -108,10 +103,10 @@ $(function() {
                     .done(function() {
 
                         // Reload the data
-                        row.children('td')[0].innerHTML = movieToEdit.title;
-                        row.children('td')[1].innerHTML = movieToEdit.durationInMinutes;
-                        row.children('td')[2].innerHTML = movieToEdit.is3D;
-                        row.children('td')[3].innerHTML = movieToEdit.dolby;
+                        row.children('td')[1].innerHTML = movieToEdit.title;
+                        row.children('td')[2].innerHTML = movieToEdit.durationInMinutes;
+                        row.children('td')[3].innerHTML = movieToEdit.is3D;
+                        row.children('td')[4].innerHTML = movieToEdit.dolby;
 
                         // Fancy css and close the modal
                         row.css('background', 'gold');
@@ -157,12 +152,17 @@ $(function() {
 
                         // Add new row to the table with the newly added movie
                         let newRow = `<tr class="d-flex" data-movieid="${id}", data-movietitle="${newMovie.title}">
-                                    <td class="col-3 title cool-pointer">${newMovie.title}</td>
-                                    <td class="col-5 duration">${newMovie.durationInMinutes}</td>
-                                    <td class="col-1 is3D">${newMovie.is3D}</td>
-                                    <td class="col-1 dolby">${newMovie.dolby}</td>
-                                    <td class="col-1">
-                                        <button
+                                        <td class="col-1 cool-pointer">
+                                            <button title="screening list" class="btn btn-outline-dark">
+                                                <span class="fas fa-chevron-right"></span>
+                                            </button>
+                                        </td>
+                                        <td class="col-4 title cool-pointer">${newMovie.title}</td>
+                                        <td class="col-3 duration">${newMovie.durationInMinutes}</td>
+                                        <td class="col-1 is3D">${newMovie.is3D}</td>
+                                        <td class="col-1 dolby">${newMovie.dolby}</td>
+                                        <td class="col-1">
+                                            <button
                                                id = "editButton"
                                                class="btn btn-outline-dark btn-edit"
                                                title="edit"
@@ -173,7 +173,7 @@ $(function() {
                                     </td>
                                     <td class="col-1">
                                         <button class="btn btn-outline-dark btn-delete" title="delete">
-                                            <span class="fas fa-trash text-white"></span>
+                                            <span class="fas fa-trash"></span>
                                         </button>
                                     </td>
                                   </tr>`;

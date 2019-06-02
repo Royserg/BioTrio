@@ -146,7 +146,7 @@ function createBookingRow(bookingId, booking) {
                         <td class="col-1">${screening.time.slice(0, -3)}</td>
                         <td class="col-3">${booking.customerPhoneNumber}</td>
                         <td class="col-1">
-                            <button class="btn btn-info btn-tickets" title="tickets">
+                            <button class="btn btn-outline-dark btn-tickets" title="tickets">
                                 <span class="fas fa-ticket-alt"></span>
                             </button>
                         </td>

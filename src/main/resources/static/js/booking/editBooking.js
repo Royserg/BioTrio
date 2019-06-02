@@ -21,7 +21,6 @@ $(function() {
     const $row = $(this).closest('tr');
     const bookingId = $row.data('bookingid');
 
-    console.log('bookingId', bookingId);
     // Fetch information about the booking
     //  .then start preparing modal elements with booking information
     //  with information about screening, fetch all tickets already booked and
@@ -41,7 +40,6 @@ $(function() {
 
   function handleBookingData(booking) {
 
-    console.log('booking', booking);
     // Save booking information
     bookingData = booking;
 
@@ -73,8 +71,6 @@ $(function() {
   }
 
   function displayModal(screeningTickets) {
-
-    console.log('screening tickets:', screeningTickets);
 
     // Prepare 2D array for seat grid
     const seatsArray = generateSeatsGrid(bookingData.screening.theater, screeningTickets);
@@ -135,9 +131,6 @@ $(function() {
     // Update booking data
     bookingData.customerPhoneNumber = $phoneNumField.val();
     bookingData.tickets = newTickets;
-
-    console.log('booking data', bookingData);
-    console.log('new tickets', newTickets);
 
     // Send ajax PUT request
     $.ajax({

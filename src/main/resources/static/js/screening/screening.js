@@ -77,31 +77,24 @@ $(function () {
     function populateScreeningTable(movieId){
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
-            .done(function(response) {
+            .done(function(screenings) {
 
-                //edits the date attribute of the response
-                //so that it shows only the hour and minutes without seconds
-                //in order to be displayed in the screenings table
-                screeningsList = response.map(screening => { return { ...screening, time: screening.time.slice(0,-3) } });
-
-                    screeningsList.forEach(function (s) {
-                        buildTableRow(s);
-                        screeningTableBody.append(newRow);
-                    })
+                screenings.forEach(function (s) {
+                    buildTableRow(s);
+                    screeningTableBody.append(newRow);
+                })
             })
     }
     function populateEditModal(screeningId){
 
         $.getJSON(`/api/screenings/${screeningId}`)
-            .done(function(response) {
+            .done(function(screening) {
 
-                     // s = response.map(screening => { return { ...screening, time: screening.time.slice(0,-3) } });
-                    let s = response;
                     modalMovie.val(movieTitle);
-                    modalTheater.val(s.theater.name);
-                    modalDate.val(s.date);
-                    modalTime.val(s.time);
-                    modalPrice.val(s.price);
+                    modalTheater.val(screening.theater.name);
+                    modalDate.val(screening.date);
+                    modalTime.val(screening.time);
+                    modalPrice.val(screening.price);
 
                     theater = s.theater;
                 }
@@ -120,6 +113,8 @@ $(function () {
     })
 
     function buildTableRow(screening) {
+
+
          newRow = `<tr class="d-flex" data-screeningid=${screening.id}>
                       <td class="col-2 cool-pointer"> ${movieTitle} </td>
                       <td class="col-2"> ${screening.theater.name} </td>
@@ -148,7 +143,7 @@ $(function () {
                 .end();
         })
     }
-//---------------
+
     submitButton.click(function() {
         let screening = {
             "movieId": movieId,
@@ -204,7 +199,7 @@ $(function () {
         addButton.removeClass("add-scr");
         addButton.addClass("add-movie");
         screeningTableBody.html("");
-    })
+    });
 
     screeningTableBody.on('click','.cool-pointer', function () {
 
@@ -215,7 +210,6 @@ $(function () {
         addButton.removeClass("add-scr");
         addButton.addClass("add-movie");
         screeningTableBody.html("");
-
     })
 
 });

@@ -27,9 +27,9 @@ function verifyInput() {
 }
 
 
-    $('#theaterTable').on('click', 'td .btn-warning', function () {
+    $('#theaterTable').on('click', 'td .btn-edit', function () {
         console.log("Pressing Edit")
-        $('#ModalTheater').html("Editing a theater");
+        $('.modal-title').html("Editing a theater");
         id = $(this).attr('data-theaterid');
         editButton = $(this);
 
@@ -54,7 +54,6 @@ function verifyInput() {
     $('#addButton').on('click', function(){
         $('#ModalTheater').html("Adding a new theater");
         isEdit=false;
-console.log("Ændre isedit til false");
         name.val('');
         rows.val('');
         columns.val('');

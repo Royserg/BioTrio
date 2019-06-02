@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments/fragments :: head(title='Screenings')" >
-    <link rel="stylesheet" type="text/css" href="jquery-ui.min">
+
 </head>
 <body>
 <!--this is for the navigation bar-->
@@ -12,11 +12,6 @@
         <nav th:replace="fragments/fragments :: sidebar" />
         <div class="col-10 mt-3">
             <h4 th:replace="fragments/fragments :: heading(text='Screenings')" />
-
-            <div class="d-flex justify-content-end mb-4 col-12">
-                <button class="btn btn-primary"
-                        id="addScreeningButton">Add Screening</button>
-            </div>
 
             <div class="container mt-4" >
 
@@ -58,8 +53,6 @@
                     </div>
                 </div>
 
-
-
                 <!-- table for displaying the list of available screenings -->
                 <div id="screening-table-container">
                 <table class="table table-hover" id="screeningTable">
@@ -83,20 +76,6 @@
                         <td class="col-2" th:text="${screening.date}"/>
                         <td class="col-2" th:text="${screening.time}"/>
                         <td class="col-2" th:text="${screening.price}"/>
-                        <td class="col-1">
-                            <button id = "editButton"
-                               class="btn btn-warning"
-                               th:attr="data-screeningid=${screening.id}">
-                                <span class="fas fa-edit"></span>
-                            </button>
-                        </td>
-                        <td class="col-1">
-                            <button th:attr="data-screeningid=${screening.id},
-                                    data-screeningmovie=${screening.movieId}"
-                                    class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -113,7 +92,5 @@
 <!-- Bootstrap scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script th:src="@{/js/screening/deleteScreening.js}"></script>
-<script th:src="@{/js/screening/Screening.js}"></script>
 </body>
 </html>

@@ -161,7 +161,6 @@ $(function(){
   });
 
   function displaySeatsGrid (tickets) {
-    console.log('tickets', tickets);
 
     // Show/update seats list
     seats.fadeOut(100, function () {
@@ -173,7 +172,6 @@ $(function(){
 
       // Find theater attached to the screening from currently selected Screening
       let theater = selectedScreening.theater;
-      console.log('theater', theater);
 
       // Prepare 2D array for seat grid
       const seatsArray = generateSeatsGrid(theater, tickets);
@@ -185,7 +183,7 @@ $(function(){
 
   // Add new booking
   // Trigger action only when submit button has .btn-success class
-  $('.modal-footer').on('click', '#submitBtn.btn-success', function() {
+  $('.modal-footer').on('click', '#submitBtn.btn-primary', function() {
     // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
     // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
     const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
