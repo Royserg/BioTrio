@@ -17,10 +17,10 @@ function verifyInput() {
     if(name.val()==""){
         isFilled=false;
     }
-    if(rows.val()==""){
+    if(rows.val()=="" || rows.val()<0){
         isFilled=false;
     }
-    if(columns.val()==""){
+    if(columns.val()=="" || columns.val()<0){
         isFilled=false;
     }
     return isFilled;
@@ -79,7 +79,7 @@ console.log("Ændre isedit til false");
                 isEdit = false;
 
             }
-        } else { alert("Please fill the empty fields")}
+        } else { alert("Please fill the empty fields and make sure they are filled correctly")}
         function edit() {
             let theaterToEdit = {
                 'id': id,
