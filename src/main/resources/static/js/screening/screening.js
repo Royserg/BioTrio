@@ -18,14 +18,11 @@ $(function () {
     const submitButton = $('#submitButton');
     const prevButton = $('#prev');
 
-    let movieId;
-    let movieTitle;
+    let movieId,movieTitle;
     let theater;
-    let screeningsList;
-    let tr;
     let isAdd;
     let screeningId;
-    let newRow;
+    let newRow,tr;
 
     movieTable.on('click','.cool-pointer', function () {
 
@@ -74,75 +71,51 @@ $(function () {
 
     });
 
+    //can be moved to utilities if screeningsList is not used elsewhere
     function populateScreeningTable(movieId){
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
-            .done(function(screenings) {
-
-                screenings.forEach(function (s) {
-                    buildTableRow(s);
-                    screeningTableBody.append(newRow);
-                })
-            })
+          .done(function(screeningsList) {
+              if(screeningsList.length > 0){
+                  screeningsList.forEach(function (s) {
+                      const $row = buildTableRow(s,movieTitle);
+                      screeningTableBody.append($row);
+                      $("#screeningTable caption").text("List of screenings");
+                  })
+              }
+              else {
+                  $("#screeningTable caption").text("No screenings available");
+              }
+          })
     }
+
     function populateEditModal(screeningId){
 
         $.getJSON(`/api/screenings/${screeningId}`)
             .done(function(screening) {
 
-                    modalMovie.val(movieTitle);
-                    modalTheater.val(screening.theater.name);
-                    modalDate.val(screening.date);
-                    modalTime.val(screening.time);
-                    modalPrice.val(screening.price);
+                    populateModal(screening,movieTitle);
 
                     theater = s.theater;
                 }
             )
     }
-    modalTheater.change(function () {
-
+    $('#modalTheater').on('click', 'li', function() {
         // https://stackoverflow.com/a/2888447
-        const theaterId = $(this).children(":selected").data('theater_id');
+        const theaterId = $(this).data('theater_id');
+        toggleListItemSelectedClass($(this));
 
         theaterList.forEach(function (t) {
-          if(t.id==theaterId){
-              theater=t;
-          }
+            if(t.id==theaterId){
+                theater=t;
+            }
         })
-    })
+        $('.date-container').fadeIn('slow');
 
-    function buildTableRow(screening) {
+    });
 
-
-         newRow = `<tr class="d-flex" data-screeningid=${screening.id}>
-                      <td class="col-2 cool-pointer"> ${movieTitle} </td>
-                      <td class="col-2"> ${screening.theater.name} </td>
-                      <td class="col-2"> ${screening.date} </td>
-                      <td class="col-2"> ${screening.time} </td>
-                      <td class="col-2"> ${screening.price} DKK</td>
-                      <td class="col-1">
-                          <button id = "editButton" class="btn btn-outline-dark btn-edit" title="edit">
-                            <span class="fas fa-edit"></span>
-                          </button>
-                      </td>
-                      <td class="col-1">
-                          <button class="btn btn-outline-dark btn-delete" title="delete">
-                              <span class="fas fa-trash"></span>
-                          </button>
-                      </td>
-                    </tr> `;
-    }
-
-     function clearModal (modal) {
-
-        modal.on('hidden.bs.modal', function() {
-            $(this)
-                .find("input,textarea,select")
-                .val('')
-                .end();
-        })
-    }
+    modalDate.change(function () {
+        $('.time-container').fadeIn('slow');})
 
     submitButton.click(function() {
         let screening = {
@@ -154,62 +127,15 @@ $(function () {
         }
 
         if(isAdd) {
-            $.ajax({
-                type: "POST",
-                url: "/api/screenings",
-                dataType: "json",
-                data: JSON.stringify(screening),
-                contentType: "application/json; charset=utf-8",
-                success: function (id) {
-                    screening["id"]=id;
-                    buildTableRow(screening);
-                    screeningTableBody.append(newRow);
-                    screeningTableBody.scrollTop($('#screeningTable tbody')[0].scrollHeight);
-                }
-            })
+            addScreening(screening,movieTitle)
         }
         else {
-
             screening["id"]=screeningId;
-
-            $.ajax({
-                type: 'PUT',
-                url: `api/screenings/${screening.id}`,
-                dataType: 'html',
-                data: JSON.stringify(screening),
-                contentType: 'application/json; charset=utf-8',
-            })
-                .done(function () {
-                    screening.time.slice(0,-3);
-                    buildTableRow(screening);
-                    tr.replaceWith(newRow);
-                })
+            editScreening (screening,movieTitle,tr);
         }
 
          setTimeout(function(){ modal.modal('hide');},100);
     })
 
-
-
-    prevButton.click(function () {
-        $('.carousel').carousel('prev');
-        prevButton.addClass("invisible");
-        $('h4').text('Movies');
-        addButton.text("Add Movie");
-        addButton.removeClass("add-scr");
-        addButton.addClass("add-movie");
-        screeningTableBody.html("");
-    });
-
-    screeningTableBody.on('click','.cool-pointer', function () {
-
-        $('.carousel').carousel('prev');
-        prevButton.addClass("invisible");
-        $('h4').text('Movies');
-        addButton.text("Add Movie");
-        addButton.removeClass("add-scr");
-        addButton.addClass("add-movie");
-        screeningTableBody.html("");
-    })
 
 });

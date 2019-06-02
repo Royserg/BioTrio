@@ -28,8 +28,11 @@ function verifyInput() {
 
 
     $('#theaterTable').on('click', 'td .btn-edit', function () {
-        console.log("Pressing Edit")
-        $('.modal-title').html("Editing a theater");
+        $('.modal-title').text("Edit theater");
+
+        // Adjust submit button class
+        $('#submitTheater').removeClass('btn-primary').addClass('btn-warning');
+
         id = $(this).attr('data-theaterid');
         editButton = $(this);
 
@@ -52,7 +55,10 @@ function verifyInput() {
 
     });
     $('#addButton').on('click', function(){
-        $('#ModalTheater').html("Adding a new theater");
+        // Adjust submit button class
+        $('#submitTheater').removeClass('btn-warning').addClass('btn-primary');
+
+        $('.modal-title').text("Add theater");
         isEdit=false;
         name.val('');
         rows.val('');

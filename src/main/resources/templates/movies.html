@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="jquery-ui.min">
 
 </head>
+<link rel="stylesheet" th:href="@{/css/screening.css}">
 <body>
 <!--this is for the navigation bar-->
 
@@ -71,16 +72,29 @@
                                     <label for="modalScreeningMovie">Movie</label>
                                     <input type="text" class="form-control" id="modalScreeningMovie" readonly>
                                     <label for="modalTheater">Theater</label>
-                                    <select class="form-control" id="modalTheater" aria-describedby="theater">
-                                        <option style="display:none;"></option>
-                                        <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
-                                    </select>
-                                    <label for="modalDate">Date</label>
-                                    <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
-                                    <label for="modalTime">Time</label>
-                                    <input type="time" class="form-control" id="modalTime">
-                                    <label for="modalPrice">Price</label>
-                                    <input type="number" class="form-control" id="modalPrice">
+<!--                                    <select class="form-control" id="modalTheater" aria-describedby="theater">-->
+<!--                                        <option style="display:none;"></option>-->
+<!--                                        <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>-->
+<!--                                    </select>-->
+                                    <div class="row container mt-1">
+                                        <div class="col-md-12 theater-container">
+                                            <ul class="list-group theater-list" id="modalTheater">
+                                                <li class="list-group-item" th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="date-container mt-2">
+                                        <label for="modalDate">Date</label>
+                                        <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
+                                    </div>
+                                    <div class="time-container mt-2">
+                                        <label for="modalTime">Time</label>
+                                        <input type="time" class="form-control" id="modalTime">
+                                        <div class="mt-2">
+                                            <label for="modalPrice">Price</label>
+                                            <input type="number" max="1000" class="form-control" id="modalPrice">
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -203,6 +217,7 @@
 <script th:src="@{/js/movie/deleteMovie.js}"></script>
 <script th:src="@{/js/screening/screening.js}"></script>
 <script th:src="@{/js/screening/deleteScreening.js}"></script>
+<script th:src="@{/js/screening/screeningUtilities.js}"></script>
 
 </body>
 </html>
