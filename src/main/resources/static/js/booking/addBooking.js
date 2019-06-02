@@ -21,7 +21,7 @@ $(function(){
     $('#submitBtn')
       .text('Book tickets')
       .removeClass('btn-warning')
-      .addClass('btn-success');
+      .addClass('btn-primary');
 
     // Reset list of movies
     moviesList.html('');

@@ -10,12 +10,12 @@ $(function() {
 
   // Get movie data
 
-  $('table').on('click', '.btn-warning', function() {
+  $('table').on('click', '.btn-edit', function() {
 
     // Change Submit Button name
     $('#submitBtn')
       .text('Save Changes')
-      .removeClass('btn-success')
+      .removeClass('btn-primary')
       .addClass('btn-warning');
 
     const $row = $(this).closest('tr');

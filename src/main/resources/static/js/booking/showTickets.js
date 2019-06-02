@@ -3,7 +3,7 @@ $(function() {
   // Fetch tickets data for clicked booking
   // when tickets button clicked
   // tickets button have class ".btn-info"
-  $('table').on('click', '.btn-info', function() {
+  $('table').on('click', '.btn-tickets', function() {
     const row = $(this).closest('tr');
     const bookingId = row.data('bookingid');
 

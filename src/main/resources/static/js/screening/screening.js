@@ -53,9 +53,14 @@ $(function () {
         $('.modal-title').text('Add Screening');
         modal.modal("show");
 
+        // Change submit button color to primary color
+        submitButton.removeClass('btn-warning').addClass('btn-primary');
     });
 
-    screeningTableBody.on('click','.btn-warning', function () {
+    screeningTableBody.on('click','.btn-edit', function () {
+
+        // Change submit button color to yellow
+        submitButton.removeClass('btn-primary').addClass('btn-warning');
 
         clearModal(modal);
         isAdd = false;
@@ -116,23 +121,22 @@ $(function () {
 
     function buildTableRow(screening) {
          newRow = `<tr class="d-flex" data-screeningid=${screening.id}>
-                                <td class="col-2 cool-pointer"> ${movieTitle} </td>
-                                <td class="col-2"> ${screening.theater.name} </td>
-                                <td class="col-2"> ${screening.date} </td>
-                                <td class="col-2"> ${screening.time} </td>
-                                <td class="col-2"> ${screening.price} DKK</td>
-                                <td class="col-1">
-                                <button id = "editButton" 
-                                 class="btn btn-warning">
-                                  <span class="fas fa-edit"></span>
-                              </button>
-                          </td>
-                          <td class="col-1">
-                              <button class="btn btn-danger">
-                                  <span class="fas fa-trash"></span>
-                              </button>
-                          </td>
-                            </tr> `;
+                      <td class="col-2 cool-pointer"> ${movieTitle} </td>
+                      <td class="col-2"> ${screening.theater.name} </td>
+                      <td class="col-2"> ${screening.date} </td>
+                      <td class="col-2"> ${screening.time} </td>
+                      <td class="col-2"> ${screening.price} DKK</td>
+                      <td class="col-1">
+                          <button id = "editButton" class="btn btn-outline-dark btn-edit" title="edit">
+                            <span class="fas fa-edit"></span>
+                          </button>
+                      </td>
+                      <td class="col-1">
+                          <button class="btn btn-outline-dark btn-delete" title="delete">
+                              <span class="fas fa-trash"></span>
+                          </button>
+                      </td>
+                    </tr> `;
     }
 
      function clearModal (modal) {

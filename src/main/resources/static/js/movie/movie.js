@@ -12,11 +12,10 @@ $(function() {
 
     // Click edit movie and it'll bring the movie info and show it on modal
 
-    $('#movieTable').on("click", ".btn-warning", function() {
+    $('#movieTable').on("click", ".btn-edit", function() {
 
         row = $(this).closest('tr');
         id= row.data('movieid');
-        console.log(id);
 
         // Bring the movie data from the table
         movieTitle = row.children('td')[0].innerHTML;
@@ -52,7 +51,7 @@ $(function() {
             $('#modalDolby').prop("checked", false);
 
             // Show the modal with green button and header
-            showModal(`<h5>Add Movie</h5>`, 'btn btn-success');
+            showModal(`<h5>Add Movie</h5>`, 'btn btn-primary');
 
         });
 
@@ -162,12 +161,21 @@ $(function() {
                                     <td class="col-5 duration">${newMovie.durationInMinutes}</td>
                                     <td class="col-1 is3D">${newMovie.is3D}</td>
                                     <td class="col-1 dolby">${newMovie.dolby}</td>
-                                    <td class="col-1"><button
-                                                             id = "editButton"
-                                                             class="btn btn-warning"
-                                                             data-toggle="modal"
-                                                             data-target="#movieModal"><span class="fas fa-edit"></span></button></td>
-                                        <td class="col-1"><a class="btn btn-danger" ><span class="fas fa-trash text-white"></span></a></td>
+                                    <td class="col-1">
+                                        <button
+                                               id = "editButton"
+                                               class="btn btn-outline-dark btn-edit"
+                                               title="edit"
+                                               data-toggle="modal"
+                                               data-target="#movieModal">
+                                                   <span class="fas fa-edit"></span>
+                                        </button>
+                                    </td>
+                                    <td class="col-1">
+                                        <button class="btn btn-outline-dark btn-delete" title="delete">
+                                            <span class="fas fa-trash text-white"></span>
+                                        </button>
+                                    </td>
                                   </tr>`;
 
                         // Add new row to the table and hide the modal

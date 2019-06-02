@@ -40,3 +40,15 @@ table tbody {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+/* Override bootstrap btn-primary with our custom color */
+.btn-primary {
+    background: #CC014C;
+    border-color: #CC014C;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #F74B8B;
+    border-color: #CC014C;
+}

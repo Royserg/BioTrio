@@ -144,23 +144,27 @@ console.log("Ajax succeded");
                 .done(function (theaterId) {
 
                     let newRow = `<tr class="d-flex">
-                        <td class="col-2">${theater.name}</td>
-                        <td class="col-2">${theater.rowsNumber}</td> 
-                        <td class="col-2">${theater.columnsNumber}</td>
-                        <td class="col-2">${theater.can3d}</td>
-                        <td class="col-2">${theater.dolby}</td>
-                        <td class="col-1"><a href="#"
-                                                     id = "editButton"
-                                                     class="btn btn-warning"
-                                                     data-toggle="modal"
-                                                     data-target="#TheaterModel"
-                                                     data-theaterid=${theaterId}><span class="fas fa-edit"></span></a></td>
-                                                     <td class="col-1">
-                                    <button data-theaterid=${theaterId} data-theatername=${theater.name}" class="btn btn-danger">
-                                        <span class="fas fa-trash"></span>
-                                    </button>
-                                </td>
-                        </tr>`
+                                    <td class="col-2">${theater.name}</td>
+                                    <td class="col-2">${theater.rowsNumber}</td> 
+                                    <td class="col-2">${theater.columnsNumber}</td>
+                                    <td class="col-2">${theater.can3d}</td>
+                                    <td class="col-2">${theater.dolby}</td>
+                                    <td class="col-1">
+                                        <button
+                                               id = "editButton"
+                                               class="btn btn-outline-dark btn-edit"
+                                               data-toggle="modal"
+                                               data-target="#TheaterModel"
+                                               data-theaterid=${theaterId}>
+                                                <span class="fas fa-edit"></span>
+                                        </button>
+                                    </td>
+                                    <td class="col-1">
+                                        <button data-theaterid=${theaterId} data-theatername=${theater.name}" class="btn btn-outline-dark btn-delete">
+                                            <span class="fas fa-trash"></span>
+                                        </button>
+                                    </td>
+                                 </tr>`;
 
                     //appends the latest movie to the table
                     $('#theaterTable tbody').append(newRow);

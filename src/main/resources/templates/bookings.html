@@ -116,7 +116,7 @@
                                             Price: <span id="price" class="badge badge-secondary">0</span>
                                         </div>
                                     </div>
-                                    <button class="btn btn-success" id="submitBtn">Book tickets</button>
+                                    <button class="btn btn-primary" id="submitBtn">Book tickets</button>
                                 </div>
                             </div>
                         </div>
@@ -133,10 +133,10 @@
                             <th class="col-2">date</th>
                             <th class="col-1">time</th>
                             <th class="col-3">phone</th>
-                            <!-- columns for tickets edit and delete button -->
-                            <th class="col-1">tickets</th>
-                            <th class="col-1">edit</th>
-                            <th class="col-1">delete</th>
+                            <!-- columns for tickets, edit and delete button -->
+                            <th class="col-1"></th>
+                            <th class="col-1"></th>
+                            <th class="col-1"></th>
                         </tr>
                     </thead>
 
@@ -147,17 +147,17 @@
                             <td class="col-1" th:text="${booking.screening.time}">time</td>
                             <td class="col-3" th:text="${booking.customerPhoneNumber}">phone</td>
                             <td class="col-1">
-                                <button class="btn btn-info">
+                                <button class="btn btn-outline-dark btn-tickets" title="tickets">
                                     <span class="fas fa-ticket-alt"></span>
                                 </button>
                             </td>
                             <td class="col-1">
-                                <button class="btn btn-warning">
+                                <button class="btn btn-outline-dark btn-edit" title="edit">
                                     <span class="fas fa-edit"></span>
                                 </button>
                             </td>
                             <td class="col-1">
-                                <button class="btn btn-danger">
+                                <button class="btn btn-outline-dark btn-delete" title="delete">
                                     <span class="fas fa-trash"></span>
                                 </button>
                             </td>
@@ -180,7 +180,6 @@
 
     <!-- General functionality to use in other files  -->
     <script th:src="@{/js/booking/bookingUtilities.js}"></script>
-
     <!--  Dynamic searching of bookings when typing in the search bar  -->
     <script th:src="@{/js/booking/searchBooking.js}"></script>
     <!--  Show modal with tickets for the booking  -->

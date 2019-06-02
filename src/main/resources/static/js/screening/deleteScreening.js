@@ -4,7 +4,7 @@ $(function()
 {
     const screeningTable = $('#screeningTable');
 
-    screeningTable.on('click', '.btn-danger', function () {
+    screeningTable.on('click', '.btn-delete', function () {
 
         const row = $(this).closest('tr');
         const screeningId = row.data('screeningid');

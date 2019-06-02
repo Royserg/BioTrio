@@ -4,7 +4,7 @@ $(function () {
 
     // Delete movie
 
-    $('#movieTable').on("click", ".btn-danger", function () {
+    $('#movieTable').on("click", ".btn-delete", function () {
 
         const row = $(this).closest('tr');
         const id = row.data('movieid');
