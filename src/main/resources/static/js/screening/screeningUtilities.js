@@ -24,6 +24,8 @@ function buildTableRow(screening,movieTitle) {
   return newRow;
 }
 
+//currently not used
+//checks if all fields in the modal are populated
 function validateInput(screening) {
   let validated = true;
   if(screening.movieId == null) validated = false;
@@ -33,6 +35,7 @@ function validateInput(screening) {
   return validated;
 }
 
+//clears all fields of the modal
 function clearModal (modal) {
 
   modal.on('hidden.bs.modal', function() {
@@ -49,7 +52,6 @@ function clearModal (modal) {
 }
 
 function populateModal(screening,movieTitle){
-
 
   $('#modalScreeningMovie').val(movieTitle);
   $('#modalDate').val(screening.date);

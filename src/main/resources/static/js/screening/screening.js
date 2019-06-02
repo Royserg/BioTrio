@@ -1,35 +1,32 @@
 
 $(function () {
 
-    //stops carousel from auto sliding
-    $('.carousel').carousel({
-        interval: false
-    });
-
     const movieTable = $('#movieTable');
     const screeningTableBody = $('#screeningTable').children('tbody');
     const modal = $('#screeningModal');
     const modalMovie = $('#modalScreeningMovie');
-    const modalTheater = $('#modalTheater');
     const modalPrice = $('#modalPrice');
     const modalDate = $('#modalDate');
     const modalTime = $('#modalTime');
-    const addButton = $('#addButton');
     const submitButton = $('#submitButton');
-    const prevButton = $('#prev');
 
     let movieId,movieTitle;
     let theater;
-    let isAdd;
     let screeningId;
-    let newRow,tr;
+    let isAdd;
+    let tr;
 
+
+    /*
+    When a movie is clicked this method saves the
+    Id and Name of the selected movie and
+    displays the screenings for it
+     */
     movieTable.on('click','.cool-pointer', function () {
 
         let row = $(this).closest('tr');
         movieId = row.attr('data-movieid');
         movieTitle = row.attr('data-movieTitle');
-        movieDur = row.attr('data-moviedur');
 
         $('.date-container').hide();
         $('.time-container').hide();
@@ -68,7 +65,8 @@ $(function () {
 
     });
 
-    //can be moved to utilities if screeningsList is not used elsewhere
+    //Finds the screenings for the selected movie and
+    //populates the body of the screenings table
     function populateScreeningTable(movieId){
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
@@ -86,6 +84,7 @@ $(function () {
           })
     }
 
+    //fills the modal with information from the database for the selected screening
     function populateEditModal(screeningId){
 
         $.getJSON(`/api/screenings/${screeningId}`)
@@ -97,6 +96,8 @@ $(function () {
                 }
             )
     }
+    //gets which theater has been selected from the modal and
+    //reveals the next container for date and price
     $('#modalTheater').on('click', 'li', function() {
         // https://stackoverflow.com/a/2888447
         const theaterId = $(this).data('theater_id');
@@ -114,6 +115,8 @@ $(function () {
     modalDate.change(function () {
         $('.time-container').fadeIn('slow');})
 
+    //when the save button is clicked
+    //this method creates the screening object and calls the respective method
     submitButton.click(function() {
         let screening = {
             "movieId": movieId,
