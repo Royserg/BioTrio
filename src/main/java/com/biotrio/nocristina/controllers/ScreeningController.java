@@ -83,7 +83,6 @@ public class ScreeningController implements IController<Screening>{
     @GetMapping("/api/screenings/date/{date}")
     @ResponseBody
     public List<Screening> screeningsByDate(@PathVariable String date) {
-        System.out.println("date requested in controller: " + date);
         return screeningService.getScreeningsByDate(date);
 
     }

@@ -1,0 +1,22 @@
+
+.list-group-item:hover {
+    background: #343A40;
+    color: white;
+}
+
+/* Class for selected list group items */
+.list-group-item__selected {
+    background: #343A40;
+    color: white;
+}
+
+.theater-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.theater-list li {
+    border-radius: .25rem;
+    cursor: pointer;
+    margin-bottom: 0;
+}

@@ -40,3 +40,33 @@ table tbody {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
+tbody td {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Override bootstrap btn-primary with our custom color */
+.btn-primary {
+    background: #CC014C;
+    border-color: #CC014C;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #F74B8B;
+    border-color: #CC014C;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: #CC014C;
+    border-color: #F74B8B;
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}

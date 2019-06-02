@@ -67,16 +67,12 @@ public class MovieController implements IController<Movie>{
     @ResponseBody
     public void deleteOne(@PathVariable int id){
         movieRepo.deleteOne(id);
-        System.out.println("movie " + id + " deleted.");
     }
 
-    // return JSON list of screenings for provided movieId
+    // Return JSON list of screenings for provided movieId
     @GetMapping("/api/movies/{movieId}/screenings")
     @ResponseBody
     public List<Screening> screeningsForMovie(@PathVariable int movieId) {
-        // TODO: I need to get list of screenings for a particular movie
-        // TODO: So we need to add screenings list to Movie
-        // TODO: or connect here Screening Repo
         return screeningService.getByMovieId(movieId);
     }
 

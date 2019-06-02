@@ -4,7 +4,6 @@
 
 .list-group-item {
     cursor: pointer;
-    margin-bottom: 0;
 }
 
 .list-group-item:hover {
@@ -40,25 +39,16 @@
     max-height: 197px;
 }
 
-.times-list {
-
-}
-
 
 .times-list {
-    display: flex;
     flex-direction: row;
-    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
-/*.screening-times {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: flex-start;*/
-/*    flex-wrap: wrap;*/
-/*}*/
-
+.times-list li {
+    margin-bottom: 0;
+    border-radius: .25rem;
+}
 
 .seats-container {
     margin-bottom: 10rem;
@@ -109,14 +99,9 @@
 .modal-footer {
     background: ghostwhite;
     border-radius: 0 0 4px 4px;
-    /*position: sticky;*/
-    /*bottom: 0px;*/
 }
 
 .footer {
-    /*background: #d2d2d8;*/
-    /*position: fixed;*/
-    /*bottom: 0;*/
     height: 100px;
     width: 100%;
 

@@ -27,9 +27,12 @@ function verifyInput() {
 }
 
 
-    $('#theaterTable').on('click', 'td .btn-warning', function () {
-        console.log("Pressing Edit")
-        $('#ModalTheater').html("Editing a theater");
+    $('#theaterTable').on('click', '.btn-edit', function () {
+        $('.modal-title').text("Edit theater");
+
+        // Adjust submit button class
+        $('#submitTheater').removeClass('btn-primary').addClass('btn-warning');
+
         id = $(this).attr('data-theaterid');
         editButton = $(this);
 
@@ -52,9 +55,11 @@ function verifyInput() {
 
     });
     $('#addButton').on('click', function(){
-        $('#ModalTheater').html("Adding a new theater");
+        // Adjust submit button class
+        $('#submitTheater').removeClass('btn-warning').addClass('btn-primary');
+
+        $('.modal-title').text("Add theater");
         isEdit=false;
-console.log("Ændre isedit til false");
         name.val('');
         rows.val('');
         columns.val('');
@@ -90,8 +95,8 @@ console.log("Ændre isedit til false");
                 'can3d': $('#is3D').is(':checked'),
                 'dolby': $('#isDolby').is(':checked')
             };
-            console.log(theaterToEdit);
-            //Send the newly entered info
+
+            // Send the newly entered info
             $.ajax({
 
                 type: 'PUT',
@@ -99,8 +104,6 @@ console.log("Ændre isedit til false");
                 data: JSON.stringify(theaterToEdit),
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-console.log("Ajax succeded");
-
                     editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
                     editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
                     editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
@@ -112,7 +115,7 @@ console.log("Ajax succeded");
                         $(this).fadeIn(300);
                         $(this).css('background', 'white');
                         setTimeout(function () {
-                            $('#TheaterModal').modal('hide');
+                            $('#theaterModal').modal('hide');
                         }, 100);
                         isEdit=false;
                     });
@@ -144,29 +147,33 @@ console.log("Ajax succeded");
                 .done(function (theaterId) {
 
                     let newRow = `<tr class="d-flex">
-                        <td class="col-2">${theater.name}</td>
-                        <td class="col-2">${theater.rowsNumber}</td> 
-                        <td class="col-2">${theater.columnsNumber}</td>
-                        <td class="col-2">${theater.can3d}</td>
-                        <td class="col-2">${theater.dolby}</td>
-                        <td class="col-1"><a href="#"
-                                                     id = "editButton"
-                                                     class="btn btn-warning"
-                                                     data-toggle="modal"
-                                                     data-target="#TheaterModel"
-                                                     data-theaterid=${theaterId}><span class="fas fa-edit"></span></a></td>
-                                                     <td class="col-1">
-                                    <button data-theaterid=${theaterId} data-theatername=${theater.name}" class="btn btn-danger">
-                                        <span class="fas fa-trash"></span>
-                                    </button>
-                                </td>
-                        </tr>`
+                                    <td class="col-2">${theater.name}</td>
+                                    <td class="col-2">${theater.rowsNumber}</td> 
+                                    <td class="col-2">${theater.columnsNumber}</td>
+                                    <td class="col-2">${theater.can3d}</td>
+                                    <td class="col-2">${theater.dolby}</td>
+                                    <td class="col-1">
+                                        <button
+                                               id = "editButton"
+                                               class="btn btn-outline-dark btn-edit"
+                                               data-toggle="modal"
+                                               data-target="#theaterModal"
+                                               data-theaterid=${theaterId}>
+                                                <span class="fas fa-edit"></span>
+                                        </button>
+                                    </td>
+                                    <td class="col-1">
+                                        <button data-theaterid=${theaterId} data-theatername=${theater.name}" class="btn btn-outline-dark btn-delete">
+                                            <span class="fas fa-trash"></span>
+                                        </button>
+                                    </td>
+                                 </tr>`;
 
                     //appends the latest movie to the table
                     $('#theaterTable tbody').append(newRow);
 
                     setTimeout(function () {
-                        $('#TheaterModal').modal('hide');
+                        $('#theaterModal').modal('hide');
                     }, 100);
 
                     //Scroll to bottom of container

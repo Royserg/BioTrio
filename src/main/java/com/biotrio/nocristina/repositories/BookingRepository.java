@@ -44,7 +44,6 @@ public class BookingRepository implements IRepository<Booking> {
     }
 
     public List<Booking> findByPhone(String phoneNumber) {
-        System.out.println(phoneNumber);
         String sql = getJoinedQuery() + " WHERE b.customer_phone_number LIKE ?";
         List<Booking> bookings = jdbc.query(sql, new String[] {phoneNumber + "%"}, resultSetExtractor);
 
