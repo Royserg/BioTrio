@@ -3,7 +3,6 @@ $(function() {
     let bookings = [];
     let screenings = [];
     let tickets = [];
-    let movies = [];
 
     // get today
     let date = new Date();
@@ -61,11 +60,6 @@ $(function() {
                     // calculate the total number of bookings
                     bookingCount += 1;
 
-                    // put movieID into movie array
-                    movies.push(booking.movie);
-                    console.log('movie ', booking.movie);
-                    console.log('movies ', movies);
-
                     // get the ticket price for each booking
                     ticketPrice = booking.screening.price;
 
@@ -87,49 +81,9 @@ $(function() {
                 $('.total-tickets').text(ticketCount);
                 $('.total-sales').text(totalSales);
 
-                // get the most booked movie
-                // mode(movies);
-                // console.log('mode movie ', mode(movies));
 
             }
         });
-
-    // function mode(movies) {
-        // as result can be bimodal or multi-modal,
-        // the returned result is provided as an array
-        // let modes = [], count = [], i, m, maxIndex = 0;
-        //
-        // for (i = 0; i < movies.length; i += 1) {
-        //     m = movies[i];
-        //     count[m] = (count[m] || 0) + 1;
-        //     if (count[m] > maxIndex) {
-        //         maxIndex = count[m];
-        //     }
-        // }
-        //
-        // for (i in count)
-        //     if (count.hasOwnProperty(i)) {
-        //         if (count[i] === maxIndex) {
-        //             modes.push(Number(i));
-        //         }
-        //     }
-    //
-    //     let count = 1, i, movieTitle, movieTitle1;
-    //
-    //     for(i = 0; i < movies.length; i+=1) {
-    //         movieTitle = movies[i].title;
-    //         console.log('movieTitle ', movieTitle);
-    //         movieTitle1 = movies[i+1].title;
-    //
-    //         if(movieTitle === movieTitle1) {
-    //             count += 1;
-    //         } else {
-    //
-    //         }
-    //     }
-    //
-    //     return count;
-    // }
 
 
 });
