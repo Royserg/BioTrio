@@ -13,11 +13,11 @@
                 <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
 
                 <!--Modal for adding new theaters -->
-                <div class="modal fade" id="TheaterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="theaterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="ModalTheater"></h5>
+                                <h5 class="modal-title"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -34,12 +34,12 @@
 
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="is3D">
-                                    <label for="is3D" class="form-check-label">3D Ready?</label>
+                                    <label for="is3D" class="form-check-label">3D</label>
                                 </div>
 
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="isDolby">
-                                    <label for="isDolby" class="form-check-label">Dolby Ready?</label>
+                                    <label for="isDolby" class="form-check-label">Dolby</label>
                                 </div>
 
                             </div>
@@ -58,7 +58,7 @@
                             type="button"
                             id="addButton"
                             data-toggle="modal"
-                            data-target="#TheaterModal">Add theater</button>
+                            data-target="#theaterModal">Add theater</button>
                 </div>
 
                 <!-- List of available theaters -->
@@ -70,8 +70,8 @@
                                 <th class="col-2">Name</th>
                                 <th class="col-2">Rows no.</th>
                                 <th class="col-2">Columns no.</th>
-                                <th class="col-2">Can 3D?</th>
-                                <th class="col-2">Can Dolby?</th>
+                                <th class="col-2">3D</th>
+                                <th class="col-2">Dolby</th>
                                 <!-- columns for edit and delete button -->
                                 <th class="col-1"></th>
                                 <th class="col-1"></th>
@@ -90,7 +90,7 @@
                                             class="btn btn-outline-dark btn-edit"
                                             title="edit"
                                             data-toggle="modal"
-                                            data-target="#TheaterModal"
+                                            data-target="#theaterModal"
                                             th:attr="data-theaterid = ${theater.id}">
                                         <span class="fas fa-edit"></span>
                                     </button>

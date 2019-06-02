@@ -11,12 +11,12 @@ function buildTableRow(screening,movieTitle) {
                                 <td class="col-2"> ${time.length > 5 ? time.slice(0, -3) : time} </td>
                                 <td class="col-2"> ${price} DKK</td>
                                 <td class="col-1">
-                                <button class="btn btn-edit">
+                                <button class="btn btn-outline-dark btn-edit">
                                   <span class="fas fa-edit"></span>
                               </button>
                           </td>
                           <td class="col-1">
-                              <button class="btn btn-delete">
+                              <button class="btn btn-outline-dark btn-delete">
                                   <span class="fas fa-trash"></span>
                               </button>
                           </td>

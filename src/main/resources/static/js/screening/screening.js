@@ -29,15 +29,12 @@ $(function () {
         let row = $(this).closest('tr');
         movieId = row.attr('data-movieid');
         movieTitle = row.attr('data-movieTitle');
+        movieDur = row.attr('data-moviedur');
 
-        $('.carousel').carousel('next');
+        $('.date-container').hide();
+        $('.time-container').hide();
 
-        $('h4').text('Screenings');
-        addButton.text("Add Screening");
-        addButton.removeClass("add-movie");
-        addButton.addClass("add-scr");
-        prevButton.removeClass("invisible");
-
+        prepareScreeningsPage();
         populateScreeningTable(movieId);
 
     })
@@ -96,7 +93,7 @@ $(function () {
 
                     populateModal(screening,movieTitle);
 
-                    theater = s.theater;
+                    theater = screening.theater;
                 }
             )
     }

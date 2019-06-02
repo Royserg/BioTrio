@@ -27,7 +27,7 @@ function verifyInput() {
 }
 
 
-    $('#theaterTable').on('click', 'td .btn-edit', function () {
+    $('#theaterTable').on('click', '.btn-edit', function () {
         $('.modal-title').text("Edit theater");
 
         // Adjust submit button class
@@ -95,8 +95,8 @@ function verifyInput() {
                 'can3d': $('#is3D').is(':checked'),
                 'dolby': $('#isDolby').is(':checked')
             };
-            console.log(theaterToEdit);
-            //Send the newly entered info
+
+            // Send the newly entered info
             $.ajax({
 
                 type: 'PUT',
@@ -104,8 +104,6 @@ function verifyInput() {
                 data: JSON.stringify(theaterToEdit),
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-console.log("Ajax succeded");
-
                     editButton.parent().siblings('td')[0].innerHTML = theaterToEdit.name;
                     editButton.parent().siblings('td')[1].innerHTML = theaterToEdit.rowsNumber;
                     editButton.parent().siblings('td')[2].innerHTML = theaterToEdit.columnsNumber;
@@ -117,7 +115,7 @@ console.log("Ajax succeded");
                         $(this).fadeIn(300);
                         $(this).css('background', 'white');
                         setTimeout(function () {
-                            $('#TheaterModal').modal('hide');
+                            $('#theaterModal').modal('hide');
                         }, 100);
                         isEdit=false;
                     });
@@ -159,7 +157,7 @@ console.log("Ajax succeded");
                                                id = "editButton"
                                                class="btn btn-outline-dark btn-edit"
                                                data-toggle="modal"
-                                               data-target="#TheaterModel"
+                                               data-target="#theaterModal"
                                                data-theaterid=${theaterId}>
                                                 <span class="fas fa-edit"></span>
                                         </button>
@@ -175,7 +173,7 @@ console.log("Ajax succeded");
                     $('#theaterTable tbody').append(newRow);
 
                     setTimeout(function () {
-                        $('#TheaterModal').modal('hide');
+                        $('#theaterModal').modal('hide');
                     }, 100);
 
                     //Scroll to bottom of container
