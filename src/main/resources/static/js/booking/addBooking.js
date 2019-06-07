@@ -17,6 +17,9 @@ $(function(){
 
   // Show modal for adding a new booking, with loaded list of movies
   $('#addBookingBtn').click(function() {
+    // Change modal title
+    $('#modalTitle').text('Add booking');
+
     // Change Submit Button name and classes
     $('#submitBtn')
       .text('Book tickets')
