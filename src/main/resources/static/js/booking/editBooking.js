@@ -8,15 +8,8 @@ $(function() {
   // Keep information about fetched booking
   let bookingData = null;
 
-  // Get movie data
 
   $('table').on('click', '.btn-edit', function() {
-
-    // Change Submit Button name
-    $('#submitBtn')
-      .text('Save Changes')
-      .removeClass('btn-primary')
-      .addClass('btn-warning');
 
     const $row = $(this).closest('tr');
     const bookingId = $row.data('bookingid');
@@ -47,14 +40,13 @@ $(function() {
     fadeOutBulk([datesContainer, timesContainer, $('.seats-container')]);
 
     // Show movie, dates, screening times containers with filled info
-    $('#modalTitle').text('Edit Booking');
     $('#moviesList').html(`<p class="list-group-item list-group-item__selected">${booking.movie.title}</p>`);
 
     datesContainer.fadeIn(100);
     $('#screeningDates').html(`<p class="list-group-item list-group-item__selected">${booking.screening.date}</p>`);
 
     timesContainer.fadeIn(100);
-    $('#screeningTimes').html(`<p class="list-group-item list-group-item__selected">${booking.screening.time}</p>`);
+    $('#screeningTimes').html(`<p class="list-group-item list-group-item__selected">${booking.screening.time.slice(0,-3)}</p>`);
 
     // Display a phone number
     $('#phoneNum').val(booking.customerPhoneNumber);
@@ -102,13 +94,15 @@ $(function() {
     $('.seats-container').fadeIn(100);
 
     // Open booking modal
-    $('#bookingModal').modal('show');
-
+    bookingModal.showModal(true, 'Edit Booking', 'Save Changes');
   }
 
   // Submit Changes made to the booking
   // Trigger action only when submit button has .btn-warning class
   $('.modal-footer').on('click', '#submitBtn.btn-warning', function() {
+
+    // Disable submit button
+    bookingModal.disableButton();
 
     const $phoneNumField = $('#phoneNum');
     const $selectedSeats = $('.seat__selected');
@@ -153,7 +147,6 @@ $(function() {
         })
 
       });
-
   });
 
 });

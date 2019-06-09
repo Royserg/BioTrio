@@ -1,5 +1,7 @@
 $(function() {
 
+    // Initialize Theater modal
+    const theaterModal = new Modal($('#theaterModal'), $('#submitTheater'));
 
     let editButton;
     let id;
@@ -28,10 +30,6 @@ function verifyInput() {
 
 
     $('#theaterTable').on('click', '.btn-edit', function () {
-        $('.modal-title').text("Edit theater");
-
-        // Adjust submit button class
-        $('#submitTheater').removeClass('btn-primary').addClass('btn-warning');
 
         id = $(this).attr('data-theaterid');
         editButton = $(this);
@@ -47,29 +45,38 @@ function verifyInput() {
         $("#NameField").val(name);
         $("#RowsField").val(rowsNumber);
         $("#ColumnsField").val(columnsNumber);
-        $("#is3D").prop("checked", can3D === "true" ? true : false);
-        $("#isDolby").prop("checked", dolby === "true" ? true : false);
+        $("#is3D").prop("checked", can3D === "true");
+        $("#isDolby").prop("checked", dolby === "true");
 
         isEdit = true;
 
+        // Adjust modal and display it
+        theaterModal.showModal(isEdit, 'Edit Theater', 'Save');
 
     });
-    $('#addButton').on('click', function(){
-        // Adjust submit button class
-        $('#submitTheater').removeClass('btn-warning').addClass('btn-primary');
 
-        $('.modal-title').text("Add theater");
+    $('#addButton').on('click', function(){
+
         isEdit=false;
         name.val('');
         rows.val('');
         columns.val('');
         $("#is3D").prop("checked", false);
         $("#isDolby").prop("checked", false);
+
+        // Adjust modal and display it
+        theaterModal.showModal(isEdit, 'Add Theater', 'Add Theater');
+
     });
 
     //This determines whether the button pressed is add or edit
     $('html body').off('click').on('click', '#submitTheater', function (e) {
+
+
         if(verifyInput()) {
+
+            // Disable submit button
+            theaterModal.disableButton();
 
             if (isEdit) {
 
@@ -84,7 +91,10 @@ function verifyInput() {
                 isEdit = false;
 
             }
-        } else { alert("Please fill the empty fields")}
+        } else {
+            alert("Please fill the empty fields");
+        }
+
         function edit() {
             let theaterToEdit = {
                 'id': id,
@@ -126,7 +136,6 @@ function verifyInput() {
         function add(e) {
 
             e.preventDefault();
-            console.log("Pressed add");
             let theater = {
                 "cinemaId": 1,
                 "name": name.val(),
@@ -134,7 +143,7 @@ function verifyInput() {
                 "columnsNumber": columns.val(),
                 "can3d": is3d.is(':checked'),
                 "dolby": isDolby.is(':checked')
-            }
+            };
 
 
             $.ajax({
