@@ -1,89 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
-<head th:replace="fragments/fragments :: head(title='Dashboard')">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-</head>
-
+    <head th:replace="fragments/fragments :: head(title='BioTrio cinema')" />
+    <link rel="stylesheet" th:href="@{/css/webpage.css}">
 <body>
-    <nav th:replace="fragments/fragments :: navbar" />
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav th:replace="fragments/fragments :: sidebar" />
-            <div class="col-10 content" style="margin-top: 10px;">
+    <!-- Fixed top navbar -->
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-transparent">
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/navbar_logo.png}" width="150" height="40" class="d-inline-block align-top" alt="BioTrio Logo">
+        </a>
 
-                <div class="row" style="justify-content: space-evenly">
+        <!-- Hamburger button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                        <div class="col-4">
-                            <div class="card infobox-lg mb-2">
-                                <div class="card-body">
-                                    <h2 class="total-screenings"></h2>
-                                    <p>screenings planned in total</p>
-                                </div>
-                            </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-                            <div class="card infobox-lg mb-2">
-                                <div class="card-body">
-                                    <h2 class="total-bookings"></h2>
-                                    <p>bookings made in total</p>
-                                </div>
-                            </div>
-
-                            <div class="card infobox-lg">
-                                <div class="card-body">
-                                    <h2 class="total-tickets"></h2>
-                                    <p>tickets booked in total</p>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="col-4">
-                            <div class="card infobox-lg mb-2">
-                                <div class="card-body">
-                                    <h2 class="total-sales"></h2>
-                                    <p>total price of the ticket sales</p>
-                                </div>
-                            </div>
-
-                            <div class="card infobox-lg">
-                                <div class="card-body">
-                                    <h2 class="future-screenings"></h2>
-                                    <p>planned screenings in the future</p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    <div class="col-4">
-
-                        <div class ="card infobox-lg">
-                            <div class="card-body">
-                                <h3>Opening Hours</h3>
-                                <ul class="list-group list-group-flush" id="openingHours">
-                                    <li class="list-group-item d-flex justify-content-between" th:each="day : ${schedule}">
-                                        <span th:text="${days[day.dayNo - 1]}"></span>
-                                        <span th:text="${day.openingHour} + ' - ' + ${day.closingHour}"></span>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+    <main role="main">
+        <div class="image--container d-flex justify-content-start align-items-center">
+            <img class="img-fluid image--main" src="https://via.placeholder.com/750x400/111" alt="Random Movie generated">
+            <div class="movie--info">
+                <h4>Movie Title</h4>
+                <p>Description of a movie</p>
+                <button>Book</button>
             </div>
-
         </div>
 
-    </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script th:src="@{/js/dashboard.js}"></script>
+
+    <!--  For individual images in the list of movies https://stackoverflow.com/questions/49354906/overlay-image-with-text-with-bootstrap-4   -->
+
 </body>
 </html>

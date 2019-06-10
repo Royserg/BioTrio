@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Controller
@@ -27,7 +26,7 @@ public class DashboardController {
         m.addAttribute("days", days);
         m.addAttribute("schedule", cinema.getSchedule());
 
-        return "index";
+        return "dashboard";
     }
 
     @GetMapping("/api/schedule")
