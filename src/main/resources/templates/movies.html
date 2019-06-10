@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
 <head th:replace="fragments/fragments :: head(title='Movies')" >
-    <link rel="stylesheet" type="text/css" href="jquery-ui.min">
 
 </head>
 <link rel="stylesheet" th:href="@{/css/screening.css}">
@@ -33,10 +32,10 @@
                             </div>
                             <div class="modal-body">
                                 <label for="modalTitle">Title</label>
-                                <input type="text" class="form-control" id="modalTitle" maxlength="255">
+                                <input type="text" class="form-control" id="modalTitle" placeholder="Movie title" maxlength="255">
 
                                 <label for="modalDurationInMinutes">Duration in Minutes</label>
-                                <input type="number" class="form-control" id="modalDurationInMinutes" min="10">
+                                <input type="number" class="form-control" id="modalDurationInMinutes" placeholder="Duration in minutes" min="10">
 
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input modalCheckbox" id="modalIs3D">
@@ -72,10 +71,6 @@
                                     <label for="modalScreeningMovie">Movie</label>
                                     <input type="text" class="form-control" id="modalScreeningMovie" readonly>
                                     <label for="modalTheater">Theater</label>
-<!--                                    <select class="form-control" id="modalTheater" aria-describedby="theater">-->
-<!--                                        <option style="display:none;"></option>-->
-<!--                                        <option th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>-->
-<!--                                    </select>-->
                                     <div class="row container mt-1">
                                         <div class="col-md-12 theater-container">
                                             <ul class="list-group theater-list" id="modalTheater">
@@ -213,11 +208,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<!-- custom js class providing modal functionality -->
+<script th:src="@{/js/Modal.js}"></script>
+
 <script th:src="@{/js/movie/movie.js}"></script>
 <script th:src="@{/js/movie/deleteMovie.js}"></script>
+
+<script th:src="@{/js/screening/screeningUtilities.js}"></script>
 <script th:src="@{/js/screening/screening.js}"></script>
 <script th:src="@{/js/screening/deleteScreening.js}"></script>
-<script th:src="@{/js/screening/screeningUtilities.js}"></script>
+
 
 </body>
 </html>
