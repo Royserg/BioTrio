@@ -1,12 +1,23 @@
 package com.biotrio.nocristina.models;
 
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Theater {
 
     private int id;
+
+    @NotEmpty @Min(1)
     private String name;
+
+    @NotNull @Min(1)
     private int rowsNumber;
+
+    @NotNull @Min(1)
     private int columnsNumber;
+
     private boolean can3d;
     private boolean dolby;
 
