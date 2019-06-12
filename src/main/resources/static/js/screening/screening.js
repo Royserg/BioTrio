@@ -1,35 +1,35 @@
 
 $(function () {
 
-    //stops carousel from auto sliding
-    $('.carousel').carousel({
-        interval: false
-    });
+    // Initialize Screening modal
+    const screeningModal = new Modal($('#screeningModal'), $('#submitButton'));
 
     const movieTable = $('#movieTable');
     const screeningTableBody = $('#screeningTable').children('tbody');
     const modal = $('#screeningModal');
     const modalMovie = $('#modalScreeningMovie');
-    const modalTheater = $('#modalTheater');
     const modalPrice = $('#modalPrice');
     const modalDate = $('#modalDate');
     const modalTime = $('#modalTime');
-    const addButton = $('#addButton');
     const submitButton = $('#submitButton');
-    const prevButton = $('#prev');
 
     let movieId,movieTitle;
     let theater;
-    let isAdd;
     let screeningId;
-    let newRow,tr;
+    let isAdd;
+    let tr;
 
+
+    /*
+    When a movie is clicked this method saves the
+    Id and Name of the selected movie and
+    displays the screenings for it
+     */
     movieTable.on('click','.cool-pointer', function () {
 
         let row = $(this).closest('tr');
         movieId = row.attr('data-movieid');
         movieTitle = row.attr('data-movieTitle');
-        movieDur = row.attr('data-moviedur');
 
         $('.date-container').hide();
         $('.time-container').hide();
@@ -44,31 +44,27 @@ $(function () {
         clearModal(modal);
         isAdd = true;
         modalMovie.val(movieTitle);
-        $('.modal-title').text('Add Screening');
-        modal.modal("show");
 
-        // Change submit button color to primary color
-        submitButton.removeClass('btn-warning').addClass('btn-primary');
+        // Adjust modal and open it
+        screeningModal.showModal(false, 'Add Screening', 'Add Screening');
     });
 
     screeningTableBody.on('click','.btn-edit', function () {
-
-        // Change submit button color to yellow
-        submitButton.removeClass('btn-primary').addClass('btn-warning');
-
         clearModal(modal);
         isAdd = false;
 
         tr = $(this).closest('tr');
         screeningId = tr.data('screeningid');
 
-        $('.modal-title').text('Edit Screening');
         populateEditModal(screeningId);
-        modal.modal("show");
+
+        // Show adjusted modal
+        screeningModal.showModal(true, 'Edit Screening', 'Save');
 
     });
 
-    //can be moved to utilities if screeningsList is not used elsewhere
+    //Finds the screenings for the selected movie and
+    //populates the body of the screenings table
     function populateScreeningTable(movieId){
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
@@ -86,6 +82,7 @@ $(function () {
           })
     }
 
+    //fills the modal with information from the database for the selected screening
     function populateEditModal(screeningId){
 
         $.getJSON(`/api/screenings/${screeningId}`)
@@ -97,6 +94,8 @@ $(function () {
                 }
             )
     }
+    //gets which theater has been selected from the modal and
+    //reveals the next container for date and price
     $('#modalTheater').on('click', 'li', function() {
         // https://stackoverflow.com/a/2888447
         const theaterId = $(this).data('theater_id');
@@ -114,6 +113,8 @@ $(function () {
     modalDate.change(function () {
         $('.time-container').fadeIn('slow');})
 
+    //when the save button is clicked
+    //this method creates the screening object and calls the respective method
     submitButton.click(function() {
         let screening = {
             "movieId": movieId,
@@ -122,6 +123,9 @@ $(function () {
             "date": modalDate.val(),
             "time": modalTime.val()
         }
+
+        // Disable submit button
+        screeningModal.disableButton();
 
         if(isAdd) {
             addScreening(screening,movieTitle)
@@ -134,5 +138,36 @@ $(function () {
          setTimeout(function(){ modal.modal('hide');},100);
     })
 
+
+    function addScreening(screening,movieTitle){
+
+        $.ajax({
+            type: "POST",
+            url: "/api/screenings",
+            dataType: "json",
+            data: JSON.stringify(screening),
+            contentType: "application/json; charset=utf-8",
+        }).done(function (id) {
+            screening["id"]=id;
+            const $row = buildTableRow(screening,movieTitle);
+            $('#screeningTable tbody').append($row);
+            $("#screeningTable caption").text("List of screenings");
+            $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
+        });
+    }
+
+
+    function editScreening (screening,movieTitle,tr){
+        $.ajax({
+            type: 'PUT',
+            url: `api/screenings/${screening.id}`,
+            dataType: 'html',
+            data: JSON.stringify(screening),
+            contentType: "application/json; charset=utf-8",
+        }).done(function () {
+            const $row = buildTableRow(screening,movieTitle);
+            tr.replaceWith($row);
+        })
+    }
 
 });

@@ -1,5 +1,8 @@
 $(function() {
 
+    // Initialize modal class
+    const movieModal = new Modal($('#movieModal'), $('#submitModal'));
+
     const addButton = $('#addButton');
 
     let id;
@@ -15,7 +18,7 @@ $(function() {
     $('#movieTable').on("click", ".btn-edit", function() {
 
         row = $(this).closest('tr');
-        id= row.data('movieid');
+        id = row.data('movieid');
 
         // Bring the movie data from the table
         movieTitle = row.children('td')[1].innerHTML;
@@ -26,15 +29,14 @@ $(function() {
         // Show the previous data so that the user can edit onto it
         $("#modalTitle").val(movieTitle);
         $("#modalDurationInMinutes").val(movieDuration);
-        $("#modalIs3D").val(movie3D);
-        $("#modalDolby").val(movieDolby);
+        $("#modalIs3D").prop('checked', movie3D === 'true');
+        $("#modalDolby").prop('checked', movieDolby === 'true');
 
         // Change isEdit into true
         isEdit = true;
 
         // Show the modal with yellow button and header
-        showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
-
+        movieModal.showModal(isEdit, 'Edit Movie', 'Save');
     });
 
     // Click add movie and it'll clear the modal, getting ready for new info
@@ -50,20 +52,9 @@ $(function() {
             $('#modalIs3D').prop("checked", false);
             $('#modalDolby').prop("checked", false);
 
-            // Show the modal with green button and header
-            showModal(`<h5>Add Movie</h5>`, 'btn btn-primary');
-
+            // Show the modal for adding a new Movie
+            movieModal.showModal(isEdit, 'Add Movie', 'Add Movie');
         });
-
-        // Show modal with different header and button color
-        function showModal(header, className) {
-
-            $('#movieModalTitle').html(header);
-            $('#submitModal').removeAttr('class');
-            $('#submitModal').addClass(className);
-            $('#movieModal').modal('show');
-
-        }
 
         // Click save button and edit or add accordingly
         $('html body').off('click').on('click', '#submitModal', function (e) {
@@ -78,6 +69,9 @@ $(function() {
 
         // Edit a movie
         function edit() {
+
+            // Disable submit button
+            movieModal.disableButton();
 
             let movieToEdit = {
                 'id': id,
@@ -99,7 +93,7 @@ $(function() {
                     dataType: 'html',
                     data: JSON.stringify(movieToEdit),
                     contentType: 'application/json'
-                } )
+                })
                     .done(function() {
 
                         // Reload the data
@@ -118,12 +112,14 @@ $(function() {
                             }, 100);
 
                         })
-                    })
+                    });
             }
         }
 
         // Add a movie
         function add(e) {
+            // Disable submit button
+            movieModal.disableButton();
 
             // Prevent default event such as refreshing the whole page after the movie is added
             e.preventDefault();

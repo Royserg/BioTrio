@@ -48,7 +48,9 @@ tbody td {
 
 
 /* Override bootstrap btn-primary with our custom color */
-.btn-primary {
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
     background: #CC014C;
     border-color: #CC014C;
     color: white;
