@@ -9,7 +9,7 @@ public class Theater {
 
     private int id;
 
-    @NotEmpty @Min(1)
+    @NotEmpty
     private String name;
 
     @NotNull @Min(1)

@@ -1,13 +1,10 @@
 package com.biotrio.nocristina.controllers;
 
 import com.biotrio.nocristina.models.Theater;
-import com.biotrio.nocristina.models.TheaterValidator;
 import com.biotrio.nocristina.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,13 +16,6 @@ public class TheaterController implements IController<Theater>{
     @Autowired
     TheaterRepository theaterRepo;
 
-    @Autowired
-    private TheaterValidator theaterValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder){
-        binder.addValidators(theaterValidator);
-    }
 
     //get all theaters
     @GetMapping("/api/theaters")
@@ -54,7 +44,7 @@ public class TheaterController implements IController<Theater>{
     //update one theater
     @PutMapping("/api/theaters/{id}")
     @ResponseBody
-    public void updateOne(@PathVariable int id, @RequestBody Theater theater) {
+    public void updateOne(@PathVariable int id, @Valid @RequestBody Theater theater) {
         theaterRepo.updateOne(id, theater);
     }
 

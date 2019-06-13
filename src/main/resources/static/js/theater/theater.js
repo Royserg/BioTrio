@@ -19,10 +19,10 @@ function verifyInput() {
     if(name.val()==""){
         isFilled=false;
     }
-    if(rows.val()=="" || rows.val()<0){
+    if(rows.val()=="" || rows.val()<=0){
         isFilled=false;
     }
-    if(columns.val()=="" || columns.val()<0){
+    if(columns.val()=="" || columns.val()<=0){
         isFilled=false;
     }
     return isFilled;
