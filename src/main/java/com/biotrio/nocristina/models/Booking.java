@@ -1,10 +1,13 @@
 package com.biotrio.nocristina.models;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Booking {
 
     private int id;
+
+    @NotNull
     private String customerPhoneNumber;
     private List<Ticket> tickets;
     // Screening Contains Theater object
