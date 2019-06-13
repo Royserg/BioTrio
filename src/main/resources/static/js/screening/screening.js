@@ -13,6 +13,23 @@ $(function () {
     const modalTime = $('#modalTime');
     const submitButton = $('#submitButton');
 
+    let isFilled=false;
+
+    //Fucntion which verifies the input of the user
+    function verifyInput() {
+        isFilled=true;
+        if(modalPrice.val()=="" || modalPrice.val()<=0){
+            isFilled=false;
+        }
+        if(modalDate.val()=="" || modalDate.val == null){
+            isFilled=false;
+        }
+        if(modalTime.val()=="" || modalTime.val == null){
+            isFilled=false;
+        }
+        return isFilled;
+    }
+
     let movieId,movieTitle;
     let theater;
     let screeningId;
@@ -113,9 +130,14 @@ $(function () {
     modalDate.change(function () {
         $('.time-container').fadeIn('slow');})
 
+
+
     //when the save button is clicked
     //this method creates the screening object and calls the respective method
     submitButton.click(function() {
+
+        console.log("I am now saving");
+
         let screening = {
             "movieId": movieId,
             "theater": theater,
@@ -125,18 +147,22 @@ $(function () {
         }
 
         // Disable submit button
-        screeningModal.disableButton();
 
-        if(isAdd) {
-            addScreening(screening,movieTitle)
+        if (verifyInput()) {
+            if (isAdd) {
+                addScreening(screening, movieTitle)
+                screeningModal.disableButton();
+            } else {
+                screening["id"] = screeningId;
+                editScreening(screening, movieTitle, tr);
+                screeningModal.disableButton();
+            }
+        } else {
+            alert("Please validate the fields and ensure that the date is set in the future");
         }
-        else {
-            screening["id"]=screeningId;
-            editScreening (screening,movieTitle,tr);
-        }
+    });
 
-         setTimeout(function(){ modal.modal('hide');},100);
-    })
+
 
 
     function addScreening(screening,movieTitle){
@@ -153,6 +179,7 @@ $(function () {
             $('#screeningTable tbody').append($row);
             $("#screeningTable caption").text("List of screenings");
             $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
+            setTimeout(function(){ modal.modal('hide');},100);
         });
     }
 
