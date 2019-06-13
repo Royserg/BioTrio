@@ -35,40 +35,41 @@ $(function() {
         $('.btn-edit').each((index, button) => {
             button.disabled = true;
         });
+    });
 
-        // save and then replace the button back
-        $('.list-group').on('click', '.btn-save', function() {
+    // save and then replace the button back
+    $('.list-group').on('click', '.btn-save', function() {
+        let row = $(this).closest('li');
+        let dayNo = row.data('dayno');
 
-            let dayNo = row.data('dayno');
+        let day = {
+            'dayNo': dayNo,
+            'openingHour': $('#openingTime').val(),
+            'closingHour': $('#closingTime').val(),
+            'cinemaId': row.data('cinemaid')
+        };
 
-            let day = {
-                'dayNo': dayNo,
-                'openingHour': $('#openingTime').val(),
-                'closingHour': $('#closingTime').val(),
-                'cinemaId': row.data('cinemaid')
-            };
+        $.ajax({
 
-            $.ajax({
+            type: 'PUT',
+            url: `/api/schedule/${dayNo}`,
+            dataType: 'html',
+            data: JSON.stringify(day),
+            contentType: 'application/json'
 
-                type: 'PUT',
-                url: `/api/schedule/${dayNo}`,
-                dataType: 'html',
-                data: JSON.stringify(day),
-                contentType: 'application/json'
+        })
+            .done(function () {
 
-            })
-                .done(function () {
+                // make the buttons available
+                $('.btn-edit').each((index, button) => {
+                    button.disabled = false;
+                });
 
-                    // make the buttons available
-                    $('.btn-edit').each((index, button) => {
-                        button.disabled = false;
-                    });
+                // replace the text
+                $('#scheduleToEdit').replaceWith(`<span id="schedule">${day.openingHour} - ${day.closingHour}</span>`);
 
-                    // replace the text
-                    $('#scheduleToEdit').replaceWith(`<span id="schedule">${day.openingHour} - ${day.closingHour}</span>`);
-
-                    // replace the button
-                    $('#saveScheduleButton').replaceWith(`<button
+                // replace the button
+                $('#saveScheduleButton').replaceWith(`<button
                                                 id = "editScheduleButton"
                                                 class="btn btn-outline-dark btn-edit"
                                                 title="edit">
@@ -76,23 +77,21 @@ $(function() {
                                         </button>`);
 
 
-                    // fancy css
-                    row.css('background', 'gold');
-                    row.fadeOut(300, function () {
-                        $(this).fadeIn(300);
-                        $(this).css('background', 'white');
-                        // $(this).css({
-                        //     "cursor": "wait",
-                        //     "pointer-events": "none",
-                        //     "background": "white"
-                        // });
-                    });
+                // fancy css
+                row.css('background', 'gold');
+                row.fadeOut(300, function () {
+                    $(this).fadeIn(300);
+                    $(this).css('background', 'white');
+                    // $(this).css({
+                    //     "cursor": "wait",
+                    //     "pointer-events": "none",
+                    //     "background": "white"
+                    // });
+                });
 
-                })
+            })
 
-        });
     });
-
 
 
 
