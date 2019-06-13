@@ -15,7 +15,7 @@
 
                 <div class="row" style="justify-content: space-evenly">
 
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="card infobox-lg mb-2">
                                 <div class="card-body">
                                     <h2 class="total-screenings"></h2>
@@ -40,7 +40,7 @@
 
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="card infobox-lg mb-2">
                                 <div class="card-body">
                                     <h2 class="total-sales"></h2>
@@ -57,15 +57,22 @@
                         </div>
 
 
-                    <div class="col-4">
+                    <div class="col-5">
 
                         <div class ="card infobox-lg">
-                            <div class="card-body">
+                            <div class="card-body scheduleCard">
                                 <h3>Opening Hours</h3>
                                 <ul class="list-group list-group-flush" id="openingHours">
-                                    <li class="list-group-item d-flex justify-content-between" th:each="day : ${schedule}">
-                                        <span th:text="${days[day.dayNo - 1]}"></span>
-                                        <span th:text="${day.openingHour} + ' - ' + ${day.closingHour}"></span>
+                                    <li class="list-group-item d-flex justify-content-between" id="day" th:each="day : ${schedule}" th:object="${day}"
+                                        th:attr="data-dayNo=${day.dayNo}, data-cinemaId=${day.cinemaId}">
+                                        <span id="date" th:text="${days[day.dayNo - 1]}"></span>
+                                        <span id="schedule" th:text="${day.openingHour} + ' - ' + ${day.closingHour}"></span>
+                                        <button
+                                                id = "editScheduleButton"
+                                                class="btn btn-outline-dark btn-edit"
+                                                title="edit">
+                                            <span class="fas fa-edit"></span>
+                                        </button>
                                     </li>
 
                                 </ul>
