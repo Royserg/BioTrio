@@ -38,27 +38,24 @@ public class MovieRepository implements IRepository<Movie>{
 
     public int saveOne(Movie newMovie){
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO movies VALUES(null, ?,?,?,?);";
+        String sql = "INSERT INTO movies VALUES(?,?);";
         jdbc.update((Connection connection)->{
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
 
-                ps.setString(1, newMovie.getTitle());
-                ps.setInt(2, newMovie.getDurationInMinutes());
-                ps.setBoolean(3, newMovie.isIs3D());
-                ps.setBoolean(4, newMovie.isDolby());
+                ps.setInt(1, newMovie.getId());
+                ps.setString(2, newMovie.getTitle());
 
                 return ps;
-            }, keyHolder);
+            });
 
-        return keyHolder.getKey().intValue();
+        return newMovie.getId();
     }
 
     public void updateOne(int id, Movie movieToEdit){
 
-        String sql = "UPDATE movies SET title = ?, duration_in_minutes = ? , is3D = ?, dolby = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), movieToEdit.getDurationInMinutes(), movieToEdit.isIs3D(), movieToEdit.isDolby(), id);
+        String sql = "UPDATE movies SET title = ? WHERE id = ?;";
+        jdbc.update(sql, movieToEdit.getTitle(), id);
 
     }
 

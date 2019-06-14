@@ -1,5 +1,11 @@
 $(function() {
 
+    // TheMovieDB API setup
+    const API_KEY = '02325bf00c28d42c083b25b3be60b75e';
+    const API_URL = 'https://api.themoviedb.org/3';
+    const API_IMAGE_URL = 'https://image.tmdb.org/t/p/w92/';
+
+
     // Initialize modal class
     const movieModal = new Modal($('#movieModal'), $('#submitModal'));
 
@@ -7,7 +13,7 @@ $(function() {
 
     let id;
     let isEdit = false;
-    let movieTitle, movieDuration, movie3D, movieDolby;
+    let movieTitle;
     let row;
 
     //add class to the add button
@@ -21,16 +27,10 @@ $(function() {
         id = row.data('movieid');
 
         // Bring the movie data from the table
-        movieTitle = row.children('td')[1].innerHTML;
-        movieDuration = row.children('td')[2].innerHTML;
-        movie3D = row.children('td')[3].innerHTML;
-        movieDolby = row.children('td')[4].innerHTML;
+        movieTitle = row.children('td')[2].innerHTML;
 
         // Show the previous data so that the user can edit onto it
         $("#modalTitle").val(movieTitle);
-        $("#modalDurationInMinutes").val(movieDuration);
-        $("#modalIs3D").prop('checked', movie3D === 'true');
-        $("#modalDolby").prop('checked', movieDolby === 'true');
 
         // Change isEdit into true
         isEdit = true;
@@ -48,9 +48,6 @@ $(function() {
 
             // Clear the modal
             $('#modalTitle').val("");
-            $('#modalDurationInMinutes').val("");
-            $('#modalIs3D').prop("checked", false);
-            $('#modalDolby').prop("checked", false);
 
             // Show the modal for adding a new Movie
             movieModal.showModal(isEdit, 'Add Movie', 'Add Movie');
@@ -76,9 +73,6 @@ $(function() {
             let movieToEdit = {
                 'id': id,
                 'title': $('#modalTitle').val(),
-                'durationInMinutes': $('#modalDurationInMinutes').val(),
-                'is3D': $('#modalIs3D').is(":checked"),
-                'dolby': $('#modalDolby').is(":checked")
             };
 
             // Check if the screening time is less than 10 minutes
@@ -97,10 +91,7 @@ $(function() {
                     .done(function() {
 
                         // Reload the data
-                        row.children('td')[1].innerHTML = movieToEdit.title;
-                        row.children('td')[2].innerHTML = movieToEdit.durationInMinutes;
-                        row.children('td')[3].innerHTML = movieToEdit.is3D;
-                        row.children('td')[4].innerHTML = movieToEdit.dolby;
+                        row.children('td')[2].innerHTML = movieToEdit.title;
 
                         // Fancy css and close the modal
                         row.css('background', 'gold');
@@ -126,9 +117,6 @@ $(function() {
 
             let newMovie = {
                 'title': $('#modalTitle').val(),
-                'durationInMinutes': $('#modalDurationInMinutes').val(),
-                'is3D': $('#modalIs3D').is(":checked"),
-                'dolby': $('#modalDolby').is(":checked")
             };
 
             if (newMovie.durationInMinutes < 10) {
@@ -153,10 +141,9 @@ $(function() {
                                                 <span class="fas fa-chevron-right"></span>
                                             </button>
                                         </td>
-                                        <td class="col-4 title cool-pointer">${newMovie.title}</td>
-                                        <td class="col-3 duration">${newMovie.durationInMinutes}</td>
-                                        <td class="col-1 is3D">${newMovie.is3D}</td>
-                                        <td class="col-1 dolby">${newMovie.dolby}</td>
+                                        <td class="col-3 id">${newMovie.id}</td>
+                                        <td class="col-6 title cool-pointer">${newMovie.title}</td>
+
                                         <td class="col-1">
                                             <button
                                                id = "editButton"
@@ -185,4 +172,29 @@ $(function() {
                     });
             }
         }
+
+
+    $('#dropdownSearchButton').on("click", function(e){
+
+        e.stopPropagation();
+        e.preventDefault();
+
+        $(this).next('ul').show();
+        let movieTitle = $('#modalTitle').val();
+        $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${movieTitle}`)
+            .done(response => {
+
+                response.results.forEach((r) => {
+
+                    let searchRow = `<li class="dropdown-item" href="#">'${r['original_title']}' released on ${r['release_date']}</li>`
+                    $('.dropdown-search').append(searchRow);
+                })
+
+            });
+
+        //select movie -> show it on the result span
+
+    });
+
+
 });
