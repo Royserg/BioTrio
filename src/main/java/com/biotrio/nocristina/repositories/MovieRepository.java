@@ -52,13 +52,6 @@ public class MovieRepository {
         return newMovie.getId();
     }
 
-//    public void updateOne(int id, Movie movieToEdit){
-//
-//        String sql = "UPDATE movies SET title = ? WHERE id = ?;";
-//        jdbc.update(sql, movieToEdit.getTitle(), id);
-//
-//    }
-
     public void deleteOne(int id){
 
         String sql = "DELETE FROM movies WHERE id =?";

@@ -20,25 +20,6 @@ $(function() {
     //add class to the add button
     addButton.addClass("add-movie");
 
-    // Click edit movie and it'll bring the movie info and show it on modal
-    // $('#movieTable').on("click", ".btn-edit", function() {
-    //
-    //     row = $(this).closest('tr');
-    //     id = row.data('movieid');
-    //
-    //     // Bring the movie data from the table
-    //     movieTitle = row.children('td')[2].innerHTML;
-    //
-    //     // Show the previous data so that the user can edit onto it
-    //     $("#modalTitle").val(movieTitle);
-    //
-    //     // Change isEdit into true
-    //     isEdit = true;
-    //
-    //     // Show the modal with yellow button and header
-    //     movieModal.showModal(isEdit, 'Edit Movie', 'Save');
-    // });
-
     // Click add movie and it'll clear the modal, getting ready for new info
     //https://stackoverflow.com/a/28108858
     $(document).on("click", '#addButton.add-movie', function() {
@@ -55,50 +36,12 @@ $(function() {
             movieModal.showModal(isEdit, 'Add Movie', 'Add Movie');
         });
 
-        // Click save button and edit or add accordingly
+        // Click save button and add accordingly
         $('html body').off('click').on('click', '#submitModal', function (e) {
 
                 add(e);
 
         });
-
-        // Edit a movie
-        // function edit() {
-        //
-        //     // Disable submit button
-        //     movieModal.disableButton();
-        //
-        //     let movieToEdit = {
-        //         'id': newID,
-        //         'title': newTitle,
-        //     };
-        //
-        //     $.ajax( {
-        //
-        //         type: 'PUT',
-        //         url: `/api/movies/${id}`,
-        //         dataType: 'html',
-        //         data: JSON.stringify(movieToEdit),
-        //         contentType: 'application/json'
-        //     })
-        //         .done(function() {
-        //
-        //             // Reload the data
-        //             row.children('td')[2].innerHTML = movieToEdit.title;
-        //
-        //             // Fancy css and close the modal
-        //             row.css('background', 'gold');
-        //             row.fadeOut(300, function () {
-        //                 $(this).fadeIn(300);
-        //                 $(this).css('background', 'white');
-        //                 setTimeout(function () {
-        //                     $('#movieModal').modal('hide');
-        //                 }, 100);
-        //
-        //             });
-        //         });
-        //
-        // }
 
         // Add a movie
         function add(e) {
@@ -107,8 +50,6 @@ $(function() {
 
             // Prevent default event such as refreshing the whole page after the movie is added
             e.preventDefault();
-
-            console.log('newID ', id, ' newTitle ', movieTitle);
 
             let newMovie = {
                 'id': id,
@@ -159,7 +100,9 @@ $(function() {
         e.preventDefault();
 
         $(this).next('ul').show();
+        // get the input of movie to search
         let movieTitle = $('#modalTitle').val();
+        // search by the title of the movie on tmdb api and show the lists of movies that include the title
         $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${movieTitle}`)
             .done(response => {
 
@@ -174,15 +117,17 @@ $(function() {
 
     });
 
-    //select movie -> show it on the result span
+    // when select movie -> show it on the result span
     $('.dropdown-search').off('click').on('click', '.searchResult', function(e) {
 
         e.stopPropagation();
         e.preventDefault();
 
+        // show the selected movie on the result span
         let row = $(this).closest('li');
         $('#selectedTitle').html(row[0].innerHTML);
 
+        // save the relevant data as attributes so that it can be passed onto the object initialization
         id = row.data('id');
         movieTitle = row.data('title');
 
