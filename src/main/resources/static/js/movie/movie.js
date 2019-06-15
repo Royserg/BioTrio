@@ -99,16 +99,17 @@ $(function() {
         e.stopPropagation();
         e.preventDefault();
 
-        $(this).next('ul').show();
+        $(this).next('select').show();
         // get the input of movie to search
         let movieTitle = $('#modalTitle').val();
+
         // search by the title of the movie on tmdb api and show the lists of movies that include the title
         $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${movieTitle}`)
             .done(response => {
 
                 response.results.forEach((r) => {
 
-                    let searchRow = `<li class="dropdown-item searchResult" href="#" data-id="${r['id']}" data-title="${r['original_title']}">'${r['original_title']}' released on ${r['release_date']}</li>`
+                    let searchRow = `<option class="dropdown-item searchResult" href="#" data-id="${r['id']}" data-title="${r['original_title']}">'${r['original_title']}' released on ${r['release_date']}</option>`
                     $('.dropdown-search').append(searchRow);
 
                 })
@@ -118,14 +119,15 @@ $(function() {
     });
 
     // when select movie -> show it on the result span
-    $('.dropdown-search').off('click').on('click', '.searchResult', function(e) {
+    $('.show-search').on('click', '.searchResult', function(e) {
 
         e.stopPropagation();
         e.preventDefault();
 
-        // show the selected movie on the result span
-        let row = $(this).closest('li');
+        // show the selected movie on the result span and close the options
+        let row = $(this).closest('option');
         $('#selectedTitle').html(row[0].innerHTML);
+        $('.searchResult').hide();
 
         // save the relevant data as attributes so that it can be passed onto the object initialization
         id = row.data('id');

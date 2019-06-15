@@ -32,16 +32,18 @@
                             </div>
 
                             <div class="modal-body">
-                                <label for="modalTitle">Title</label>
+                                <label for="modalTitle">Type in the title to search movie</label>
                                 <input type="text" class="form-control" id="modalTitle" placeholder="Movie title" maxlength="255">
 
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownSearchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="fas fa-search"></span>
-                                    </button>
-                                    <ul class="dropdown-search" aria-labelledby="dropdownSearchButton">
+                                    <button class="dropdown-toggle" id="dropdownSearchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="show-search">
+                                            <optgroup class="dropdown-search" selected="selected" label="Click here to search movie">
 
-                                    </ul>
+                                            </optgroup>
+                                        </span>
+                                    </button>
+
                                 </div>
 
                                 <label for="selectedTitle">Movie title selected</label>
