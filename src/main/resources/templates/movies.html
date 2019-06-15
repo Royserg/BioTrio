@@ -44,8 +44,8 @@
                                     </ul>
                                 </div>
 
-                                <label for="searchTitle">Movie title selected</label>
-                                <span type="text" class="form-control" id="searchTitle" maxlength="255"></span>
+                                <label for="selectedTitle">Movie title selected</label>
+                                <span type="text" class="form-control" id="selectedTitle" maxlength="255"></span>
 
 
                             </div>
@@ -125,9 +125,9 @@
                                     <tr class="d-flex">
                                         <th class="col-1"></th>
                                         <th class="col-3">ID</th>
-                                        <th class="col-6">Title</th>
+                                        <th class="col-7">Title</th>
                                         <!-- columns for edit and delete button -->
-                                        <th class="col-1"></th>
+                                        <!--<th class="col-1"></th>-->
                                         <th class="col-1"></th>
                                     </tr>
                                     </thead>
@@ -142,17 +142,17 @@
                                             </button>
                                         </td>
                                         <td class="col-3 " th:text="${movie.id}" />
-                                        <td class="col-6 " th:text="${movie.title}" />
-                                        <td class="col-1">
-                                            <button
-                                                    id = "editButton"
-                                                    class="btn btn-outline-dark btn-edit"
-                                                    title="edit"
-                                                    data-toggle="modal"
-                                                    data-target="#movieModal">
-                                                <span class="fas fa-edit"></span>
-                                            </button>
-                                        </td>
+                                        <td class="col-7 " th:text="${movie.title}" />
+                                        <!--<td class="col-1">-->
+                                            <!--<button-->
+                                                    <!--id = "editButton"-->
+                                                    <!--class="btn btn-outline-dark btn-edit"-->
+                                                    <!--title="edit"-->
+                                                    <!--data-toggle="modal"-->
+                                                    <!--data-target="#movieModal">-->
+                                                <!--<span class="fas fa-edit"></span>-->
+                                            <!--</button>-->
+                                        <!--</td>-->
                                         <td class="col-1">
                                             <button class="btn btn-outline-dark btn-delete" title="delete">
                                                 <span class="fas fa-trash"></span>

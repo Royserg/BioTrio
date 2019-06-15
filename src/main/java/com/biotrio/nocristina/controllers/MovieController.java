@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class MovieController implements IController<Movie>{
+public class MovieController {
 
     @Autowired
     MovieRepository movieRepo;
@@ -55,12 +55,13 @@ public class MovieController implements IController<Movie>{
         return movieId;
     }
 
-    // Update one movie
-    @PutMapping("/api/movies/{id}")
-    @ResponseBody
-    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
-        movieRepo.updateOne(id, movieToEdit);
-    }
+//    // Update one movie
+//    @PutMapping("/api/movies/{id}")
+//    @ResponseBody
+//    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
+//        movieRepo.updateOne(id, movieToEdit);
+//        System.out.println("movieToEdit " + id + ", " + movieToEdit.getTitle());
+//    }
 
     // Delete one movie
     @DeleteMapping("/api/movies/{id}")

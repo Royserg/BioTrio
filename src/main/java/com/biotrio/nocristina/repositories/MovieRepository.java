@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class MovieRepository implements IRepository<Movie>{
+public class MovieRepository {
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -52,12 +52,12 @@ public class MovieRepository implements IRepository<Movie>{
         return newMovie.getId();
     }
 
-    public void updateOne(int id, Movie movieToEdit){
-
-        String sql = "UPDATE movies SET title = ? WHERE id = ?;";
-        jdbc.update(sql, movieToEdit.getTitle(), id);
-
-    }
+//    public void updateOne(int id, Movie movieToEdit){
+//
+//        String sql = "UPDATE movies SET title = ? WHERE id = ?;";
+//        jdbc.update(sql, movieToEdit.getTitle(), id);
+//
+//    }
 
     public void deleteOne(int id){
 
