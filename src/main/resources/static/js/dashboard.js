@@ -42,6 +42,13 @@ $(function() {
         let row = $(this).closest('li');
         let dayNo = row.data('dayno');
 
+        let openingHourInput = $('#openingTime').val();
+        let closingHourInput = $('#closingTime').val();
+
+        if(openingHourInput > closingHourInput) {
+            alert('Opening time cannot be later then closing time.');
+        } else {
+
         let day = {
             'dayNo': dayNo,
             'openingHour': $('#openingTime').val(),
@@ -82,15 +89,10 @@ $(function() {
                 row.fadeOut(300, function () {
                     $(this).fadeIn(300);
                     $(this).css('background', 'white');
-                    // $(this).css({
-                    //     "cursor": "wait",
-                    //     "pointer-events": "none",
-                    //     "background": "white"
-                    // });
                 });
 
             })
-
+        }
     });
 
 
