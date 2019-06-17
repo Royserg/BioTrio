@@ -7,7 +7,7 @@ public class Booking {
 
     private int id;
 
-    @NotNull
+    @Phone
     private String customerPhoneNumber;
     private List<Ticket> tickets;
     // Screening Contains Theater object
