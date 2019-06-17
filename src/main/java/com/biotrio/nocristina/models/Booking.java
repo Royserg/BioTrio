@@ -1,6 +1,5 @@
 package com.biotrio.nocristina.models;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Booking {
@@ -9,6 +8,7 @@ public class Booking {
 
     @Phone
     private String customerPhoneNumber;
+
     private List<Ticket> tickets;
     // Screening Contains Theater object
     private Screening screening;
