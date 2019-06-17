@@ -22,7 +22,11 @@ public class Screening {
 
     @NotNull @Min(1)
     private BigDecimal price;
+
+    @NotNull
     private Theater theater;
+
+    @NotNull
     private int movieId;
 
     public Screening(){}
