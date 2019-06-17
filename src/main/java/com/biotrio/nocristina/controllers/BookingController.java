@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,7 +44,7 @@ public class BookingController implements IController<Booking>{
     @Override
     @PutMapping("/api/bookings/{id}")
     @ResponseBody
-    public void updateOne(@PathVariable int id, @RequestBody Booking itemToUpdate) {
+    public void updateOne(@PathVariable int id, @Valid @RequestBody Booking itemToUpdate) {
         bookingService.editBooking(id, itemToUpdate);
     }
 
@@ -55,7 +56,7 @@ public class BookingController implements IController<Booking>{
      */
     @PostMapping("/api/bookings")
     @ResponseBody
-    public int saveOne(@RequestBody Booking newBooking) {
+    public int saveOne(@Valid @RequestBody Booking newBooking) {
         int bookingId = bookingService.addBooking(newBooking);
 
         return bookingId;

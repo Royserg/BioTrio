@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -14,6 +15,7 @@ public class TheaterController implements IController<Theater>{
 
     @Autowired
     TheaterRepository theaterRepo;
+
 
     //get all theaters
     @GetMapping("/api/theaters")
@@ -34,7 +36,7 @@ public class TheaterController implements IController<Theater>{
     //save new theater
     @PostMapping("/api/theaters")
     @ResponseBody
-    public int saveOne(@RequestBody Theater newTheater) {
+    public int saveOne(@Valid @RequestBody Theater newTheater) {
         int theaterId = theaterRepo.addTheater(newTheater);
         return theaterId;
     }
@@ -42,7 +44,7 @@ public class TheaterController implements IController<Theater>{
     //update one theater
     @PutMapping("/api/theaters/{id}")
     @ResponseBody
-    public void updateOne(@PathVariable int id, @RequestBody Theater theater) {
+    public void updateOne(@PathVariable int id, @Valid @RequestBody Theater theater) {
         theaterRepo.updateOne(id, theater);
     }
 

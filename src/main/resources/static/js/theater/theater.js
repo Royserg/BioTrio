@@ -19,10 +19,10 @@ function verifyInput() {
     if(name.val()==""){
         isFilled=false;
     }
-    if(rows.val()==""){
+    if(rows.val()=="" || rows.val()<=0){
         isFilled=false;
     }
-    if(columns.val()==""){
+    if(columns.val()=="" || columns.val()<=0){
         isFilled=false;
     }
     return isFilled;
@@ -92,7 +92,7 @@ function verifyInput() {
 
             }
         } else {
-            alert("Please fill the empty fields");
+            alert("Please fill the empty fields and make sure they're filled correctly");
         }
 
         function edit() {

@@ -111,7 +111,7 @@ $(function() {
                                 $('#movieModal').modal('hide');
                             }, 100);
 
-                        })
+                        });
                     });
             }
         }

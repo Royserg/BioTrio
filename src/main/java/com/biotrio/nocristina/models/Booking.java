@@ -5,7 +5,10 @@ import java.util.List;
 public class Booking {
 
     private int id;
+
+    @Phone
     private String customerPhoneNumber;
+
     private List<Ticket> tickets;
     // Screening Contains Theater object
     private Screening screening;
