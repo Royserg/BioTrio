@@ -5,6 +5,7 @@ $(function() {
     // TheMovieDB API setup
     const API_KEY = '02325bf00c28d42c083b25b3be60b75e';
     const API_URL = 'https://api.themoviedb.org/3';
+    const API_IMAGE_URL = 'https://image.tmdb.org/t/p/w92/';
 
 
     // Initialize modal class
@@ -12,6 +13,7 @@ $(function() {
 
     const addButton = $('#addButton');
 
+    let i;
     let id;
     let isEdit = false;
     let movieTitle;
@@ -28,9 +30,9 @@ $(function() {
             isEdit = false;
 
             // Clear the modal
-            $('#modalTitle').val("");
-            $('.dropdown-search').empty();
-            $('#selectedTitle').html("");
+            $('#searchMovie').val("");
+            $('.dropdown-menu').empty();
+            $('#showResults').empty();
 
             // Show the modal for adding a new Movie
             movieModal.showModal(isEdit, 'Add Movie', 'Add Movie');
@@ -93,47 +95,63 @@ $(function() {
 
         }
 
-    //search movie on the tmdb api
-    $('#dropdownSearchButton').off('click').on('click', function(e){
 
-        e.stopPropagation();
-        e.preventDefault();
+        // search movie on the tmdb api
+        $('.modal-body').on('keyup', '#searchMovie', function() {
 
-        $(this).next('select').show();
-        // get the input of movie to search
-        let movieTitle = $('#modalTitle').val();
+            // clear the drop down and the result panel
+            $('.dropdown-item').remove();
+            $('.dropdown-menu').empty();
+            $('#showResults').empty();
 
-        // search by the title of the movie on tmdb api and show the lists of movies that include the title
-        $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${movieTitle}`)
-            .done(response => {
+            // get the input value
+            let searchTitle = $('#searchMovie').val();
 
-                response.results.forEach((r) => {
+            // search the title through the tmdb api and show the first 3(the most recently released) results
+            $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${searchTitle}`)
+                    .done(response => {
 
-                    let searchRow = `<option class="dropdown-item searchResult" href="#" data-id="${r['id']}" data-title="${r['original_title']}">'${r['original_title']}' released on ${r['release_date']}</option>`
-                    $('.dropdown-search').append(searchRow);
+                        for(i=0; i<3; i++){
+                            let result = response.results[i];
+                            let resultRow = `<a class="dropdown-item" href="#" data-id="${result['id']}" data-title="${result['original_title']}" style="display:flex; justify-content:flex-start;">
+                                                <img class="movieThumbnail"  src="${API_IMAGE_URL + result['poster_path']}"/>
+                                                <div style="margin-left: 30px;"><p>${result['original_title']}</p>
+                                                     <p>${result['release_date']}</p></div></a>`;
+                            $('.dropdown-menu').append(resultRow);
 
-                })
+                        }
 
-            });
 
-    });
+                    });
 
-    // when select movie -> show it on the result span
-    $('.show-search').on('click', '.searchResult', function(e) {
+        });
 
-        e.stopPropagation();
-        e.preventDefault();
+        // when select movie -> show the title on the result panel
+        $('.dropdown-menu').on('click', '.dropdown-item', function() {
 
-        // show the selected movie on the result span and close the options
-        let row = $(this).closest('option');
-        $('#selectedTitle').html(row[0].innerHTML);
-        $('.searchResult').hide();
+            // empty the result panel
+            $('#showResults').empty();
 
-        // save the relevant data as attributes so that it can be passed onto the object initialization
-        id = row.data('id');
-        movieTitle = row.data('title');
+            // save the id and title for adding the movie
+            id = $(this).data('id');
+            movieTitle = $(this).data('title');
 
-    });
+            // get the info of the selected movie from tmdb and show it on result panel
+            $.ajax(`${API_URL}/movie/${id}?api_key=${API_KEY}`)
+                .done(response => {
+                    let selectedMovieRow =`<br>
+                                    <label for="selectedMovie">Movie selected</label>
+                                    <div type="text" id="selectedMovie" maxlength="255" style="display:flex; justify-content:space-around;">
+                                    <img class="selectedMovieThumbnail"  src="${API_IMAGE_URL + response['poster_path']}"/>
+                                    <div><p> Title: ${response['original_title']}</p>
+                                        <p> Release Date: ${response['release_date']}</p>
+                                        <p> Status: ${response['status']}</p>
+                                        <p> Runtime: ${response['runtime']}</p></div>
+                                    </div>`;
 
+                    $('#showResults').append(selectedMovieRow);
+
+                });
+        })
 
 });

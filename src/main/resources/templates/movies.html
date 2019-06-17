@@ -19,7 +19,7 @@
 
             <div class="mt-4" >
 
-                <!-- Modal for Add and Edit a Movie -->
+                <!-- Modal for Add a Movie -->
 
                 <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -31,25 +31,22 @@
                                 </button>
                             </div>
 
+
+
                             <div class="modal-body">
-                                <label for="modalTitle">Type in the title to search movie</label>
-                                <input type="text" class="form-control" id="modalTitle" placeholder="Movie title" maxlength="255">
-
-                                <div class="dropdown">
-                                    <button class="dropdown-toggle" id="dropdownSearchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="show-search">
-                                            <optgroup class="dropdown-search" selected="selected" label="Click here to search movie">
-
-                                            </optgroup>
-                                        </span>
-                                    </button>
-
+                                <label for="searchMovie">Search Movie</label>
+                                <div class="input-group dropdown-toggle" style="margin:auto;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input class="form-control" id="searchMovie" type="text" placeholder="Type in the title to search movie"  />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-search"></span>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <label for="selectedTitle">Movie title selected</label>
-                                <span type="text" class="form-control" id="selectedTitle" maxlength="255"></span>
-
-
+                                <div class="dropdown-menu">
+                                </div>
+                                <div id="showResults">
+                                </div>
                             </div>
 
                             <div class="modal-footer">
