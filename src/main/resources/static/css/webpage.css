@@ -1,0 +1,130 @@
+body {
+    background: #353535;
+    /*overflow: hidden;*/
+}
+
+/* Hides scrollbar */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar {
+    height: 60px;
+    background: rgba(0,0,0,.3);
+}
+
+.navbar .fa-bars {
+    color: #CC014C;
+}
+
+/* Hero section styles */
+.image--container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /*height: 32rem;*/
+    padding-left: 5%;
+    padding-bottom: 8%;
+    /*max-height: 60vh;*/
+    /*background: #000000;*/
+    height: 100vh;
+}
+
+.image--container .image--main {
+    /*width: 50%;*/
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.image--container .img--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background: rgba(0,0,0,.3);
+}
+
+.image--container .movie--info {
+    height: 17%;
+    color: white;
+    z-index: 30;
+}
+
+.image--container .btn--container {
+    width: 55%;
+}
+/* Hero section styles -- end */
+
+/* Movies slider section styles */
+.main--container {
+    overflow-x: scroll;
+    height: 20vh;
+}
+
+.movies--container {
+    padding-left: 2%;
+    padding-right: 2%;
+    display: flex;
+    flex-wrap: nowrap;
+
+}
+
+.movie--thumbnail {
+    margin-right: .4em;
+    padding: 4px;
+    border: 1px solid #CC014C;
+    border-radius: .25rem;
+    max-width: 100%;
+    height: auto;
+}
+/* Movies slider section styles - end*/
+
+
+/* Movie Description section styles */
+    .description--container {
+        color: white;
+        width: 100%;
+        height: 70vh;
+        background: #222222;
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .description--container .trailer--container {
+        height: 45%;
+        background: #343A40;
+    }
+
+/* Movie Description section styles - end */
+
+/* Footer styles */
+.footer {
+    height: 35vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: #000000;
+}
+
+.footer .footer--socials a {
+    font-size: 2.2em;
+    color: #CC014C;
+}
+
+.footer .footer--info {
+    font-size: .7em;
+    color: white;
+}
+
+.footer .footer--info p {
+    margin-bottom: .3rem;
+}
+/* Footer styles - end */
+
+

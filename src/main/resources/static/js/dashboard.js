@@ -21,7 +21,7 @@ $(function() {
 
         // when click edit button, change the text field into input field
         // also change the edit button into save button
-        $('#scheduleToEdit').replaceWith(`<span id="scheduleToEdit"><input type="time" id="openingTime" min="09:00:00" max="18:00:00" required/> - <input type="time" id="closingTime" min="21:00:00" max="23:59:00" required/></span>`);
+        $('#scheduleToEdit').replaceWith(`<span id="scheduleToEdit"><input type="time" id="openingTime"/> - <input type="time" id="closingTime" max="23:59:00" required/></span>`);
         $('#openingTime').val(previousOpening);
         $('#closingTime').val(previousClosing);
         $(this).replaceWith(`<button
@@ -41,6 +41,13 @@ $(function() {
     $('.list-group').on('click', '.btn-save', function() {
         let row = $(this).closest('li');
         let dayNo = row.data('dayno');
+
+        let openingHourInput = $('#openingTime').val();
+        let closingHourInput = $('#closingTime').val();
+
+        if(openingHourInput > closingHourInput) {
+            alert('Opening time cannot be later then closing time.');
+        } else {
 
         let day = {
             'dayNo': dayNo,
@@ -82,15 +89,10 @@ $(function() {
                 row.fadeOut(300, function () {
                     $(this).fadeIn(300);
                     $(this).css('background', 'white');
-                    // $(this).css({
-                    //     "cursor": "wait",
-                    //     "pointer-events": "none",
-                    //     "background": "white"
-                    // });
                 });
 
             })
-
+        }
     });
 
 
