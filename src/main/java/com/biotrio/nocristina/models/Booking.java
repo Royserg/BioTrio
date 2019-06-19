@@ -1,14 +1,25 @@
 package com.biotrio.nocristina.models;
 
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-public class Booking {
+public class Booking{
 
     private int id;
+
+    @NotEmpty @Min(8)
     private String customerPhoneNumber;
+
+    @Size(min=1, max=4)
     private List<Ticket> tickets;
     // Screening Contains Theater object
+    @NotNull
     private Screening screening;
+    @NotNull
     private Movie movie;
 
     public Booking(){}
@@ -66,4 +77,5 @@ public class Booking {
                 ", tickets=" + tickets +
                 '}';
     }
+
 }

@@ -75,4 +75,11 @@ public class CinemaRepository implements IRepository<Cinema>{
         return schedule;
     }
 
+    public void updateSchedule(Day day) {
+
+        String sql = "UPDATE opening_hours SET opening_hour = ?, closing_hour = ? WHERE day_no = ?;";
+        jdbc.update(sql, day.getOpeningHour(), day.getClosingHour(), day.getDayNo());
+
+    }
+
 }

@@ -1,5 +1,10 @@
 package com.biotrio.nocristina.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -7,10 +12,21 @@ import java.time.LocalTime;
 public class Screening {
 
     private int id;
+
+    @NotNull
     private LocalTime time;
+
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @NotNull @FutureOrPresent
     private LocalDate date;
+
+    @NotNull @Min(1)
     private BigDecimal price;
+
+    @NotNull
     private Theater theater;
+
+    @NotNull
     private int movieId;
 
     public Screening(){}

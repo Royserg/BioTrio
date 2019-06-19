@@ -179,9 +179,6 @@ $(function(){
   // Trigger action only when submit button has .btn-success class
   $('.modal-footer').on('click', '#submitBtn.btn-primary', function() {
 
-    // Disable submit button
-    bookingModal.disableButton();
-
     // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
     // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
     const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
@@ -196,6 +193,9 @@ $(function(){
       alert('Missing phone number of seat selection');
       return
     }
+
+    // Disable submit button
+    bookingModal.disableButton();
 
     // Create representation of an booking object for sending to Backend
     let booking = {
