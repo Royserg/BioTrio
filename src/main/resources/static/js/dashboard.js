@@ -1,7 +1,93 @@
+// Google Calendar
+
+// Client ID and API key from the Developer Console
+// Client ID and API key from the Developer Console
+const CLIENT_ID = '1025167550617-t52don7ga2rpem7i281v6267trpdaqdo.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAj0zYBtiSadIVuigTmXEH-BvDPo32I89o';
+// Array of API discovery doc URLs for APIs used by the quickstart
+const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events';
+const authorizeButton = document.getElementById('authorize_button');
+const signoutButton = document.getElementById('signout_button');
+/**
+ * On load, called to load the auth2 library and API client library.
+ */
+function loadClient() {
+    gapi.load('client:auth2', () => {
+        gapi.client.init({
+            clientId: CLIENT_ID,
+            apiKey: API_KEY,
+            discoveryDocs: DISCOVERY_DOCS,
+            scope: SCOPES
+        }).then(() => {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            authorizeButton.onclick = () => gapi.auth2.getAuthInstance().signIn();
+            signoutButton.onclick = () => gapi.auth2.getAuthInstance().signOut();
+        });
+    });
+}
+/**
+ * Called when the signed in status changes, to update the UI
+ * appropriately. After a sign-in, the API is called.
+ */
+function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) listUpcomingEvents();
+    authorizeButton.style.display = (isSignedIn ? 'none' : 'block');
+    signoutButton.style.display = (isSignedIn ? 'block' : 'none');
+}
+/**
+ * Append a pre element to the body with a message.
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendPre(message) {
+    document.getElementById('content')
+      .appendChild(document.createTextNode(message + '\n'));
+}
+/**
+ * Print the summary and start datetime/date of the next ten events in
+ * the authorized user's calendar. If no events are found an
+ * appropriate message is printed.
+ */
+function listUpcomingEvents() {
+    console.log(gapi.client.calendar.events.list);
+    gapi.client.calendar.events.list({
+        calendarId: 'vsgsekfjir60lmvsj094qg6knc@group.calendar.google.com',
+        timeMin: (new Date()).toISOString(),
+        showDeleted: false,
+        singleEvents: true,
+        maxResults: 10,
+        orderBy: 'startTime'
+    }).then((response) => {
+        const events = response.result.items;
+        appendPre('Upcoming events:');
+        if (events.length > 0) {
+            events.map((event) => {
+                let when = event.start.dateTime;
+                if (!when) {
+                    when = event.start.date;
+                }
+                appendPre(`${event.summary} (${when})`);
+            });
+        } else {
+            appendPre('No upcoming events found.');
+        }
+    });
+}
+
+
+
+// Google calendar -- end
+
+
+
+
+
 $(function() {
-    console.log("loaded jquery");
-
-
 
     // editing opening hours
 
