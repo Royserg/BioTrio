@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments/page :: head(title='Make a Booking')" />
+
+<link rel="stylesheet" th:href="@{/css/page/bookMovie.css}">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.min.css">-->
+
+<body>
+
+    <nav th:replace="fragments/page :: navbar"></nav>
+
+    <section class="movies--section pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img th:src="${'https://image.tmdb.org/t/p/w342' + movie.poster_path}" th:alt="${movie.original_title} + ' poster'">
+                </div>
+                <div class="col-md-8">
+                    <h2 th:text="${movie.original_title}"></h2>
+                    <p th:text="${movie.overview}"></p>
+
+                    <span class="divider"></span>
+                    <!-- Select Date field -->
+                    <label for="dateField">Date</label>
+                    <select name="date" id="dateField" class="form-control">
+                    </select>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!--  Custom js  -->
+    <script th:src="@{/js/page/bookMovie.js}"></script>
+</body>
+</html>

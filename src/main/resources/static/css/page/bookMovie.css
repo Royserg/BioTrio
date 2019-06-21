@@ -1,0 +1,12 @@
+.movies--section {
+    margin-top: 60px;
+}
+
+/* Custom divider */
+.divider {
+    margin: 30px 0;
+    height: 6px;
+    width: 20%;
+    background: #CC014C;
+    display: block;
+}

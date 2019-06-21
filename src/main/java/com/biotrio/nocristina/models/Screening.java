@@ -76,10 +76,11 @@ public class Screening {
     public String toString() {
         return "Screening{" +
                 "id=" + id +
-                ", theater=" + theater +
-                ", price=" + price +
-                ", date=" + date +
                 ", time=" + time +
+                ", date=" + date +
+                ", price=" + price +
+                ", theater=" + theater +
+                ", movieId=" + movieId +
                 '}';
     }
 }
