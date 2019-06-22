@@ -1,6 +1,5 @@
 $(function() {
-    console.log("loaded jquery");
-
+    console.log("jquery loaded");
 
 
     // editing opening hours
@@ -143,7 +142,7 @@ $(function() {
 
     let ticketCount = 0, bookingCount = 0, ticketPrice = 0, totalSales = 0;
     //Get all bookings, store in 'bookings' array
-    $.ajax(`/api/bookings/`,
+    $.ajax(`/api/bookings/all`,
         {
             // success callback function
             success: (data) => {
@@ -151,6 +150,7 @@ $(function() {
                 $.each(data, (index, booking) => {
                     bookings.push(booking);
 
+                    console.log('data ', data, ' booking ', booking);
                     // calculate the total number of bookings
                     bookingCount += 1;
 
