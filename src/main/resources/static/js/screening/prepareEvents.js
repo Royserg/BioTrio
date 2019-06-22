@@ -1,6 +1,6 @@
-function getMovie(selectedScreenings) {
+function createEvents(selectedScreenings) {
 
-    let newScreenings = [];
+    let events = [];
 
     // / TheMovieDB API setup
     const API_KEY = '02325bf00c28d42c083b25b3be60b75e';
@@ -11,29 +11,38 @@ function getMovie(selectedScreenings) {
     $.ajax(`${API_URL}/movie/${screening.movieId}?api_key=${API_KEY}`)
         .done(response => {
 
-            let event = {
-                "movieId": screening.movieId,
-                "movieTitle": response['original_title'],
-                "startTime":screening.time,
-                "runtime":response['runtime']
+            let scheduleEvent = {
+                // "movieId": screening.movieId,
+                "title": response['original_title'],
+                "start":screening.time.slice(0,5),
+                "end":calculateEndTime(screening.time,response['runtime']),
+                noDetails: true
             }
 
-            calculateEndTime(screening.time,response['runtime']);
+            // let scheduleEvent = {
+            //     "start":12,
+            //     "end":14,
+            //     "title":"test",
+            //     // noDetails: true
+            // }
 
-            newScreenings.push(event);
-
-            // console.log(response['runtime']);
+            events.push(scheduleEvent);
+            // console.log("start time:",screening.time)
+            // console.log("runtime:",response['runtime']);
 
         });
     })
-    console.log(newScreenings)
+
+    return events;
 }
 
 function calculateEndTime(startTime,runtime) {
 
-    const end = new moment(${startTime}).add(runtime,'minutes'));
-    console.log(end);
+    let start = new moment(`${startTime}`, 'HH:mm');
+    let endTime = start.add(runtime, 'minutes').format('HH:mm');
+    // console.log("endtime:",endTime);
+
+    return endTime;
 }
 
-//trqbva da vzemesh start time na screening i da dobavish runtime ot funciqta otgore
-//i posle da suzdadesh nov obekt koito sudurja start time end time and movie title thats it
+

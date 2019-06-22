@@ -131,15 +131,21 @@ $(function () {
         })
         // $('.date-container').fadeIn('slow');
         $('.time-container').fadeIn('slow');
+        $('.schedule-container').fadeIn('slow');
 
         selectedScreenings = selectedScreenings.filter(s => s.theater.id === theater.id);
-        getMovie(selectedScreenings);
-
+        let events = createEvents(selectedScreenings);
+        console.log("events:",events)
+        buildSchedule(events);
     });
 
-    function buildSchedule (){
+    function buildSchedule (events){
         // $('#schedule').timespace(options, callback)
+        console.log(events)
+        let title = 'test'
 
+        // let array = [{start: 12, end: 13, title: , description: 'Go for a walk.'},
+        //     {start: 14, title: 'Lunch', description: 'Eat a healthy lunch.'}]
         $('#schedule').timespace({
             startTime: openHour,
             endTime: closeHour,
@@ -148,15 +154,13 @@ $(function () {
             data: {
                 headings: [
                     // {start: 0, end: 6, title: 'Night'},
-                    // {start: 6, end: 12, title: 'Morning'},
-                    // {start: 12, end: 18, title: 'Afternoon'},
-                    // {start: 18, end: 24, title: 'Evening'},
-                ],
+                    ],
                 events: [
-                    // {start: 6.50, title: 'Breakfast', description: 'Eat a healthy breakfast.'},
-                    // {start: 8, end: 10, title: 'Walk', description: 'Go for a walk.'},
-                    // {start: 14, title: 'Lunch', description: 'Eat a healthy lunch.'},
-                    // {start: 14.75, title: 'Confirm Appointment', noDetails: true},
+                    // {start: events[0].start, end: events[0].end, title: events[0].title, description: 'Go for a walk.'},
+                    {start: 14, title:'', noDetails:true,callback:function () {
+                            this.container.find('.jqTimespaceTitleClamp').append(title);
+                        }},
+                    {start: 14.75, title: 'Confirm Appointment', noDetails: true},
                     {start: 17.75, end: 20, title: 'Bring Supplies'},
                 ]
             }

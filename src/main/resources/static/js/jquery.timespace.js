@@ -273,7 +273,7 @@
 		timeTableBody: '<section></section>',
 		display: '<article class="jqTimespaceDisplay"></article>',
 		displayWrapper: '<div></div>',
-		displayTitle: '<h1></h1>',
+		displayTitle: '<h1 class="myTitle"></h1>',
 		displayTimeDiv: '<div class="jqTimespaceDisplayTime"></div>',
 		displayTime: '<time></time>',
 		displayBody: '<section></section>',
