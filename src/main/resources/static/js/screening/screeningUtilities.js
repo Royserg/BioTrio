@@ -99,9 +99,10 @@ function prepareScreeningsPage() {
 }
 
 $(function() {
+
   $('[name="modalTime"]').timeselector({
-    min: '17:30',
-    max: '23:00',
+    min: '20:00',
+    max: '22:00',
     step: 5,
     hours12: false
   })

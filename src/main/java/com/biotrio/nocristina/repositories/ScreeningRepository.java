@@ -67,8 +67,9 @@ public class ScreeningRepository implements IRepository<Screening>{
 
 
     public List<Screening> findByDate(String date) {
-        String sql = "SELECT * from screenings WHERE date = '" + date + "'";
-        return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+        String sql = getJoinedQuery()+ " WHERE s.date = ?";
+        List <Screening> screenings = jdbc.query(sql,new Object[]{date}, resultSetExtractor);
+        return screenings;
     }
   
     public List<Screening> findBetweenDates(String date1, String date2){

@@ -35,6 +35,7 @@ $(function () {
     let screeningId;
     let isAdd;
     let tr;
+    let openHour,closeHour;
 
 
     /*
@@ -130,12 +131,17 @@ $(function () {
         // $('.date-container').fadeIn('slow');
         $('.time-container').fadeIn('slow');
 
+
+    });
+
+    function buildSchedule (){
         // $('#schedule').timespace(options, callback)
+
         $('#schedule').timespace({
-            startTime: 17,
-            endTime:23,
+            startTime: openHour,
+            endTime: closeHour,
             selectedEvent: -1,
-            markerIncrement:5,
+            // markerIncrement:5,
             data: {
                 headings: [
                     // {start: 0, end: 6, title: 'Night'},
@@ -152,17 +158,19 @@ $(function () {
                 ]
             }
         });
-    });
+
+    }
 
     modalDate.change(function () {
         $('.theater-container').fadeIn('slow');
-        // $('.time-container').fadeIn('slow');
 
-        const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
+        // $('.time-container').fadeIn('slow');
+        // const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
+
         const selectedDaySchedule = cinema.schedule.find(day => day.dayNo === moment(modalDate.val()).isoWeekday());
 
-        const openHour = selectedDaySchedule.openingHour;
-        const closingHour = selectedDaySchedule.closingHour;
+        openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
+        closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
 
 
     })
