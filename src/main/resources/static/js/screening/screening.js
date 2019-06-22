@@ -36,7 +36,7 @@ $(function () {
     let isAdd;
     let tr;
     let openHour,closeHour;
-
+    let selectedScreenings;
 
     /*
     When a movie is clicked this method saves the
@@ -116,6 +116,7 @@ $(function () {
                 }
             )
     }
+
     //gets which theater has been selected from the modal and
     //reveals the next container for date and price
     $('#modalTheater').on('click', 'li', function() {
@@ -131,6 +132,8 @@ $(function () {
         // $('.date-container').fadeIn('slow');
         $('.time-container').fadeIn('slow');
 
+        selectedScreenings = selectedScreenings.filter(s => s.theater.id === theater.id);
+        getMovie(selectedScreenings);
 
     });
 
@@ -164,8 +167,17 @@ $(function () {
     modalDate.change(function () {
         $('.theater-container').fadeIn('slow');
 
-        // $('.time-container').fadeIn('slow');
-        // const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
+        const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
+
+        // get all the screenings for the selected date
+        $.getJSON(`/api/screenings/date/${selectedDate}`)
+            .done(function(data) {
+                    // return selectedScreenings = data.filter(s => s.theater.id === theater.id);
+                    selectedScreenings = data;
+                    // console.log(selectedScreenings);
+                }
+            );
+
 
         const selectedDaySchedule = cinema.schedule.find(day => day.dayNo === moment(modalDate.val()).isoWeekday());
 
@@ -174,7 +186,6 @@ $(function () {
 
 
     })
-
 
 
     //when the save button is clicked
@@ -204,38 +215,5 @@ $(function () {
             alert("Please validate the fields and ensure that the date is set in the future");
         }
     });
-
-
-    function addScreening(screening,movieTitle){
-
-        $.ajax({
-            type: "POST",
-            url: "/api/screenings",
-            dataType: "json",
-            data: JSON.stringify(screening),
-            contentType: "application/json; charset=utf-8",
-        }).done(function (id) {
-            screening["id"]=id;
-            const $row = buildTableRow(screening,movieTitle);
-            $('#screeningTable tbody').append($row);
-            $("#screeningTable caption").text("List of screenings");
-            $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
-            setTimeout(function(){ modal.modal('hide');},100);
-        });
-    }
-
-
-    function editScreening (screening,movieTitle,tr){
-        $.ajax({
-            type: 'PUT',
-            url: `api/screenings/${screening.id}`,
-            dataType: 'html',
-            data: JSON.stringify(screening),
-            contentType: "application/json; charset=utf-8",
-        }).done(function () {
-            const $row = buildTableRow(screening,movieTitle);
-            tr.replaceWith($row);
-        })
-    }
 
 });

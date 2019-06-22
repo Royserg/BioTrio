@@ -49,6 +49,7 @@ function clearModal (modal) {
   // $('.date-container').hide();
   $('.theater-container').hide();
   $('.time-container').hide();
+  $('.schedule-container').hide();
 
 }
 
@@ -119,3 +120,34 @@ function toggleListItemSelectedClass(element) {
 $('.carousel').carousel({
   interval: false
 });
+
+function editScreening (screening,movieTitle,tr){
+  $.ajax({
+    type: 'PUT',
+    url: `api/screenings/${screening.id}`,
+    dataType: 'html',
+    data: JSON.stringify(screening),
+    contentType: "application/json; charset=utf-8",
+  }).done(function () {
+    const $row = buildTableRow(screening,movieTitle);
+    tr.replaceWith($row);
+  })
+}
+
+function addScreening(screening,movieTitle){
+
+  $.ajax({
+    type: "POST",
+    url: "/api/screenings",
+    dataType: "json",
+    data: JSON.stringify(screening),
+    contentType: "application/json; charset=utf-8",
+  }).done(function (id) {
+    screening["id"]=id;
+    const $row = buildTableRow(screening,movieTitle);
+    $('#screeningTable tbody').append($row);
+    $("#screeningTable caption").text("List of screenings");
+    $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
+    setTimeout(function(){ $('#screeningModal').modal('hide');},100);
+  });
+}
