@@ -48,8 +48,8 @@ $(function () {
         movieId = row.attr('data-movieid');
         movieTitle = row.attr('data-movieTitle');
 
-        $('.date-container').hide();
-        $('.time-container').hide();
+        // $('.date-container').hide();
+        // $('.time-container').hide();
 
         prepareScreeningsPage();
         populateScreeningTable(movieId);
@@ -64,6 +64,10 @@ $(function () {
 
         // Adjust modal and open it
         screeningModal.showModal(false, 'Add Screening', 'Add Screening');
+
+        //disable dates before today by setting the min value
+        //https://stackoverflow.com/a/50405795
+        document.getElementById('modalDate').min = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
     });
 
     screeningTableBody.on('click','.btn-edit', function () {
@@ -123,12 +127,37 @@ $(function () {
                 theater=t;
             }
         })
-        $('.date-container').fadeIn('slow');
+        // $('.date-container').fadeIn('slow');
+        $('.time-container').fadeIn('slow');
 
+        // $('#schedule').timespace(options, callback)
+        $('#schedule').timespace({
+            startTime: 17,
+            endTime:23,
+            selectedEvent: -1,
+            markerIncrement:5,
+            data: {
+                headings: [
+                    // {start: 0, end: 6, title: 'Night'},
+                    // {start: 6, end: 12, title: 'Morning'},
+                    // {start: 12, end: 18, title: 'Afternoon'},
+                    // {start: 18, end: 24, title: 'Evening'},
+                ],
+                events: [
+                    // {start: 6.50, title: 'Breakfast', description: 'Eat a healthy breakfast.'},
+                    // {start: 8, end: 10, title: 'Walk', description: 'Go for a walk.'},
+                    // {start: 14, title: 'Lunch', description: 'Eat a healthy lunch.'},
+                    // {start: 14.75, title: 'Confirm Appointment', noDetails: true},
+                    {start: 17.75, end: 20, title: 'Bring Supplies'},
+                ]
+            }
+        });
     });
 
     modalDate.change(function () {
-        $('.time-container').fadeIn('slow');})
+        $('.theater-container').fadeIn('slow');
+        // $('.time-container').fadeIn('slow');
+    })
 
 
 
@@ -161,8 +190,6 @@ $(function () {
             alert("Please validate the fields and ensure that the date is set in the future");
         }
     });
-
-
 
 
     function addScreening(screening,movieTitle){

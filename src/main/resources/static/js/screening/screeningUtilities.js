@@ -46,7 +46,8 @@ function clearModal (modal) {
       .end()
   });
   $("#modalTheater").children('li').removeClass('list-group-item__selected');
-  $('.date-container').hide();
+  // $('.date-container').hide();
+  $('.theater-container').hide();
   $('.time-container').hide();
 
 }
@@ -97,9 +98,14 @@ function prepareScreeningsPage() {
   $('#prev').removeClass("invisible");
 }
 
-
-
-
+$(function() {
+  $('[name="modalTime"]').timeselector({
+    min: '17:30',
+    max: '23:00',
+    step: 5,
+    hours12: false
+  })
+});
 
 function toggleListItemSelectedClass(element) {
   // Remove selected class from all items
