@@ -24,6 +24,8 @@ function buildTableRow(screening,movieTitle) {
   return newRow;
 }
 
+//currently not used
+//checks if all fields in the modal are populated
 function validateInput(screening) {
   let validated = true;
   if(screening.movieId == null) validated = false;
@@ -33,6 +35,7 @@ function validateInput(screening) {
   return validated;
 }
 
+//clears all fields of the modal
 function clearModal (modal) {
 
   modal.on('hidden.bs.modal', function() {
@@ -49,7 +52,6 @@ function clearModal (modal) {
 }
 
 function populateModal(screening,movieTitle){
-
 
   $('#modalScreeningMovie').val(movieTitle);
   $('#modalDate').val(screening.date);
@@ -95,35 +97,9 @@ function prepareScreeningsPage() {
   $('#prev').removeClass("invisible");
 }
 
-function addScreening(screening,movieTitle){
-  $.ajax({
-    type: "POST",
-    url: "/api/screenings",
-    dataType: "json",
-    data: JSON.stringify(screening),
-    contentType: "application/json; charset=utf-8",
-  }).done(function (id) {
-    screening["id"]=id;
-    const $row = buildTableRow(screening,movieTitle);
-    $('#screeningTable tbody').append($row);
-    $("#screeningTable caption").text("List of screenings");
-    $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
-  });
-}
 
-function editScreening (screening,movieTitle,tr){
-  console.log("sending put request")
-  $.ajax({
-    type: 'PUT',
-    url: `api/screenings/${screening.id}`,
-    dataType: 'html',
-    data: JSON.stringify(screening),
-    contentType: "application/json; charset=utf-8",
-  }).done(function () {
-    const $row = buildTableRow(screening,movieTitle);
-    tr.replaceWith($row);
-  })
-}
+
+
 
 function toggleListItemSelectedClass(element) {
   // Remove selected class from all items

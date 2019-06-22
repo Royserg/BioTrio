@@ -106,7 +106,7 @@
                             <div class="modal-footer">
                                 <div class="footer">
                                     <div class="form-container" >
-                                        <input class="form-control" placeholder="Phone Number" name="phoneNum" type="text" id="phoneNum"/>
+                                        <input class="form-control" placeholder="Phone Number" name="phoneNum" type="text" id="phoneNum" maxlength="8"/>
                                     </div>
                                     <div class="footer-information">
                                         <div>
@@ -178,6 +178,8 @@
 
     <!-- Custom js -->
 
+    <!-- Modal class with functionality  -->
+    <script th:src="@{/js/Modal.js}"></script>
     <!-- General functionality to use in other files  -->
     <script th:src="@{/js/booking/bookingUtilities.js}"></script>
     <!--  Dynamic searching of bookings when typing in the search bar  -->

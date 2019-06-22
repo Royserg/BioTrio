@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -58,7 +60,7 @@ public class ScreeningController implements IController<Screening>{
     // Add new screening
     @PostMapping("/api/screenings")
     @ResponseBody
-    public int saveOne(@RequestBody Screening newScreening) {
+    public int saveOne(@Valid @RequestBody Screening newScreening) {
         int screeningId = screeningService.addScreening(newScreening);
 
         return screeningId;
@@ -74,7 +76,7 @@ public class ScreeningController implements IController<Screening>{
     // Edit screening
     @PutMapping("/api/screenings/{id}")
     @ResponseBody
-    public void updateOne(@PathVariable int id,  @RequestBody Screening screeningToEdit){
+    public void updateOne(@PathVariable int id,  @Valid @RequestBody Screening screeningToEdit){
         screeningService.editScreening(id, screeningToEdit);
     }
 

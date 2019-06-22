@@ -17,12 +17,6 @@ $(function(){
 
   // Show modal for adding a new booking, with loaded list of movies
   $('#addBookingBtn').click(function() {
-    // Change Submit Button name and classes
-    $('#submitBtn')
-      .text('Book tickets')
-      .removeClass('btn-warning')
-      .addClass('btn-primary');
-
     // Reset list of movies
     moviesList.html('');
     // Hide containers for booking info, so opening modal again doesn't show previous booking info
@@ -50,7 +44,7 @@ $(function(){
         });
 
     // Open modal
-    $('#bookingModal').modal();
+    bookingModal.showModal(false, 'Add Booking', 'Add Booking')
   });
 
 
@@ -184,6 +178,7 @@ $(function(){
   // Add new booking
   // Trigger action only when submit button has .btn-success class
   $('.modal-footer').on('click', '#submitBtn.btn-primary', function() {
+
     // Convert array-like object into a JavaScript array: `https://api.jquery.com/jQuery.makeArray/`
     // then transform each element into object with `rowNo` and `columnNo` attributes that reflect Seat class
     const selectedSeats = $.makeArray($('.seat__selected')).map(seat => {
@@ -194,10 +189,13 @@ $(function(){
     });
 
     // Prevent making a booking without a phone number
-    if (!$('#phoneNum').val()) {
-      alert('Provide phone number');
+    if (!$('#phoneNum').val() || selectedSeats.length === 0) {
+      alert('Missing phone number of seat selection');
       return
     }
+
+    // Disable submit button
+    bookingModal.disableButton();
 
     // Create representation of an booking object for sending to Backend
     let booking = {
@@ -217,7 +215,7 @@ $(function(){
     })
       .done(bookingId => addBookingRow(bookingId, booking));
 
-  })
+  });
 
 
   function addBookingRow(bookingId, booking) {

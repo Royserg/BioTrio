@@ -2,6 +2,7 @@ package com.biotrio.nocristina.repositories;
 import com.biotrio.nocristina.models.Booking;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -41,6 +42,12 @@ public class BookingRepository implements IRepository<Booking> {
         String sql = getJoinedQuery() + " ORDER BY b.id DESC LIMIT 15;";
         List<Booking> bookings = jdbc.query(sql, resultSetExtractor);
         return bookings;
+    }
+
+    public List<Booking> findAllBookings() {
+        String sql = getJoinedQuery() + " ORDER BY b.id;";
+        List<Booking> allBookings = jdbc.query(sql, resultSetExtractor);
+        return allBookings;
     }
 
     public List<Booking> findByPhone(String phoneNumber) {
@@ -112,7 +119,7 @@ public class BookingRepository implements IRepository<Booking> {
                 " s.time as screening_time, s.date as screening_date, s.price as screening_price," +
                 " th.id as screening_theater_id, th.name as screening_theater_name, th.rows_number as screening_theater_rows_number," +
                 " th.columns_number as screening_theater_columns_number, th.can3D as screening_theater_can3d, th.dolby as screening_theater_dolby," +
-               " m.id as movie_id, m.title as movie_title, m.duration_in_minutes as movie_duration_in_minutes" +
+               " m.id as movie_id, m.title as movie_title" +
                " FROM bookings b" +
                 " JOIN tickets t ON t.booking_id = b.id" +
                 " JOIN screenings s ON s.id = b.screening_id" +

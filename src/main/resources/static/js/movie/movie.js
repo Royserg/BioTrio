@@ -1,41 +1,26 @@
 $(function() {
 
+    console.log('movie js loaded');
+
+    // TheMovieDB API setup
+    const API_KEY = '02325bf00c28d42c083b25b3be60b75e';
+    const API_URL = 'https://api.themoviedb.org/3';
+    const API_IMAGE_URL = 'https://image.tmdb.org/t/p/w92/';
+
+
+    // Initialize modal class
+    const movieModal = new Modal($('#movieModal'), $('#submitModal'));
+
     const addButton = $('#addButton');
 
+    let i;
     let id;
     let isEdit = false;
-    let movieTitle, movieDuration, movie3D, movieDolby;
-    let row;
+    let movieTitle;
+    // let row;
 
     //add class to the add button
     addButton.addClass("add-movie");
-
-    // Click edit movie and it'll bring the movie info and show it on modal
-
-    $('#movieTable').on("click", ".btn-edit", function() {
-
-        row = $(this).closest('tr');
-        id= row.data('movieid');
-
-        // Bring the movie data from the table
-        movieTitle = row.children('td')[1].innerHTML;
-        movieDuration = row.children('td')[2].innerHTML;
-        movie3D = row.children('td')[3].innerHTML;
-        movieDolby = row.children('td')[4].innerHTML;
-
-        // Show the previous data so that the user can edit onto it
-        $("#modalTitle").val(movieTitle);
-        $("#modalDurationInMinutes").val(movieDuration);
-        $("#modalIs3D").val(movie3D);
-        $("#modalDolby").val(movieDolby);
-
-        // Change isEdit into true
-        isEdit = true;
-
-        // Show the modal with yellow button and header
-        showModal(`<h5>Edit Movie</h5>`, 'btn btn-warning');
-
-    });
 
     // Click add movie and it'll clear the modal, getting ready for new info
     //https://stackoverflow.com/a/28108858
@@ -45,148 +30,128 @@ $(function() {
             isEdit = false;
 
             // Clear the modal
-            $('#modalTitle').val("");
-            $('#modalDurationInMinutes').val("");
-            $('#modalIs3D').prop("checked", false);
-            $('#modalDolby').prop("checked", false);
+            $('#searchMovie').val("");
+            $('.dropdown-menu').empty();
+            $('#showResults').empty();
 
-            // Show the modal with green button and header
-            showModal(`<h5>Add Movie</h5>`, 'btn btn-primary');
-
+            // Show the modal for adding a new Movie
+            movieModal.showModal(isEdit, 'Add Movie', 'Add Movie');
         });
 
-        // Show modal with different header and button color
-        function showModal(header, className) {
-
-            $('#movieModalTitle').html(header);
-            $('#submitModal').removeAttr('class');
-            $('#submitModal').addClass(className);
-            $('#movieModal').modal('show');
-
-        }
-
-        // Click save button and edit or add accordingly
+        // Click save button and add accordingly
         $('html body').off('click').on('click', '#submitModal', function (e) {
 
-            if(isEdit) {
-                edit();
-            } else {
                 add(e);
-            }
 
         });
-
-        // Edit a movie
-        function edit() {
-
-            let movieToEdit = {
-                'id': id,
-                'title': $('#modalTitle').val(),
-                'durationInMinutes': $('#modalDurationInMinutes').val(),
-                'is3D': $('#modalIs3D').is(":checked"),
-                'dolby': $('#modalDolby').is(":checked")
-            };
-
-            // Check if the screening time is less than 10 minutes
-            if (movieToEdit.durationInMinutes < 10) {
-                alert("Invalid input. Please check the duration again.");
-            } else {
-
-                $.ajax( {
-
-                    type: 'PUT',
-                    url: `/api/movies/${id}`,
-                    dataType: 'html',
-                    data: JSON.stringify(movieToEdit),
-                    contentType: 'application/json'
-                } )
-                    .done(function() {
-
-                        // Reload the data
-                        row.children('td')[1].innerHTML = movieToEdit.title;
-                        row.children('td')[2].innerHTML = movieToEdit.durationInMinutes;
-                        row.children('td')[3].innerHTML = movieToEdit.is3D;
-                        row.children('td')[4].innerHTML = movieToEdit.dolby;
-
-                        // Fancy css and close the modal
-                        row.css('background', 'gold');
-                        row.fadeOut(300, function () {
-                            $(this).fadeIn(300);
-                            $(this).css('background', 'white');
-                            setTimeout(function () {
-                                $('#movieModal').modal('hide');
-                            }, 100);
-
-                        })
-                    })
-            }
-        }
 
         // Add a movie
         function add(e) {
+            // Disable submit button
+            movieModal.disableButton();
 
             // Prevent default event such as refreshing the whole page after the movie is added
             e.preventDefault();
 
             let newMovie = {
-                'title': $('#modalTitle').val(),
-                'durationInMinutes': $('#modalDurationInMinutes').val(),
-                'is3D': $('#modalIs3D').is(":checked"),
-                'dolby': $('#modalDolby').is(":checked")
+                'id': id,
+                'title': movieTitle
             };
 
-            if (newMovie.durationInMinutes < 10) {
+            $.ajax({
+                type: 'POST',
+                url: `/api/movies`,
+                dataType: 'json',
+                data: JSON.stringify(newMovie),
+                contentType: 'application/json'
+            })
+            .done(function (id) {
 
-                alert("Invalid input. Please check the duration again.");
-
-            } else {
-
-                $.ajax({
-                    type: 'POST',
-                    url: `/api/movies`,
-                    dataType: 'json',
-                    data: JSON.stringify(newMovie),
-                    contentType: 'application/json'
-                })
-                .done(function (id) {
-
-                        // Add new row to the table with the newly added movie
-                        let newRow = `<tr class="d-flex" data-movieid="${id}", data-movietitle="${newMovie.title}">
-                                        <td class="col-1 cool-pointer">
-                                            <button title="screening list" class="btn btn-outline-dark">
-                                                <span class="fas fa-chevron-right"></span>
-                                            </button>
-                                        </td>
-                                        <td class="col-4 title cool-pointer">${newMovie.title}</td>
-                                        <td class="col-3 duration">${newMovie.durationInMinutes}</td>
-                                        <td class="col-1 is3D">${newMovie.is3D}</td>
-                                        <td class="col-1 dolby">${newMovie.dolby}</td>
-                                        <td class="col-1">
-                                            <button
-                                               id = "editButton"
-                                               class="btn btn-outline-dark btn-edit"
-                                               title="edit"
-                                               data-toggle="modal"
-                                               data-target="#movieModal">
-                                                   <span class="fas fa-edit"></span>
+                    // Add new row to the table with the newly added movie
+                    let newRow = `<tr class="d-flex" data-movieid="${id}", data-movietitle="${newMovie.title}">
+                                    <td class="col-1 cool-pointer">
+                                        <button title="screening list" class="btn btn-outline-dark">
+                                            <span class="fas fa-chevron-right"></span>
                                         </button>
                                     </td>
-                                    <td class="col-1">
-                                        <button class="btn btn-outline-dark btn-delete" title="delete">
-                                            <span class="fas fa-trash"></span>
-                                        </button>
-                                    </td>
-                                  </tr>`;
+                                    <td class="col-3 id">${newMovie.id}</td>
+                                    <td class="col-7 title cool-pointer">${newMovie.title}</td>
+                                <td class="col-1">
+                                    <button class="btn btn-outline-dark btn-delete" title="delete">
+                                        <span class="fas fa-trash"></span>
+                                    </button>
+                                </td>
+                              </tr>`;
 
-                        // Add new row to the table and hide the modal
-                        $('#movieTable tbody').append(newRow);
-                        setTimeout(function () {
-                            $('#movieModal').modal('hide');
-                        }, 100);
+                    // Add new row to the table and hide the modal
+                    $('#movieTable tbody').append(newRow);
+                    setTimeout(function () {
+                        $('#movieModal').modal('hide');
+                    }, 100);
 
-                        // Scroll down the table so that you can see the newly added movie
-                         $('#movieTable tbody').scrollTop($('#movieTable tbody')[0].scrollHeight);
-                    });
-            }
+                    // Scroll down the table so that you can see the newly added movie
+                     $('#movieTable tbody').scrollTop($('#movieTable tbody')[0].scrollHeight);
+                });
+
         }
+
+
+        // search movie on the tmdb api
+        $('.modal-body').on('keyup', '#searchMovie', function() {
+
+            // clear the drop down and the result panel
+            $('.dropdown-item').remove();
+            $('.dropdown-menu').empty();
+            $('#showResults').empty();
+
+            // get the input value
+            let searchTitle = $('#searchMovie').val();
+
+            // search the title through the tmdb api and show the first 3(the most recently released) results
+            $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${searchTitle}`)
+                    .done(response => {
+
+                        for(i=0; i<3; i++){
+                            let result = response.results[i];
+                            let resultRow = `<a class="dropdown-item" href="#" data-id="${result['id']}" data-title="${result['original_title']}" style="display:flex; justify-content:flex-start;">
+                                                <img class="movieThumbnail"  src="${API_IMAGE_URL + result['poster_path']}"/>
+                                                <div style="margin-left: 30px;"><p>${result['original_title']}</p>
+                                                     <p>${result['release_date']}</p></div></a>`;
+                            $('.dropdown-menu').append(resultRow);
+
+                        }
+
+
+                    });
+
+        });
+
+        // when select movie -> show the title on the result panel
+        $('.dropdown-menu').on('click', '.dropdown-item', function() {
+
+            // empty the result panel
+            $('#showResults').empty();
+
+            // save the id and title for adding the movie
+            id = $(this).data('id');
+            movieTitle = $(this).data('title');
+
+            // get the info of the selected movie from tmdb and show it on result panel
+            $.ajax(`${API_URL}/movie/${id}?api_key=${API_KEY}`)
+                .done(response => {
+                    let selectedMovieRow =`<br>
+                                    <label for="selectedMovie">Movie selected</label>
+                                    <div type="text" id="selectedMovie" maxlength="255" style="display:flex; justify-content:space-around;">
+                                    <img class="selectedMovieThumbnail"  src="${API_IMAGE_URL + response['poster_path']}"/>
+                                    <div><p> Title: ${response['original_title']}</p>
+                                        <p> Release Date: ${response['release_date']}</p>
+                                        <p> Status: ${response['status']}</p>
+                                        <p> Runtime: ${response['runtime']}</p></div>
+                                    </div>`;
+
+                    $('#showResults').append(selectedMovieRow);
+
+                });
+        })
+
 });

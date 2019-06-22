@@ -164,3 +164,6 @@ function createBookingRow(bookingId, booking) {
                `);
   return $row;
 }
+
+// Initialize booking Modal
+const bookingModal = new Modal($('#bookingModal'), $('#submitBtn'));
