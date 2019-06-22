@@ -157,6 +157,14 @@ $(function () {
     modalDate.change(function () {
         $('.theater-container').fadeIn('slow');
         // $('.time-container').fadeIn('slow');
+
+        const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
+        const selectedDaySchedule = cinema.schedule.find(day => day.dayNo === moment(modalDate.val()).isoWeekday());
+
+        const openHour = selectedDaySchedule.openingHour;
+        const closingHour = selectedDaySchedule.closingHour;
+
+
     })
 
 
