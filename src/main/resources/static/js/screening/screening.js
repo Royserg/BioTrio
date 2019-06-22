@@ -173,8 +173,6 @@ $(function () {
     //this method creates the screening object and calls the respective method
     submitButton.click(function() {
 
-        console.log("I am now saving");
-
         let screening = {
             "movieId": movieId,
             "theater": theater,
