@@ -31,6 +31,13 @@ public class BookingController implements IController<Booking>{
         return bookings;
     }
 
+    @GetMapping("/api/bookings/all")
+    @ResponseBody
+    public List<Booking> findAllBookingsForStat() {
+        List<Booking> allBookings = bookingService.getAllBookingsForStat();
+        return allBookings;
+    }
+
     @GetMapping("/api/bookings/{id}")
     @ResponseBody
     public Booking findOne(@PathVariable int id) {

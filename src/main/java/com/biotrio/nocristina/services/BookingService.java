@@ -25,6 +25,11 @@ public class BookingService {
         return bookings;
     }
 
+    public List<Booking> getAllBookingsForStat() {
+        List<Booking> allBookings = bookingRepo.findAllBookings();
+        return allBookings;
+    }
+
     /**
      * Method returning list of bookings that match passed phone number beginning
      * with any random end of the phone number
