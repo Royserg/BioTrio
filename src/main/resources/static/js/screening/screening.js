@@ -136,37 +136,27 @@ $(function () {
         selectedScreenings = selectedScreenings.filter(s => s.theater.id === theater.id);
         let events = createEvents(selectedScreenings);
         console.log("events:",events)
-        buildSchedule(events);
     });
 
-    function buildSchedule (events){
-        // $('#schedule').timespace(options, callback)
-        console.log(events)
-        let title = 'test'
+    function f() {
+        let timetable = new Timetable();
 
-        // let array = [{start: 12, end: 13, title: , description: 'Go for a walk.'},
-        //     {start: 14, title: 'Lunch', description: 'Eat a healthy lunch.'}]
-        $('#schedule').timespace({
-            startTime: openHour,
-            endTime: closeHour,
-            selectedEvent: -1,
-            // markerIncrement:5,
-            data: {
-                headings: [
-                    // {start: 0, end: 6, title: 'Night'},
-                    ],
-                events: [
-                    // {start: events[0].start, end: events[0].end, title: events[0].title, description: 'Go for a walk.'},
-                    {start: 14, title:'', noDetails:true,callback:function () {
-                            this.container.find('.jqTimespaceTitleClamp').append(title);
-                        }},
-                    {start: 14.75, title: 'Confirm Appointment', noDetails: true},
-                    {start: 17.75, end: 20, title: 'Bring Supplies'},
-                ]
-            }
-        });
+        const theaterNames = theaterList.map(theater => theater.name);
+        timetable.addLocations([ 'Nile']);
+
+        const openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
+        const closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
+
+        timetable.setScope(openHour, closeHour === 23 ? 0 : closeHour + 1); // optional, only whole hours between 0 and 23
+
+        //addEvent(name, location, startDate, endDate[, options])
+        timetable.addEvent(movieTitle,'Nile' , new Date(2015,7,17,10,45), new Date(2015,7,17,12,30));
+
+        let renderer = new Timetable.Renderer(timetable);
+        renderer.draw('.timetable');
 
     }
+
 
     modalDate.change(function () {
         $('.theater-container').fadeIn('slow');
