@@ -1,6 +1,10 @@
-function createEvents(selectedScreenings) {
+function createEvents(selectedScreenings,openHour,closeHour) {
 
-    let events = [];
+    // console.log(selectedScreenings);
+    // console.log(typeof selectedScreenings);
+    let timetable = new Timetable();
+    timetable.addLocations([ 'loc']);
+    timetable.setScope(openHour, closeHour === 23 ? 0 : closeHour + 1);
 
     // / TheMovieDB API setup
     const API_KEY = '02325bf00c28d42c083b25b3be60b75e';
@@ -14,35 +18,37 @@ function createEvents(selectedScreenings) {
             let scheduleEvent = {
                 // "movieId": screening.movieId,
                 "title": response['original_title'],
-                "start":screening.time.slice(0,5),
+                "start":screening.time,
                 "end":calculateEndTime(screening.time,response['runtime']),
-                noDetails: true
             }
 
-            // let scheduleEvent = {
-            //     "start":12,
-            //     "end":14,
-            //     "title":"test",
-            //     // noDetails: true
-            // }
+            let startHour = parseInt(scheduleEvent.start.slice(0,2));
+            let startMin = parseInt(scheduleEvent.start.slice(3,5));
 
-            events.push(scheduleEvent);
-            // console.log("start time:",screening.time)
-            // console.log("runtime:",response['runtime']);
+            let endHour = parseInt(scheduleEvent.end.slice(0,2));
+            let endMin = parseInt(scheduleEvent.end.slice(3,5));
 
+            timetable.addEvent(scheduleEvent.title,'loc' , new Date(2000,1,1,startHour,startMin),
+                                                              new Date(2000,1,1,endHour,endMin));
+
+            renderTable(timetable);
         });
     })
 
-    return events;
+    return timetable;
 }
 
 function calculateEndTime(startTime,runtime) {
 
     let start = new moment(`${startTime}`, 'HH:mm');
     let endTime = start.add(runtime, 'minutes').format('HH:mm');
-    // console.log("endtime:",endTime);
 
     return endTime;
 }
 
+function renderTable(timetable) {
+    clearSchedule();
+    let renderer = new Timetable.Renderer(timetable);
+    renderer.draw('.timetable');
+}
 

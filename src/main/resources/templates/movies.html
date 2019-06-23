@@ -5,7 +5,6 @@
 
 </head>
 <link rel="stylesheet" th:href="@{/css/screening.css}">
-<link rel="stylesheet" th:href="@{/css/jquery.timeselector.css}">
 <link rel="stylesheet" th:href="@{/css/timetablejs.css}">
 <body>
 <!--this is for the navigation bar-->
@@ -85,12 +84,12 @@
                                             </ul>
                                         </div>
 <!--                                    </div>-->
-                                    <div class="schedule-container mt-2" id="schedule">
+                                    <div class="timetable mt-2" id="schedule">
 
                                     </div>
                                     <div class="time-container mt-2">
                                         <label for="modalTime">Time</label>
-                                        <input type="text" class="form-control" name="modalTime" id="modalTime" step="5">
+                                        <input type="time" class="form-control" name="modalTime" id="modalTime" step="5">
                                         <div class="mt-2">
                                             <label for="modalPrice">Price</label>
                                             <input type="number" max="1000" class="form-control" id="modalPrice">
@@ -208,7 +207,6 @@
 
 <!-- custom js class providing modal functionality -->
 <script th:src="@{/js/Modal.js}"></script>
-<script th:src="@{/js/jquery.timeselector.js}"></script>
 <script th:src="@{/js/timetable.js}"></script>
 
 <script th:src="@{/js/movie/movie.js}"></script>

@@ -24,17 +24,6 @@ function buildTableRow(screening,movieTitle) {
   return newRow;
 }
 
-//currently not used
-//checks if all fields in the modal are populated
-function validateInput(screening) {
-  let validated = true;
-  if(screening.movieId == null) validated = false;
-  if(screening.theater == null) validated = false;
-  if(screening.price > 999 || screening.price < 1) validated = false;
-
-  return validated;
-}
-
 //clears all fields of the modal
 function clearModal (modal) {
 
@@ -49,7 +38,7 @@ function clearModal (modal) {
   // $('.date-container').hide();
   $('.theater-container').hide();
   $('.time-container').hide();
-  $('.schedule-container').hide();
+  $('.timetable').hide();
 
 }
 
@@ -62,6 +51,10 @@ function populateModal(screening,movieTitle){
 
   $('.date-container').show();
   $('.time-container').show();
+  $('.theater-container').show();
+  $('.timetable').show();
+
+
 
   //finds the list item which has data attribute equal to the id of
   // the selected screenings theater and adds css to it
@@ -99,15 +92,6 @@ function prepareScreeningsPage() {
   $('#prev').removeClass("invisible");
 }
 
-$(function() {
-
-  $('[name="modalTime"]').timeselector({
-    min: '20:00',
-    max: '22:00',
-    step: 5,
-    hours12: false
-  })
-});
 
 function toggleListItemSelectedClass(element) {
   // Remove selected class from all items
@@ -150,4 +134,23 @@ function addScreening(screening,movieTitle){
     $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
     setTimeout(function(){ $('#screeningModal').modal('hide');},100);
   });
+}
+
+//Fucntion which verifies the input of the user
+function verifyInput() {
+  // isFilled=true;
+  if($('#modalPrice').val()=="" || $('#modalPrice').val()<=0){
+    return false;
+  }
+  if($('#modalDate').val()=="" || $('#modalDate').val == null){
+    return false;
+  }
+  if($('#modalTime').val()=="" || $('#modalTime').val == null){
+    return false;
+  }
+  return true;
+}
+
+function clearSchedule(){
+  $('#schedule').html('');
 }

@@ -13,30 +13,12 @@ $(function () {
     const modalTime = $('#modalTime');
     const submitButton = $('#submitButton');
 
-    let isFilled=false;
-
-    //Fucntion which verifies the input of the user
-    function verifyInput() {
-        isFilled=true;
-        if(modalPrice.val()=="" || modalPrice.val()<=0){
-            isFilled=false;
-        }
-        if(modalDate.val()=="" || modalDate.val == null){
-            isFilled=false;
-        }
-        if(modalTime.val()=="" || modalTime.val == null){
-            isFilled=false;
-        }
-        return isFilled;
-    }
-
-    let movieId,movieTitle;
-    let theater;
-    let screeningId;
-    let isAdd;
-    let tr;
+    let movieId,movieTitle,screeningId;
+    let isAdd,tr;
     let openHour,closeHour;
     let selectedScreenings;
+    let theater = null;
+
 
     /*
     When a movie is clicked this method saves the
@@ -48,9 +30,6 @@ $(function () {
         let row = $(this).closest('tr');
         movieId = row.attr('data-movieid');
         movieTitle = row.attr('data-movieTitle');
-
-        // $('.date-container').hide();
-        // $('.time-container').hide();
 
         prepareScreeningsPage();
         populateScreeningTable(movieId);
@@ -90,27 +69,30 @@ $(function () {
     function populateScreeningTable(movieId){
 
         $.getJSON(`/api/movies/${movieId}/screenings`)
-          .done(function(screeningsList) {
-              if(screeningsList.length > 0){
-                  screeningsList.forEach(function (s) {
-                      const $row = buildTableRow(s,movieTitle);
-                      screeningTableBody.append($row);
-                      $("#screeningTable caption").text("List of screenings");
-                  })
-              }
-              else {
-                  $("#screeningTable caption").text("No screenings available");
-              }
-          })
+            .done(function(screeningsList) {
+                if(screeningsList.length > 0){
+                    screeningsList.forEach(function (s) {
+                        const $row = buildTableRow(s,movieTitle);
+                        screeningTableBody.append($row);
+                        $("#screeningTable caption").text("List of screenings");
+                    })
+                }
+                else {
+                    $("#screeningTable caption").text("No screenings available");
+                }
+            })
     }
 
     //fills the modal with information from the database for the selected screening
     function populateEditModal(screeningId){
 
+        getScreenings();
+
         $.getJSON(`/api/screenings/${screeningId}`)
             .done(function(screening) {
 
                     populateModal(screening,movieTitle);
+                    createSchedule();
 
                     theater = screening.theater;
                 }
@@ -120,6 +102,9 @@ $(function () {
     //gets which theater has been selected from the modal and
     //reveals the next container for date and price
     $('#modalTheater').on('click', 'li', function() {
+
+        clearSchedule();
+
         // https://stackoverflow.com/a/2888447
         const theaterId = $(this).data('theater_id');
         toggleListItemSelectedClass($(this));
@@ -129,59 +114,57 @@ $(function () {
                 theater=t;
             }
         })
-        // $('.date-container').fadeIn('slow');
-        $('.time-container').fadeIn('slow');
-        $('.schedule-container').fadeIn('slow');
 
-        selectedScreenings = selectedScreenings.filter(s => s.theater.id === theater.id);
-        let events = createEvents(selectedScreenings);
-        console.log("events:",events)
-        f();
+        $('.timetable').fadeIn('slow');
+        $('.time-container').fadeIn('slow');
+
+        createSchedule();
+
     });
 
-    function f() {
-        let timetable = new Timetable();
-
-        // const theaterNames = theaterList.map(theater => theater.name);
-        timetable.addLocations([ 'Nile']);
-
-        // const openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
-        // const closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
-
-        // timetable.setScope(openHour, closeHour === 23 ? 0 : closeHour + 1); // optional, only whole hours between 0 and 23
-
-        //addEvent(name, location, startDate, endDate[, options])
-        timetable.addEvent(movieTitle,'Nile' , new Date(2015,7,17,10,45), new Date(2015,7,17,12,30));
-
-        let renderer = new Timetable.Renderer(timetable);
-        renderer.draw('.schedule-container');
-
+    function filterScreenings(theater,selectedScreenings){
+        return selectedScreenings.filter(s => s.theater.id === theater.id);
     }
 
+    function createSchedule(){
+        // getScreenings();
+        let screenings = filterScreenings(theater,selectedScreenings);
+        let timetable = createEvents(screenings,openHour,closeHour);
+
+        return timetable;
+    }
 
     modalDate.change(function () {
         $('.theater-container').fadeIn('slow');
 
+        clearSchedule();
+        getScreenings();
+
+        if(theater !== null) {
+            createSchedule();
+        }
+
+        const selectedDaySchedule = cinema.schedule.find(day => day.dayNo === moment(modalDate.val()).isoWeekday());
+        openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
+        closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
+
+    })
+
+    function getScreenings () {
         const selectedDate = moment(modalDate.val()).format("YYYY-MM-DD");
 
         // get all the screenings for the selected date
         $.getJSON(`/api/screenings/date/${selectedDate}`)
             .done(function(data) {
-                    // return selectedScreenings = data.filter(s => s.theater.id === theater.id);
-                    selectedScreenings = data;
-                    // console.log(selectedScreenings);
+                    if (typeof(data) === "string"){
+                        selectedScreenings = JSON.parse(data)
+                    }
+                    else {
+                        selectedScreenings = data;
+                    }
                 }
             );
-
-
-        const selectedDaySchedule = cinema.schedule.find(day => day.dayNo === moment(modalDate.val()).isoWeekday());
-
-        openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
-        closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
-
-
-    })
-
+    }
 
     //when the save button is clicked
     //this method creates the screening object and calls the respective method
