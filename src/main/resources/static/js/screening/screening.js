@@ -136,24 +136,25 @@ $(function () {
         selectedScreenings = selectedScreenings.filter(s => s.theater.id === theater.id);
         let events = createEvents(selectedScreenings);
         console.log("events:",events)
+        f();
     });
 
     function f() {
         let timetable = new Timetable();
 
-        const theaterNames = theaterList.map(theater => theater.name);
+        // const theaterNames = theaterList.map(theater => theater.name);
         timetable.addLocations([ 'Nile']);
 
-        const openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
-        const closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
+        // const openHour = parseInt(selectedDaySchedule.openingHour.slice(0,2));
+        // const closeHour = parseInt(selectedDaySchedule.closingHour.slice(0,2));
 
-        timetable.setScope(openHour, closeHour === 23 ? 0 : closeHour + 1); // optional, only whole hours between 0 and 23
+        // timetable.setScope(openHour, closeHour === 23 ? 0 : closeHour + 1); // optional, only whole hours between 0 and 23
 
         //addEvent(name, location, startDate, endDate[, options])
         timetable.addEvent(movieTitle,'Nile' , new Date(2015,7,17,10,45), new Date(2015,7,17,12,30));
 
         let renderer = new Timetable.Renderer(timetable);
-        renderer.draw('.timetable');
+        renderer.draw('.schedule-container');
 
     }
 
