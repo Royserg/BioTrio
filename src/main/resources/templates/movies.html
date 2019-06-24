@@ -5,6 +5,7 @@
 
 </head>
 <link rel="stylesheet" th:href="@{/css/screening.css}">
+<link rel="stylesheet" th:href="@{/css/timetablejs.css}">
 <body>
 <!--this is for the navigation bar-->
 
@@ -69,23 +70,26 @@
                             </div>
                             <div class="modal-body">
                                 <form>
-                                    <label for="modalScreeningMovie">Movie</label>
-                                    <input type="text" class="form-control" id="modalScreeningMovie" readonly>
-                                    <label for="modalTheater">Theater</label>
-                                    <div class="row container mt-1">
-                                        <div class="col-md-12 theater-container">
-                                            <ul class="list-group theater-list" id="modalTheater">
-                                                <li class="list-group-item" th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
-                                            </ul>
-                                        </div>
-                                    </div>
+<!--                                    <label for="modalScreeningMovie">Movie</label>-->
+<!--                                    <input type="text" class="form-control" id="modalScreeningMovie" readonly>-->
                                     <div class="date-container mt-2">
                                         <label for="modalDate">Date</label>
                                         <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
                                     </div>
+<!--                                    <div class="row container mt-1">-->
+                                        <div class="col-md-12 theater-container">
+                                            <label for="modalTheater">Theater</label>
+                                            <ul class="list-group theater-list" id="modalTheater">
+                                                <li class="list-group-item" th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                                            </ul>
+                                        </div>
+<!--                                    </div>-->
+                                    <div class="timetable mt-2" id="schedule">
+
+                                    </div>
                                     <div class="time-container mt-2">
                                         <label for="modalTime">Time</label>
-                                        <input type="time" class="form-control" id="modalTime">
+                                        <input type="time" class="form-control" name="modalTime" id="modalTime" step="5">
                                         <div class="mt-2">
                                             <label for="modalPrice">Price</label>
                                             <input type="number" max="1000" class="form-control" id="modalPrice">
@@ -186,17 +190,24 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
     let theaterList =  /*[[${theaterList}]]*/ 'default';
+    const cinema =  /*[[${cinema}]]*/ 'default';
 /*]]>*/
 </script>
 <!-- scripts for jquery and js -->
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<!--moment.js library for handling date and time-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" crossorigin="anonymous"></script>
+
 <!-- custom js class providing modal functionality -->
 <script th:src="@{/js/Modal.js}"></script>
+<script th:src="@{/js/timetable.js}"></script>
 
 <script th:src="@{/js/movie/movie.js}"></script>
 <script th:src="@{/js/movie/deleteMovie.js}"></script>
@@ -204,6 +215,7 @@
 <script th:src="@{/js/screening/screeningUtilities.js}"></script>
 <script th:src="@{/js/screening/screening.js}"></script>
 <script th:src="@{/js/screening/deleteScreening.js}"></script>
+<script th:src="@{/js/screening/prepareEvents.js}"></script>
 
 
 </body>

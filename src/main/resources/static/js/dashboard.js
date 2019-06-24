@@ -150,23 +150,22 @@ $(function() {
                 $.each(data, (index, booking) => {
                     bookings.push(booking);
 
-                    console.log('data ', data, ' booking ', booking);
                     // calculate the total number of bookings
-                    bookingCount += 1;
+                    bookingCount++;
 
                     // get the ticket price for each booking
                     ticketPrice = booking.screening.price;
+
+                    // calculate the total ticket sales
+                    totalSales = totalSales + ticketPrice;
 
                     // loop through each booking, get the amount of tickets
                     $.each(booking.tickets, (index, ticket) => {
 
                         tickets.push(ticket);
-                        ticketCount += 1;
+                        ticketCount++;
 
                     });
-
-                    // calculate the total ticket sales
-                    totalSales += ticketPrice * ticketCount;
 
                 });
 
