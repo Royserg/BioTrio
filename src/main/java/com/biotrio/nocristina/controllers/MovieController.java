@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class MovieController {
+public class MovieController implements IController<Movie>{
 
     @Autowired
     MovieRepository movieRepo;
@@ -60,6 +60,11 @@ public class MovieController {
     @ResponseBody
     public void deleteOne(@PathVariable int id){
         movieRepo.deleteOne(id);
+    }
+
+    @Override
+    public void updateOne(int id, Movie itemToUpdate) {
+
     }
 
     // Return JSON list of screenings for provided movieId

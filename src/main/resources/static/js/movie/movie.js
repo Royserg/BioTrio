@@ -98,7 +98,7 @@ $(function() {
 
         // search movie on the tmdb api
         $('.modal-body').on('keyup', '#searchMovie', function() {
-
+            console.log("test");
             // clear the drop down and the result panel
             $('.dropdown-item').remove();
             $('.dropdown-menu').empty();
@@ -110,7 +110,7 @@ $(function() {
             // search the title through the tmdb api and show the first 3(the most recently released) results
             $.ajax(`${API_URL}/search/movie?api_key=${API_KEY}&query=${searchTitle}`)
                     .done(response => {
-
+                      console.log(response);
                         for(i=0; i<3; i++){
                             let result = response.results[i];
                             let resultRow = `<a class="dropdown-item" href="#" data-id="${result['id']}" data-title="${result['original_title']}" style="display:flex; justify-content:flex-start;">
