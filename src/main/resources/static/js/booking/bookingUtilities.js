@@ -7,7 +7,7 @@ function toggleListItemSelectedClass(element) {
   // Remove selected class from all items
   element.siblings('li').removeClass('list-group-item__selected');
   // Add selected class to the clicked item
-  element.toggleClass('list-group-item__selected');
+  element.addClass('list-group-item__selected');
 }
 
 

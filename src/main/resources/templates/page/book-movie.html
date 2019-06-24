@@ -3,7 +3,7 @@
 
 <head th:replace="fragments/page :: head(title='Make a Booking')" />
 
-<link rel="stylesheet" th:href="@{/css/page/bookMovie.css}">
+<link rel="stylesheet" th:href="@{/css/page/book-movie.css}">
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">-->
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.min.css">-->
 
@@ -11,30 +11,95 @@
 
     <nav th:replace="fragments/page :: navbar"></nav>
 
+
+    <!-- Booking modal   -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add Booking</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                </div>  <!-- Modal body - end -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" id="submitBtn">Book tickets</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Booking modal -- end -->
+
+
     <section class="movies--section pt-5 pb-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <img th:src="${'https://image.tmdb.org/t/p/w342' + movie.poster_path}" th:alt="${movie.original_title} + ' poster'">
+                <div class="col-md-4 poster--container">
+                    <img
+                         th:src="${'https://image.tmdb.org/t/p/w342' + movie.poster_path}"
+                         th:alt="${movie.original_title} + ' poster'"
+                         class="movie-poster"
+                    >
                 </div>
                 <div class="col-md-8">
-                    <h2 th:text="${movie.original_title}"></h2>
+                    <h2 class="movie-title" th:text="${movie.original_title}"></h2>
                     <p th:text="${movie.overview}"></p>
 
                     <span class="divider"></span>
                     <!-- Select Date field -->
-                    <label for="dateField">Date</label>
-                    <select name="date" id="dateField" class="form-control">
+                    <label for="dateField">Date:</label>
+                    <select name="date" id="dateField" class="form-control mb-4 w-25">
                     </select>
 
+                    <label>Time:</label>
+                    <ul class="list-group list-group-horizontal screening-times mb-4">
 
+                    </ul>
+
+                    <div class="seats-container mt-2 pt-4">
+                        <h4 class="text-center">Screen</h4>
+                        <div class="screen mx-auto mb-5"></div>
+                        <div class="mt-3 mb-4" id="seatsGrid">
+                            <!-- Dynamically updated seats from js -->
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
     </section>
+
+    <footer class="footer d-flex justify-content-between align-items-center">
+        <div class="form-container w-25" >
+            <input class="form-control" placeholder="Phone Number" name="phoneNum" type="text" id="phoneNum"/>
+        </div>
+        <div class="footer-information w-25 d-flex justify-content-between">
+            <div>
+                Tickets: <span id="ticketsCount" class="badge badge-secondary">0</span>
+            </div>
+            <div>
+                Price: <span id="price" class="badge badge-secondary">0</span>
+            </div>
+        </div>
+        <button class="btn btn-lg btn-primary" id="prepareBookingBtn">Proceed</button>
+    </footer>
+
     <!--  jQuery  -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Popper js for tooltips-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <!-- Bootstrap script -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--  Modal class  -->
+    <script th:src="@{/js/Modal.js}"></script>
+    <!-- Booking utilities -->
+    <script th:src="@{/js/booking/bookingUtilities.js}"></script>
+
     <!--  Custom js  -->
     <script th:src="@{/js/page/bookMovie.js}"></script>
 </body>
