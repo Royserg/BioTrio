@@ -26,7 +26,7 @@ public class MovieController {
 
         m.addAttribute("movieList", findAll());
         m.addAttribute("theaterList",screeningService.getAllTheaters());
-
+        m.addAttribute("cinema",screeningService.getOneCinema(1));
         return "movies";
     }
 

@@ -24,17 +24,6 @@ function buildTableRow(screening,movieTitle) {
   return newRow;
 }
 
-//currently not used
-//checks if all fields in the modal are populated
-function validateInput(screening) {
-  let validated = true;
-  if(screening.movieId == null) validated = false;
-  if(screening.theater == null) validated = false;
-  if(screening.price > 999 || screening.price < 1) validated = false;
-
-  return validated;
-}
-
 //clears all fields of the modal
 function clearModal (modal) {
 
@@ -46,8 +35,10 @@ function clearModal (modal) {
       .end()
   });
   $("#modalTheater").children('li').removeClass('list-group-item__selected');
-  $('.date-container').hide();
+  // $('.date-container').hide();
+  $('.theater-container').hide();
   $('.time-container').hide();
+  $('.timetable').hide();
 
 }
 
@@ -60,6 +51,10 @@ function populateModal(screening,movieTitle){
 
   $('.date-container').show();
   $('.time-container').show();
+  $('.theater-container').show();
+  $('.timetable').show();
+
+
 
   //finds the list item which has data attribute equal to the id of
   // the selected screenings theater and adds css to it
@@ -98,9 +93,6 @@ function prepareScreeningsPage() {
 }
 
 
-
-
-
 function toggleListItemSelectedClass(element) {
   // Remove selected class from all items
   element.siblings('li').removeClass('list-group-item__selected');
@@ -112,3 +104,53 @@ function toggleListItemSelectedClass(element) {
 $('.carousel').carousel({
   interval: false
 });
+
+function editScreening (screening,movieTitle,tr){
+  $.ajax({
+    type: 'PUT',
+    url: `api/screenings/${screening.id}`,
+    dataType: 'html',
+    data: JSON.stringify(screening),
+    contentType: "application/json; charset=utf-8",
+  }).done(function () {
+    const $row = buildTableRow(screening,movieTitle);
+    tr.replaceWith($row);
+  })
+}
+
+function addScreening(screening,movieTitle){
+
+  $.ajax({
+    type: "POST",
+    url: "/api/screenings",
+    dataType: "json",
+    data: JSON.stringify(screening),
+    contentType: "application/json; charset=utf-8",
+  }).done(function (id) {
+    screening["id"]=id;
+    const $row = buildTableRow(screening,movieTitle);
+    $('#screeningTable tbody').append($row);
+    $("#screeningTable caption").text("List of screenings");
+    $('#screeningTable').children('tbody').scrollTop($('#screeningTable tbody')[0].scrollHeight);
+    setTimeout(function(){ $('#screeningModal').modal('hide');},100);
+  });
+}
+
+//Fucntion which verifies the input of the user
+function verifyInput() {
+  // isFilled=true;
+  if($('#modalPrice').val()=="" || $('#modalPrice').val()<=0){
+    return false;
+  }
+  if($('#modalDate').val()=="" || $('#modalDate').val == null){
+    return false;
+  }
+  if($('#modalTime').val()=="" || $('#modalTime').val == null){
+    return false;
+  }
+  return true;
+}
+
+function clearSchedule(){
+  $('#schedule').html('');
+}

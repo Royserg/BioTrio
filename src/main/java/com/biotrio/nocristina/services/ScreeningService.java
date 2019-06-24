@@ -1,5 +1,6 @@
 package com.biotrio.nocristina.services;
 
+import com.biotrio.nocristina.models.Cinema;
 import com.biotrio.nocristina.models.Movie;
 import com.biotrio.nocristina.models.Screening;
 import com.biotrio.nocristina.models.Theater;
@@ -20,6 +21,9 @@ public class ScreeningService {
 
     @Autowired
     private MovieRepository movieRepo;
+
+    @Autowired
+    private CinemaRepository cinemaRepo;
 
 
     public List<Screening> getAllScreenings() {
@@ -78,4 +82,6 @@ public class ScreeningService {
     public void editScreening(int id, Screening screening) {
         screeningRepo.updateOne(id, screening);
     }
+
+    public Cinema getOneCinema (int cinemaId) {return cinemaRepo.findOne(cinemaId);}
 }
