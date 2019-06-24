@@ -10,7 +10,7 @@ $(function () {
         const id = row.data('movieid');
 
         // Get confirmation for deleting
-        const remove = confirm(`Are you sure you want to delete this movie?`);
+        const remove = confirm(`Are you sure you want to delete this movie? If you delete movie, all the screenings attached to the movie will be deleted.`);
         if (remove) {
 
             $.ajax({

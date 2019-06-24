@@ -14,19 +14,19 @@ $(function() {
     const is3d = $('#is3D');
     const isDolby = $('#isDolby');
 
-function verifyInput() {
-    isFilled=true;
-    if(name.val()==""){
-        isFilled=false;
+    function verifyInput() {
+        isFilled=true;
+        if(name.val()==""){
+            isFilled=false;
+        }
+        if(rows.val()=="" || rows.val()<=0){
+            isFilled=false;
+        }
+        if(columns.val()=="" || columns.val()<=0){
+            isFilled=false;
+        }
+        return isFilled;
     }
-    if(rows.val()=="" || rows.val()<=0){
-        isFilled=false;
-    }
-    if(columns.val()=="" || columns.val()<=0){
-        isFilled=false;
-    }
-    return isFilled;
-}
 
 
     $('#theaterTable').on('click', '.btn-edit', function () {
@@ -94,6 +94,7 @@ function verifyInput() {
         } else {
             alert("Please fill the empty fields and make sure they're filled correctly");
         }
+
 
         function edit() {
             let theaterToEdit = {
