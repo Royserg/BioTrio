@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class CinemaRepository implements IRepository<Cinema>{
+public class CinemaRepository implements IRepository<Cinema> {
 
     @Autowired
     private JdbcTemplate jdbc;

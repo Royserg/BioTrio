@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class ScreeningRepository implements IRepository<Screening>{
+public class ScreeningRepository implements IRepository<Screening> {
 
     @Autowired
     private JdbcTemplate jdbc;
