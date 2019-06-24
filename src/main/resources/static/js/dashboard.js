@@ -1,6 +1,4 @@
 $(function() {
-    console.log("jquery loaded");
-
 
     // editing opening hours
 

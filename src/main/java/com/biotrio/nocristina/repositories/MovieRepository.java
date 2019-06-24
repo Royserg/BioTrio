@@ -4,9 +4,6 @@ import com.biotrio.nocristina.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class MovieRepository {
+public class MovieRepository implements IRepository<Movie>{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -52,10 +49,17 @@ public class MovieRepository {
         return newMovie.getId();
     }
 
+
+
     public void deleteOne(int id){
 
         String sql = "DELETE FROM movies WHERE id =?";
         jdbc.update(sql, id);
+
+    }
+
+    @Override
+    public void updateOne(int id, Movie itemToUpdate) {
 
     }
 
