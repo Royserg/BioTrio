@@ -72,3 +72,7 @@ tbody td {
     border-color: #F74B8B;
     box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
 }
+
+.modal-open .modal {
+    background: rgba(0,0,0,0.5);
+}

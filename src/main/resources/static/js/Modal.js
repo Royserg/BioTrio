@@ -37,6 +37,6 @@ class Modal {
     this.submitBtn.text(submitBtnText);
 
     // Show modal
-    this.modal.modal('show');
+    this.modal.modal({ backdrop: false }).modal('show');
   }
 }
