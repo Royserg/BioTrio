@@ -28,13 +28,13 @@ public class PageController {
     private static final String API_KEY = "02325bf00c28d42c083b25b3be60b75e";
     private static final String API_URL = "https://api.themoviedb.org/3/";
 
+    // Object allowing sending HTTP requests
     private RestTemplate restTemplate = new RestTemplate();
 
 
     @GetMapping("/page")
     public String index(Model model) {
 
-        RestTemplate restTemplate = new RestTemplate();
         // Prepare url to API for retrieving all information about the movie
         // `%s` after /movie/ is for dynamically injected id of a particular movie
         String apiResourceUrl = API_URL + "/movie/%s?api_key=" + API_KEY + "&language=en-US";
@@ -49,7 +49,6 @@ public class PageController {
             moviesFromAPI.add(restTemplate.getForObject(String.format(apiResourceUrl, movie.getId()), MovieAPI.class));
         }
 
-        System.out.println("Api movies: " + moviesFromAPI);
         // Add movies to the model
         model.addAttribute("allMovies", moviesFromAPI);
 
@@ -57,7 +56,7 @@ public class PageController {
     }
 
     @GetMapping("/page/{movieId}")
-    public String bookScreening(Model model, @PathVariable int movieId) {
+    public String bookMovie(Model model, @PathVariable int movieId) {
 
         // Get movie from API
         String apiResource = String.format("%smovie/%d?api_key=%s&language=en-US", API_URL, movieId, API_KEY);
@@ -70,6 +69,12 @@ public class PageController {
         model.addAttribute("screenings", screenings);
 
         return "page/book-movie";
+    }
+
+
+    @GetMapping("/page/{movieId}/screenings/{screeningId}")
+    public String bookScreening(Model model, @PathVariable int movieId, @PathVariable int screeningId) {
+        return bookMovie(model, movieId);
     }
 }
 

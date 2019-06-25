@@ -19,7 +19,7 @@ $(function(){
         }
          ).datepicker('setDate', new Date());
 
-  // Get current date in 2019-06-17 format
+  // Get current date in "YYYY-mm-dd" format
   const currentDate = $.datepicker.formatDate('yy-mm-dd', new Date());
 
   // Get screenings for current date
@@ -32,8 +32,8 @@ $(function(){
   // === Functions ===
   /**
    * Datepicker Select date handler
-   * @param dateText
-   * @param instance
+   * @param dateText (String) selected date in "YYYY-mm-dd" format
+   * @param instance datepicker instance (not in use)
    */
   function handleDateSelect(dateText, instance) {
 
@@ -101,7 +101,7 @@ $(function(){
                                               <h5 class="card-text mb-4">${movieInfo['original_title']}</h5>
                                               <p>times:</p>
                                               <ul class="list-group times--list">
-                                                  ${movie['times'].map(screening => `<a href="/page/${screening.id}" class="list-group-item list-group-item-action">${screening.time.slice(0, -3)}</a>`).join('')}
+                                                  ${movie['times'].map(screening => `<a href="/page/${movieInfo.id}/screenings/${screening.id}" class="list-group-item list-group-item-action">${screening.time.slice(0, -3)}</a>`).join('')}
                                               </ul>
                                           </div>
                                       </div>

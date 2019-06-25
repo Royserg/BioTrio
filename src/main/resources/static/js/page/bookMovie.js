@@ -1,6 +1,12 @@
 $(function(){
+
+  const urlSplitted = window.location.pathname.split('/');
+
   // Movie id read from url
-  const movieId = window.location.pathname.split('/')[2];
+  const movieId = parseInt(urlSplitted[2]);
+  // Screening id from url
+  const screeningId = parseInt(urlSplitted[4]);
+
   // References to html elements
   const screeningTimes = $('.screening-times');
   const seatsContainer = $('.seats-container');
@@ -25,8 +31,25 @@ $(function(){
       // Show Select field with all possible dates for this movie
       displayDates(screenings);
 
-      // Display times for first date populated in the select field
-      $('#dateField option').eq(0).change();
+      if (screeningId) {
+        // Read whole screening object from list of screenings
+        const screening = allScreenings.find(s => s.id === screeningId);
+        // Set select option to display selected screening's date
+        $('#dateField').val(screening.date).change();
+        // Select the time of the screening
+        // TODO:
+        console.log(screening.time);
+
+        $('.screening-times').children().each((i, time) => {
+          if (parseInt(time.dataset.screeningid) === screening.id) {
+            time.click();
+          }
+        });
+
+      } else {
+        // Display times for first date populated in the select field
+        $('#dateField option').eq(0).change();
+      }
     });
 
 
