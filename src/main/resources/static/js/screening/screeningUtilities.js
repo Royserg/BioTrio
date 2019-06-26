@@ -136,7 +136,7 @@ function addScreening(screening,movieTitle){
   });
 }
 
-//Fucntion which verifies the input of the user
+//Function which verifies the input of the user
 function verifyInput() {
   // isFilled=true;
   if($('#modalPrice').val()=="" || $('#modalPrice').val()<=0){
