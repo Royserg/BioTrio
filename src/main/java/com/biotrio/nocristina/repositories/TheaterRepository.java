@@ -50,7 +50,6 @@ public class TheaterRepository implements IRepository<Theater>{
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                // TODO: Set default value for cinema id in the database = we have only 1 cinema
                 ps.setInt(1, 1);
                 ps.setString(2, theater.getName());
                 ps.setInt(3, theater.getRowsNumber());

@@ -102,7 +102,7 @@ $(function() {
 
     // get today
     let date = new Date();
-    let month = date.getMonth()+1;
+    let month = date.getMonth()+1; // getMonth() starts from 0 and up to 11
     let day = date.getDate();
     let today = date.getFullYear() + '-' +
         (month<10 ? '0' : '') + month + '-' +
@@ -122,12 +122,12 @@ $(function() {
                     screenings.push(screening);
 
                     // calculate the total number of screenings
-                    screeningCount += 1;
+                    screeningCount++;
 
                     // calculate the total number of future screenings
                     screeningDate = screening.date;
                     if(screeningDate >= today) {
-                        futureScreening += 1;
+                        futureScreening++;
                     }
                 });
 
