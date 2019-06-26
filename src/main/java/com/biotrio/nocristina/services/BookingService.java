@@ -26,7 +26,7 @@ public class BookingService {
     }
 
     public List<Booking> getAllBookingsForStat() {
-        List<Booking> allBookings = bookingRepo.findAllBookings();
+        List<Booking> allBookings = bookingRepo.findAll();
         return allBookings;
     }
 

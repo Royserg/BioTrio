@@ -47,11 +47,6 @@ public class ScreeningService {
         return movieRepo.findAll();
     }
 
-    public Screening findByBookingId(int bookingId) {
-        Screening screening = screeningRepo.findByBookingId(bookingId);
-
-        return screening;
-    }
 
     public List<Screening> getByMovieId(int movieId) {
         List<Screening> screenings = screeningRepo.findByMovieId(movieId);

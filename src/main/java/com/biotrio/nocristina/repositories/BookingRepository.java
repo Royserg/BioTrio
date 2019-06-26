@@ -39,15 +39,9 @@ public class BookingRepository implements IRepository<Booking> {
 
 
     public List<Booking> findAll() {
-        String sql = getJoinedQuery() + " ORDER BY b.id DESC LIMIT 15;";
+        String sql = getJoinedQuery() + " ORDER BY b.id";
         List<Booking> bookings = jdbc.query(sql, resultSetExtractor);
         return bookings;
-    }
-
-    public List<Booking> findAllBookings() {
-        String sql = getJoinedQuery() + " ORDER BY b.id;";
-        List<Booking> allBookings = jdbc.query(sql, resultSetExtractor);
-        return allBookings;
     }
 
     public List<Booking> findByPhone(String phoneNumber) {
