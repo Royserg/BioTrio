@@ -115,6 +115,7 @@ function editScreening (screening,movieTitle,tr){
   }).done(function () {
     const $row = buildTableRow(screening,movieTitle);
     tr.replaceWith($row);
+    $('#screeningModal').modal('hide');
   })
 }
 

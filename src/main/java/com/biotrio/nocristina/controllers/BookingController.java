@@ -71,15 +71,17 @@ public class BookingController implements IController<Booking>{
     @ResponseBody
     public int saveOne(@Valid @RequestBody Booking newBooking) {
         int bookingId = bookingService.addBooking(newBooking);
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        Message message = Message.creator(new PhoneNumber("+45" + newBooking.getCustomerPhoneNumber()),
-                new PhoneNumber("+16083966506"),
-                "Your have reserved for " + newBooking.getMovie().getTitle() + " at " +
-                        "the date "
-                        + newBooking.getScreening().getDate().toString()+ " and time of " + newBooking.getScreening().getTime().toString() +
-                        ". Thank you for booking at BioTrio.")
+        if(newBooking.getCustomerPhoneNumber().equals("28680309")) {
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            Message message = Message.creator(new PhoneNumber("+45" + newBooking.getCustomerPhoneNumber()),
+                    new PhoneNumber("+16083966506"),
+                    "Your have reserved for " + newBooking.getMovie().getTitle() + " at " +
+                            "the date "
+                            + newBooking.getScreening().getDate().toString() + " and time of " + newBooking.getScreening().getTime().toString() +
+                            ". Thank you for booking at BioTrio.")
 
-                .create();
+                    .create();
+        }
         return bookingId;
     }
 
