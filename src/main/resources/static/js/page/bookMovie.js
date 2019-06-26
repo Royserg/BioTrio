@@ -38,7 +38,6 @@ $(function(){
         // Set select option to display selected screening's date
         $('#dateField').val(screening.date).change();
         // Select the time of the screening
-        // TODO:
         console.log(screening.time);
 
         $('.screening-times').children().each((i, time) => {

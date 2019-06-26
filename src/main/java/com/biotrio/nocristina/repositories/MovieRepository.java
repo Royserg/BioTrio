@@ -38,7 +38,7 @@ public class MovieRepository implements IRepository<Movie>{
         String sql = "INSERT INTO movies VALUES(?,?);";
         jdbc.update((Connection connection)->{
 
-            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+            PreparedStatement ps = connection.prepareStatement(sql);
 
                 ps.setInt(1, newMovie.getId());
                 ps.setString(2, newMovie.getTitle());

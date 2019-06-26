@@ -34,7 +34,6 @@ public class ScreeningRepository implements IRepository<Screening> {
         return screenings;
     }
 
-//    TODO: convert to prepared statement
     public Screening findOne(int screeningId) {
 
        String sql = getJoinedQuery()+ " WHERE s.id = ?";

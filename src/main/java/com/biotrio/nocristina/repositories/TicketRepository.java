@@ -34,7 +34,7 @@ public class TicketRepository {
 
     public Ticket saveTicket(int bookingId, Ticket ticket){
         PreparedStatementCreator psc = connection -> {
-            PreparedStatement ps = connection.prepareStatement("insert into tickets values (null, ?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO tickets VALUES (null, ?,?,?)");
             ps.setInt(1, bookingId);
             ps.setInt(2, ticket.getRowNo());
             ps.setInt(3, ticket.getColumnNo());

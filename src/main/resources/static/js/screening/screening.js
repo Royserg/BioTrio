@@ -92,7 +92,7 @@ $(function () {
             .done(function(screening) {
 
                     populateModal(screening,movieTitle);
-                    createSchedule();
+                    //createSchedule();
 
                     theater = screening.theater;
                 }

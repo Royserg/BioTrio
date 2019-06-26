@@ -101,9 +101,6 @@ $(function() {
   // Trigger action only when submit button has .btn-warning class
   $('.modal-footer').on('click', '#submitBtn.btn-warning', function() {
 
-    // Disable submit button
-    bookingModal.disableButton();
-
     const $phoneNumField = $('#phoneNum');
     const $selectedSeats = $('.seat__selected');
 
@@ -112,7 +109,11 @@ $(function() {
       alert("Phone field empty or no ticket selected");
       return
     }
-    // Replace bookingData.tickets array with $selectedSeats array and send to backend
+
+    // Disable submit button
+    bookingModal.disableButton();
+
+      // Replace bookingData.tickets array with $selectedSeats array and send to backend
     // Convert array-like object into JS array
     const newTickets = $.makeArray($('.seat__selected')).map(function(ticket) {
       return {
