@@ -19,7 +19,7 @@ public class Booking{
     // Screening Contains Theater object
     @NotNull
     private Screening screening;
-    @NotNull
+
     private Movie movie;
 
     public Booking(){}

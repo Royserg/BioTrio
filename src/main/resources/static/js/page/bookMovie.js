@@ -18,6 +18,7 @@ $(function(){
   const newBooking = {
     'customerPhoneNumber': '',
     'tickets': [],
+    'movie': {},
     'screening': {}
   };
 
@@ -110,6 +111,7 @@ $(function(){
     // Save screening and theater into new Booking
     newBooking.screening = selectedScreening;
     newBooking.theater = selectedScreening.theater;
+    newBooking.movie = { id: selectedScreening.movieId, title: $('.movie-title').text() };
 
     // Save price of the screening as data attribute
     $('#seatsGrid').data('ticket-price', selectedScreening.price);
