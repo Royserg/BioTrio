@@ -52,6 +52,5 @@ public class CinemaController implements IController<Cinema>{
     @PutMapping("/api/cinemas/{id}")
     @Override
     public void updateOne(@PathVariable int id, Cinema itemToUpdate) {
-        //TODO: implement??
     }
 }

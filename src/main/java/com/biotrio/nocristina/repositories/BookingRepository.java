@@ -38,7 +38,7 @@ public class BookingRepository implements IRepository<Booking> {
 
 
     public List<Booking> findAll() {
-        String sql = getJoinedQuery() + " ORDER BY b.id DESC LIMIT 15;";
+        String sql = getJoinedQuery() + " ORDER BY b.id";
         List<Booking> bookings = jdbc.query(sql, resultSetExtractor);
         return bookings;
     }
@@ -112,7 +112,7 @@ public class BookingRepository implements IRepository<Booking> {
                 " s.time as screening_time, s.date as screening_date, s.price as screening_price," +
                 " th.id as screening_theater_id, th.name as screening_theater_name, th.rows_number as screening_theater_rows_number," +
                 " th.columns_number as screening_theater_columns_number, th.can3D as screening_theater_can3d, th.dolby as screening_theater_dolby," +
-               " m.id as movie_id, m.title as movie_title, m.duration_in_minutes as movie_duration_in_minutes" +
+               " m.id as movie_id, m.title as movie_title" +
                " FROM bookings b" +
                 " JOIN tickets t ON t.booking_id = b.id" +
                 " JOIN screenings s ON s.id = b.screening_id" +

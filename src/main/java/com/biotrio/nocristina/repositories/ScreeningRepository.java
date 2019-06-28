@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class ScreeningRepository implements IRepository<Screening>{
+public class ScreeningRepository implements IRepository<Screening> {
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -34,7 +34,6 @@ public class ScreeningRepository implements IRepository<Screening>{
         return screenings;
     }
 
-//    TODO: convert to prepared statement
     public Screening findOne(int screeningId) {
 
        String sql = getJoinedQuery()+ " WHERE s.id = ?";
@@ -67,8 +66,9 @@ public class ScreeningRepository implements IRepository<Screening>{
 
 
     public List<Screening> findByDate(String date) {
-        String sql = "SELECT * from screenings WHERE date = '" + date + "'";
-        return jdbc.query(sql, new BeanPropertyRowMapper<>(Screening.class));
+        String sql = getJoinedQuery()+ " WHERE s.date = ?";
+        List <Screening> screenings = jdbc.query(sql,new Object[]{date}, resultSetExtractor);
+        return screenings;
     }
   
     public List<Screening> findBetweenDates(String date1, String date2){

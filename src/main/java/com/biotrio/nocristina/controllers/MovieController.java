@@ -26,7 +26,7 @@ public class MovieController implements IController<Movie>{
 
         m.addAttribute("movieList", findAll());
         m.addAttribute("theaterList",screeningService.getAllTheaters());
-
+        m.addAttribute("cinema",screeningService.getOneCinema(1));
         return "movies";
     }
 
@@ -55,18 +55,16 @@ public class MovieController implements IController<Movie>{
         return movieId;
     }
 
-    // Update one movie
-    @PutMapping("/api/movies/{id}")
-    @ResponseBody
-    public void updateOne(@PathVariable int id, @RequestBody Movie movieToEdit){
-        movieRepo.updateOne(id, movieToEdit);
-    }
-
     // Delete one movie
     @DeleteMapping("/api/movies/{id}")
     @ResponseBody
     public void deleteOne(@PathVariable int id){
         movieRepo.deleteOne(id);
+    }
+
+    @Override
+    public void updateOne(int id, Movie itemToUpdate) {
+
     }
 
     // Return JSON list of screenings for provided movieId

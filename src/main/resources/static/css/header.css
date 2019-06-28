@@ -48,7 +48,9 @@ tbody td {
 
 
 /* Override bootstrap btn-primary with our custom color */
-.btn-primary {
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
     background: #CC014C;
     border-color: #CC014C;
     color: white;
@@ -69,4 +71,8 @@ tbody td {
     background-color: #CC014C;
     border-color: #F74B8B;
     box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+
+.modal-open .modal {
+    background: rgba(0,0,0,0.5);
 }

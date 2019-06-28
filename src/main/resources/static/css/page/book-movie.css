@@ -1,0 +1,112 @@
+.movies--section {
+    margin-top: 60px;
+    min-height: 1000px;
+}
+
+.movies--section .row {
+    /*height: 1000px;*/
+}
+
+.poster--container {
+    position: relative;
+}
+
+.movie-poster {
+    position: sticky;
+    top: 110px;
+}
+
+/* Custom divider */
+.divider {
+    margin: 30px 0;
+    height: 6px;
+    width: 20%;
+    background: #CC014C;
+    display: block;
+}
+
+/* Styles for ul items */
+.list-group-item {
+    cursor: pointer;
+    transition: background .4s ease;
+}
+
+.list-group-item:hover {
+    background: #CC014C;
+    color: white;
+}
+
+/* Class for selected list group items */
+.list-group-item__selected {
+    background: #CC014C;
+    color: white;
+}
+/* Styles for ul items == end */
+
+/* Seats and screen styles */
+.seats-container {
+    display: none;
+    /*height: 60%;*/
+    padding-bottom: 75px;
+    background: rgba(0,0,0,.1);
+    border-radius: 10px;
+}
+
+.screen {
+    width: 40%;
+    height: 5px;
+    background: black;
+    border-radius: 30%;
+}
+
+.seat {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.seat__reserved {
+    background-color: crimson;
+}
+
+.seat__free {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.seat__selected {
+    background-color: forestgreen;
+    border: none;
+}
+/* Seats and screen styles == end */
+
+/* Footer styles */
+.footer {
+    bottom: 0;
+    position: sticky;
+
+    height: 13vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: rgba(0,0,0,.8);
+}
+
+.footer .footer-information {
+    font-size: 1.5rem;
+}
+/* Footer styles == end */
+
+/*  Modal styles */
+.modal {
+    color: #000000;
+}
+
+.modal .spinner-border {
+    height: 1rem;
+    width: 1rem;
+}
+
+/*  Modal styles -- end */
+
+#bookingModal

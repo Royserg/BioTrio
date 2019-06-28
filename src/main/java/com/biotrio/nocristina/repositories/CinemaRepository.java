@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class CinemaRepository implements IRepository<Cinema>{
+public class CinemaRepository implements IRepository<Cinema> {
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -73,6 +73,13 @@ public class CinemaRepository implements IRepository<Cinema>{
         Day schedule = jdbc.queryForObject(sql, new Object[] {today}, new BeanPropertyRowMapper<>(Day.class));
 
         return schedule;
+    }
+
+    public void updateSchedule(Day day) {
+
+        String sql = "UPDATE opening_hours SET opening_hour = ?, closing_hour = ? WHERE day_no = ?;";
+        jdbc.update(sql, day.getOpeningHour(), day.getClosingHour(), day.getDayNo());
+
     }
 
 }
