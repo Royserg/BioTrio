@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class TheaterController implements IController<Theater>{
+public class    TheaterController implements IController<Theater>{
 
     @Autowired
     TheaterRepository theaterRepo;
