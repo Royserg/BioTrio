@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+    <head th:replace="fragments/fragments :: head(title='Theaters')" />
+
+    <body>
+    <nav th:replace="fragments/fragments :: navbar" />
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="fragments/fragments :: sidebar" />
+            <div class="col-md-10 mt-3">
+                <h4 th:replace="fragments/fragments :: heading(text='Theaters')" />
+
+                <!--Modal for adding new theaters -->
+                <div class="modal fade" id="theaterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="NameField">Name of theater</label>
+                                <input type="text" class="form-control" placeholder="Theater Name" id="NameField" minlength="1" maxlength="15">
+
+                                <label for="RowsField">Amount of rows</label>
+                                <input type="number" class="form-control" placeholder="Number of rows" id="RowsField" min="1">
+
+                                <label for="ColumnsField">Amount of columns</label>
+                                <input type="number" class="form-control" placeholder="Number of columns" id="ColumnsField" min="1">
+
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" class="form-check-input" id="is3D">
+                                    <label for="is3D" class="form-check-label">3D</label>
+                                </div>
+
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" class="form-check-input" id="isDolby">
+                                    <label for="isDolby" class="form-check-label">Dolby</label>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="submitTheater">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Button that opens up the add theater modal-->
+
+                <div class="d-flex justify-content-end mb-4">
+                    <button class="btn btn-primary"
+                            type="button"
+                            id="addButton"
+                            data-toggle="modal"
+                            data-target="#theaterModal">Add theater</button>
+                </div>
+
+                <!-- List of available theaters -->
+                <div id="table-container">
+                <table class="table table-hover" id="theaterTable">
+                        <caption>End of the list</caption>
+                        <thead class="thead-dark">
+                            <tr class="d-flex">
+                                <th class="col-2">Name</th>
+                                <th class="col-2">Rows no.</th>
+                                <th class="col-2">Columns no.</th>
+                                <th class="col-2">3D</th>
+                                <th class="col-2">Dolby</th>
+                                <!-- columns for edit and delete button -->
+                                <th class="col-1"></th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="d-flex" th:each="theater : ${theaterList}">
+                                <td class="col-2" th:text="*{theater.name}" th:value="${theater}"/>
+                                <td class="col-2" th:text="${theater.rowsNumber}"/>
+                                <td class="col-2" th:text="${theater.columnsNumber}"/>
+                                <td class="col-2" th:text="${theater.can3d}"/>
+                                <td class="col-2" th:text="${theater.dolby}"/>
+                                <td class="col-1">
+                                    <button
+                                            id = "editButton"
+                                            class="btn btn-outline-dark btn-edit"
+                                            title="edit"
+                                            data-toggle="modal"
+                                            data-target="#theaterModal"
+                                            th:attr="data-theaterid = ${theater.id}">
+                                        <span class="fas fa-edit"></span>
+                                    </button>
+                                </td>
+                                <td class="col-1">
+                                    <button th:attr="data-theaterid=${theater.id}, data-theatername=${theater.name}" title="delete" class="btn btn-outline-dark btn-delete">
+                                        <span class="fas fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script th:src="@{/js/Modal.js}"></script>
+    <script th:src="@{/js/theater/deleteTheater.js}"></script>
+    <script th:src="@{/js/theater/theater.js}"></script>
+    </body>
+</html>

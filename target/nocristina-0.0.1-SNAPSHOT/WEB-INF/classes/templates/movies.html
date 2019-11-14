@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments/fragments :: head(title='Movies')" >
+
+</head>
+<link rel="stylesheet" th:href="@{/css/screening.css}">
+<link rel="stylesheet" th:href="@{/css/timetablejs.css}">
+<body>
+<!--this is for the navigation bar-->
+
+<nav th:replace="fragments/fragments :: navbar" />
+
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/fragments :: sidebar" />
+
+        <div class="col-10 mt-3">
+            <h4 th:replace="fragments/fragments :: heading(text='Movies')" />
+
+            <div class="mt-4" >
+
+                <!-- Modal for Add a Movie -->
+
+                <div class="modal fade" id="movieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="movieModalTitle"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+
+
+                            <div class="modal-body">
+                                <label for="searchMovie">Search Movie</label>
+                                <div class="input-group" style="margin:auto;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input class="form-control" id="searchMovie" type="text" placeholder="Type in the title to search movie"  />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-search"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu">
+                                </div>
+                                <div id="showResults">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="submitModal">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for Add and Edit Screening-->
+                <div class="modal fade" id="screeningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+<!--                                    <label for="modalScreeningMovie">Movie</label>-->
+<!--                                    <input type="text" class="form-control" id="modalScreeningMovie" readonly>-->
+                                    <div class="date-container mt-2">
+                                        <label for="modalDate">Date</label>
+                                        <input type="date" class="form-control" id="modalDate" placeholder="screeningDate">
+                                    </div>
+<!--                                    <div class="row container mt-1">-->
+                                        <div class="col-md-12 theater-container">
+                                            <label for="modalTheater">Theater</label>
+                                            <ul class="list-group theater-list" id="modalTheater">
+                                                <li class="list-group-item" th:each="theater : ${theaterList}" th:attr="data-theater_id=${theater.id}" th:text="${theater.name}"/>
+                                            </ul>
+                                        </div>
+<!--                                    </div>-->
+                                    <div class="timetable mt-2" id="schedule">
+
+                                    </div>
+                                    <div class="time-container mt-2">
+                                        <label for="modalTime">Time</label>
+                                        <input type="time" class="form-control" name="modalTime" id="modalTime" step="5">
+                                        <div class="mt-2">
+                                            <label for="modalPrice">Price</label>
+                                            <input type="number" max="1000" class="form-control" id="modalPrice">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning" id="submitButton" >Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button for adding and going back -->
+                <div class="d-flex justify-content-between mb-4">
+
+                    <button class="btn invisible btn-outline-dark" id="prev" title="Back to movies">
+                        <span class="fas fa-chevron-left" style="font-size: 100%"></span>
+                    </button>
+
+                    <button class="btn btn-primary"
+                     id="addButton">Add Movie</button>
+
+                </div>
+                <!--Carousel for displaying both tables-->
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <!--table for displaying the list of movies-->
+                            <div id="movie-table-container" >
+                                <table class="table table-hover" id="movieTable">
+                                    <caption>List of movies</caption>
+                                    <thead class="thead-dark">
+                                    <tr class="d-flex">
+                                        <th class="col-1"></th>
+                                        <th class="col-3">ID</th>
+                                        <th class="col-7">Title</th>
+                                        <!-- columns for edit and delete button -->
+                                        <!--<th class="col-1"></th>-->
+                                        <th class="col-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="d-flex"  th:each="movie : ${movieList}" th:object="${movie}"
+                                                                        th:attr="data-movieid=${movie.id},
+                                                                                 data-movietitle=${movie.title}">
+
+                                        <td class="col-1 cool-pointer">
+                                            <button title="screening list" class="btn btn-outline-dark">
+                                                <span class="fas fa-chevron-right"></span>
+                                            </button>
+                                        </td>
+                                        <td class="col-3 " th:text="${movie.id}" />
+                                        <td class="col-7 " th:text="${movie.title}" />
+                                        <td class="col-1">
+                                            <button class="btn btn-outline-dark btn-delete" title="delete">
+                                                <span class="fas fa-trash"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <!-- table for displaying the list of available screenings -->
+                            <div id="screening-table-container">
+                                <table class="table table-hover" id="screeningTable">
+                                    <caption>List of screenings</caption>
+                                    <thead class="thead-dark">
+                                    <tr class="d-flex">
+                                        <th class="col-2 sticky-header">Movie</th>
+                                        <th class="col-2 sticky-header">Theater room</th>
+                                        <th class="col-2 sticky-header">Date</th>
+                                        <th class="col-2 sticky-header">Time</th>
+                                        <th class="col-2 sticky-header">Price</th>
+                                        <!-- columns for edit and delete button -->
+                                        <th class="col-1"></th>
+                                        <th class="col-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- the table body will be filled dynamically from jquery depending on which movie
+                                         has been selected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let theaterList =  /*[[${theaterList}]]*/ 'default';
+    const cinema =  /*[[${cinema}]]*/ 'default';
+/*]]>*/
+</script>
+<!-- scripts for jquery and js -->
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!--moment.js library for handling date and time-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" crossorigin="anonymous"></script>
+
+<!-- custom js class providing modal functionality -->
+<script th:src="@{/js/Modal.js}"></script>
+<script th:src="@{/js/timetable.js}"></script>
+
+<script th:src="@{/js/movie/movie.js}"></script>
+<script th:src="@{/js/movie/deleteMovie.js}"></script>
+
+<script th:src="@{/js/screening/screeningUtilities.js}"></script>
+<script th:src="@{/js/screening/screening.js}"></script>
+<script th:src="@{/js/screening/deleteScreening.js}"></script>
+<script th:src="@{/js/screening/prepareEvents.js}"></script>
+
+
+</body>
+</html>

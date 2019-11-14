@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+    <head th:replace="fragments/page :: head(title='BioTrio cinema')" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.min.css">
+
+
+<body>
+
+    <nav th:replace="fragments/page :: navbar"></nav>
+
+    <main class="hero--section">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div th:each="movie,iter : ${allMovies}" class="carousel-item" th:classappend="${iter.index} == 0 ? 'active' : ''">
+                    <img class="image--carousel" th:src="'https://image.tmdb.org/t/p/w1280' + ${movie.backdrop_path}" th:alt="${movie.original_title} + 'poster'">
+                    <div class="container">
+                        <div class="carousel-caption d-flex justify-content-between align-items-end">
+                            <div class='movie--info text-left'>
+                                <h2 class="movie--title" th:text="${movie.original_title}">Title</h2>
+                                <span class="divider"></span>
+                                <p class="lead" th:text="${movie.tagline}"></p>
+                            </div>
+                            <div class='movie--buttons'>
+                                <a class="btn btn-lg btn-primary" th:href="@{'/page/' + ${movie.id}}" role="button">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </main>
+
+
+    <section class="movies--section pt-5 pb-5">
+        <div class="container">
+            <div class="date--container pt-2 pb-5">
+                <h3><input type="text" id="datepicker" class="date--picker"> screenings:</h3>
+                <span class="divider"></span>
+            </div>
+            <div class="movies--container">
+                <div class="row">
+                    <!--  Dynamically displayed Screenings for today -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer d-flex flex-column justify-content-between pt-5">
+
+        <div class="footer--info">
+            <h5>Opening hours:</h5>
+            <div clas="d-flex flex-column">
+                <p>Mon-Fri: 17:00 - 23:00</p>
+                <p>Sat-Sun: 15:00 - 23:00</p>
+            </div>
+        </div>
+
+        <div class="footer--socials d-flex justify-content-center">
+            <a href="#" class="btn">
+                <span class="fab fa-instagram"></span>
+            </a>
+            <a href="#" class="btn">
+                <span class="fab fa-twitter-square"></span>
+            </a>
+            <a href="#" class="btn">
+                <span class="fab fa-facebook-square"></span>
+            </a>
+        </div>
+
+        <small class="text-center text-white">®BioTrio</small>
+    </footer>
+
+    <!--  jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!--  jQuery UI for datepicker  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--  Bootstrap jQuery script for Carousel  -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--  Custom script  -->
+    <script th:src="@{/js/page/index.js}"></script>
+</body>
+</html>

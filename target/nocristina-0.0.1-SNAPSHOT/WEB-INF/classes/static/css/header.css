@@ -1,0 +1,78 @@
+.navbar {
+    height: 50px;
+}
+
+.nav-link {
+    color: #232323;
+    border-bottom: 1px solid transparent;
+    transition: .4s border ease-in;
+    padding: .7em 0;
+}
+
+.nav-link__active {
+    background: #D7D8D9;
+    border-bottom: 1px solid #343434;
+}
+
+.nav-link:hover {
+    color: #343434;
+    border-bottom: 1px solid #343434;
+}
+
+
+.sidebar-sticky {
+    height: calc(100vh - 50px);
+}
+
+.page-heading {
+    display: inline;
+    border-bottom: 1px solid #343434;
+}
+
+.cool-pointer{
+    cursor:pointer;
+}
+
+/* Make only table body scrollable */
+table tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody td {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Override bootstrap btn-primary with our custom color */
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background: #CC014C;
+    border-color: #CC014C;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #F74B8B;
+    border-color: #CC014C;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: #CC014C;
+    border-color: #F74B8B;
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+
+.modal-open .modal {
+    background: rgba(0,0,0,0.5);
+}

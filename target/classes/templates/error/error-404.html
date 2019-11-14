@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/fragments :: head(title='Error 404 - Page not found')" >
+
+<body>
+    <nav th:replace="fragments/fragments :: navbar" />
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="fragments/fragments :: sidebar" />
+
+            <div class="col-10 mt-3">
+                <img class="rounded mx-auto d-block img-fluid" width="800" th:src="@{/404.jpg}" alt="Page not found">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

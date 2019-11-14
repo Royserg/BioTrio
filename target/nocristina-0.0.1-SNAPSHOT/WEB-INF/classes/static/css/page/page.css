@@ -1,0 +1,170 @@
+body {
+    background: #353535;
+    color: white;
+}
+
+
+/* Override bootstrap btn-primary with our custom color */
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background: #CC014C;
+    border-color: #CC014C;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #F74B8B;
+    border-color: #CC014C;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: #CC014C;
+    border-color: #F74B8B;
+    box-shadow: 0 0 0 0.2rem rgba(204,1,76,.5);
+}
+/* Override bootstrap btn-primary - end */
+
+/* Custom divider */
+.divider {
+    margin: 30px 0;
+    height: 6px;
+    width: 20%;
+    background: #CC014C;
+    display: block;
+}
+
+
+.navbar {
+    height: 60px;
+    background: rgba(0,0,0,.3);
+}
+
+.navbar .fa-bars {
+    color: #CC014C;
+}
+
+/* Hero section styles */
+
+.hero--section {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+}
+
+.carousel-item {
+    height: calc(100vh - 60px);
+}
+
+.image--carousel {
+    width: 100%;
+    height: 100%;
+}
+
+.spinner-border {
+    width: 10rem;
+    height: 10rem;
+}
+
+.carousel-caption  {
+    text-shadow: 0 1px 2px rgba(0,0,0,.9);
+}
+
+.carousel-caption .movie--title {
+    font-weight: 800;
+    text-transform: uppercase;
+
+}
+
+.movie--info .divider {
+    width: 150px;
+}
+
+.carousel-caption .movie--buttons .btn-primary {
+    margin-bottom: 1rem;
+    width: 175px;
+    text-align: center;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,.3);
+}
+/* ======= */
+
+
+/* Movies list for particular date styles */
+.movies--section {
+    color: #222222;
+    background: transparent url(/../../background.png) repeat fixed 0 0/8px;
+    min-height: 730px;
+}
+
+.movies--section .date--picker {
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.4);
+    width: 17%;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.1);
+
+}
+
+.movies--container .card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.26);
+}
+
+.times--list .list-group-item {
+    width: 40%;
+    height: 35px;
+    margin-bottom: 2px;
+    color: white;
+    background: #CC014C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.times--list .list-group-item:hover {
+    background: #EC216C;
+}
+
+.movies--container .movie--container {
+    text-decoration: none;
+    color: black;
+}
+
+/* Movies list for particular date styles === End */
+
+
+/* Footer styles */
+.footer {
+    height: 35vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: #000000;
+}
+
+.footer .footer--socials a {
+    font-size: 2.2em;
+    color: #CC014C;
+}
+
+.footer .footer--info {
+    font-size: .7em;
+    color: white;
+}
+
+.footer .footer--info p {
+    margin-bottom: .3rem;
+}
+/* Footer styles - end */
+
+
+.modal-open .modal {
+    background: rgba(0,0,0,0.5);
+}

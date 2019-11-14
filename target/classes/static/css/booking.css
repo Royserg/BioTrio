@@ -1,0 +1,123 @@
+.modal-body {
+    min-height: 60vh;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background: #343A40;
+    color: white;
+}
+
+/* Class for selected list group items */
+.list-group-item__selected {
+    background: #343A40;
+    color: white;
+}
+
+.dates-container,
+.times-container,
+.seats-container {
+    display: none;
+}
+
+/* Make containers scrollable on y axis */
+.movies-list,
+.dates-list,
+.times-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.movies-list {
+    max-height: 240px;
+}
+
+.dates-list {
+    max-height: 197px;
+}
+
+
+.times-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.times-list li {
+    margin-bottom: 0;
+    border-radius: .25rem;
+}
+
+.seats-container {
+    margin-bottom: 10rem;
+}
+
+.screen {
+    width: 40%;
+    height: 5px;
+    background: black;
+    border-radius: 30%;
+}
+
+.seat {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.seat__reserved {
+    background-color: crimson;
+}
+
+.seat__free {
+    background-color: white;
+    border: 2px solid black;
+}
+
+.seat__selected {
+    background-color: forestgreen;
+    border: none;
+}
+
+/* Make Modal full screen */
+.modal {
+    padding: 15px;
+}
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+
+.modal-footer {
+    background: ghostwhite;
+    border-radius: 0 0 4px 4px;
+}
+
+.footer {
+    height: 100px;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-container {
+    flex: 0 0 25%;
+}
+
+.footer-information {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 30%;
+    font-size: 1.3em;
+}
